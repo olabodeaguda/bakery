@@ -30,6 +30,22 @@ namespace BakeryPR.ModelView
             }
         }
 
+        public DelegateCommand<object> UpdateCommand
+        {
+            get
+            {
+                return new DelegateCommand<object>((s)=> {
+                    Ingredent sd = this.selectIngredent;
+                    bool result = dao.update(sd);
+                    if (result)
+                    {
+                        MessageBox.Show("Update was successfull");
+                    }
+
+                });
+            }
+        }
+
         public DelegateCommand<object> loadEditCommand
         {
             get
@@ -137,14 +153,14 @@ namespace BakeryPR.ModelView
             }
         }
 
-        public List<MeasurementType> MeasurementTypes
+        public ObservableCollection<MeasurementType> MeasurementTypes
         {
             get
             {
                 List<MeasurementType> lst = new List<MeasurementType>();
                 lst.Add(new MeasurementType() { id = -1, name = "none" });
                 lst.AddRange(mDao.all());
-                return lst;
+                return new ObservableCollection<MeasurementType>(lst);
             }
         }
 

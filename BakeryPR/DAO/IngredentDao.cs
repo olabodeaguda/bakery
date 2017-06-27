@@ -62,6 +62,23 @@ namespace BakeryPR.DAO
 
         public bool update(Ingredent values)
         {
+            using (SQLiteConnection conn = new SQLiteConnection(connectionString))
+            {
+                conn.Open();
+                SQLiteCommand cmd = new SQLiteCommand(conn);
+                cmd.CommandText = "update ingredent set ingredentName = @ingredentName,unitCost=@unitCost,mTypeid = @mTypeid where id = @id";
+                cmd.Parameters.AddWithValue("@ingredentName", values.ingredentName);
+                cmd.Parameters.AddWithValue("@unitCost", values.unitCost);
+                cmd.Parameters.AddWithValue("@id", values.id);
+                cmd.Parameters.AddWithValue("@mTypeid", values.mTypeId);
+                cmd.CommandType = CommandType.Text;
+                int count = cmd.ExecuteNonQuery();
+                if (count > 0)
+                {
+                    return true;
+                }
+            }
+
             return false;
         }
 

@@ -7,9 +7,9 @@
         xmlns:vm="clr-namespace:BakeryPR.ModelView"
         mc:Ignorable="d"
         Title="Edit Ingredent" Height="300" Width="450" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
-    <Window.DataContext>
+    <!--<Window.DataContext>
         <vm:IngredentModelView></vm:IngredentModelView>
-    </Window.DataContext>
+    </Window.DataContext>-->
     <Grid Margin="5">
         <Grid.RowDefinitions>
             <RowDefinition Height="70"></RowDefinition>
@@ -30,13 +30,14 @@
 
         <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding selectIngredent.ingredentName,Mode=TwoWay}"></TextBox>
 
-        <ComboBox SelectedValue="{Binding selectIngredent.mTypeId, Mode=TwoWay, NotifyOnSourceUpdated=True}"  Grid.Row="2" Grid.Column="1" 
+        <ComboBox SelectedValue="{Binding selectIngredent.mTypeId, Mode=TwoWay, NotifyOnSourceUpdated=True}" 
+                  Grid.Row="2" Grid.Column="1" 
                   ItemsSource="{Binding MeasurementTypes}" 
                   DisplayMemberPath="name" 
                   SelectedValuePath="id" IsSynchronizedWithCurrentItem="True"></ComboBox>
         <TextBox  Grid.Row="3" Grid.Column="1" Text="{Binding selectIngredent.unitCost,Mode=TwoWay}"></TextBox>
 
-        <Button Style="{StaticResource btnSubmitStyle}" Grid.Column="1" Grid.Row="4" Command="{Binding addCommand}" >Edit</Button>
+        <Button Style="{StaticResource btnSubmitStyle}" Grid.Column="1" Grid.Row="4" Command="{Binding UpdateCommand}" >Update</Button>
 
     </Grid>
 </Window>
