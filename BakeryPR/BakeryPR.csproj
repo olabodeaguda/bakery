@@ -64,12 +64,15 @@
     <Compile Include="DAO\AbstractDao.cs" />
     <Compile Include="DAO\IngredentDao.cs" />
     <Compile Include="DAO\MeasureTypeDao.cs" />
+    <Compile Include="DAO\OverheadDao.cs" />
     <Compile Include="DAO\ProductDao.cs" />
     <Compile Include="Models\Ingredent.cs" />
     <Compile Include="Models\MeasurementType.cs" />
+    <Compile Include="Models\Overhead.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="ModelView\DashboardModelView.cs" />
     <Compile Include="ModelView\IngredentModelView.cs" />
+    <Compile Include="ModelView\OverheadModelView.cs" />
     <Compile Include="ModelView\ProductViewModel.cs" />
     <Compile Include="ModelView\UCDashboardModelView.cs" />
     <Compile Include="Utilities\DelegateCommand.cs" />
@@ -99,6 +102,9 @@
     </Compile>
     <Compile Include="Views\IngredentView.xaml.cs">
       <DependentUpon>IngredentView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\OverheadView.xaml.cs">
+      <DependentUpon>OverheadView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ProductView.xaml.cs">
       <DependentUpon>ProductView.xaml</DependentUpon>
@@ -131,6 +137,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\IngredentView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\OverheadView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
