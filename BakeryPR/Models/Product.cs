@@ -25,7 +25,7 @@ namespace BakeryPR.Models
         {
             get { return _weight; }
             set { _weight = value;
-                this.NotifyPropertyChanged("weight");
+                    this.NotifyPropertyChanged("weight");
             }
         }
 

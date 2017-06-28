@@ -35,11 +35,18 @@ namespace BakeryPR.ModelView
             get
             {
                 return new DelegateCommand<object>((s)=> {
-                    Ingredent sd = this.selectIngredent;
-                    bool result = dao.update(sd);
-                    if (result)
+                    try
                     {
-                        MessageBox.Show("Update was successfull");
+                        Ingredent sd = this.selectIngredent;
+                        bool result = dao.update(sd);
+                        if (result)
+                        {
+                            MessageBox.Show("Update was successfull");
+                        }
+                    }
+                    catch (Exception x)
+                    {
+                        MessageBox.Show(x.Message);
                     }
 
                 });
@@ -70,18 +77,25 @@ namespace BakeryPR.ModelView
             get
             {
                 return new DelegateCommand<object>((s)=> {
-                    Ingredent ig = this.ingredent;
+                    try
+                    {
+                        Ingredent ig = this.ingredent;
 
-                    bool result = dao.add(ig);
-                    if(result)
-                    {
-                        MessageBox.Show("Saved");
+                        bool result = dao.add(ig);
+                        if (result)
+                        {
+                            MessageBox.Show("Saved");
+                        }
+                        else
+                        {
+                            MessageBox.Show("not saved");
+                        }
+                        this.ingredent = new Ingredent();
                     }
-                    else
+                    catch (Exception x)
                     {
-                        MessageBox.Show("not saved");
+                        MessageBox.Show(x.Message);
                     }
-                    this.ingredent = new Ingredent();
 
                 });
             }

@@ -20,10 +20,85 @@ namespace BakeryPR.ModelView
         {
             get
             {
-                return new DelegateCommand<object>((s)=>{
+                return new DelegateCommand<object>((s) =>
+                {
                     AddProduct prod = new AddProduct();
+                    prod.DataContext = this;
                     prod.ShowDialog();
                     this.products = new ObservableCollection<Product>(dao.all());
+                });
+            }
+        }
+
+        public DelegateCommand<object> UpdateCommand
+        {
+            get
+            {
+                return new DelegateCommand<object>((s) =>
+                {
+                    try
+                    {
+                        Product sd = this.product;
+                        bool result = dao.update(sd);
+                        if (result)
+                        {
+                            MessageBox.Show("Update was successfull");
+                        }
+                    }
+                    catch (Exception x)
+                    {
+                        MessageBox.Show(x.Message);
+                    }
+                });
+            }
+        }
+
+        public DelegateCommand<object> addCommand
+        {
+            get
+            {
+                return new DelegateCommand<object>((s) =>
+                {
+                    try
+                    {
+                        Product ig = this.product;
+
+                        bool result = dao.add(ig);
+                        if (result)
+                        {
+                            MessageBox.Show("Saved");
+                        }
+                        else
+                        {
+                            MessageBox.Show("not saved");
+                        }
+                        this.product = new Product();
+                    }
+                    catch (Exception x)
+                    {
+                        MessageBox.Show(x.Message);
+                    }
+
+                });
+            }
+        }
+
+        public DelegateCommand<object> loadEditCommand
+        {
+            get
+            {
+                return new DelegateCommand<object>((s) =>
+                {
+
+                    if (s != null)
+                    {
+                        EditProduct editIngr = new EditProduct();
+                        this.product = (Product)s;
+
+                        editIngr.DataContext = this;
+                        bool? result = editIngr.ShowDialog();
+                        this.products = new ObservableCollection<Product>(dao.all());
+                    }
                 });
             }
         }
@@ -44,12 +119,13 @@ namespace BakeryPR.ModelView
             }
         }
 
-        private Product _product;
+        private Product _product = new Product();
 
         public Product product
-        {       
+        {
             get { return _product; }
-            set {
+            set
+            {
                 _product = value;
                 this.NotifyPropertyChanged("product");
             }
@@ -82,7 +158,6 @@ namespace BakeryPR.ModelView
                 return new ObservableCollection<MeasurementType>(lst);
             }
         }
-
 
         #region property change
 
