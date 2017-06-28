@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:BakeryPR.Views"
         mc:Ignorable="d"
         xmlns:vm="clr-namespace:BakeryPR.ModelView"
-        Title="Dashboard" Height="{Binding winHeight}" Width="{Binding winWidth}" WindowState="Maximized" WindowStyle="SingleBorderWindow"
+        Title="Bakery" Height="{Binding winHeight}" Width="{Binding winWidth}" WindowState="Maximized" WindowStyle="SingleBorderWindow"
         WindowStartupLocation="CenterScreen">
     <!--<Window.Background>
         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">

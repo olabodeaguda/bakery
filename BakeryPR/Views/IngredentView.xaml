@@ -18,7 +18,8 @@
         </Grid.RowDefinitions>
         <Button Width="90" Height="40" HorizontalAlignment="Left" Command="{Binding loadCommand}">Add</Button>
         <ListView x:Name="IngredentLst"  Width="{Binding winWidth}" 
-                  ItemsSource="{Binding Ingredents,Mode=TwoWay}" IsSynchronizedWithCurrentItem="True" HorizontalAlignment="Left" HorizontalContentAlignment="Left" Margin="0,19,-20,41" Grid.RowSpan="2">
+                  ItemsSource="{Binding Ingredents,Mode=TwoWay}" IsSynchronizedWithCurrentItem="True" HorizontalAlignment="Left" HorizontalContentAlignment="Left" 
+                  Grid.Row="1">
             <ListView.View>
 
                 <GridView>

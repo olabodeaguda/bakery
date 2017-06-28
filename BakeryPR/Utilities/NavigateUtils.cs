@@ -20,7 +20,7 @@ namespace BakeryPR.Utilities
                 case "mAnalysis":
                     return new UCDashboard();
                 case "product":
-                    return new UCDashboard();
+                    return new ProductView();
                 case "overhead":
                     return new UCDashboard();
                 case "measurementType":

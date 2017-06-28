@@ -16,10 +16,10 @@
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         <Button Width="90" Height="40" HorizontalAlignment="Left" Command="{Binding loadCommand}">Add</Button>
-        <ListView x:Name="IngredentLst"  Width="{Binding winWidth}" 
-                  ItemsSource="{Binding Ingredents,Mode=TwoWay}" IsSynchronizedWithCurrentItem="True" HorizontalAlignment="Left" HorizontalContentAlignment="Left" Margin="0,19,-20,41" Grid.RowSpan="2">
+        <ListView x:Name="ProductLst"  Width="{Binding winWidth}" 
+                  ItemsSource="{Binding Products,Mode=TwoWay}" IsSynchronizedWithCurrentItem="True" HorizontalAlignment="Left" 
+                  HorizontalContentAlignment="Left" Margin="5" Grid.RowSpan="2" Grid.Row="1">
             <ListView.View>
-
                 <GridView>
                     <GridViewColumn  x:Name="gridV">
                         <GridViewColumn.CellTemplate >
@@ -32,9 +32,15 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                     <GridViewColumn Width="200"  HeaderContainerStyle="{StaticResource ListViewStyle}" 
-                                    Header="Ingredent"  DisplayMemberBinding="{Binding ingredentName}" />
+                                    Header="Weight"  DisplayMemberBinding="{Binding ingredentName}" />
                     <GridViewColumn Width="100" HeaderContainerStyle="{StaticResource ListViewStyle}" 
-                                    Header="Unit Cost" DisplayMemberBinding="{Binding unitCost}" />
+                                    Header="Description" DisplayMemberBinding="{Binding unitCost}" />
+                    <GridViewColumn Width="100" HeaderContainerStyle="{StaticResource ListViewStyle}" 
+                                    Header="Cost of Package" DisplayMemberBinding="{Binding unitCost}" />
+                    <GridViewColumn Width="100" HeaderContainerStyle="{StaticResource ListViewStyle}" 
+                                    Header="Retail Price" DisplayMemberBinding="{Binding unitCost}" />
+                    <GridViewColumn Width="100" HeaderContainerStyle="{StaticResource ListViewStyle}" 
+                                    Header="Wholesales Price" DisplayMemberBinding="{Binding unitCost}" />
                     <GridViewColumn Width="200" HeaderContainerStyle="{StaticResource ListViewStyle}" 
                                     Header="Measure Type Name" DisplayMemberBinding="{Binding measureTypeName}" />
                 </GridView>

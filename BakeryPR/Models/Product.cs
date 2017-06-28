@@ -69,7 +69,7 @@ namespace BakeryPR.Models
             }
         }
 
-        private int _mTypeId;
+        private int _mTypeId = -1;
 
         public int mTypeId
         {
