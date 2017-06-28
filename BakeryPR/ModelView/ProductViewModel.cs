@@ -159,6 +159,8 @@ namespace BakeryPR.ModelView
             }
         }
 
+        
+
         #region property change
 
         public double winHeight

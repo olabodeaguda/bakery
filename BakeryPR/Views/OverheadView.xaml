@@ -18,7 +18,7 @@
         </Grid.RowDefinitions>
         <Button Width="90" Height="40" HorizontalAlignment="Left" Command="{Binding loadCommand}">Add</Button>
         <ListView x:Name="ProductLst"  Width="{Binding winWidth}" 
-                  ItemsSource="{Binding products,Mode=TwoWay}" IsSynchronizedWithCurrentItem="True" HorizontalAlignment="Left" 
+                  ItemsSource="{Binding overheads,Mode=TwoWay}" IsSynchronizedWithCurrentItem="True" HorizontalAlignment="Left" 
                   HorizontalContentAlignment="Left" Margin="5" Grid.RowSpan="2" Grid.Row="1">
             <ListView.View>
                 <GridView>
@@ -33,15 +33,11 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                     <GridViewColumn Width="200"  HeaderContainerStyle="{StaticResource ListViewStyle}" 
-                                    Header="Weight"  DisplayMemberBinding="{Binding weight}" />
+                                    Header="Overhead Name"  DisplayMemberBinding="{Binding name}" />
                     <GridViewColumn Width="100" HeaderContainerStyle="{StaticResource ListViewStyle}" 
-                                    Header="Description" DisplayMemberBinding="{Binding descripton}" />
+                                    Header="Unit Cost" DisplayMemberBinding="{Binding unitCostExpression}" />
                     <GridViewColumn Width="100" HeaderContainerStyle="{StaticResource ListViewStyle}" 
-                                    Header="Cost of Package" DisplayMemberBinding="{Binding costOfPackage}" />
-                    <GridViewColumn Width="100" HeaderContainerStyle="{StaticResource ListViewStyle}" 
-                                    Header="Retail Price" DisplayMemberBinding="{Binding retailPrice}" />
-                    <GridViewColumn Width="100" HeaderContainerStyle="{StaticResource ListViewStyle}" 
-                                    Header="Wholesales Price" DisplayMemberBinding="{Binding wholeSales}" />
+                                    Header="Overhead Type" DisplayMemberBinding="{Binding overheadType}" />
                     <GridViewColumn Width="200" HeaderContainerStyle="{StaticResource ListViewStyle}" 
                                     Header="Measure Type Name" DisplayMemberBinding="{Binding measureTypeName}" />
                 </GridView>

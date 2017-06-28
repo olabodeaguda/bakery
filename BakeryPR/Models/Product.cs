@@ -89,6 +89,14 @@ namespace BakeryPR.Models
             }
         }
 
+        public string weightView
+        {
+            get
+            {
+                return $"{ this.weight} {this.measureTypeName}";
+            }
+        }
+
 
         #region property change
 

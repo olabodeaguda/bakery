@@ -1,0 +1,38 @@
+﻿<Window x:Class="BakeryPR.Views.AddOverhead"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BakeryPR.Views"
+        mc:Ignorable="d"
+        Title="Add Overhead" Height="300" Width="450" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+    <Grid Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="150"></ColumnDefinition>
+            <ColumnDefinition Width="250"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center">Overhead Name</TextBlock>
+        <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center">Measurement Type</TextBlock>
+        <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center">A Unit Cost</TextBlock>
+        <TextBlock Grid.Row="4" Grid.Column="0" VerticalAlignment="Center">Overhead Type</TextBlock>
+
+        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding overhead.name,Mode=TwoWay}"></TextBox>
+        <ComboBox SelectedValue="{Binding overhead.mTypeId,Mode=TwoWay}"  Grid.Row="2" Grid.Column="1" ItemsSource="{Binding MeasurementTypes}" 
+                  DisplayMemberPath="name" SelectedValuePath="id"></ComboBox>
+        <TextBox  Grid.Row="3" Grid.Column="1" Text="{Binding overhead.unitCost,Mode=TwoWay}"></TextBox>
+        <ComboBox SelectedValue="{Binding overhead.overheadType,Mode=TwoWay}"  Grid.Row="4" Grid.Column="1" ItemsSource="{Binding OverheadTypes}" 
+                  ></ComboBox>
+
+        <Button Style="{StaticResource btnSubmitStyle}" Grid.Column="1" Grid.Row="5" Command="{Binding addCommand}" >Add</Button>
+
+    </Grid>
+</Window>

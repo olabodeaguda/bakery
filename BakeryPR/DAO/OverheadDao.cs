@@ -29,7 +29,8 @@ namespace BakeryPR.DAO
                     name = x["name"].ToString(),
                     mTypeId = int.Parse(x["mTypeId"].ToString()),
                     unitCost = double.Parse(x["unitCost"].ToString()),
-                    measureTypeName = x["measureTypeName"].ToString()
+                    measureTypeName = x["measureTypeName"].ToString(),
+                     overheadType = x["overheadType"].ToString()
                 }).ToList();
             }
 
@@ -42,11 +43,12 @@ namespace BakeryPR.DAO
             {
                 conn.Open();
                 SQLiteCommand cmd = new SQLiteCommand(conn);
-                cmd.CommandText = "insert into overheads(name,mTypeId,mTypeid) " +
-                    "values(@name,@mTypeid,@unitCost)";
+                cmd.CommandText = "insert into overheads(name,mTypeId,mTypeid,overheadType) " +
+                    "values(@name,@mTypeid,@unitCost,@overheadType)";
                 cmd.Parameters.AddWithValue("@name", values.name);
                 cmd.Parameters.AddWithValue("@unitCost", values.unitCost);
                 cmd.Parameters.AddWithValue("@mTypeid", values.mTypeId);
+                cmd.Parameters.AddWithValue("@overheadType", values.overheadType);
                 cmd.CommandType = CommandType.Text;
                 int count = cmd.ExecuteNonQuery();
                 if (count > 0)
@@ -64,11 +66,12 @@ namespace BakeryPR.DAO
             {
                 conn.Open();
                 SQLiteCommand cmd = new SQLiteCommand(conn);
-                cmd.CommandText = "update overheads set name = @name,unitCost=@unitCost,mTypeid = @mTypeid where id = @id";
+                cmd.CommandText = "update overheads set overheadType=@overheadType, name = @name,unitCost=@unitCost,mTypeid = @mTypeid where id = @id";
                 cmd.Parameters.AddWithValue("@name", values.name);
                 cmd.Parameters.AddWithValue("@unitCost", values.unitCost);
                 cmd.Parameters.AddWithValue("@id", values.id);
                 cmd.Parameters.AddWithValue("@mTypeid", values.mTypeId);
+                cmd.Parameters.AddWithValue("@overheadType", values.overheadType);
                 cmd.CommandType = CommandType.Text;
                 int count = cmd.ExecuteNonQuery();
                 if (count > 0)

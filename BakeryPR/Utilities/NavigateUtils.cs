@@ -22,14 +22,14 @@ namespace BakeryPR.Utilities
                 case "product":
                     return new ProductView();
                 case "overhead":
-                    return new UCDashboard();
-                case "measurementType":
-                    return new UCDashboard();
+                    return new OverheadView();
                 case "sales":
                     return new UCDashboard();
                 case "reports":
                     return new UCDashboard();
                 case "about":
+                    return new UCDashboard();
+                case "recipe":
                     return new UCDashboard();
                 default:
                     return new ErrorView();

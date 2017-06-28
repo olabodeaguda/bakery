@@ -40,6 +40,14 @@ namespace BakeryPR.Models
             }
         }
 
+        public string quantityExpression
+        {
+            get
+            {
+                return $"{ this.quantity} {this.measureTypeName}";
+            }
+        }
+
 
         private int _id;
 

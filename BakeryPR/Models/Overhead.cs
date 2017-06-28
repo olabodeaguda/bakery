@@ -33,7 +33,7 @@ namespace BakeryPR.Models
             }
         }
 
-        private int _mTypeId;
+        private int _mTypeId = -1;
 
         public int mTypeId
         {
@@ -57,6 +57,19 @@ namespace BakeryPR.Models
             }
         }
 
+        private string _overheadType = "none";
+
+        public string overheadType
+        {
+            get { return _overheadType; }
+            set
+            {
+                _overheadType = value;
+                this.NotifyPropertyChanged("overheadType");
+            }
+        }
+
+
         private string _measureTypeName;
 
         public string measureTypeName
@@ -66,6 +79,14 @@ namespace BakeryPR.Models
             {
                 _measureTypeName = value;
                 this.NotifyPropertyChanged("measureTypeName");
+            }
+        }
+
+        public string unitCostExpression
+        {
+            get
+            {
+                return $"{ this.unitCost} /{this.measureTypeName}";
             }
         }
 

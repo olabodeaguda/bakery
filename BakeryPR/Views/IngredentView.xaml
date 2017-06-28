@@ -39,6 +39,8 @@
                                     Header="Unit Cost" DisplayMemberBinding="{Binding unitCost}" />
                     <GridViewColumn Width="200" HeaderContainerStyle="{StaticResource ListViewStyle}" 
                                     Header="Measure Type Name" DisplayMemberBinding="{Binding measureTypeName}" />
+                    <GridViewColumn Width="200" HeaderContainerStyle="{StaticResource ListViewStyle}" 
+                                    Header="Quantity" DisplayMemberBinding="{Binding quantityExpression}" />
                 </GridView>
             </ListView.View>
         </ListView>
