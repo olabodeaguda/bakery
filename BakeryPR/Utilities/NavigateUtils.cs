@@ -27,10 +27,8 @@ namespace BakeryPR.Utilities
                     return new UCDashboard();
                 case "reports":
                     return new UCDashboard();
-                case "about":
-                    return new UCDashboard();
                 case "recipe":
-                    return new UCDashboard();
+                    return new RecipeIngredentView();
                 default:
                     return new ErrorView();
             }

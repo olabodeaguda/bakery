@@ -43,7 +43,7 @@ namespace BakeryPR.DAO
             {
                 conn.Open();
                 SQLiteCommand cmd = new SQLiteCommand(conn);
-                cmd.CommandText = "insert into overheads(name,mTypeId,mTypeid,overheadType) " +
+                cmd.CommandText = "insert into overheads(name,mTypeId,unitCost,overheadType) " +
                     "values(@name,@mTypeid,@unitCost,@overheadType)";
                 cmd.Parameters.AddWithValue("@name", values.name);
                 cmd.Parameters.AddWithValue("@unitCost", values.unitCost);

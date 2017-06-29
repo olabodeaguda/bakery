@@ -97,6 +97,7 @@ namespace BakeryPR.ModelView
                         editIngr.DataContext = this;
                         bool? result = editIngr.ShowDialog();
                         this.overheads = new ObservableCollection<Overhead>(dao.all());
+                        this.overhead = new Overhead(); 
                     }
                 });
             }
