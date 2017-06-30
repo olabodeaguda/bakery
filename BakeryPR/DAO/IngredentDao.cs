@@ -37,6 +37,33 @@ namespace BakeryPR.DAO
             return lst;
         }
 
+        public List<Ingredent> byId(int id)
+        {
+            List<Ingredent> lst = new List<Ingredent>();
+            using (SQLiteConnection conn = new SQLiteConnection(this.connectionString))
+            {
+                conn.Open();
+                DataSet dt = new DataSet();
+                SQLiteCommand cmd = new SQLiteCommand(conn);
+                cmd.CommandText = "select ingredent.*,measurementType.measureTypeName from ingredent inner join measurementType on ingredent.mTypeId = measurementType.id where ingredent.id=@id";
+                cmd.Parameters.AddWithValue("@id", id);
+                cmd.CommandType = CommandType.Text;
+                this.SQLiteAdaptor(dt, cmd);
+
+                lst = dt.Tables[0].Rows.Cast<DataRow>().Select(x => new Ingredent()
+                {
+                    id = int.Parse(x["id"].ToString()),
+                    ingredentName = x["ingredentName"].ToString(),
+                    mTypeId = int.Parse(x["mTypeId"].ToString()),
+                    quantity = double.Parse(x["quantity"].ToString()),
+                    unitCost = double.Parse(x["unitCost"].ToString()),
+                    measureTypeName = x["measureTypeName"].ToString()
+                }).ToList();
+            }
+
+            return lst;
+        }
+
         public bool add(Ingredent values)
         {
             using (SQLiteConnection conn = new SQLiteConnection(connectionString))
@@ -81,6 +108,8 @@ namespace BakeryPR.DAO
 
             return false;
         }
+
+
 
         public bool delete(int id)
         {

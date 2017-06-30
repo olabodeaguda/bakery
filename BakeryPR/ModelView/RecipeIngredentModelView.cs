@@ -27,12 +27,27 @@ namespace BakeryPR.ModelView
             }
         }
 
+        public RecipeIngredentDao riDao
+        {
+            get
+            {
+                return new RecipeIngredentDao();
+            }
+        }
 
         public RecipeDao dao
         {
             get
             {
                 return new RecipeDao();
+            }
+        }
+
+        public IngredentDao ingredentDao
+        {
+            get
+            {
+                return new IngredentDao();
             }
         }
 
@@ -49,6 +64,54 @@ namespace BakeryPR.ModelView
                     //var t = lst.FirstOrDefault(x => x.title == this.recipe.title);
                     //this.recipe = t != null ? t : new Recipe();
                     //this.recipes = new ObservableCollection<Recipe>(lst);
+                });
+            }
+        }
+
+        public DelegateCommand<object> addIngredntCommmand
+        {
+            get
+            {
+                return new DelegateCommand<object>((s) =>
+                {
+                    try
+                    {
+                        if (this.recipe == null)
+                        {
+                            throw new Exception("Recipe not available");
+                        }
+
+                        this.recipeIngredent.recipeId = this.recipe.id;
+                        bool result = this.riDao.add(this.recipeIngredent);
+                        if (result)
+                        {
+                            MessageBox.Show("saved");
+
+                        }
+                        else
+                        {
+                            MessageBox.Show("an error occur while saving your request");
+                        }
+
+                    }
+                    catch (Exception x)
+                    {
+                        MessageBox.Show(x.Message);
+                    }
+
+                });
+            }
+        }
+
+        public DelegateCommand<object> loadAddIngredntCommmand
+        {
+            get
+            {
+                return new DelegateCommand<object>((s) =>
+                {
+                    AddRecipeIngredent rep = new AddRecipeIngredent();
+                    rep.DataContext = this;
+                    rep.ShowDialog();
                 });
             }
         }
@@ -85,15 +148,15 @@ namespace BakeryPR.ModelView
                         ig.dateCreated = DateTime.Now;
                         ig.lastUpdated = DateTime.Now;
 
-                         bool result = dao.add(ig);
-                         if (result)
-                         {
-                             MessageBox.Show("Saved");
-                         }
-                         else
-                         {
-                             MessageBox.Show("not saved");
-                         }
+                        bool result = dao.add(ig);
+                        if (result)
+                        {
+                            MessageBox.Show("Saved");
+                        }
+                        else
+                        {
+                            MessageBox.Show("not saved");
+                        }
                         List<Recipe> lst = dao.all();
                         var t = lst.FirstOrDefault(x => x.title == ig.title);
                         this.recipe = t != null ? t : new Recipe();
@@ -108,6 +171,32 @@ namespace BakeryPR.ModelView
             }
         }
 
+        private RecipeIngredents _recipeIngredent = new RecipeIngredents();
+
+        public RecipeIngredents recipeIngredent
+        {
+            get { return _recipeIngredent; }
+            set
+            {
+                _recipeIngredent = value;
+                this.NotifyPropertyChanged("recipeIngredent");
+            }
+        }
+
+        private ObservableCollection<RecipeIngredents> _riIngredents = new ObservableCollection<RecipeIngredents>();
+
+        public ObservableCollection<RecipeIngredents> riIngredents
+        {
+            get { return _riIngredents; }
+            set
+            {
+                _riIngredents = value;
+            }
+        }
+
+
+
+
         private ObservableCollection<Recipe> _recipes = new ObservableCollection<Recipe>();
 
         public ObservableCollection<Recipe> recipes
@@ -119,6 +208,23 @@ namespace BakeryPR.ModelView
                 this.NotifyPropertyChanged("recipes");
             }
         }
+
+
+        public ObservableCollection<Ingredent> ingredents
+        {
+            get
+            {
+                List<Ingredent> lst = new List<Ingredent>()
+                {
+                    new Ingredent() { id = -1, ingredentName = "none" }
+                };
+
+                lst.AddRange(ingredentDao.all());
+
+                return new ObservableCollection<Ingredent>(lst);
+            }
+        }
+
 
         private Recipe _recipe = new Recipe();
 

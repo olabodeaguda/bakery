@@ -71,16 +71,23 @@ namespace BakeryPR.Models
             }
         }
 
-        private int _recipeNos = 0;
-        public int recipeNos
+        public int ingredentNos
         {
-            get { return _recipeNos; }
+            get { return this.ingredent.Count; }
+        }
+
+        private double _totalWeight;
+
+        public double totalWeight
+        {
+            get { return _totalWeight; }
             set
             {
-                _recipeNos = value;
-                this.NotifyPropertyChanged("recipeNos");
+                _totalWeight = value;
+                this.NotifyPropertyChanged("totalWeight");
             }
         }
+
 
         #region property change
 

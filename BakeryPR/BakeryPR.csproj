@@ -82,6 +82,7 @@
     <Compile Include="DAO\OverheadDao.cs" />
     <Compile Include="DAO\ProductDao.cs" />
     <Compile Include="DAO\RecipeDao.cs" />
+    <Compile Include="DAO\RecipeIngredentDao.cs" />
     <Compile Include="Models\Ingredent.cs" />
     <Compile Include="Models\MeasurementType.cs" />
     <Compile Include="Models\Overhead.cs" />
@@ -109,6 +110,9 @@
     </Compile>
     <Compile Include="Views\AddRecipe.xaml.cs">
       <DependentUpon>AddRecipe.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AddRecipeIngredent.xaml.cs">
+      <DependentUpon>AddRecipeIngredent.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Dashboard.xaml.cs">
       <DependentUpon>Dashboard.xaml</DependentUpon>
@@ -157,6 +161,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\AddRecipe.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AddRecipeIngredent.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

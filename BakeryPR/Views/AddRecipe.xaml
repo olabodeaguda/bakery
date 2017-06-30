@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BakeryPR.Views"
         mc:Ignorable="d"
-        Title="Add Recipe" Height="400" Width="600" WindowStartupLocation="CenterOwner" ResizeMode="NoResize">
+        Title="Add Recipe" Height="400" Width="600"  WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40"></RowDefinition>
@@ -27,9 +27,11 @@
                 <RowDefinition></RowDefinition>
                 <RowDefinition Height="30"></RowDefinition>
             </Grid.RowDefinitions>
-            <Button Width="100" Height="25" HorizontalAlignment="Left" IsEnabled="{Binding isAddIngredent}">Add Ingredent</Button>
+            <Button Command="{Binding loadAddIngredntCommmand}" Width="100" Height="25" HorizontalAlignment="Left" IsEnabled="{Binding isAddIngredent}">Add Ingredent</Button>
 
-            <ListView Grid.Row="1">
+            <ListView x:Name="IngredentLst"  Width="{Binding winWidth}" 
+                  ItemsSource="{Binding ingredents,Mode=TwoWay}" IsSynchronizedWithCurrentItem="True" HorizontalAlignment="Left" HorizontalContentAlignment="Left" 
+                  Grid.Row="1">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn  x:Name="gridV">

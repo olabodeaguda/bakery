@@ -17,7 +17,8 @@
         </Grid.RowDefinitions>
         <Button Width="90" Height="40" HorizontalAlignment="Left" Command="{Binding loadCommand}">Add</Button>
         <ListView x:Name="RecipeLst"  Width="{Binding winWidth}" 
-                  ItemsSource="{Binding recipes,Mode=TwoWay}" IsSynchronizedWithCurrentItem="True" HorizontalAlignment="Left" HorizontalContentAlignment="Left" 
+                  ItemsSource="{Binding recipes,Mode=TwoWay}" IsSynchronizedWithCurrentItem="True" 
+                  HorizontalAlignment="Left" HorizontalContentAlignment="Left" 
                   Grid.Row="1">
             <ListView.View>
 
@@ -39,7 +40,9 @@
                     <GridViewColumn Width="200" HeaderContainerStyle="{StaticResource ListViewStyle}" 
                                     Header="Last Updated" DisplayMemberBinding="{Binding lastUpdated,StringFormat=yyyy-MM-dd}" />
                     <GridViewColumn Width="200" HeaderContainerStyle="{StaticResource ListViewStyle}" 
-                                    Header="No of Recipe" DisplayMemberBinding="{Binding recipeNos}" />
+                                    Header="No of Recipe" DisplayMemberBinding="{Binding ingredentNos}" />
+                    <GridViewColumn Width="200" HeaderContainerStyle="{StaticResource ListViewStyle}" 
+                                    Header="Weight(Kg)" DisplayMemberBinding="{Binding totalWeight}" />
                 </GridView>
             </ListView.View>
         </ListView>

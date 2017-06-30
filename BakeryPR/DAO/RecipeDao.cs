@@ -13,6 +13,7 @@ namespace BakeryPR.DAO
 {
     public class RecipeDao : AbstractDao
     {
+        RecipeIngredentDao riDao = new RecipeIngredentDao();
         public List<Recipe> all()
         {
             List<Recipe> lst = new List<Recipe>();
@@ -21,28 +22,21 @@ namespace BakeryPR.DAO
                 conn.Open();
                 DataSet dt = new DataSet();
                 SQLiteCommand cmd = new SQLiteCommand(conn);
-                cmd.CommandText = "select recipe.*,ingredent.ingredentName, recipeIngredent.quantity from recipe left join  recipeIngredent on recipeIngredent.recipeId = recipe.id left join ingredent on ingredent.id = recipeIngredent.ingredentId";
+                cmd.CommandText = "select * from recipe";
                 cmd.CommandType = CommandType.Text;
                 this.SQLiteAdaptor(dt, cmd);
 
-                IEnumerable<IGrouping<int, Recipe>> results = dt.Tables[0].Rows.Cast<DataRow>().Select(x => new Recipe()
+                List<Recipe> results = dt.Tables[0].Rows.Cast<DataRow>().Select(x => new Recipe()
                 {
                     id = int.Parse(x["id"].ToString()),
                     title = x["title"].ToString(),
                     dateCreated = DateTime.Parse(x["dateCreated"].ToString(), new CultureInfo("en-US", true)),
-                    lastUpdated = DateTime.Parse(x["lastUpdated"].ToString(), new CultureInfo("en-US", true))
-                }).GroupBy(x => x.id);
+                    lastUpdated = DateTime.Parse(x["lastUpdated"].ToString(), new CultureInfo("en-US", true))                   
+                }).ToList();
 
-                foreach (var p in results)
+                foreach (var rec in results)
                 {
-                    Recipe pp = p.FirstOrDefault();
-                    Recipe rec = new Recipe();
-                    rec.id = p.Key;
-                    rec.title = p.FirstOrDefault()?.title;
-
-                    rec.recipeNos = p.Count();
-                    rec.dateCreated = pp.dateCreated;
-                    rec.lastUpdated = pp.lastUpdated;
+                    rec.ingredent = new ObservableCollection<RecipeIngredents>(riDao.byRecipeId(rec.id));
                     lst.Add(rec);
                 }
 
@@ -79,9 +73,8 @@ namespace BakeryPR.DAO
             {
                 conn.Open();
                 SQLiteCommand cmd = new SQLiteCommand(conn);
-                cmd.CommandText = "update recipe set title=@title,dateCreated=@dateCreated,lastUpdated=@lastUpdated where id = @id";
+                cmd.CommandText = "update recipe set title=@title,lastUpdated=@lastUpdated where id = @id";
                 cmd.Parameters.AddWithValue("@title", values.title);
-                cmd.Parameters.AddWithValue("@dateCreated", values.dateCreated);
                 cmd.Parameters.AddWithValue("@lastUpdated", values.lastUpdated);
                 cmd.Parameters.AddWithValue("@id", values.id);
                 cmd.CommandType = CommandType.Text;
