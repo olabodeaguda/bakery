@@ -40,9 +40,9 @@
                     <GridViewColumn Width="200" HeaderContainerStyle="{StaticResource ListViewStyle}" 
                                     Header="Last Updated" DisplayMemberBinding="{Binding lastUpdated,StringFormat=yyyy-MM-dd}" />
                     <GridViewColumn Width="200" HeaderContainerStyle="{StaticResource ListViewStyle}" 
-                                    Header="No of Recipe" DisplayMemberBinding="{Binding ingredentNos}" />
+                                    Header="No of Ingredent" DisplayMemberBinding="{Binding ingredentNos}" />
                     <GridViewColumn Width="200" HeaderContainerStyle="{StaticResource ListViewStyle}" 
-                                    Header="Weight(Kg)" DisplayMemberBinding="{Binding totalWeight}" />
+                                    Header="Total Cost (Naira)" DisplayMemberBinding="{Binding totalCost}" />
                 </GridView>
             </ListView.View>
         </ListView>

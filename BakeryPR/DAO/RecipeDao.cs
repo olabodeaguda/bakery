@@ -45,6 +45,37 @@ namespace BakeryPR.DAO
             return lst;
         }
 
+        public Recipe byId(int id)
+        {
+            Recipe results = null;
+            using (SQLiteConnection conn = new SQLiteConnection(this.connectionString))
+            {
+                conn.Open();
+                DataSet dt = new DataSet();
+                SQLiteCommand cmd = new SQLiteCommand(conn);
+                cmd.CommandText = "select * from recipe where id = @id";
+                cmd.Parameters.AddWithValue("@id", id);
+                cmd.CommandType = CommandType.Text;
+                this.SQLiteAdaptor(dt, cmd);
+
+                results = dt.Tables[0].Rows.Cast<DataRow>().Select(x => new Recipe()
+                {
+                    id = int.Parse(x["id"].ToString()),
+                    title = x["title"].ToString(),
+                    dateCreated = DateTime.Parse(x["dateCreated"].ToString(), new CultureInfo("en-US", true)),
+                    lastUpdated = DateTime.Parse(x["lastUpdated"].ToString(), new CultureInfo("en-US", true))
+                }).FirstOrDefault();
+
+                if (results != null)
+                {
+                    results.ingredent = new ObservableCollection<RecipeIngredents>(riDao.byRecipeId(results.id)); 
+                }
+            }
+
+            return results;
+        }
+
+
         public bool add(Recipe values)
         {
             using (SQLiteConnection conn = new SQLiteConnection(connectionString))

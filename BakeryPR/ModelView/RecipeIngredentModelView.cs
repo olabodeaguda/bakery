@@ -60,10 +60,7 @@ namespace BakeryPR.ModelView
                     AddRecipe prod = new AddRecipe();
                     prod.DataContext = this;
                     prod.ShowDialog();
-                    //List<Recipe> lst = dao.all();
-                    //var t = lst.FirstOrDefault(x => x.title == this.recipe.title);
-                    //this.recipe = t != null ? t : new Recipe();
-                    //this.recipes = new ObservableCollection<Recipe>(lst);
+                    this.recipes = new ObservableCollection<Recipe>(dao.all());
                 });
             }
         }
@@ -82,11 +79,23 @@ namespace BakeryPR.ModelView
                         }
 
                         this.recipeIngredent.recipeId = this.recipe.id;
+
+                        // check if combination already exit
+
+                        RecipeIngredents rri = this.riDao.byRecipeIdIngredent(this.recipeIngredent.recipeId, this.recipeIngredent.ingredentId);
+                        if (rri != null)
+                        {
+                            MessageBox.Show("recipe already exit");
+                            return;
+                        }
+
+
                         bool result = this.riDao.add(this.recipeIngredent);
                         if (result)
                         {
                             MessageBox.Show("saved");
-
+                            this.recipeIngredent = new RecipeIngredents();
+                            this.riIngredents = new ObservableCollection<RecipeIngredents>(riDao.byRecipeId(this.recipe.id));
                         }
                         else
                         {
@@ -116,25 +125,6 @@ namespace BakeryPR.ModelView
             }
         }
 
-        public DelegateCommand<object> loadEditCommand
-        {
-            get
-            {
-                return new DelegateCommand<object>((s) =>
-                {
-
-                    if (s != null)
-                    {
-                        /* EditIngredent editIngr = new EditIngredent();
-                         this.selectIngredent = (Ingredent)s;
-
-                         editIngr.DataContext = this;
-                         bool? result = editIngr.ShowDialog();
-                         this.Ingredents = new ObservableCollection<Ingredent>(dao.all());*/
-                    }
-                });
-            }
-        }
 
         public DelegateCommand<object> addCommand
         {
@@ -187,15 +177,16 @@ namespace BakeryPR.ModelView
 
         public ObservableCollection<RecipeIngredents> riIngredents
         {
-            get { return _riIngredents; }
+            get
+            {
+                return _riIngredents;
+            }
             set
             {
                 _riIngredents = value;
+                this.NotifyPropertyChanged("riIngredents");
             }
         }
-
-
-
 
         private ObservableCollection<Recipe> _recipes = new ObservableCollection<Recipe>();
 
@@ -208,7 +199,6 @@ namespace BakeryPR.ModelView
                 this.NotifyPropertyChanged("recipes");
             }
         }
-
 
         public ObservableCollection<Ingredent> ingredents
         {
@@ -245,6 +235,113 @@ namespace BakeryPR.ModelView
                 this.NotifyPropertyChanged("recipe");
             }
         }
+
+        #region edit
+
+
+        public DelegateCommand<object> loadEditCommand
+        {
+            get
+            {
+                return new DelegateCommand<object>((s) =>
+                {
+                    if (s != null)
+                    {
+                        EditRecipe editrecipe = new EditRecipe();
+                        editrecipe.DataContext = this;
+                        this.recipe = (Recipe)s;
+                        this.riIngredents = new ObservableCollection<RecipeIngredents>(riDao.byRecipeId(this.recipe.id));
+                        bool? result = editrecipe.ShowDialog();
+                        this.recipes = new ObservableCollection<Recipe>(dao.all());
+                    }
+                });
+            }
+        }
+
+        public DelegateCommand<object> loadEditIngredentCommand
+        {
+            get
+            {
+                return new DelegateCommand<object>((s) =>
+                {
+                     if(s != null)
+                    {
+                        EditRecipeIngredent editRecipe = new EditRecipeIngredent();
+                        this.recipeIngredent = (RecipeIngredents)s;
+                        editRecipe.DataContext = this;
+                        editRecipe.ShowDialog();                   
+                    }
+                });
+            }
+        }
+
+        public DelegateCommand<object> updateCommand
+        {
+            get
+            {
+                return new DelegateCommand<object>((s) =>
+                {
+                    try
+                    {
+                        Recipe ig = this.recipe;
+                        ig.dateCreated = DateTime.Now;
+                        ig.lastUpdated = DateTime.Now;
+
+                        bool result = dao.update(ig);
+                        if (result)
+                        {
+                            MessageBox.Show("Saved");
+                        }
+                        else
+                        {
+                            MessageBox.Show("not saved");
+                        }
+                        List<Recipe> lst = dao.all();
+                        var t = lst.FirstOrDefault(x => x.title == ig.title);
+                        this.recipe = t != null ? t : new Recipe();
+                        this.recipes = new ObservableCollection<Recipe>(lst);
+                    }
+                    catch (Exception x)
+                    {
+                        MessageBox.Show(x.Message);
+                    }
+
+                });
+            }
+        }
+
+        public DelegateCommand<object> updateIngredntCommmand
+        {
+            get
+            {
+                return new DelegateCommand<object>((s) =>
+                {
+                    try
+                    {
+                        bool result = this.riDao.Update(this.recipeIngredent);
+                        if (result)
+                        {
+                            MessageBox.Show("saved");
+                            this.riIngredents = new ObservableCollection<RecipeIngredents>(riDao.byRecipeId(this.recipe.id));
+                        }
+                        else
+                        {
+                            MessageBox.Show("an error occur while saving your request");
+                        }
+
+                    }
+                    catch (Exception x)
+                    {
+                        MessageBox.Show(x.Message);
+                    }
+
+                });
+            }
+        }
+
+
+
+        #endregion
 
         #region property change
 

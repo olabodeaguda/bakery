@@ -130,6 +130,12 @@
     <Compile Include="Views\EditProduct.xaml.cs">
       <DependentUpon>EditProduct.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\EditRecipe.xaml.cs">
+      <DependentUpon>EditRecipe.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EditRecipeIngredent.xaml.cs">
+      <DependentUpon>EditRecipeIngredent.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ErrorView.xaml.cs">
       <DependentUpon>ErrorView.xaml</DependentUpon>
     </Compile>
@@ -181,6 +187,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\EditProduct.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EditRecipe.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EditRecipeIngredent.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -76,16 +76,11 @@ namespace BakeryPR.Models
             get { return this.ingredent.Count; }
         }
 
-        private double _totalWeight;
+        private double _totalCost;
 
-        public double totalWeight
+        public double totalCost
         {
-            get { return _totalWeight; }
-            set
-            {
-                _totalWeight = value;
-                this.NotifyPropertyChanged("totalWeight");
-            }
+            get { return this.ingredent.Sum(x => (x.quantity * x.unitCost)); }
         }
 
 

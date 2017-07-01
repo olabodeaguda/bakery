@@ -45,7 +45,7 @@ namespace BakeryPR.Models
             }
         }
 
-        private int _ingredentId;
+        private int _ingredentId = -1;
 
         public int ingredentId
         {
@@ -56,6 +56,49 @@ namespace BakeryPR.Models
                 this.NotifyPropertyChanged("ingredentId");
             }
         }
+
+        private double _unitCost;
+
+        public double unitCost
+        {
+            get { return _unitCost; }
+            set
+            {
+                _unitCost = value;
+                this.NotifyPropertyChanged("unitCost");
+            }
+        }
+
+        private string _mType;
+
+        public string mType
+        {
+            get { return _mType; }
+            set
+            {
+                _mType = value;
+                this.NotifyPropertyChanged("mType");
+            }
+        }
+
+        public string totalCost
+        {
+            get { return (this.unitCost * this.quantity).ToString() + " " + this.mType; }
+        }
+
+        private string _ingredentName;
+
+        public string ingredentName
+        {
+            get { return _ingredentName; }
+            set
+            {
+                _ingredentName = value;
+                this.NotifyPropertyChanged("ingredentName");
+            }
+        }
+
+
 
 
         #region property change
