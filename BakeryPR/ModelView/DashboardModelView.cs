@@ -12,7 +12,7 @@ using System.Windows.Input;
 
 namespace BakeryPR.ModelView
 {
-    public class DashboardModelView: INotifyPropertyChanged
+    public class DashboardModelView : INotifyPropertyChanged
     {
         public void Navigate(object obj)
         {
@@ -22,6 +22,7 @@ namespace BakeryPR.ModelView
                 ss = PageParameter.dashboard.ToString();
             }
             this.navState = NavigateUtils.getNav(ss);
+            this.isSpin = false;
             this.NotifyPropertyChanged("navState");
         }
 
@@ -38,14 +39,18 @@ namespace BakeryPR.ModelView
         public object navState
         {
             get { return _navState; }
-            set { _navState = value;
+            set
+            {
+                _navState = value;
                 this.NotifyPropertyChanged("navState");
             }
         }
 
 
-        public double winHeight {
-            get {
+        public double winHeight
+        {
+            get
+            {
                 return SystemParameters.PrimaryScreenHeight;
             }
         }
@@ -58,6 +63,14 @@ namespace BakeryPR.ModelView
             }
         }
 
+        public double winWidthHalf
+        {
+            get
+            {
+                return SystemParameters.PrimaryScreenWidth / 2;
+            }
+        }
+
         public string footerText
         {
             get
@@ -65,6 +78,19 @@ namespace BakeryPR.ModelView
                 return "Copyright © " + DateTime.Now.Year.ToString();
             }
         }
+
+        private bool _isSpin = true;
+
+        public bool isSpin
+        {
+            get { return _isSpin; }
+            set
+            {
+                _isSpin = value;
+                this.NotifyPropertyChanged("isSpin");
+            }
+        }
+
 
         #region property change
 

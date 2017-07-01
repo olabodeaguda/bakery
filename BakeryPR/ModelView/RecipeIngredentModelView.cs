@@ -124,8 +124,7 @@ namespace BakeryPR.ModelView
                 });
             }
         }
-
-
+    
         public DelegateCommand<object> addCommand
         {
             get

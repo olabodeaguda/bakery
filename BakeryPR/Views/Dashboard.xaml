@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:fa="http://schemas.fontawesome.io/icons/"
         xmlns:local="clr-namespace:BakeryPR.Views"
         mc:Ignorable="d"
         xmlns:vm="clr-namespace:BakeryPR.ModelView"
@@ -46,15 +47,18 @@
                 <MenuItem Header="Overhead" Command="{Binding navCommand}" CommandParameter="overhead"></MenuItem>
                 <MenuItem Header="Manage Recipe" Command="{Binding navCommand}" CommandParameter="recipe"></MenuItem>
             </MenuItem>
+            <MenuItem Header="Production"  Command="{Binding navCommand}" CommandParameter="production"></MenuItem>
             <MenuItem Header="Sales"  Command="{Binding navCommand}" CommandParameter="sales"></MenuItem>
             <MenuItem Header="Reports" Command="{Binding navCommand}" CommandParameter="reports"></MenuItem>
             <MenuItem Header="About" Command="{Binding navCommand}" CommandParameter="about"></MenuItem>
         </Menu>
 
         <DockPanel Grid.Row="2">
+            <!--<fa:ImageAwesome Icon="Refresh" Spin="True" Height="48" Width="48"
+                             Margin="400 0 0 0" />-->
             <ContentPresenter Content="{Binding navState}"  Width="{Binding winWidth}"></ContentPresenter>
         </DockPanel>
-
+       
         <TextBlock TextAlignment="Center" Foreground="White" TextWrapping="WrapWithOverflow" Width="{Binding winWidth}" Text="{Binding footerText}" Grid.Row="3" FontSize="16" HorizontalAlignment="Center"></TextBlock>
     </Grid>
 </Window>
