@@ -48,7 +48,7 @@
                         <GridViewColumn Width="200"  HeaderContainerStyle="{StaticResource ListViewStyle}" 
                                     Header="Ingredent"  DisplayMemberBinding="{Binding ingredentName}" />
                         <GridViewColumn Width="100" HeaderContainerStyle="{StaticResource ListViewStyle}" 
-                                    Header="Quantity" DisplayMemberBinding="{Binding quantity}" />
+                                    Header="Quantity" DisplayMemberBinding="{Binding quantityView}" />
                         <GridViewColumn Width="200" HeaderContainerStyle="{StaticResource ListViewStyle}" 
                                     Header="Cost/Unit" DisplayMemberBinding="{Binding unitCost}" />
                         <GridViewColumn Width="200" HeaderContainerStyle="{StaticResource ListViewStyle}" 

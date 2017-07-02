@@ -33,6 +33,15 @@ namespace BakeryPR.Models
             }
         }
 
+        public string quantityView
+        {
+            get
+            {
+                return this.quantity.ToString() + "" + this.mType;
+            }
+
+        }
+
         private int _recipeid;
 
         public int recipeId
@@ -83,7 +92,7 @@ namespace BakeryPR.Models
 
         public string totalCost
         {
-            get { return (this.unitCost * this.quantity).ToString() + " " + this.mType; }
+            get { return (this.unitCost * this.quantity).ToString(); }
         }
 
         private string _ingredentName;

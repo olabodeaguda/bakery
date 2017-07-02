@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -8,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace BakeryPR.Models
 {
-    public class Recipe : INotifyPropertyChanged
+    public class InventoryHistory : INotifyPropertyChanged
     {
-        private int _id = -1;
+        private int _id;
 
         public int id
         {
@@ -22,15 +21,27 @@ namespace BakeryPR.Models
             }
         }
 
-        private string _title;
+        private int _ingredentId;
 
-        public string title
+        public int ingredentId
         {
-            get { return _title; }
+            get { return _ingredentId; }
             set
             {
-                _title = value;
-                this.NotifyPropertyChanged("title");
+                _ingredentId = value;
+                this.NotifyPropertyChanged("ingredentId");
+            }
+        }
+
+        private double _amount;
+
+        public double amount
+        {
+            get { return _amount; }
+            set
+            {
+                _amount = value;
+                this.NotifyPropertyChanged("amount");
             }
         }
 
@@ -43,42 +54,44 @@ namespace BakeryPR.Models
             {
                 _dateCreated = value;
                 this.NotifyPropertyChanged("dateCreated");
-
             }
         }
 
-        private DateTime _lastUpdated;
+        private string _ingredentName;
 
-        public DateTime lastUpdated
+        public string ingredentName
         {
-            get { return _lastUpdated; }
+            get { return _ingredentName; }
             set
             {
-                _lastUpdated = value;
-                this.NotifyPropertyChanged("lastUpdated");
+                _ingredentName = value;
+                this.NotifyPropertyChanged("ingredentName");
             }
         }
 
-        private ObservableCollection<RecipeIngredents> _ingredent = new ObservableCollection<RecipeIngredents>();
 
-        public ObservableCollection<RecipeIngredents> ingredent
+        private string _addedBy;
+
+        public string addedBy
         {
-            get { return _ingredent; }
+            get { return _addedBy; }
             set
             {
-                _ingredent = value;
-                this.NotifyPropertyChanged("ingredent");
+                _addedBy = value;
+                this.NotifyPropertyChanged("addedBy");
             }
         }
 
-        public int ingredentNos
-        {
-            get { return this.ingredent.Count; }
-        }
+        private string _inventoryMode;
 
-        public double totalCost
+        public string inventoryMode
         {
-            get { return this.ingredent.Sum(x => (x.quantity * x.unitCost)); }
+            get { return _inventoryMode; }
+            set
+            {
+                _inventoryMode = value;
+                this.NotifyPropertyChanged("inventoryMode");
+            }
         }
 
 
@@ -94,7 +107,5 @@ namespace BakeryPR.Models
             }
         }
         #endregion
-
-
     }
 }

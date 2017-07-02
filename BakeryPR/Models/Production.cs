@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -8,18 +7,14 @@ using System.Threading.Tasks;
 
 namespace BakeryPR.Models
 {
-    public class Recipe : INotifyPropertyChanged
+    public class Production : INotifyPropertyChanged
     {
-        private int _id = -1;
+        private int _id;
 
         public int id
         {
             get { return _id; }
-            set
-            {
-                _id = value;
-                this.NotifyPropertyChanged("id");
-            }
+            set { _id = value; }
         }
 
         private string _title;
@@ -43,7 +38,6 @@ namespace BakeryPR.Models
             {
                 _dateCreated = value;
                 this.NotifyPropertyChanged("dateCreated");
-
             }
         }
 
@@ -59,27 +53,41 @@ namespace BakeryPR.Models
             }
         }
 
-        private ObservableCollection<RecipeIngredents> _ingredent = new ObservableCollection<RecipeIngredents>();
+        private string _createdBY;
 
-        public ObservableCollection<RecipeIngredents> ingredent
+        public string createdBY
         {
-            get { return _ingredent; }
+            get { return _createdBY; }
             set
             {
-                _ingredent = value;
-                this.NotifyPropertyChanged("ingredent");
+                _createdBY = value;
+                this.NotifyPropertyChanged("createdBY");
+            }
+        }
+        private int _productCount;
+
+        public int productCount
+        {
+            get { return _productCount; }
+            set
+            {
+                _productCount = value;
+                this.NotifyPropertyChanged("productCount");
             }
         }
 
-        public int ingredentNos
+        private int _productionCount;
+
+        public int productionCount
         {
-            get { return this.ingredent.Count; }
+            get { return _productionCount; }
+            set
+            {
+                _productionCount = value;
+                this.NotifyPropertyChanged("productionCount");
+            }
         }
 
-        public double totalCost
-        {
-            get { return this.ingredent.Sum(x => (x.quantity * x.unitCost)); }
-        }
 
 
         #region property change
@@ -94,7 +102,5 @@ namespace BakeryPR.Models
             }
         }
         #endregion
-
-
     }
 }

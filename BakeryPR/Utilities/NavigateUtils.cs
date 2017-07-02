@@ -24,7 +24,7 @@ namespace BakeryPR.Utilities
                 case "overhead":
                     return new OverheadView();
                 case "production":
-                    return new Production();
+                    return new ProductionView();
                 case "sales":
                     return new UCDashboard();
                 case "reports":

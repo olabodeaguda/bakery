@@ -10,17 +10,16 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace BakeryPR.Views
 {
     /// <summary>
-    /// Interaction logic for Production.xaml
+    /// Interaction logic for UpdateInventory.xaml
     /// </summary>
-    public partial class Production : UserControl
+    public partial class UpdateInventory : Window
     {
-        public Production()
+        public UpdateInventory()
         {
             InitializeComponent();
         }

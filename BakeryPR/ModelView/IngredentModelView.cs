@@ -34,7 +34,8 @@ namespace BakeryPR.ModelView
         {
             get
             {
-                return new DelegateCommand<object>((s)=> {
+                return new DelegateCommand<object>((s) =>
+                {
                     try
                     {
                         Ingredent sd = this.selectIngredent;
@@ -57,13 +58,14 @@ namespace BakeryPR.ModelView
         {
             get
             {
-                return new DelegateCommand<object>((s) => {
+                return new DelegateCommand<object>((s) =>
+                {
 
                     if (s != null)
                     {
                         EditIngredent editIngr = new EditIngredent();
                         this.selectIngredent = (Ingredent)s;
-                        
+
                         editIngr.DataContext = this;
                         bool? result = editIngr.ShowDialog();
                         this.Ingredents = new ObservableCollection<Ingredent>(dao.all());
@@ -72,11 +74,68 @@ namespace BakeryPR.ModelView
             }
         }
 
+        public DelegateCommand<object> loadUpdateInventoryCommand
+        {
+            get
+            {
+                return new DelegateCommand<object>((s) =>
+                {
+
+                    if (s != null)
+                    {
+                        UpdateInventory inven = new UpdateInventory();
+
+                        Ingredent sd = (Ingredent)s;
+                        this.inventoryHistory = new InventoryHistory()
+                        {
+                            ingredentId = sd.id,
+                            ingredentName = sd.ingredentName
+                        };
+
+                        inven.DataContext = this;
+                        inven.ShowDialog();
+                        this.Ingredents = new ObservableCollection<Ingredent>(dao.all());
+                    }
+                });
+            }
+        }
+
+        public DelegateCommand<object> updateQuantityCommand
+        {
+            get
+            {
+                return new DelegateCommand<object>((s) =>
+                {
+                    try
+                    {
+                        Ingredent ig = this.ingredent;
+                        this.inventoryHistory.inventoryMode = InventoryMode.ADD.ToString();
+
+                        bool result = invenHistoryDao.add(this.inventoryHistory);
+                        if (result)
+                        {
+                            MessageBox.Show("Saved");
+                        }
+                        else
+                        {
+                            MessageBox.Show("not saved");
+                        }
+                    }
+                    catch (Exception x)
+                    {
+                        MessageBox.Show(x.Message);
+                    }
+
+                });
+            }
+        }
+
         public DelegateCommand<object> addCommand
         {
             get
             {
-                return new DelegateCommand<object>((s)=> {
+                return new DelegateCommand<object>((s) =>
+                {
                     try
                     {
                         Ingredent ig = this.ingredent;
@@ -106,6 +165,14 @@ namespace BakeryPR.ModelView
             get
             {
                 return new IngredentDao();
+            }
+        }
+
+        private InventoryHistoryDao invenHistoryDao
+        {
+            get
+            {
+                return new InventoryHistoryDao();
             }
         }
 
@@ -175,6 +242,18 @@ namespace BakeryPR.ModelView
                 lst.Add(new MeasurementType() { id = -1, name = "none" });
                 lst.AddRange(mDao.all());
                 return new ObservableCollection<MeasurementType>(lst);
+            }
+        }
+
+        private InventoryHistory _inventoryHistory;
+
+        public InventoryHistory inventoryHistory
+        {
+            get { return _inventoryHistory; }
+            set
+            {
+                _inventoryHistory = value;
+                this.NotifyPropertyChanged("inventoryHistory");
             }
         }
 

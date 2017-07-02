@@ -28,7 +28,7 @@ namespace BakeryPR.DAO
                     id = int.Parse(x["id"].ToString()),
                     ingredentName = x["ingredentName"].ToString(),
                     mTypeId = int.Parse(x["mTypeId"].ToString()),
-                    quantity = double.Parse(x["quantity"].ToString()),
+                    quantity = double.Parse(x["quantity"].ToString()),//dao.ingredentQuantity(int.Parse(x["id"].ToString())),
                     unitCost = double.Parse(x["unitCost"].ToString()),
                     measureTypeName = x["measureTypeName"].ToString()
                 }).ToList();
@@ -55,7 +55,7 @@ namespace BakeryPR.DAO
                     id = int.Parse(x["id"].ToString()),
                     ingredentName = x["ingredentName"].ToString(),
                     mTypeId = int.Parse(x["mTypeId"].ToString()),
-                    quantity = double.Parse(x["quantity"].ToString()),
+                    quantity = double.Parse(x["quantity"].ToString()),//dao.ingredentQuantity(int.Parse(x["id"].ToString())),
                     unitCost = double.Parse(x["unitCost"].ToString()),
                     measureTypeName = x["measureTypeName"].ToString()
                 }).ToList();
@@ -109,7 +109,25 @@ namespace BakeryPR.DAO
             return false;
         }
 
+        public bool updateIngredent(int ingredntId,double quantity)
+        {
+            using (SQLiteConnection conn = new SQLiteConnection(connectionString))
+            {
+                conn.Open();
+                SQLiteCommand cmd = new SQLiteCommand(conn);
+                cmd.CommandText = "update ingredent set quantity = @quantity where id = @id";
+                cmd.Parameters.AddWithValue("@quantity", quantity);
+                cmd.Parameters.AddWithValue("@id", ingredntId);
+                cmd.CommandType = CommandType.Text;
+                int count = cmd.ExecuteNonQuery();
+                if (count > 0)
+                {
+                    return true;
+                }
+            }
 
+            return false;
+        }
 
         public bool delete(int id)
         {

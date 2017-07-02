@@ -81,20 +81,28 @@
     </ApplicationDefinition>
     <Compile Include="DAO\AbstractDao.cs" />
     <Compile Include="DAO\IngredentDao.cs" />
+    <Compile Include="DAO\InventoryHistoryDao.cs" />
     <Compile Include="DAO\MeasureTypeDao.cs" />
     <Compile Include="DAO\OverheadDao.cs" />
     <Compile Include="DAO\ProductDao.cs" />
+    <Compile Include="DAO\ProductionDao.cs" />
     <Compile Include="DAO\RecipeDao.cs" />
     <Compile Include="DAO\RecipeIngredentDao.cs" />
     <Compile Include="Models\Ingredent.cs" />
+    <Compile Include="Models\InventoryHistory.cs" />
+    <Compile Include="Models\InventoryMode.cs" />
     <Compile Include="Models\MeasurementType.cs" />
     <Compile Include="Models\Overhead.cs" />
     <Compile Include="Models\Product.cs" />
+    <Compile Include="Models\Production.cs" />
+    <Compile Include="Models\ProductionOverhead.cs" />
+    <Compile Include="Models\ProductionProduct.cs" />
     <Compile Include="Models\Recipe.cs" />
     <Compile Include="Models\RecipeIngredents.cs" />
     <Compile Include="ModelView\DashboardModelView.cs" />
     <Compile Include="ModelView\IngredentModelView.cs" />
     <Compile Include="ModelView\OverheadModelView.cs" />
+    <Compile Include="ModelView\ProductionViewModel.cs" />
     <Compile Include="ModelView\ProductViewModel.cs" />
     <Compile Include="ModelView\RecipeIngredentModelView.cs" />
     <Compile Include="ModelView\UCDashboardModelView.cs" />
@@ -110,6 +118,12 @@
     </Compile>
     <Compile Include="Views\AddProduct.xaml.cs">
       <DependentUpon>AddProduct.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AddProduction.xaml.cs">
+      <DependentUpon>AddProduction.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AddProductionOverhead.xaml.cs">
+      <DependentUpon>AddProductionOverhead.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\AddRecipe.xaml.cs">
       <DependentUpon>AddRecipe.xaml</DependentUpon>
@@ -148,8 +162,8 @@
     <Compile Include="Views\OverheadView.xaml.cs">
       <DependentUpon>OverheadView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Production.xaml.cs">
-      <DependentUpon>Production.xaml</DependentUpon>
+    <Compile Include="Views\ProductionView.xaml.cs">
+      <DependentUpon>ProductionView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ProductView.xaml.cs">
       <DependentUpon>ProductView.xaml</DependentUpon>
@@ -160,6 +174,9 @@
     <Compile Include="Views\UCDashboard.xaml.cs">
       <DependentUpon>UCDashboard.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\UpdateInventory.xaml.cs">
+      <DependentUpon>UpdateInventory.xaml</DependentUpon>
+    </Compile>
     <Page Include="Views\AddIngredent.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -169,6 +186,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\AddProduct.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AddProduction.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AddProductionOverhead.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -216,7 +241,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Production.xaml">
+    <Page Include="Views\ProductionView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -229,6 +254,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\UCDashboard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UpdateInventory.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
