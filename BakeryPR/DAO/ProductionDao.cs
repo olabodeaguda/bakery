@@ -20,7 +20,7 @@ namespace BakeryPR.DAO
                 conn.Open();
                 DataSet dt = new DataSet();
                 SQLiteCommand cmd = new SQLiteCommand(conn);
-                cmd.CommandText = "select * from production order by title desc";
+                cmd.CommandText = "select production.*,recipe.title as recipeTitle from production inner join recipe on recipe.id=production.recipeId order by production.title desc";
                 cmd.CommandType = CommandType.Text;
                 this.SQLiteAdaptor(dt, cmd);
 
@@ -29,6 +29,7 @@ namespace BakeryPR.DAO
                     id = int.Parse(x["id"].ToString()),
                     createdBY = x["createdBy"].ToString(),
                     title = x["title"].ToString(),
+                    recipeTitle = x["recipeTitle"].ToString(),
                     dateCreated = DateTime.Parse(x["dateCreated"].ToString(), new CultureInfo("en-US", true)),
                     lastUpdated = DateTime.Parse(x["lastUpdated"].ToString(), new CultureInfo("en-US", true))
                 }).ToList();
@@ -43,10 +44,11 @@ namespace BakeryPR.DAO
             {
                 conn.Open();
                 SQLiteCommand cmd = new SQLiteCommand(conn);
-                cmd.CommandText = "insert into production(title,dateCreated,lastUpdated,createdBy) " +
-                    "values(@title,@dateCreated,@lastUpdated,@createdBy)";
+                cmd.CommandText = "insert into production(title,dateCreated,lastUpdated,createdBy,recipeId) " +
+                    "values(@title,@dateCreated,@lastUpdated,@createdBy,@recipeId)";
                 cmd.Parameters.AddWithValue("@title", values.title);
                 cmd.Parameters.AddWithValue("@createdBy", values.createdBY);
+                cmd.Parameters.AddWithValue("@recipeId", values.recipeId);
                 cmd.Parameters.AddWithValue("@dateCreated", DateTime.Now.ToString("yyyy-MM-dd"));
                 cmd.Parameters.AddWithValue("@lastUpdated", DateTime.Now.ToString("yyyy-MM-dd"));
                 cmd.CommandType = CommandType.Text;
@@ -66,10 +68,10 @@ namespace BakeryPR.DAO
             {
                 conn.Open();
                 SQLiteCommand cmd = new SQLiteCommand(conn);
-                cmd.CommandText = "update production set title=@title,lastUpdated=@lastUpdated,createdBy@createdBy where id=@id";
+                cmd.CommandText = "update production set recipeId = @recipeId,title=@title,lastUpdated=@lastUpdated,createdBy@createdBy where id=@id";
                 cmd.Parameters.AddWithValue("@title", values.title);
                 cmd.Parameters.AddWithValue("@createdBy", values.createdBY);
-                cmd.Parameters.AddWithValue("@id", values.id);
+                cmd.Parameters.AddWithValue("@recipeId", values.recipeId);
                 cmd.Parameters.AddWithValue("@lastUpdated", values.dateCreated.ToString("yyyy-MM-dd"));
                 cmd.CommandType = CommandType.Text;
                 int count = cmd.ExecuteNonQuery();
@@ -81,7 +83,6 @@ namespace BakeryPR.DAO
 
             return false;
         }
-
-
+        
     }
 }

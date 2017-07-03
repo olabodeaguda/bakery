@@ -88,6 +88,31 @@ namespace BakeryPR.Models
             }
         }
 
+        private string _recipeTitle;
+
+        public string recipeTitle
+        {
+            get { return _recipeTitle; }
+            set
+            {
+                _recipeTitle = value;
+                this.NotifyPropertyChanged("recipeTitle");
+            }
+        }
+
+
+
+        private int _recipeId = -1;
+
+        public int recipeId
+        {
+            get { return _recipeId; }
+            set
+            {
+                _recipeId = value;
+                this.NotifyPropertyChanged("recipeId");
+            }
+        }
 
 
         #region property change

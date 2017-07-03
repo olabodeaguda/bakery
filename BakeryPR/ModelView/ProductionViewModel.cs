@@ -24,7 +24,6 @@ namespace BakeryPR.ModelView
                     AddProduction prod = new AddProduction();
                     prod.DataContext = this;
                     prod.ShowDialog();
-                   // this.productions = new ObservableCollection<Production>();
                 });
             }
         }
@@ -37,12 +36,21 @@ namespace BakeryPR.ModelView
                 {
                     try
                     {
-                        bool sd = dao.add(this.production);
-                        if (sd)
+                        Error checkResource = rdao.checkRecipeQuantity(this.production.recipeId);
+
+                        if (checkResource.success)
                         {
-                            MessageBox.Show("Production have been added successfully");
-                            this.production = new Production();
-                            this.productions = new ObservableCollection<Production>(dao.all());
+                            bool sd = dao.add(this.production);
+                            if (sd)
+                            {
+                                MessageBox.Show("Production have been added successfully");
+                                this.production = new Production();
+                                this.productions = new ObservableCollection<Production>(dao.all());
+                            } 
+                        }
+                        else
+                        {
+                            MessageBox.Show(checkResource.errorMsg);
                         }
                     }
                     catch (Exception x)
@@ -62,6 +70,34 @@ namespace BakeryPR.ModelView
                 return new ProductionDao();
             }
         }
+
+        public RecipeDao rdao
+        {
+            get
+            {
+                return new RecipeDao();
+            }
+        }
+
+        private ObservableCollection<Recipe> _recipes = new ObservableCollection<Recipe>();
+
+        public ObservableCollection<Recipe> recipes
+        {
+            get
+            {
+                List<Recipe> lst = new List<Recipe>() { new Recipe() { id = -1, title = "none" } };
+                lst.AddRange(this.rdao.all());
+                _recipes = new ObservableCollection<Recipe>(lst);
+                return _recipes;
+            }
+            set
+            {
+                _recipes = value;
+                this.NotifyPropertyChanged("recipes");
+            }
+        }
+
+
         private Production _production = new Production();
 
         public Production production

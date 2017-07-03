@@ -88,6 +88,7 @@
     <Compile Include="DAO\ProductionDao.cs" />
     <Compile Include="DAO\RecipeDao.cs" />
     <Compile Include="DAO\RecipeIngredentDao.cs" />
+    <Compile Include="Models\Error.cs" />
     <Compile Include="Models\Ingredent.cs" />
     <Compile Include="Models\InventoryHistory.cs" />
     <Compile Include="Models\InventoryMode.cs" />

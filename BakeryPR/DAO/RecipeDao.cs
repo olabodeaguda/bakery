@@ -13,6 +13,7 @@ namespace BakeryPR.DAO
 {
     public class RecipeDao : AbstractDao
     {
+        IngredentDao ingreDao = new IngredentDao();
         RecipeIngredentDao riDao = new RecipeIngredentDao();
         public List<Recipe> all()
         {
@@ -22,7 +23,7 @@ namespace BakeryPR.DAO
                 conn.Open();
                 DataSet dt = new DataSet();
                 SQLiteCommand cmd = new SQLiteCommand(conn);
-                cmd.CommandText = "select * from recipe";
+                cmd.CommandText = "select * from recipe order by title";
                 cmd.CommandType = CommandType.Text;
                 this.SQLiteAdaptor(dt, cmd);
 
@@ -75,7 +76,6 @@ namespace BakeryPR.DAO
             return results;
         }
 
-
         public bool add(Recipe values)
         {
             using (SQLiteConnection conn = new SQLiteConnection(connectionString))
@@ -119,5 +119,26 @@ namespace BakeryPR.DAO
             return false;
         }
 
+        public Error checkRecipeQuantity(int recipeId)
+        {
+            Error error = new Error() { success = true, errorMsg="" };
+            List<Ingredent> lst = ingreDao.all();
+            List<RecipeIngredents> lstrecipeIngredent = riDao.byRecipeId(recipeId);
+            foreach (var tm in lstrecipeIngredent)
+            {
+                var r = lst.FirstOrDefault(x => x.id == tm.ingredentId);
+                if (r != null)
+                {
+                    if (tm.quantity > r.quantity)
+                    {
+                        //no enough material for
+                        error = new Error() { success=false ,errorMsg= r.ingredentName + " is aout of stock for the selected recipe" };
+                        break;
+                    }
+                }
+            }
+            return error;
+
+        }
     }
 }
