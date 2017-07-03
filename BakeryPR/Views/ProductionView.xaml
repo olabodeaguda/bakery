@@ -26,7 +26,7 @@
                         <GridViewColumn.CellTemplate >
                             <DataTemplate>
                                 <Button Content="Overheads"  CommandParameter="{Binding}"
-                                        Command="{Binding Path=DataContext.loadEditCommand, 
+                                        Command="{Binding Path=DataContext.loadOverheadCommand, 
                                     RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
 
                             </DataTemplate>

@@ -17,7 +17,7 @@ namespace BakeryPR.Models
             set { _id = value; }
         }
 
-        private int _overheadId;
+        private int _overheadId = -1;
 
         public int overheadId
         {
@@ -32,6 +32,19 @@ namespace BakeryPR.Models
             get { return _productionId; }
             set { _productionId = value; }
         }
+
+        private int _overheadCount;
+
+        public int overheadCount
+        {
+            get { return _overheadCount; }
+            set
+            {
+                _overheadCount = value;
+                this.NotifyPropertyChanged("overheadCount");
+            }
+        }
+
 
 
         #region property change

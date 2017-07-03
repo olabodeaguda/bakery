@@ -46,7 +46,7 @@ namespace BakeryPR.ModelView
                                 MessageBox.Show("Production have been added successfully");
                                 this.production = new Production();
                                 this.productions = new ObservableCollection<Production>(dao.all());
-                            } 
+                            }
                         }
                         else
                         {
@@ -126,6 +126,120 @@ namespace BakeryPR.ModelView
                 this.NotifyPropertyChanged("productions");
             }
         }
+
+        private Visibility _isSpin = Visibility.Collapsed;
+
+        public Visibility isSpin
+        {
+            get { return _isSpin; }
+            set
+            {
+                _isSpin = value;
+
+                this.NotifyPropertyChanged("isSpin");
+            }
+        }
+
+
+        #region Overheads
+
+        public DelegateCommand<object> loadOverheadCommand
+        {
+            get
+            {
+                return new DelegateCommand<object>((s) =>
+                {
+                    this.production = (Production)s;
+                    this.prodOverhead.productionId = this.production.id;
+                    AddProductionOverhead prodoverhead = new AddProductionOverhead();
+                    prodoverhead.ShowDialog();
+                });
+            }
+        }
+
+        public DelegateCommand<object> addOverheadCommand
+        {
+            get
+            {
+                return new DelegateCommand<object>( async (s) =>
+                 {
+                     this.isSpin = Visibility.Visible;
+                     await Task.Run(() => {
+                         try
+                         {
+                             if (this.prodOverhead.overheadId < 1)
+                             {
+                                 MessageBox.Show("Please select Overhead");
+
+                                 this.isSpin = Visibility.Collapsed;
+                                 return;
+                             }
+
+                             else if (this.prodOverhead.overheadCount < 1)
+                             {
+                                 this.prodOverhead.overheadCount = 1;
+                             }
+
+                             this.prodOverhead.productionId = this.production.id;
+
+                             bool d = prodDao.add(this.prodOverhead);
+                             if (d)
+                             {
+                                 MessageBox.Show("Saved");
+                             }
+                         }
+                         catch (Exception x)
+                         {
+                             MessageBox.Show(x.Message);
+                         }
+                     });
+
+
+                     this.isSpin = Visibility.Collapsed;
+                 });
+            }
+        }
+
+        public ProductionOverheadDao prodDao
+        {
+            get
+            {
+                return new ProductionOverheadDao();
+            }
+        }
+
+        private ProductionOverhead _prodOverhead = new ProductionOverhead();
+
+        public ProductionOverhead prodOverhead
+        {
+            get { return _prodOverhead; }
+            set
+            {
+                _prodOverhead = value;
+                this.NotifyPropertyChanged("prodOverhead");
+            }
+        }
+
+
+        public OverheadDao overheadDao
+        {
+            get
+            {
+                return new OverheadDao();
+            }
+        }
+
+        public ObservableCollection<Overhead> overheads
+        {
+            get
+            {
+                List<Overhead> lst = new List<Overhead>() { new Overhead() { id = -1, name = "none" } };
+                lst.AddRange(overheadDao.all());
+                return new ObservableCollection<Overhead>(lst);
+            }
+        }
+
+        #endregion
 
 
         #region property change
