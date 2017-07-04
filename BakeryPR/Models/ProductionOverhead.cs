@@ -45,7 +45,52 @@ namespace BakeryPR.Models
             }
         }
 
+        private string _overheadName;
 
+        public string overheadName
+        {
+            get { return _overheadName; }
+            set
+            {
+                _overheadName = value;
+                this.NotifyPropertyChanged("overheadName");
+            }
+        }
+
+        private string _mType;
+
+        public string mType
+        {
+            get { return _mType; }
+            set
+            {
+                _mType = value;
+                this.NotifyPropertyChanged("mType");
+            }
+        }
+
+        private double _unitCost;
+
+        public double unitCost
+        {
+            get { return _unitCost; }
+            set
+            {
+                _unitCost = value;
+                this.NotifyPropertyChanged("unitCost");
+            }
+        }
+
+        private string _totalCost;
+
+        public string totalCost
+        {
+            get
+            {
+                double tc = overheadCount * unitCost;
+                return $"{(tc)} {this.mType}";
+            }
+        }
 
         #region property change
 

@@ -22,6 +22,7 @@ namespace BakeryPR.ModelView
                 return new DelegateCommand<object>((s) =>
                 {
                     AddProduction prod = new AddProduction();
+                    production = new Production();
                     prod.DataContext = this;
                     prod.ShowDialog();
                 });
@@ -161,42 +162,45 @@ namespace BakeryPR.ModelView
         {
             get
             {
-                return new DelegateCommand<object>( async (s) =>
-                 {
-                     this.isSpin = Visibility.Visible;
-                     await Task.Run(() => {
-                         try
-                         {
-                             if (this.prodOverhead.overheadId < 1)
-                             {
-                                 MessageBox.Show("Please select Overhead");
+                return new DelegateCommand<object>(async (s) =>
+                {
+                    this.isSpin = Visibility.Visible;
+                    await Task.Run(() =>
+                    {
+                        try
+                        {
+                            if (this.prodOverhead.overheadId < 1)
+                            {
+                                MessageBox.Show("Please select Overhead");
 
-                                 this.isSpin = Visibility.Collapsed;
-                                 return;
-                             }
+                                this.isSpin = Visibility.Collapsed;
+                                return;
+                            }
 
-                             else if (this.prodOverhead.overheadCount < 1)
-                             {
-                                 this.prodOverhead.overheadCount = 1;
-                             }
+                            else if (this.prodOverhead.overheadCount < 1)
+                            {
+                                this.prodOverhead.overheadCount = 1;
+                            }
 
-                             this.prodOverhead.productionId = this.production.id;
+                            this.prodOverhead.productionId = this.production.id;
 
-                             bool d = prodDao.add(this.prodOverhead);
-                             if (d)
-                             {
-                                 MessageBox.Show("Saved");
-                             }
-                         }
-                         catch (Exception x)
-                         {
-                             MessageBox.Show(x.Message);
-                         }
-                     });
+                            bool d = prodDao.add(this.prodOverhead);
+                            if (d)
+                            {                                
+                                MessageBox.Show("Saved");                                
+                                //this.production.
+                            }
+                        }
+                        catch (Exception x)
+                        {
+                            MessageBox.Show(x.Message);
+                        }
+                    });
 
-
-                     this.isSpin = Visibility.Collapsed;
-                 });
+                    this.prodOverheads = new ObservableCollection<ProductionOverhead>(prodDao.byproductionId(this.production.id));
+                    
+                    this.isSpin = Visibility.Collapsed;
+                });
             }
         }
 
@@ -238,6 +242,19 @@ namespace BakeryPR.ModelView
                 return new ObservableCollection<Overhead>(lst);
             }
         }
+
+        private ObservableCollection<ProductionOverhead> _prodOverheads = new ObservableCollection<ProductionOverhead>();
+
+        public ObservableCollection<ProductionOverhead> prodOverheads
+        {
+            get { return new ObservableCollection<ProductionOverhead>(prodDao.byproductionId(this.production.id)); }
+            set
+            {
+                _prodOverheads = value;
+                this.NotifyPropertyChanged("prodOverheads");
+            }
+        }
+
 
         #endregion
 

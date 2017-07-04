@@ -41,7 +41,7 @@
                 <Button Width="50"  HorizontalAlignment="Left" Command="{Binding addOverheadCommand}" Margin="0,12">Add</Button>
                 <fa:ImageAwesome Icon="Refresh" Spin="True" Visibility="{Binding isSpin,Mode=TwoWay}" Height="20" Width="30" />
             </StackPanel>
-            
+
         </Grid>
 
         <Grid Grid.Row="2">
@@ -49,8 +49,8 @@
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
 
-            <ListView x:Name="IngredentLst"  Width="{Binding winWidth}" 
-                  ItemsSource="{Binding riIngredents}" IsSynchronizedWithCurrentItem="True" >
+            <ListView x:Name="IngredentLst" 
+                  ItemsSource="{Binding prodOverheads,Mode=TwoWay}" IsSynchronizedWithCurrentItem="True" >
                 <ListView.View>
                     <GridView>
                         <GridViewColumn  x:Name="gridV">
@@ -64,11 +64,11 @@
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
                         <GridViewColumn Width="200"  HeaderContainerStyle="{StaticResource ListViewStyle}" 
-                                    Header="Overhead Name"  DisplayMemberBinding="{Binding ingredentName}" />
+                                    Header="Overhead Name"  DisplayMemberBinding="{Binding overheadName}" />
                         <GridViewColumn Width="100" HeaderContainerStyle="{StaticResource ListViewStyle}" 
-                                    Header="Count" DisplayMemberBinding="{Binding quantityView}" />
+                                    Header="Count" DisplayMemberBinding="{Binding overheadCount}" />
                         <GridViewColumn Width="200" HeaderContainerStyle="{StaticResource ListViewStyle}" 
-                                    Header="Amount" DisplayMemberBinding="{Binding unitCost}" />
+                                    Header="Amount" DisplayMemberBinding="{Binding totalCost}" />
                     </GridView>
                 </ListView.View>
             </ListView>
