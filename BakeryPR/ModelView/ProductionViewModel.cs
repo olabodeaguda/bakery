@@ -15,6 +15,53 @@ namespace BakeryPR.ModelView
 {
     public class ProductionViewModel : INotifyPropertyChanged
     {
+        public DelegateCommand<object> loadEditProductionCommand
+        {
+            get
+            {
+                return new DelegateCommand<object>((s) =>
+                {
+                    EditProduction prod = new EditProduction();
+                    this.production = (Production)s;
+                    prod.DataContext = this;
+                    prod.ShowDialog();
+                });
+            }
+        }
+
+        public DelegateCommand<object> EditProductionCommand
+        {
+            get
+            {
+                return new DelegateCommand<object>((s) =>
+                {
+                    try
+                    {
+                        Error checkResource = rdao.checkRecipeQuantity(this.production.recipeId);
+
+                        if (checkResource.success)
+                        {
+                            bool sd = dao.update(this.production);
+                            if (sd)
+                            {
+                                MessageBox.Show("Production have been updated successfully");
+                                this.production = new Production();
+                                this.productions = new ObservableCollection<Production>(dao.all());
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show(checkResource.errorMsg);
+                        }
+                    }
+                    catch (Exception x)
+                    {
+                        MessageBox.Show(x.Message);
+                    }
+                });
+            }
+        }
+
         public DelegateCommand<object> loadCommand
         {
             get
@@ -144,6 +191,50 @@ namespace BakeryPR.ModelView
 
         #region Overheads
 
+        public DelegateCommand<object> loadupdateProdOverhead
+        {
+            get
+            {
+                return new DelegateCommand<object>((s) =>
+                {
+                    this.prodOverhead = (ProductionOverhead)s;
+                    EditProductionOverhead editPoverhead = new EditProductionOverhead();
+                    editPoverhead.DataContext = this;
+                    editPoverhead.ShowDialog();
+                });
+            }
+        }
+
+        public DelegateCommand<object> updateProdOverhead
+        {
+            get
+            {
+                return new DelegateCommand<object>(async (s) =>
+                {
+                    this.isSpin = Visibility.Visible;
+                    await Task.Run(() =>
+                    {
+                        try
+                        {
+                            bool d = prodDao.update(this.prodOverhead);
+                            if (d)
+                            {
+                                MessageBox.Show("Saved");
+                                this.prodOverheads = new ObservableCollection<ProductionOverhead>(prodDao.byproductionId(this.prodOverhead.productionId));
+                            }
+                        }
+                        catch (Exception x)
+                        {
+                            MessageBox.Show(x.Message);
+                        }
+                    });
+                    this.isSpin = Visibility.Collapsed;
+                });
+            }
+        }
+
+
+
         public DelegateCommand<object> loadOverheadCommand
         {
             get
@@ -186,8 +277,8 @@ namespace BakeryPR.ModelView
 
                             bool d = prodDao.add(this.prodOverhead);
                             if (d)
-                            {                                
-                                MessageBox.Show("Saved");                                
+                            {
+                                MessageBox.Show("Saved");
                                 //this.production.
                             }
                         }
@@ -198,7 +289,7 @@ namespace BakeryPR.ModelView
                     });
 
                     this.prodOverheads = new ObservableCollection<ProductionOverhead>(prodDao.byproductionId(this.production.id));
-                    
+
                     this.isSpin = Visibility.Collapsed;
                 });
             }

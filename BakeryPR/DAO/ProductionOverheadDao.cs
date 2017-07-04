@@ -33,6 +33,28 @@ namespace BakeryPR.DAO
             return false;
         }
 
+        public bool update(ProductionOverhead values)
+        {
+            using (SQLiteConnection conn = new SQLiteConnection(connectionString))
+            {
+                conn.Open();
+                SQLiteCommand cmd = new SQLiteCommand(conn);
+                cmd.CommandText = "update productionOverhead set overheadId=@overheadId,productionId=@productionId,OverheadCount=@OverheadCount where id = @id";
+                cmd.Parameters.AddWithValue("@overheadId", values.overheadId);
+                cmd.Parameters.AddWithValue("@productionId", values.productionId);
+                cmd.Parameters.AddWithValue("@OverheadCount", values.overheadCount);
+                cmd.Parameters.AddWithValue("@id", values.id);
+                cmd.CommandType = CommandType.Text;
+                int count = cmd.ExecuteNonQuery();
+                if (count > 0)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         public List<ProductionOverhead> byproductionId(int prodId)
         {
             List<ProductionOverhead> lst = new List<ProductionOverhead>();

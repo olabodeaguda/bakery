@@ -17,6 +17,7 @@
             <RowDefinition Height="100"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
+        <TextBlock Style="{StaticResource headings}" >Add Overhead</TextBlock>
 
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>
@@ -24,9 +25,9 @@
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="101*"></ColumnDefinition>
-                <ColumnDefinition Width="216*"></ColumnDefinition>
-                <ColumnDefinition Width="377*"></ColumnDefinition>
+                <ColumnDefinition Width="130"></ColumnDefinition>
+                <ColumnDefinition Width="210"></ColumnDefinition>
+                <ColumnDefinition Width="377"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <TextBlock Padding="6" Margin="5" Height="30">Select Overhead</TextBlock>
             <TextBlock Padding="6" Margin="5" Height="30" Grid.Row="1" >Count</TextBlock>
@@ -38,7 +39,7 @@
             <TextBox Grid.Row="1" Grid.Column="1" Height="30" Text="{Binding prodOverhead.overheadCount,Mode=TwoWay}"></TextBox>
 
             <StackPanel Grid.Column="2" Orientation="Horizontal">
-                <Button Width="50"  HorizontalAlignment="Left" Command="{Binding addOverheadCommand}" Margin="0,12">Add</Button>
+                <Button Width="50"  HorizontalAlignment="Left" Command="{Binding addOverheadCommand}" Margin="12">Add</Button>
                 <fa:ImageAwesome Icon="Refresh" Spin="True" Visibility="{Binding isSpin,Mode=TwoWay}" Height="20" Width="30" />
             </StackPanel>
 
@@ -57,7 +58,7 @@
                             <GridViewColumn.CellTemplate >
                                 <DataTemplate>
                                     <Button Content="Edit"  CommandParameter="{Binding}"
-                                        Command="{Binding Path=DataContext.loadEditCommand, 
+                                        Command="{Binding Path=DataContext.loadupdateProdOverhead, 
                                     RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
 
                                 </DataTemplate>
