@@ -57,6 +57,42 @@ namespace BakeryPR.Models
             }
         }
 
+        private string _productName;
+
+        public string productName
+        {
+            get { return _productName; }
+            set
+            {
+                _productName = value;
+                this.NotifyPropertyChanged("productName");
+            }
+        }
+
+        private string _measureTypeName;
+
+        public string measureTypeName
+        {
+            get { return _measureTypeName; }
+            set
+            {
+                _measureTypeName = value;
+                this.NotifyPropertyChanged("measureTypeName");
+            }
+        }
+
+        private double _weight;
+
+        public double weight
+        {
+            get { return _weight; }
+            set
+            {
+                _weight = value;
+                this.NotifyPropertyChanged("weight");
+            }
+        }
+
 
         #region property change
 

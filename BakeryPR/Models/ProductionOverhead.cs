@@ -92,6 +92,8 @@ namespace BakeryPR.Models
             }
         }
 
+        
+
         #region property change
 
         public event PropertyChangedEventHandler PropertyChanged;

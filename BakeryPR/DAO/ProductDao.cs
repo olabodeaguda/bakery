@@ -19,7 +19,7 @@ namespace BakeryPR.DAO
                 conn.Open();
                 DataSet dt = new DataSet();
                 SQLiteCommand cmd = new SQLiteCommand(conn);
-                cmd.CommandText = "select product.*,measurementType.measureTypeName from product inner join measurementType on product.mTypeId = measurementType.id";
+                cmd.CommandText = "select product.*,measurementType.measureTypeName from product inner join measurementType on product.mTypeId = measurementType.id order by product.descripton";
                 cmd.CommandType = CommandType.Text;
                 this.SQLiteAdaptor(dt, cmd);
 

@@ -355,6 +355,69 @@ namespace BakeryPR.ModelView
         #endregion
 
 
+        #region product
+
+        public DelegateCommand<object> loadProductCommand
+        {
+            get
+            {
+                return new DelegateCommand<object>((s) =>
+                {
+                    AddProductionProduct prod = new AddProductionProduct();
+                    productionProduct = new ProductionProduct();
+                    prod.DataContext = this;
+                    prod.ShowDialog();
+                });
+            }
+        }
+
+        private ProductionProduct _productionProduct = new ProductionProduct();
+
+        public ProductionProduct productionProduct
+        {
+            get { return _productionProduct; }
+            set
+            {
+                _productionProduct = value;
+                this.NotifyPropertyChanged("productionProduct");
+            }
+        }
+
+
+        public ProductDao productDao
+        {
+            get
+            {
+                return new ProductDao();
+            }
+        }
+
+        private ObservableCollection<Product> _products = new ObservableCollection<Product>();
+
+        public ObservableCollection<Product> products
+        {
+            get { return new ObservableCollection<Product>(productDao.all()); }
+            set
+            {
+                _products = value;
+                this.NotifyPropertyChanged("products");
+            }
+        }
+
+        private ObservableCollection<ProductionProduct> _productionproducts = new ObservableCollection<ProductionProduct>();
+
+        public ObservableCollection<ProductionProduct> productionProducts
+        {
+            get { return _productionproducts; }
+            set
+            {
+                _productionproducts = value;
+                this.NotifyPropertyChanged("productionProducts");
+            }
+        }
+
+        #endregion
+
         #region property change
 
         public double winHeight

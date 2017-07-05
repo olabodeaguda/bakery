@@ -1,4 +1,4 @@
-﻿<Window x:Class="BakeryPR.Views.AddProductionOverhead"
+﻿<Window x:Class="BakeryPR.Views.AddProductionProduct"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -7,7 +7,7 @@
         xmlns:vm="clr-namespace:BakeryPR.ModelView"
         xmlns:fa="http://schemas.fontawesome.io/icons/"
         mc:Ignorable="d"
-        Title="Add Production Overhead" Height="400" Width="700"  WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+        Title="AddProductionProduct"  Height="400" Width="700"  WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Window.DataContext>
         <vm:ProductionViewModel></vm:ProductionViewModel>
     </Window.DataContext>
@@ -17,7 +17,7 @@
             <RowDefinition Height="100"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
-        <TextBlock Style="{StaticResource headings}" >Add Overhead</TextBlock>
+        <TextBlock Style="{StaticResource headings}" >Add Product</TextBlock>
 
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>
@@ -29,14 +29,14 @@
                 <ColumnDefinition Width="210"></ColumnDefinition>
                 <ColumnDefinition Width="377"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <TextBlock Padding="6" Margin="5" Height="30">Select Overhead</TextBlock>
+            <TextBlock Padding="6" Margin="5" Height="30">Select Product</TextBlock>
             <TextBlock Padding="6" Margin="5" Height="30" Grid.Row="1" >Count</TextBlock>
 
             <ComboBox HorizontalAlignment="Left" Width="200" 
-                      SelectedValue="{Binding prodOverhead.overheadId,Mode=TwoWay}"  
-                       Grid.Column="1" ItemsSource="{Binding overheads}" 
-                  DisplayMemberPath="name" SelectedValuePath="id" Margin="5,5,0,5" Height="30"></ComboBox>
-            <TextBox Grid.Row="1" Grid.Column="1" Height="30" Text="{Binding prodOverhead.overheadCount,Mode=TwoWay}"></TextBox>
+                      SelectedValue="{Binding productionProduct.productId,Mode=TwoWay}"  
+                       Grid.Column="1" ItemsSource="{Binding products}" 
+                  DisplayMemberPath="descripton" SelectedValuePath="id" Margin="5,5,0,5" Height="30"></ComboBox>
+            <TextBox Grid.Row="1" Grid.Column="1" Height="30" Text="{Binding productionProduct.quantity,Mode=TwoWay}"></TextBox>
 
             <StackPanel Grid.Column="2" Orientation="Horizontal">
                 <Button Width="50"  HorizontalAlignment="Left" Command="{Binding addOverheadCommand}" Margin="12">Add</Button>
@@ -65,7 +65,7 @@
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
                         <GridViewColumn Width="200"  HeaderContainerStyle="{StaticResource ListViewStyle}" 
-                                    Header="Overhead Name"  DisplayMemberBinding="{Binding overheadName}" />
+                                    Header="Product"  DisplayMemberBinding="{Binding overheadName}" />
                         <GridViewColumn Width="100" HeaderContainerStyle="{StaticResource ListViewStyle}" 
                                     Header="Count" DisplayMemberBinding="{Binding overheadCount}" />
                         <GridViewColumn Width="200" HeaderContainerStyle="{StaticResource ListViewStyle}" 
