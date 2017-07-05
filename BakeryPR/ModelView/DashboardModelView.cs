@@ -21,10 +21,25 @@ namespace BakeryPR.ModelView
             {
                 ss = PageParameter.dashboard.ToString();
             }
-            this.navState = NavigateUtils.getNav(ss);
+            string tt = "";
+            this.navState = NavigateUtils.getNav(ss,out tt);
+            this.title = tt;
             this.isSpin = false;
             this.NotifyPropertyChanged("navState");
         }
+
+        private string _title = "";
+
+        public string title
+        {
+            get { return _title; }
+            set
+            {
+                _title = value;
+                this.NotifyPropertyChanged("title");
+            }
+        }
+
 
         public DelegateCommand<object> navCommand
         {

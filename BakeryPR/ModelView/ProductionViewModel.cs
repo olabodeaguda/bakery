@@ -88,6 +88,7 @@ namespace BakeryPR.ModelView
 
                         if (checkResource.success)
                         {
+                            // check if it already exist
                             bool sd = dao.add(this.production);
                             if (sd)
                             {
@@ -188,7 +189,6 @@ namespace BakeryPR.ModelView
             }
         }
 
-
         #region Overheads
 
         public DelegateCommand<object> loadupdateProdOverhead
@@ -233,8 +233,6 @@ namespace BakeryPR.ModelView
             }
         }
 
-
-
         public DelegateCommand<object> loadOverheadCommand
         {
             get
@@ -273,13 +271,22 @@ namespace BakeryPR.ModelView
                                 this.prodOverhead.overheadCount = 1;
                             }
 
-                            this.prodOverhead.productionId = this.production.id;
+                            // check if overhead already exist
 
-                            bool d = prodDao.add(this.prodOverhead);
-                            if (d)
+                            this.prodOverhead.productionId = this.production.id;
+                            ProductionOverhead pover = prodDao.byproductionOverheadId(this.prodOverhead.productionId, this.prodOverhead.overheadId);
+
+                            if (pover == null)
                             {
-                                MessageBox.Show("Saved");
-                                //this.production.
+                                bool d = prodDao.add(this.prodOverhead);
+                                if (d)
+                                {
+                                    MessageBox.Show("Saved");
+                                }
+                            }
+                            else
+                            {
+                                MessageBox.Show("Selected overhead already exist");
                             }
                         }
                         catch (Exception x)
@@ -315,7 +322,6 @@ namespace BakeryPR.ModelView
             }
         }
 
-
         public OverheadDao overheadDao
         {
             get
@@ -345,7 +351,6 @@ namespace BakeryPR.ModelView
                 this.NotifyPropertyChanged("prodOverheads");
             }
         }
-
 
         #endregion
 

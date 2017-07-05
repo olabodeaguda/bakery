@@ -87,6 +87,37 @@ namespace BakeryPR.DAO
             return lst;
         }
 
+        public ProductionOverhead byproductionOverheadId(int prodId,int overheadId)
+        {
+            using (SQLiteConnection conn = new SQLiteConnection(this.connectionString))
+            {
+                conn.Open();
+                DataSet dt = new DataSet();
+                SQLiteCommand cmd = new SQLiteCommand(conn);
+                string query = "select productionOverhead.*,overheads.name as overheadName,measurementType.measureTypeName,overheads.unitCost  from productionOverhead ";
+                query += "inner join overheads on overheads.id = productionOverhead.overheadId ";
+                query += "inner join measurementType on measurementType.id = overheads.mTypeId where productionOverhead.productionId = @productionId and productionOverhead.overheadId = @overheadId";
+
+                cmd.CommandText = query;
+                cmd.Parameters.AddWithValue("@productionId", prodId);
+                cmd.Parameters.AddWithValue("overheadId", overheadId);
+                cmd.CommandType = CommandType.Text;
+                this.SQLiteAdaptor(dt, cmd);
+
+                return dt.Tables[0].Rows.Cast<DataRow>().Select(x => new ProductionOverhead()
+                {
+                    id = int.Parse(x["id"].ToString()),
+                    mType = x["measureTypeName"].ToString(),
+                    overheadId = int.Parse(x["overheadId"].ToString()),
+                    productionId = int.Parse(x["productionId"].ToString()),
+                    unitCost = double.Parse(x["unitCost"].ToString()),
+                    overheadName = x["overheadName"].ToString(),
+                    overheadCount = int.Parse(x["OverheadCount"].ToString())
+                }).FirstOrDefault();
+            }
+
+        }
+
         public List<ProductionOverhead> all()
         {
             List<ProductionOverhead> lst = new List<ProductionOverhead>();

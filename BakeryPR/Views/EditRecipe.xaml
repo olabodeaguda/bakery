@@ -12,7 +12,7 @@
             <RowDefinition Height="50"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
-
+        <TextBlock Style="{StaticResource headings}"  Grid.ColumnSpan="2">Edit Recipe</TextBlock>
         <StackPanel Grid.Row="1">
             <TextBlock Padding="6 0 0 0">Title</TextBlock>
             <StackPanel Orientation="Horizontal" Height="30">

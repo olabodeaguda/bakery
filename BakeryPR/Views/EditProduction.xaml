@@ -5,8 +5,32 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BakeryPR.Views"
         mc:Ignorable="d"
-        Title="EditProduction" Height="300" Width="300">
-    <Grid>
-        
+        Title="EditProduction"  Height="300" Width="450" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <TextBlock Style="{StaticResource headings}"  Grid.ColumnSpan="2"> Edit Production</TextBlock>
+
+        <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center">Production Title</TextBlock>
+        <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center">Select Recipe</TextBlock>
+
+        <TextBox Grid.Row="1" Height="30" Grid.Column="1" Text="{Binding production.title,Mode=TwoWay}"></TextBox>
+        <ComboBox SelectedValue="{Binding production.recipeId,Mode=TwoWay}"  Grid.Row="2" Grid.Column="1"
+                  ItemsSource="{Binding recipes}" 
+                  DisplayMemberPath="title" SelectedValuePath="id"></ComboBox>
+
+        <Button Style="{StaticResource btnSubmitStyle}" HorizontalAlignment="Right" 
+                Grid.Column="1" Grid.Row="3" Command="{Binding EditProductionCommand}" >Update</Button>
+
+
     </Grid>
 </Window>

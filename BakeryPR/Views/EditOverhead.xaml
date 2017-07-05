@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BakeryPR.Views"
         mc:Ignorable="d"
-        Title="EditOverhead" Height="300" Width="450" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+        Title="Edit Overhead" Height="300" Width="450" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Grid Margin="5">
         <Grid.RowDefinitions>
             <RowDefinition Height="70"></RowDefinition>
@@ -19,7 +19,7 @@
             <ColumnDefinition Width="150"></ColumnDefinition>
             <ColumnDefinition Width="250"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-
+        <TextBlock Style="{StaticResource headings}"  Grid.ColumnSpan="2">Edit Overhead</TextBlock>
         <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center">Overhead Name</TextBlock>
         <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center">Measurement Type</TextBlock>
         <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center">A Unit Cost</TextBlock>

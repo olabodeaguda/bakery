@@ -23,8 +23,8 @@
             <ColumnDefinition Width="150"></ColumnDefinition>
             <ColumnDefinition Width="250"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-
-        <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center">Ingredent Name</TextBlock>
+        <TextBlock Style="{StaticResource headings}"  Grid.ColumnSpan="2">Edit Ingredient</TextBlock>
+        <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center">Ingredient Name</TextBlock>
         <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center">Measurement Type</TextBlock>
         <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center">A Unit Cost</TextBlock>
 

@@ -38,8 +38,6 @@
                                     Header="Unit Cost" DisplayMemberBinding="{Binding unitCostExpression}" />
                     <GridViewColumn Width="100" HeaderContainerStyle="{StaticResource ListViewStyle}" 
                                     Header="Overhead Type" DisplayMemberBinding="{Binding overheadType}" />
-                    <GridViewColumn Width="200" HeaderContainerStyle="{StaticResource ListViewStyle}" 
-                                    Header="Measure Type Name" DisplayMemberBinding="{Binding measureTypeName}" />
                 </GridView>
             </ListView.View>
         </ListView>

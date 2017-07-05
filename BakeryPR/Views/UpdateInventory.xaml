@@ -18,7 +18,7 @@
             <ColumnDefinition Width="150"></ColumnDefinition>
             <ColumnDefinition Width="250"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-
+        <TextBlock Style="{StaticResource headings}"  Grid.ColumnSpan="2">Edit Inventory</TextBlock>
         <TextBlock  Grid.Row="1" Grid.Column="0" VerticalAlignment="Center">Ingredent Name</TextBlock>
         <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center">Quantity</TextBlock>
 

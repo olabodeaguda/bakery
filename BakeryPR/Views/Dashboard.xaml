@@ -53,6 +53,8 @@
             <MenuItem Header="About" Command="{Binding navCommand}" CommandParameter="about"></MenuItem>
         </Menu>
 
+        <TextBlock Grid.Row="1" Style="{StaticResource boldheadings}" Text="{Binding title}"></TextBlock>
+        
         <DockPanel Grid.Row="2">
             <!--<fa:ImageAwesome Icon="Refresh" Spin="True" Height="48" Width="48"
                              Margin="400 0 0 0" />-->
