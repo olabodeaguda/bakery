@@ -7,7 +7,7 @@
         xmlns:vm="clr-namespace:BakeryPR.ModelView"
         xmlns:fa="http://schemas.fontawesome.io/icons/"
         mc:Ignorable="d"
-        Title="AddProductionProduct"  Height="400" Width="700"  WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+        Title="Add  Product"  Height="400" Width="700"  WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Window.DataContext>
         <vm:ProductionViewModel></vm:ProductionViewModel>
     </Window.DataContext>
@@ -30,7 +30,7 @@
                 <ColumnDefinition Width="377"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <TextBlock Padding="6" Margin="5" Height="30">Select Product</TextBlock>
-            <TextBlock Padding="6" Margin="5" Height="30" Grid.Row="1" >Count</TextBlock>
+            <TextBlock Padding="6" Margin="5" Height="30" Grid.Row="1" >Quantity</TextBlock>
 
             <ComboBox HorizontalAlignment="Left" Width="200" 
                       SelectedValue="{Binding productionProduct.productId,Mode=TwoWay}"  
@@ -39,7 +39,7 @@
             <TextBox Grid.Row="1" Grid.Column="1" Height="30" Text="{Binding productionProduct.quantity,Mode=TwoWay}"></TextBox>
 
             <StackPanel Grid.Column="2" Orientation="Horizontal">
-                <Button Width="50"  HorizontalAlignment="Left" Command="{Binding addOverheadCommand}" Margin="12">Add</Button>
+                <Button Width="50"  HorizontalAlignment="Left" Command="{Binding addPProductCommand}" Margin="12">Add</Button>
                 <fa:ImageAwesome Icon="Refresh" Spin="True" Visibility="{Binding isSpin,Mode=TwoWay}" Height="20" Width="30" />
             </StackPanel>
 
@@ -50,8 +50,8 @@
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
 
-            <ListView x:Name="IngredentLst" 
-                  ItemsSource="{Binding prodOverheads,Mode=TwoWay}" IsSynchronizedWithCurrentItem="True" >
+            <ListView x:Name="productLst" 
+                  ItemsSource="{Binding productionProducts,Mode=TwoWay}" IsSynchronizedWithCurrentItem="True" >
                 <ListView.View>
                     <GridView>
                         <GridViewColumn  x:Name="gridV">
@@ -65,11 +65,11 @@
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
                         <GridViewColumn Width="200"  HeaderContainerStyle="{StaticResource ListViewStyle}" 
-                                    Header="Product"  DisplayMemberBinding="{Binding overheadName}" />
+                                    Header="Product"  DisplayMemberBinding="{Binding productName}" />
                         <GridViewColumn Width="100" HeaderContainerStyle="{StaticResource ListViewStyle}" 
-                                    Header="Count" DisplayMemberBinding="{Binding overheadCount}" />
+                                    Header="Count" DisplayMemberBinding="{Binding quantity}" />
                         <GridViewColumn Width="200" HeaderContainerStyle="{StaticResource ListViewStyle}" 
-                                    Header="Amount" DisplayMemberBinding="{Binding totalCost}" />
+                                    Header="Total Weight" DisplayMemberBinding="{Binding totalWeight}" />
                     </GridView>
                 </ListView.View>
             </ListView>

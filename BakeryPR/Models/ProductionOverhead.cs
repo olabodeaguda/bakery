@@ -80,9 +80,7 @@ namespace BakeryPR.Models
                 this.NotifyPropertyChanged("unitCost");
             }
         }
-
-        private string _totalCost;
-
+       
         public string totalCost
         {
             get

@@ -100,7 +100,7 @@ namespace BakeryPR.DAO
 
                 cmd.CommandText = query;
                 cmd.Parameters.AddWithValue("@productionId", prodId);
-                cmd.Parameters.AddWithValue("overheadId", overheadId);
+                cmd.Parameters.AddWithValue("@overheadId", overheadId);
                 cmd.CommandType = CommandType.Text;
                 this.SQLiteAdaptor(dt, cmd);
 

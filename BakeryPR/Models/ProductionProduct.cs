@@ -21,7 +21,7 @@ namespace BakeryPR.Models
             }
         }
 
-        private int _productId;
+        private int _productId = -1;
 
         public int productId
         {
@@ -33,7 +33,7 @@ namespace BakeryPR.Models
             }
         }
 
-        private int _productionId;
+        private int _productionId = -1;
 
         public int productionId
         {
@@ -90,6 +90,14 @@ namespace BakeryPR.Models
             {
                 _weight = value;
                 this.NotifyPropertyChanged("weight");
+            }
+        }
+
+        public string totalWeight
+        {
+            get
+            {
+                return $"{(weight * quantity)}{measureTypeName}";
             }
         }
 

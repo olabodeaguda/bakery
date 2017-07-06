@@ -80,6 +80,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="DAO\AbstractDao.cs" />
+    <Compile Include="DAO\CommonDao.cs" />
     <Compile Include="DAO\IngredentDao.cs" />
     <Compile Include="DAO\InventoryHistoryDao.cs" />
     <Compile Include="DAO\MeasureTypeDao.cs" />
@@ -87,6 +88,7 @@
     <Compile Include="DAO\ProductDao.cs" />
     <Compile Include="DAO\ProductionDao.cs" />
     <Compile Include="DAO\ProductionOverheadDao.cs" />
+    <Compile Include="DAO\ProductionProductDao.cs" />
     <Compile Include="DAO\RecipeDao.cs" />
     <Compile Include="DAO\RecipeIngredentDao.cs" />
     <Compile Include="Models\Error.cs" />

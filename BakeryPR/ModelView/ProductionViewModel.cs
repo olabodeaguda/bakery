@@ -33,31 +33,34 @@ namespace BakeryPR.ModelView
         {
             get
             {
-                return new DelegateCommand<object>((s) =>
+                return new DelegateCommand<object>(async (s) =>
                 {
-                    try
+                    await Task.Run(() =>
                     {
-                        Error checkResource = rdao.checkRecipeQuantity(this.production.recipeId);
-
-                        if (checkResource.success)
+                        try
                         {
-                            bool sd = dao.update(this.production);
-                            if (sd)
+                            Error checkResource = rdao.checkRecipeQuantity(this.production.recipeId);
+
+                            if (checkResource.success)
                             {
-                                MessageBox.Show("Production have been updated successfully");
-                                this.production = new Production();
-                                this.productions = new ObservableCollection<Production>(dao.all());
+                                bool sd = dao.update(this.production);
+                                if (sd)
+                                {
+                                    MessageBox.Show("Production have been updated successfully");
+                                    this.production = new Production();
+                                    this.productions = new ObservableCollection<Production>(dao.all());
+                                }
+                            }
+                            else
+                            {
+                                MessageBox.Show(checkResource.errorMsg);
                             }
                         }
-                        else
+                        catch (Exception x)
                         {
-                            MessageBox.Show(checkResource.errorMsg);
+                            MessageBox.Show(x.Message);
                         }
-                    }
-                    catch (Exception x)
-                    {
-                        MessageBox.Show(x.Message);
-                    }
+                    });
                 });
             }
         }
@@ -357,6 +360,35 @@ namespace BakeryPR.ModelView
 
         #region product
 
+        public DelegateCommand<object> addPProductCommand
+        {
+            get
+            {
+                return new DelegateCommand<object>(async (s) =>
+                {
+                    await Task.Run(() =>
+                    {
+                        try
+                        {
+                            if (productionProduct.productionId != -1)
+                            {
+                                // check if the available gram is not more than the recipe total gram
+                                bool result = this.pProductDao.add(this.productionProduct);
+                                if (result)
+                                {
+                                    MessageBox.Show("Product have been added successfullu");
+                                }
+                            }
+                        }
+                        catch (Exception x)
+                        {
+                            MessageBox.Show(x.Message);
+                        }
+                    });
+                });
+            }
+        }
+
         public DelegateCommand<object> loadProductCommand
         {
             get
@@ -392,6 +424,14 @@ namespace BakeryPR.ModelView
             }
         }
 
+        public ProductionProductDao pProductDao
+        {
+            get
+            {
+                return new ProductionProductDao();
+            }
+        }
+
         private ObservableCollection<Product> _products = new ObservableCollection<Product>();
 
         public ObservableCollection<Product> products
@@ -408,7 +448,16 @@ namespace BakeryPR.ModelView
 
         public ObservableCollection<ProductionProduct> productionProducts
         {
-            get { return _productionproducts; }
+            get
+            {
+                if (productionProduct.productionId != -1)
+                {
+                    var t = pProductDao.byproductionId(productionProduct.productionId);
+                    _productionproducts = new ObservableCollection<ProductionProduct>(t);
+                }
+
+                return _productionproducts;
+            }
             set
             {
                 _productionproducts = value;

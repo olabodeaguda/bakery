@@ -32,7 +32,7 @@ namespace BakeryPR.DAO
                     id = int.Parse(x["id"].ToString()),
                     title = x["title"].ToString(),
                     dateCreated = DateTime.Parse(x["dateCreated"].ToString(), new CultureInfo("en-US", true)),
-                    lastUpdated = DateTime.Parse(x["lastUpdated"].ToString(), new CultureInfo("en-US", true))                   
+                    lastUpdated = DateTime.Parse(x["lastUpdated"].ToString(), new CultureInfo("en-US", true))
                 }).ToList();
 
                 foreach (var rec in results)
@@ -69,7 +69,7 @@ namespace BakeryPR.DAO
 
                 if (results != null)
                 {
-                    results.ingredent = new ObservableCollection<RecipeIngredents>(riDao.byRecipeId(results.id)); 
+                    results.ingredent = new ObservableCollection<RecipeIngredents>(riDao.byRecipeId(results.id));
                 }
             }
 
@@ -121,7 +121,7 @@ namespace BakeryPR.DAO
 
         public Error checkRecipeQuantity(int recipeId)
         {
-            Error error = new Error() { success = true, errorMsg="" };
+            Error error = new Error() { success = true, errorMsg = "" };
             List<Ingredent> lst = ingreDao.all();
             List<RecipeIngredents> lstrecipeIngredent = riDao.byRecipeId(recipeId);
             foreach (var tm in lstrecipeIngredent)
@@ -132,7 +132,7 @@ namespace BakeryPR.DAO
                     if (tm.quantity > r.quantity)
                     {
                         //no enough material for
-                        error = new Error() { success=false ,errorMsg= r.ingredentName + " is aout of stock for the selected recipe" };
+                        error = new Error() { success = false, errorMsg = r.ingredentName + " is aout of stock for the selected recipe" };
                         break;
                     }
                 }
