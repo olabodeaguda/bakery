@@ -5,10 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BakeryPR.Views"
         mc:Ignorable="d"
-        Title="EditProduct" Height="380" Width="450" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+        Title="EditProduct" Height="410" Width="450" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Grid Margin="5">
         <Grid.RowDefinitions>
             <RowDefinition Height="70"></RowDefinition>
+            <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
@@ -28,6 +29,7 @@
         <TextBlock Grid.Row="4" Grid.Column="0" VerticalAlignment="Center">Cost of Package</TextBlock>
         <TextBlock Grid.Row="5" Grid.Column="0" VerticalAlignment="Center">Retail price</TextBlock>
         <TextBlock Grid.Row="6" Grid.Column="0" VerticalAlignment="Center">Wholesales Price</TextBlock>
+        <TextBlock Grid.Row="7" Grid.Column="0" VerticalAlignment="Center">Product Name</TextBlock>
 
         <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding product.descripton,Mode=TwoWay}"></TextBox>
         <TextBox  Grid.Row="2" Grid.Column="1" Text="{Binding product.weight,Mode=TwoWay}"></TextBox>
@@ -35,8 +37,9 @@
         <TextBox  Grid.Row="4" Grid.Column="1" Text="{Binding product.costOfPackage,Mode=TwoWay}"></TextBox>
         <TextBox  Grid.Row="5" Grid.Column="1" Text="{Binding product.retailPrice,Mode=TwoWay}"></TextBox>
         <TextBox  Grid.Row="6" Grid.Column="1" Text="{Binding product.wholeSales,Mode=TwoWay}"></TextBox>
+        <TextBox  Grid.Row="7" Grid.Column="1" Text="{Binding product.name,Mode=TwoWay}"></TextBox>
 
-        <Button Style="{StaticResource btnSubmitStyle}" Grid.Column="1" Grid.Row="7" Command="{Binding UpdateCommand}" >Update</Button>
+        <Button Style="{StaticResource btnSubmitStyle}" Grid.Column="1" Grid.Row="8" Command="{Binding UpdateCommand}" >Update</Button>
 
     </Grid>
 </Window>

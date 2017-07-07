@@ -20,7 +20,7 @@ namespace BakeryPR.DAO
                 SQLiteCommand cmd = new SQLiteCommand(conn);
                 cmd.CommandText = "insert into productionProduct(productId,productionId,quantity) " +
                     "values(@productId,@productionId,@quantity)";
-                cmd.Parameters.AddWithValue("@overheadId", values.productId);
+                cmd.Parameters.AddWithValue("@productId", values.productId);
                 cmd.Parameters.AddWithValue("@productionId", values.productionId);
                 cmd.Parameters.AddWithValue("@quantity", values.quantity);
                 cmd.CommandType = CommandType.Text;

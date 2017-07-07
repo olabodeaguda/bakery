@@ -89,7 +89,6 @@ namespace BakeryPR.ModelView
             {
                 return new DelegateCommand<object>((s) =>
                 {
-
                     if (s != null)
                     {
                         EditProduct editIngr = new EditProduct();
@@ -97,6 +96,7 @@ namespace BakeryPR.ModelView
 
                         editIngr.DataContext = this;
                         bool? result = editIngr.ShowDialog();
+                        this.product = new Product();
                         this.products = new ObservableCollection<Product>(dao.all());
                     }
                 });

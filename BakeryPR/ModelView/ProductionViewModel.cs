@@ -370,13 +370,15 @@ namespace BakeryPR.ModelView
                     {
                         try
                         {
-                            if (productionProduct.productionId != -1)
+                            if (production.id != -1)
                             {
+                                this.productionProduct.productionId = production.id;
                                 // check if the available gram is not more than the recipe total gram
                                 bool result = this.pProductDao.add(this.productionProduct);
                                 if (result)
                                 {
-                                    MessageBox.Show("Product have been added successfullu");
+                                    MessageBox.Show("Product have been added successfully");
+                                    this.productions = new ObservableCollection<Production>(dao.all());
                                 }
                             }
                         }
@@ -397,6 +399,7 @@ namespace BakeryPR.ModelView
                 {
                     AddProductionProduct prod = new AddProductionProduct();
                     productionProduct = new ProductionProduct();
+                    this.production = (Production)s;
                     prod.DataContext = this;
                     prod.ShowDialog();
                 });

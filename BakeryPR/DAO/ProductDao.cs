@@ -32,7 +32,8 @@ namespace BakeryPR.DAO
                     weight = double.Parse(x["weight"].ToString()),
                     mTypeId = int.Parse(x["mTypeId"].ToString()),
                     wholeSales = double.Parse(x["wholeSales"].ToString()),
-                    measureTypeName = x["measureTypeName"].ToString()
+                    measureTypeName = x["measureTypeName"].ToString(),
+                     name =x["name"].ToString()
                 }).ToList();
             }
 
@@ -45,14 +46,15 @@ namespace BakeryPR.DAO
             {
                 conn.Open();
                 SQLiteCommand cmd = new SQLiteCommand(conn);
-                cmd.CommandText = "insert into product(weight,descripton,costOfPackage,retailPrice,wholeSales,mTypeId) " +
-                    "values(@weight,@descripton,@costOfPackage,@retailPrice,@wholeSales,@mTypeId)";
+                cmd.CommandText = "insert into product(weight,descripton,costOfPackage,retailPrice,wholeSales,mTypeId,name) " +
+                    "values(@weight,@descripton,@costOfPackage,@retailPrice,@wholeSales,@mTypeId,@name)";
                 cmd.Parameters.AddWithValue("@weight", values.weight);
                 cmd.Parameters.AddWithValue("@descripton", values.descripton);
                 cmd.Parameters.AddWithValue("@costOfPackage", values.costOfPackage);
                 cmd.Parameters.AddWithValue("@retailPrice", values.retailPrice);
                 cmd.Parameters.AddWithValue("@wholeSales", values.wholeSales);
                 cmd.Parameters.AddWithValue("@mTypeId", values.mTypeId);
+                cmd.Parameters.AddWithValue("@name", values.name);
                 cmd.CommandType = CommandType.Text;
                 int count = cmd.ExecuteNonQuery();
                 if (count > 0)
@@ -70,13 +72,14 @@ namespace BakeryPR.DAO
             {
                 conn.Open();
                 SQLiteCommand cmd = new SQLiteCommand(conn);
-                cmd.CommandText = "update product set retailPrice=@retailPrice,wholeSales=@wholeSales,mTypeId=@mTypeId, weight = @weight,descripton=@descripton,costOfPackage = @costOfPackage where id = @id";
+                cmd.CommandText = "update product set name=@name, retailPrice=@retailPrice,wholeSales=@wholeSales,mTypeId=@mTypeId, weight = @weight,descripton=@descripton,costOfPackage = @costOfPackage where id = @id";
                 cmd.Parameters.AddWithValue("@weight", values.weight);
                 cmd.Parameters.AddWithValue("@descripton", values.descripton);
                 cmd.Parameters.AddWithValue("@costOfPackage", values.costOfPackage);
                 cmd.Parameters.AddWithValue("@retailPrice", values.retailPrice);
                 cmd.Parameters.AddWithValue("@wholeSales", values.wholeSales);
                 cmd.Parameters.AddWithValue("@mTypeId", values.mTypeId);
+                cmd.Parameters.AddWithValue("@name", values.name);
                 cmd.Parameters.AddWithValue("@id", values.id);
                 cmd.CommandType = CommandType.Text;
                 int count = cmd.ExecuteNonQuery();
