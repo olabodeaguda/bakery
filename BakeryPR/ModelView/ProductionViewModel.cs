@@ -357,7 +357,6 @@ namespace BakeryPR.ModelView
 
         #endregion
 
-
         #region product
 
         public DelegateCommand<object> addPProductCommand
