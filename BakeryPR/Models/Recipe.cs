@@ -81,6 +81,18 @@ namespace BakeryPR.Models
             get { return this.ingredent.Sum(x => (x.quantity * x.unitCost)); }
         }
 
+        private double _quantity;
+
+        public double quantity
+        {
+            get { return _quantity; }
+            set
+            {
+                _quantity = value;
+                this.NotifyPropertyChanged("quantity");
+            }
+        }
+
 
         #region property change
 

@@ -40,7 +40,7 @@ namespace BakeryPR.DAO
             {
                 conn.Open();
                 SQLiteCommand cmd = new SQLiteCommand(conn);
-                cmd.CommandText = "update productionOverhead set productId=@productId,productionId=@productionId,quantity=@quantity where id = @id";
+                cmd.CommandText = "update productionProduct set productId=@productId,productionId=@productionId,quantity=@quantity where id = @id";
                 cmd.Parameters.AddWithValue("@productId", values.productId);
                 cmd.Parameters.AddWithValue("@productionId", values.productionId);
                 cmd.Parameters.AddWithValue("@quantity", values.quantity);

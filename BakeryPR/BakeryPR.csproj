@@ -172,6 +172,9 @@
     <Compile Include="Views\IngredentView.xaml.cs">
       <DependentUpon>IngredentView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\EditProductionProduct.xaml.cs">
+      <DependentUpon>EditProductionProduct.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\OverheadView.xaml.cs">
       <DependentUpon>OverheadView.xaml</DependentUpon>
     </Compile>
@@ -259,6 +262,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\IngredentView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EditProductionProduct.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

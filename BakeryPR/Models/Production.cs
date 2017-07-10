@@ -9,12 +9,28 @@ namespace BakeryPR.Models
 {
     public class Production : INotifyPropertyChanged
     {
-        private int _id;
+        private double _quantity;
+
+        public double quantity
+        {
+            get { return _quantity; }
+            set
+            {
+                _quantity = value;
+                this.NotifyPropertyChanged("quantity");
+            }
+        }
+
+        private int _id = -1;
 
         public int id
         {
             get { return _id; }
-            set { _id = value; }
+            set
+            {
+                _id = value;
+                this.NotifyPropertyChanged("id");
+            }
         }
 
         private string _title;

@@ -32,7 +32,8 @@ namespace BakeryPR.DAO
                     id = int.Parse(x["id"].ToString()),
                     title = x["title"].ToString(),
                     dateCreated = DateTime.Parse(x["dateCreated"].ToString(), new CultureInfo("en-US", true)),
-                    lastUpdated = DateTime.Parse(x["lastUpdated"].ToString(), new CultureInfo("en-US", true))
+                    lastUpdated = DateTime.Parse(x["lastUpdated"].ToString(), new CultureInfo("en-US", true)),
+                    quantity = !String.IsNullOrEmpty(x["quantity"].ToString()) ? double.Parse(x["quantity"].ToString()) : 1
                 }).ToList();
 
                 foreach (var rec in results)
@@ -64,7 +65,8 @@ namespace BakeryPR.DAO
                     id = int.Parse(x["id"].ToString()),
                     title = x["title"].ToString(),
                     dateCreated = DateTime.Parse(x["dateCreated"].ToString(), new CultureInfo("en-US", true)),
-                    lastUpdated = DateTime.Parse(x["lastUpdated"].ToString(), new CultureInfo("en-US", true))
+                    lastUpdated = DateTime.Parse(x["lastUpdated"].ToString(), new CultureInfo("en-US", true)),
+                    quantity = x["quantity"] != null ? double.Parse(x["quantity"].ToString()) : 1
                 }).FirstOrDefault();
 
                 if (results != null)
@@ -82,11 +84,12 @@ namespace BakeryPR.DAO
             {
                 conn.Open();
                 SQLiteCommand cmd = new SQLiteCommand(conn);
-                cmd.CommandText = "insert into recipe(title,dateCreated,lastUpdated) " +
-                    "values(@title,@dateCreated,@lastUpdated)";
+                cmd.CommandText = "insert into recipe(title,dateCreated,lastUpdated,quantity) " +
+                    "values(@title,@dateCreated,@lastUpdated,@quantity)";
                 cmd.Parameters.AddWithValue("@title", values.title);
                 cmd.Parameters.AddWithValue("@dateCreated", values.dateCreated.ToString("yyyy-MM-dd"));
                 cmd.Parameters.AddWithValue("@lastUpdated", values.dateCreated.ToString("yyyy-MM-dd"));
+                cmd.Parameters.AddWithValue("@quantity", values.quantity);
                 cmd.CommandType = CommandType.Text;
                 int count = cmd.ExecuteNonQuery();
                 if (count > 0)
@@ -104,10 +107,11 @@ namespace BakeryPR.DAO
             {
                 conn.Open();
                 SQLiteCommand cmd = new SQLiteCommand(conn);
-                cmd.CommandText = "update recipe set title=@title,lastUpdated=@lastUpdated where id = @id";
+                cmd.CommandText = "update recipe set title=@title,lastUpdated=@lastUpdated,quantity=@quantity where id = @id";
                 cmd.Parameters.AddWithValue("@title", values.title);
                 cmd.Parameters.AddWithValue("@lastUpdated", values.lastUpdated);
                 cmd.Parameters.AddWithValue("@id", values.id);
+                cmd.Parameters.AddWithValue("@quantity", values.quantity);
                 cmd.CommandType = CommandType.Text;
                 int count = cmd.ExecuteNonQuery();
                 if (count > 0)
@@ -132,7 +136,35 @@ namespace BakeryPR.DAO
                     if (tm.quantity > r.quantity)
                     {
                         //no enough material for
-                        error = new Error() { success = false, errorMsg = r.ingredentName + " is aout of stock for the selected recipe" };
+                        error = new Error() { success = false, errorMsg = r.ingredentName + " is out of stock for the selected recipe" };
+                        break;
+                    }
+                }
+            }
+            return error;
+
+        }
+
+        public Error checkRecipeQuantity(int recipeId, double amount)
+        {
+            Error error = new Error() { success = true, errorMsg = "" };
+            Recipe recipe = this.byId(recipeId);
+            double ratio = 0;
+
+            ratio = recipe.quantity == 0 ? 1 : (amount / recipe.quantity);
+
+            List<Ingredent> lst = ingreDao.all();
+            List<RecipeIngredents> lstrecipeIngredent = riDao.byRecipeId(recipeId);
+            foreach (var tm in lstrecipeIngredent)
+            {
+                var r = lst.FirstOrDefault(x => x.id == tm.ingredentId);
+                if (r != null)
+                {
+                    double comp = tm.quantity * ratio;
+                    if (comp > r.quantity)
+                    {
+                        //no enough material for
+                        error = new Error() { success = false, errorMsg = r.ingredentName + " is out of stock for the selected recipe" };
                         break;
                     }
                 }

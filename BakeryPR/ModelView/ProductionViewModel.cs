@@ -87,11 +87,16 @@ namespace BakeryPR.ModelView
                 {
                     try
                     {
-                        Error checkResource = rdao.checkRecipeQuantity(this.production.recipeId);
+                        if(this.production.quantity == 0)
+                        {
+                            throw new Exception("Qantity can't be zero");
+                        }
+                        Error checkResource = rdao.checkRecipeQuantity(this.production.recipeId,this.production.quantity);
 
                         if (checkResource.success)
                         {
                             // check if it already exist
+                            this.production.title = this.production.title + DateTime.Now.ToString("yyyy-MM-dd");
                             bool sd = dao.add(this.production);
                             if (sd)
                             {
@@ -359,6 +364,69 @@ namespace BakeryPR.ModelView
 
         #region product
 
+        public DelegateCommand<object> loadUpdateProdproduct
+        {
+            get
+            {
+                return new DelegateCommand<object>((s) =>
+                {
+                    EditProductionProduct epp = new EditProductionProduct();
+                    this.productionProduct = (ProductionProduct)s;
+                    epp.DataContext = this;
+                    epp.ShowDialog();
+
+                    /* await Task.Run(() =>
+                     {
+                         try
+                         {
+                             EditProductionProduct epp = new EditProductionProduct();
+                             this.productionProduct = (ProductionProduct)s;
+                             //epp.DataContext = this;
+                             epp.ShowDialog();
+                         }
+                         catch (Exception x)
+                         {
+                             MessageBox.Show(x.Message);
+                         }
+                     });*/
+                });
+            }
+        }
+
+        public DelegateCommand<object> UpdateProdproduct
+        {
+            get
+            {
+                return new DelegateCommand<object>(async (s) =>
+                {
+                    await Task.Run(() =>
+                     {
+                         try
+                         {
+                             this.isSpin = Visibility.Visible;
+                             bool result = pProductDao.update(this.productionProduct);
+                             if (result)
+                             {
+                                 this.isSpin = Visibility.Collapsed;
+                                 MessageBox.Show("saved");
+                                 this.productionProducts = new ObservableCollection<ProductionProduct>(pProductDao.byproductionId(this.productionProduct.productionId));
+                             }
+                             else
+                             {
+                                 MessageBox.Show("Please try again or contact adnministrator");
+                             }
+
+                         }
+                         catch (Exception x)
+                         {
+                             this.isSpin = Visibility.Collapsed;
+                             MessageBox.Show(x.Message);
+                         }
+                     });
+                });
+            }
+        }
+
         public DelegateCommand<object> addPProductCommand
         {
             get
@@ -372,12 +440,23 @@ namespace BakeryPR.ModelView
                             if (production.id != -1)
                             {
                                 this.productionProduct.productionId = production.id;
+
+                                ProductionProduct pp = this.pProductDao.byProductionproductId(this.productionProduct.productionId,
+                                    this.productionProduct.productId);
+
                                 // check if the available gram is not more than the recipe total gram
-                                bool result = this.pProductDao.add(this.productionProduct);
-                                if (result)
+                                if (pp == null)
                                 {
-                                    MessageBox.Show("Product have been added successfully");
-                                    this.productions = new ObservableCollection<Production>(dao.all());
+                                    bool result = this.pProductDao.add(this.productionProduct);
+                                    if (result)
+                                    {
+                                        MessageBox.Show("Product have been added successfully");
+                                        this.productionProducts = new ObservableCollection<ProductionProduct>(pProductDao.byproductionId(this.productionProduct.productionId));
+                                    }
+                                }
+                                else
+                                {
+                                    MessageBox.Show("Selected product already exist for the selected production");
                                 }
                             }
                         }
@@ -452,9 +531,9 @@ namespace BakeryPR.ModelView
         {
             get
             {
-                if (productionProduct.productionId != -1)
+                if (production.id != -1)
                 {
-                    var t = pProductDao.byproductionId(productionProduct.productionId);
+                    var t = pProductDao.byproductionId(production.id);
                     _productionproducts = new ObservableCollection<ProductionProduct>(t);
                 }
 

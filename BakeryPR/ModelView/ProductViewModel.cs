@@ -131,7 +131,6 @@ namespace BakeryPR.ModelView
             }
         }
 
-
         private ObservableCollection<Product> _products;
 
         public ObservableCollection<Product> products
@@ -158,8 +157,6 @@ namespace BakeryPR.ModelView
                 return new ObservableCollection<MeasurementType>(lst);
             }
         }
-
-        
 
         #region property change
 

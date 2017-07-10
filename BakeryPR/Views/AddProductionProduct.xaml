@@ -58,7 +58,7 @@
                             <GridViewColumn.CellTemplate >
                                 <DataTemplate>
                                     <Button Content="Edit"  CommandParameter="{Binding}"
-                                        Command="{Binding Path=DataContext.loadupdateProdOverhead, 
+                                        Command="{Binding Path=DataContext.loadUpdateProdproduct, 
                                     RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
 
                                 </DataTemplate>
