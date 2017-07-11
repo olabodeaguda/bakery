@@ -116,8 +116,6 @@ namespace BakeryPR.Models
             }
         }
 
-
-
         private int _recipeId = -1;
 
         public int recipeId
@@ -130,6 +128,29 @@ namespace BakeryPR.Models
             }
         }
 
+        private string _approval;
+
+        public string approval
+        {
+            get { return _approval; }
+            set
+            {
+                _approval = value;
+                this.NotifyPropertyChanged("approval");
+            }
+        }
+
+        private string _approveBy;
+
+        public string approveBy
+        {
+            get { return _approveBy; }
+            set
+            {
+                _approveBy = value;
+                this.NotifyPropertyChanged("approveBy");
+            }
+        }
 
         #region property change
 

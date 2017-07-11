@@ -57,6 +57,8 @@
                                     Header="Title"  DisplayMemberBinding="{Binding title}" />
                     <GridViewColumn Width="200"  HeaderContainerStyle="{StaticResource ListViewStyle}" 
                                     Header="Recipe"  DisplayMemberBinding="{Binding recipeTitle}" />
+                    <GridViewColumn Width="200"  HeaderContainerStyle="{StaticResource ListViewStyle}" 
+                                    Header="Quantity"  DisplayMemberBinding="{Binding quantity}" />
                     <GridViewColumn Width="100" HeaderContainerStyle="{StaticResource ListViewStyle}" 
                                     Header="Date Created" DisplayMemberBinding="{Binding dateCreated,StringFormat=yyyy-MM-dd}" />
                     <GridViewColumn Width="100" HeaderContainerStyle="{StaticResource ListViewStyle}" 

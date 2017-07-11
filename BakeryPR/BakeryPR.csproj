@@ -101,6 +101,7 @@
     <Compile Include="Models\Production.cs" />
     <Compile Include="Models\ProductionOverhead.cs" />
     <Compile Include="Models\ProductionProduct.cs" />
+    <Compile Include="Models\Profile.cs" />
     <Compile Include="Models\Recipe.cs" />
     <Compile Include="Models\RecipeIngredents.cs" />
     <Compile Include="ModelView\DashboardModelView.cs" />

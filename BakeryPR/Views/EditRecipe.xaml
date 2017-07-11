@@ -9,11 +9,13 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40"></RowDefinition>
-            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="120"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
-        <TextBlock Style="{StaticResource headings}"  Grid.ColumnSpan="2">Edit Recipe</TextBlock>
+        <TextBlock Style="{StaticResource headings}"  Grid.ColumnSpan="2">Update Recipe</TextBlock>
         <StackPanel Grid.Row="1">
+            <TextBlock Padding="6 0 0 0">Quantity(KG)</TextBlock>
+            <TextBox Padding="0 0 0 6" HorizontalAlignment="Left" Width="200" Height="21" Text="{Binding recipe.quantity}" Margin="5,5,0,5"></TextBox>
             <TextBlock Padding="6 0 0 0">Title</TextBlock>
             <StackPanel Orientation="Horizontal" Height="30">
                 <TextBox HorizontalAlignment="Left" Width="200" Text="{Binding recipe.title}"></TextBox>

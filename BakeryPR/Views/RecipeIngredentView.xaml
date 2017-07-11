@@ -43,6 +43,8 @@
                                     Header="No of Ingredent" DisplayMemberBinding="{Binding ingredentNos}" />
                     <GridViewColumn Width="200" HeaderContainerStyle="{StaticResource ListViewStyle}" 
                                     Header="Total Cost (Naira)" DisplayMemberBinding="{Binding totalCost}" />
+                    <GridViewColumn Width="200" HeaderContainerStyle="{StaticResource ListViewStyle}" 
+                                    Header="Quantity (KG)" DisplayMemberBinding="{Binding quantity}" />
                 </GridView>
             </ListView.View>
         </ListView>

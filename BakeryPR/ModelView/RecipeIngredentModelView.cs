@@ -124,39 +124,53 @@ namespace BakeryPR.ModelView
                 });
             }
         }
-    
+
         public DelegateCommand<object> addCommand
         {
             get
             {
-                return new DelegateCommand<object>((s) =>
-                {
-                    try
-                    {
-                        Recipe ig = this.recipe;
-                        ig.dateCreated = DateTime.Now;
-                        ig.lastUpdated = DateTime.Now;
+                return new DelegateCommand<object>(async (s) =>
+               {
+                   await Task.Run(() =>
+                   {
+                       try
+                       {
+                           Recipe ig = this.recipe;
+                           double quan = 0;
+                           if (!double.TryParse(this.recipe.quantity.ToString(), out quan))
+                           {
+                               throw new Exception("Quantity is in the wrong format");
+                           }
 
-                        bool result = dao.add(ig);
-                        if (result)
-                        {
-                            MessageBox.Show("Saved");
-                        }
-                        else
-                        {
-                            MessageBox.Show("not saved");
-                        }
-                        List<Recipe> lst = dao.all();
-                        var t = lst.FirstOrDefault(x => x.title == ig.title);
-                        this.recipe = t != null ? t : new Recipe();
-                        this.recipes = new ObservableCollection<Recipe>(lst);
-                    }
-                    catch (Exception x)
-                    {
-                        MessageBox.Show(x.Message);
-                    }
+                           if (quan == 0)
+                           {
+                               throw new Exception("Quantity can't be zero");
+                           }
 
-                });
+                           ig.dateCreated = DateTime.Now;
+                           ig.lastUpdated = DateTime.Now;
+
+                           bool result = dao.add(ig);
+                           if (result)
+                           {
+                               MessageBox.Show("Saved");
+                           }
+                           else
+                           {
+                               MessageBox.Show("not saved");
+                           }
+                           List<Recipe> lst = dao.all();
+                           var t = lst.FirstOrDefault(x => x.title == ig.title);
+                           this.recipe = t != null ? t : new Recipe();
+                           this.recipes = new ObservableCollection<Recipe>(lst);
+                       }
+                       catch (Exception x)
+                       {
+                           MessageBox.Show(x.Message);
+                       }
+                   });
+
+               });
             }
         }
 
@@ -263,12 +277,12 @@ namespace BakeryPR.ModelView
             {
                 return new DelegateCommand<object>((s) =>
                 {
-                     if(s != null)
+                    if (s != null)
                     {
                         EditRecipeIngredent editRecipe = new EditRecipeIngredent();
                         this.recipeIngredent = (RecipeIngredents)s;
                         editRecipe.DataContext = this;
-                        editRecipe.ShowDialog();                   
+                        editRecipe.ShowDialog();
                     }
                 });
             }

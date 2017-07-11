@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BakeryPR.Views"
         mc:Ignorable="d"
-        Title="EditProduction"  Height="300" Width="450" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+        Title="EditProduction"  Height="330" Width="450" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Grid Margin="10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="100"></ColumnDefinition>
@@ -16,20 +16,24 @@
             <RowDefinition Height="50"></RowDefinition>
             <RowDefinition Height="50"></RowDefinition>
             <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <TextBlock Style="{StaticResource headings}"  Grid.ColumnSpan="2"> Edit Production</TextBlock>
+        <TextBlock Style="{StaticResource headings}"  Grid.ColumnSpan="2"> Update Production</TextBlock>
 
         <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center">Production Title</TextBlock>
         <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center">Select Recipe</TextBlock>
+        <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center">Quantity(KG)</TextBlock>
 
         <TextBox Grid.Row="1" Height="30" Grid.Column="1" Text="{Binding production.title,Mode=TwoWay}"></TextBox>
         <ComboBox SelectedValue="{Binding production.recipeId,Mode=TwoWay}"  Grid.Row="2" Grid.Column="1"
                   ItemsSource="{Binding recipes}" 
-                  DisplayMemberPath="title" SelectedValuePath="id"></ComboBox>
+                  DisplayMemberPath="title" SelectedValuePath="id">
+        </ComboBox>
+        <TextBox Grid.Row="3" Height="30" Grid.Column="1" Text="{Binding production.quantity,Mode=TwoWay}"></TextBox>
 
         <Button Style="{StaticResource btnSubmitStyle}" HorizontalAlignment="Right" 
-                Grid.Column="1" Grid.Row="3" Command="{Binding EditProductionCommand}" >Update</Button>
+                Grid.Column="1" Grid.Row="4" Command="{Binding EditProductionCommand}" >Update</Button>
 
 
     </Grid>

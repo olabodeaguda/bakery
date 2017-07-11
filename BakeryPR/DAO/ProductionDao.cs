@@ -30,6 +30,7 @@ namespace BakeryPR.DAO
                     createdBY = x["createdBy"].ToString(),
                     title = x["title"].ToString(),
                     recipeTitle = x["recipeTitle"].ToString(),
+                    quantity = String.IsNullOrEmpty(x["quantity"].ToString()) ? 0 : double.Parse(x["quantity"].ToString()),
                     recipeId = int.Parse(x["recipeId"].ToString()),
                     dateCreated = DateTime.Parse(x["dateCreated"].ToString(), new CultureInfo("en-US", true)),
                     lastUpdated = DateTime.Parse(x["lastUpdated"].ToString(), new CultureInfo("en-US", true))
@@ -45,11 +46,12 @@ namespace BakeryPR.DAO
             {
                 conn.Open();
                 SQLiteCommand cmd = new SQLiteCommand(conn);
-                cmd.CommandText = "insert into production(title,dateCreated,lastUpdated,createdBy,recipeId) " +
-                    "values(@title,@dateCreated,@lastUpdated,@createdBy,@recipeId)";
+                cmd.CommandText = "insert into production(title,dateCreated,lastUpdated,createdBy,recipeId,quantity) " +
+                    "values(@title,@dateCreated,@lastUpdated,@createdBy,@recipeId,@quantity)";
                 cmd.Parameters.AddWithValue("@title", values.title);
                 cmd.Parameters.AddWithValue("@createdBy", values.createdBY);
                 cmd.Parameters.AddWithValue("@recipeId", values.recipeId);
+                cmd.Parameters.AddWithValue("@quantity", values.quantity);
                 cmd.Parameters.AddWithValue("@dateCreated", DateTime.Now.ToString("yyyy-MM-dd"));
                 cmd.Parameters.AddWithValue("@lastUpdated", DateTime.Now.ToString("yyyy-MM-dd"));
                 cmd.CommandType = CommandType.Text;
@@ -69,10 +71,11 @@ namespace BakeryPR.DAO
             {
                 conn.Open();
                 SQLiteCommand cmd = new SQLiteCommand(conn);
-                cmd.CommandText = "update production set recipeId = @recipeId,title=@title,lastUpdated=@lastUpdated where id=@id";
+                cmd.CommandText = "update production set quantity=@quantity, recipeId = @recipeId,title=@title,lastUpdated=@lastUpdated where id=@id";
                 cmd.Parameters.AddWithValue("@title", values.title);
                 cmd.Parameters.AddWithValue("@recipeId", values.recipeId);
                 cmd.Parameters.AddWithValue("@id", values.id);
+                cmd.Parameters.AddWithValue("@quantity", values.quantity);
                 cmd.Parameters.AddWithValue("@lastUpdated", values.dateCreated.ToString("yyyy-MM-dd"));
                 cmd.CommandType = CommandType.Text;
                 int count = cmd.ExecuteNonQuery();
@@ -103,6 +106,7 @@ namespace BakeryPR.DAO
                     createdBY = x["createdBy"].ToString(),
                     title = x["title"].ToString(),
                     recipeTitle = x["recipeTitle"].ToString(),
+                    quantity = String.IsNullOrEmpty(x["quantity"].ToString()) ? 0 : double.Parse(x["quantity"].ToString()),
                     recipeId = int.Parse(x["recipeId"].ToString()),
                     dateCreated = DateTime.Parse(x["dateCreated"].ToString(), new CultureInfo("en-US", true)),
                     lastUpdated = DateTime.Parse(x["lastUpdated"].ToString(), new CultureInfo("en-US", true))

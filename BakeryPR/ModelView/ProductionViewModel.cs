@@ -39,7 +39,7 @@ namespace BakeryPR.ModelView
                     {
                         try
                         {
-                            Error checkResource = rdao.checkRecipeQuantity(this.production.recipeId);
+                            Error checkResource = rdao.checkRecipeQuantity(this.production.recipeId,this.production.quantity);
 
                             if (checkResource.success)
                             {
@@ -119,7 +119,6 @@ namespace BakeryPR.ModelView
             }
         }
 
-
         public ProductionDao dao
         {
             get
@@ -154,7 +153,6 @@ namespace BakeryPR.ModelView
             }
         }
 
-
         private Production _production = new Production();
 
         public Production production
@@ -166,7 +164,6 @@ namespace BakeryPR.ModelView
                 this.NotifyPropertyChanged("production");
             }
         }
-
 
         private ObservableCollection<Models.Production> _productions;
 
