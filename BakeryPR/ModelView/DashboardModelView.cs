@@ -1,4 +1,6 @@
-﻿using BakeryPR.Utilities;
+﻿using BakeryPR.DAO;
+using BakeryPR.Models;
+using BakeryPR.Utilities;
 using BakeryPR.Views;
 using System;
 using System.Collections.Generic;
@@ -16,13 +18,14 @@ namespace BakeryPR.ModelView
     {
         public void Navigate(object obj)
         {
+            this.userModel = appDao.read();
             string ss = (string)obj;
             if (ss == null)
             {
                 ss = PageParameter.dashboard.ToString();
             }
             string tt = "";
-            this.navState = NavigateUtils.getNav(ss,out tt);
+            this.navState = NavigateUtils.getNav(ss, out tt);
             this.title = tt;
             this.isSpin = false;
             this.NotifyPropertyChanged("navState");
@@ -105,6 +108,31 @@ namespace BakeryPR.ModelView
                 this.NotifyPropertyChanged("isSpin");
             }
         }
+
+        public AppConfigDao appDao
+        {
+            get
+            {
+                return new AppConfigDao();
+            }
+        }
+
+        private LoginModel _userModel = new LoginModel();
+
+        public LoginModel userModel
+        {
+            get
+            {
+                _userModel = appDao.read();
+                return _userModel;
+            }
+            set
+            {
+                _userModel = value;
+
+            }
+        }
+
 
 
         #region property change
