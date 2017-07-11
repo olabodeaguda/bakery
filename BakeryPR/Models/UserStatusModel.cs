@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BakeryPR.DAO;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -7,17 +8,17 @@ using System.Threading.Tasks;
 
 namespace BakeryPR.Models
 {
-    public class Profile : INotifyPropertyChanged
+    public class UserStatusModel : INotifyPropertyChanged
     {
-        private int _id;
+        private AppConfigDao _appConfigDao;
 
-        public int id
+        public AppConfigDao appConfigDao
         {
-            get { return _id; }
+            get { return _appConfigDao; }
             set
             {
-                _id = value;
-                this.NotifyPropertyChanged("id");
+                _appConfigDao = value;
+                this.NotifyPropertyChanged("appConfigDao");
             }
         }
 
@@ -33,30 +34,6 @@ namespace BakeryPR.Models
             }
         }
 
-        private string _surname;
-
-        public string surname
-        {
-            get { return _surname; }
-            set
-            {
-                _surname = value;
-                this.NotifyPropertyChanged("surname");
-            }
-        }
-
-        private string _othername;
-
-        public string othername
-        {
-            get { return _othername; }
-            set
-            {
-                _othername = value;
-                this.NotifyPropertyChanged("othername");
-            }
-        }
-
         private string _status;
 
         public string status
@@ -65,22 +42,9 @@ namespace BakeryPR.Models
             set
             {
                 _status = value;
-                this.NotifyPropertyChanged("status");
+                this.NotifyPropertyChanged("sttaus");
             }
         }
-
-        private string _pwd;
-
-        public string pwd
-        {
-            get { return _pwd; }
-            set
-            {
-                _pwd = value;
-                this.NotifyPropertyChanged("pwd");
-            }
-        }
-
 
         #region property change
 
@@ -94,6 +58,5 @@ namespace BakeryPR.Models
             }
         }
         #endregion
-
     }
 }

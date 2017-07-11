@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:BakeryPR.Views"
         xmlns:fa="http://schemas.fontawesome.io/icons/"
         mc:Ignorable="d"
-        Title="Edit Overhead" Height="300" Width="300"  WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+        Title="Edit Overhead" Height="300" Width="300" Style="{StaticResource {x:Type Window}}" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>

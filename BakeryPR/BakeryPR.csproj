@@ -80,6 +80,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="DAO\AbstractDao.cs" />
+    <Compile Include="DAO\AppConfigDao.cs" />
     <Compile Include="DAO\CommonDao.cs" />
     <Compile Include="DAO\IngredentDao.cs" />
     <Compile Include="DAO\InventoryHistoryDao.cs" />
@@ -91,10 +92,13 @@
     <Compile Include="DAO\ProductionProductDao.cs" />
     <Compile Include="DAO\RecipeDao.cs" />
     <Compile Include="DAO\RecipeIngredentDao.cs" />
+    <Compile Include="DAO\RoleDao.cs" />
+    <Compile Include="DAO\UserDao.cs" />
     <Compile Include="Models\Error.cs" />
     <Compile Include="Models\Ingredent.cs" />
     <Compile Include="Models\InventoryHistory.cs" />
     <Compile Include="Models\InventoryMode.cs" />
+    <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\MeasurementType.cs" />
     <Compile Include="Models\Overhead.cs" />
     <Compile Include="Models\Product.cs" />
@@ -104,6 +108,9 @@
     <Compile Include="Models\Profile.cs" />
     <Compile Include="Models\Recipe.cs" />
     <Compile Include="Models\RecipeIngredents.cs" />
+    <Compile Include="Models\Role.cs" />
+    <Compile Include="Models\UserRole.cs" />
+    <Compile Include="Models\UserStatusModel.cs" />
     <Compile Include="ModelView\DashboardModelView.cs" />
     <Compile Include="ModelView\IngredentModelView.cs" />
     <Compile Include="ModelView\OverheadModelView.cs" />
@@ -111,6 +118,8 @@
     <Compile Include="ModelView\ProductViewModel.cs" />
     <Compile Include="ModelView\RecipeIngredentModelView.cs" />
     <Compile Include="ModelView\UCDashboardModelView.cs" />
+    <Compile Include="ModelView\UserManagementModelView.cs" />
+    <Compile Include="Utilities\AppConfigUtils.cs" />
     <Compile Include="Utilities\DelegateCommand.cs" />
     <Compile Include="Utilities\NavigateUtils.cs" />
     <Compile Include="Utilities\OverheadType.cs" />
@@ -176,6 +185,9 @@
     <Compile Include="Views\EditProductionProduct.xaml.cs">
       <DependentUpon>EditProductionProduct.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\LoginView.xaml.cs">
+      <DependentUpon>LoginView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\OverheadView.xaml.cs">
       <DependentUpon>OverheadView.xaml</DependentUpon>
     </Compile>
@@ -193,6 +205,9 @@
     </Compile>
     <Compile Include="Views\UpdateInventory.xaml.cs">
       <DependentUpon>UpdateInventory.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserManagement.xaml.cs">
+      <DependentUpon>UserManagement.xaml</DependentUpon>
     </Compile>
     <Page Include="Views\AddIngredent.xaml">
       <SubType>Designer</SubType>
@@ -270,6 +285,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\LoginView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\OverheadView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -291,6 +310,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\UpdateInventory.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserManagement.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

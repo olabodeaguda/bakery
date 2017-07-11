@@ -7,7 +7,7 @@
         xmlns:vm="clr-namespace:BakeryPR.ModelView"
         xmlns:fa="http://schemas.fontawesome.io/icons/"
         mc:Ignorable="d"
-        Title="Update Product" Height="300" Width="500" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+        Title="Update Product" Height="300" Width="500" Style="{StaticResource {x:Type Window}}" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <!--<Window.DataContext>
         <vm:ProductionViewModel></vm:ProductionViewModel>
     </Window.DataContext>-->

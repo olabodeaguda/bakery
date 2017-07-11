@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BakeryPR.Views"
         mc:Ignorable="d"
-        Title="Add Production"  Height="330" Width="450" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+        Title="Add Production"  Height="330" Width="450" Style="{StaticResource {x:Type Window}}" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Grid Margin="10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="100"></ColumnDefinition>
