@@ -1,5 +1,7 @@
-﻿using System;
+﻿using BakeryPR.Models;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -10,6 +12,31 @@ namespace BakeryPR.ModelView
 {
     public class UserManagementModelView : INotifyPropertyChanged
     {
+
+        private Profile _profile = new Profile();
+
+        public Profile profile
+        {
+            get { return _profile; }
+            set
+            {
+                _profile = value;
+                this.NotifyPropertyChanged("profile");
+            }
+        }
+
+        private ObservableCollection<Profile> _profiles = new ObservableCollection<Profile>();
+
+        public ObservableCollection<Profile> profiles
+        {
+            get { return _profiles; }
+            set
+            {
+                _profiles = value;
+                this.NotifyPropertyChanged("profiles");
+            }
+        }
+
 
 
 

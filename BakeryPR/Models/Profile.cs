@@ -81,6 +81,27 @@ namespace BakeryPR.Models
             }
         }
 
+        public string fullName
+        {
+            get
+            {
+                return $"{this.surname} {this.othername}";
+            }
+        }
+
+        private string _roleName;
+
+        public string roleName
+        {
+            get { return _roleName; }
+            set
+            {
+                _roleName = value;
+                this.NotifyPropertyChanged("roleName");
+            }
+        }
+
+
 
         #region property change
 

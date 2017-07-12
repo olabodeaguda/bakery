@@ -66,7 +66,7 @@ namespace BakeryPR.DAO
                     title = x["title"].ToString(),
                     dateCreated = DateTime.Parse(x["dateCreated"].ToString(), new CultureInfo("en-US", true)),
                     lastUpdated = DateTime.Parse(x["lastUpdated"].ToString(), new CultureInfo("en-US", true)),
-                    quantity = x["quantity"] != null ? double.Parse(x["quantity"].ToString()) : 0
+                    quantity = !string.IsNullOrEmpty(x["quantity"].ToString()) ? double.Parse(x["quantity"].ToString()) : 0
                 }).FirstOrDefault();
 
                 if (results != null)
