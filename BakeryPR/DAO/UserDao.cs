@@ -93,13 +93,12 @@ namespace BakeryPR.DAO
                 conn.Open();
                 SQLiteCommand cmd = new SQLiteCommand(conn);
 
-                cmd.CommandText = "insert into profile set username = @username,surname=@surname,othername=@othername,status=@status,pwd=@pwd where id=@id";
+                cmd.CommandText = "insert into profile set username = @username,surname=@surname,othername=@othername,status=@status where id=@id";
 
                 cmd.Parameters.AddWithValue("@username", values.username);
                 cmd.Parameters.AddWithValue("@surname", values.surname);
                 cmd.Parameters.AddWithValue("@othername", values.othername);
                 cmd.Parameters.AddWithValue("@status", values.status);
-                cmd.Parameters.AddWithValue("@pwd", values.pwd);
                 cmd.Parameters.AddWithValue("@id", values.id);
 
                 cmd.CommandType = CommandType.Text;

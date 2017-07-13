@@ -37,9 +37,6 @@ namespace BakeryPR.ModelView
             }
         }
 
-
-
-
         public double winHeight
         {
             get
