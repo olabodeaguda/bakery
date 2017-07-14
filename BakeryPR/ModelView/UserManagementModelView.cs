@@ -36,6 +36,7 @@ namespace BakeryPR.ModelView
                 {
                     EditProfile user = new EditProfile();
                     this.profile = (Profile)s;
+                    user.DataContext = this;
                     user.ShowDialog();
                 });
             }

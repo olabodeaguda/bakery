@@ -10,9 +10,6 @@
         mc:Ignorable="d"
         Title="Update User" Height="300" Width="450" 
         Style="{StaticResource {x:Type Window}}" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
-    <Window.DataContext>
-        <vm:UserManagementModelView></vm:UserManagementModelView>
-    </Window.DataContext>
     
     <Grid Margin="5">
         <Grid.RowDefinitions>
