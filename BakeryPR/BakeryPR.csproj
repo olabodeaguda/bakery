@@ -175,6 +175,9 @@
     <Compile Include="Views\EditProductionOverhead.xaml.cs">
       <DependentUpon>EditProductionOverhead.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\EditProfile.xaml.cs">
+      <DependentUpon>EditProfile.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\EditRecipe.xaml.cs">
       <DependentUpon>EditRecipe.xaml</DependentUpon>
     </Compile>
@@ -271,6 +274,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\EditProductionOverhead.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EditProfile.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

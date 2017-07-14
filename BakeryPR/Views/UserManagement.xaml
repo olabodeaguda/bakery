@@ -17,7 +17,7 @@
         </Grid.RowDefinitions>
         <Button Width="90" Height="40" HorizontalAlignment="Left" Command="{Binding loadAddCommand}">Add</Button>
         <ListView Width="{Binding winWidth}" 
-                  ItemsSource="{Binding products,Mode=TwoWay}" IsSynchronizedWithCurrentItem="True" HorizontalAlignment="Left" 
+                  ItemsSource="{Binding profiles,Mode=TwoWay}" IsSynchronizedWithCurrentItem="True" HorizontalAlignment="Left" 
                   HorizontalContentAlignment="Left" Margin="5" Grid.RowSpan="2" Grid.Row="1">
             <ListView.View>
                 <GridView>
@@ -25,7 +25,7 @@
                         <GridViewColumn.CellTemplate >
                             <DataTemplate>
                                 <Button Content="Edit Profile"  CommandParameter="{Binding}"
-                                        Command="{Binding Path=DataContext.loadEditCommand, 
+                                        Command="{Binding Path=DataContext.loadUpdateCommand, 
                                     RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
 
                             </DataTemplate>
@@ -63,8 +63,6 @@
                     </GridViewColumn>
                     <GridViewColumn Width="200"  HeaderContainerStyle="{StaticResource ListViewStyle}" 
                                     Header="Full Name"  DisplayMemberBinding="{Binding fullName}" />
-                    <GridViewColumn Width="100" HeaderContainerStyle="{StaticResource ListViewStyle}" 
-                                    Header="Role Name" DisplayMemberBinding="{Binding roleName}" />
                     <GridViewColumn Width="100" HeaderContainerStyle="{StaticResource ListViewStyle}" 
                                     Header="Status" DisplayMemberBinding="{Binding status}" />
                 </GridView>

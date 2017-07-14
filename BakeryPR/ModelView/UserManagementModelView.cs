@@ -28,6 +28,32 @@ namespace BakeryPR.ModelView
             }
         }
 
+        public DelegateCommand<object> loadUpdateCommand
+        {
+            get
+            {
+                return new DelegateCommand<object>((s) =>
+                {
+                    EditProfile user = new EditProfile();
+                    this.profile = (Profile)s;
+                    user.ShowDialog();
+                });
+            }
+        }
+
+        public DelegateCommand<object> updateUserCommand
+        {
+            get
+            {
+                return new DelegateCommand<object>(async (s) =>
+                {
+                    await Task.Run(()=> {
+                            
+                    });
+                });
+            }
+        }
+
         public DelegateCommand<object> loadAddCommand
         {
             get

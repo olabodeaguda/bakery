@@ -8,7 +8,7 @@
         xmlns:utility="clr-namespace:BakeryPR.Utilities"
         xmlns:fa="http://schemas.fontawesome.io/icons/"
         mc:Ignorable="d"
-        Title="Add User" Height="400" Width="450" 
+        Title="Add User" Height="350" Width="450" 
         Style="{StaticResource {x:Type Window}}" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Window.DataContext>
         <vm:UserManagementModelView></vm:UserManagementModelView>
@@ -27,21 +27,21 @@
             <ColumnDefinition Width="113.6"></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <TextBlock Style="{StaticResource headings}"  Grid.ColumnSpan="2" Margin="15,0,14.6,0">Add User</TextBlock>
+        <TextBlock Style="{StaticResource headings}"  Grid.ColumnSpan="2" >Add User</TextBlock>
 
-        <TextBlock Grid.Row="1" Grid.ColumnSpan="2" Margin="0,0,287.6,50" Grid.RowSpan="2">Username</TextBlock>
-        <TextBlock Grid.Row="2" Grid.ColumnSpan="2" Margin="0,0.4,287.6,0">Surname</TextBlock>
-        <TextBlock Grid.Row="3" Grid.ColumnSpan="2" Margin="0,0,287.6,50" Grid.RowSpan="2">Other Names</TextBlock>
-        <TextBlock Grid.Row="4" Grid.ColumnSpan="2" Margin="0,0.4,287.6,0">Password</TextBlock>
-        <TextBlock Grid.Row="5" Grid.ColumnSpan="2" Margin="0,0,287.6,50" Grid.RowSpan="2">Confirm Password</TextBlock>
+        <TextBlock Grid.Row="1"  Height="30" VerticalAlignment="Center" >Username</TextBlock>
+        <TextBlock Grid.Row="2" Height="30" >Surname</TextBlock>
+        <TextBlock Grid.Row="3"  Height="30" >Other Names</TextBlock>
+        <TextBlock Grid.Row="4"  Height="30" >Password</TextBlock>
+        <TextBlock Grid.Row="5"  Height="30" >Confirm Password</TextBlock>
 
-        <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding profile.username,Mode=TwoWay}" Margin="2.4,7,4.6,7.6"/>
-        <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding profile.surname,Mode=TwoWay}" Margin="2.4,7.4,4.6,8"/>
-        <TextBox Grid.Column="1" Grid.Row="3" Text="{Binding profile.othername,Mode=TwoWay}" Margin="2.4,7,4.6,7.6"/>
-        <PasswordBox utility:PasswordBoxAssistant.BindPassword="True" 
-                     utility:PasswordBoxAssistant.BoundPassword="{Binding Path=profile.pwd,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="4" PasswordChar="*" Margin="1.4,7.4,-0.4,8"/>
-        <PasswordBox  utility:PasswordBoxAssistant.BindPassword="True" 
-                     utility:PasswordBoxAssistant.BoundPassword="{Binding Path=profile.confirmPassword,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="5" PasswordChar="*" Margin="1.4,7,-0.4,7.6"/>
+        <TextBox Height="30" Grid.Column="1" Grid.Row="1" Text="{Binding profile.username,Mode=TwoWay}" />
+        <TextBox Height="30" Grid.Column="1" Grid.Row="2" Text="{Binding profile.surname,Mode=TwoWay}" />
+        <TextBox Height="30" Grid.Column="1" Grid.Row="3" Text="{Binding profile.othername,Mode=TwoWay}" />
+        <PasswordBox Height="30" utility:PasswordBoxAssistant.BindPassword="True" 
+                     utility:PasswordBoxAssistant.BoundPassword="{Binding Path=profile.pwd,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="4" PasswordChar="*" />
+        <PasswordBox Height="30"  utility:PasswordBoxAssistant.BindPassword="True" 
+                     utility:PasswordBoxAssistant.BoundPassword="{Binding Path=profile.confirmPassword,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="5" PasswordChar="*" />
 
 
         <StackPanel  Grid.Row="6" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right">
@@ -49,7 +49,7 @@
                     Height="Auto"  >Add</Button>
             <fa:ImageAwesome Icon="Refresh" Spin="True" Visibility="{Binding isSpin,Mode=TwoWay}" Height="20" Width="30" />
         </StackPanel>
-        
+
 
 
     </Grid>

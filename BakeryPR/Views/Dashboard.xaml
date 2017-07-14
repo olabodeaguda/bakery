@@ -46,7 +46,7 @@
                 <MenuItem Header="Product" Command="{Binding navCommand}" CommandParameter="product"></MenuItem>
                 <MenuItem Header="Overhead" Command="{Binding navCommand}" CommandParameter="overhead"></MenuItem>
                 <MenuItem Header="Manage Recipe" Command="{Binding navCommand}" CommandParameter="recipe"></MenuItem>
-                <MenuItem Header="User Manage" Command="{Binding navCommand}" CommandParameter="user"></MenuItem>
+                <MenuItem Header="User Management" Command="{Binding navCommand}" CommandParameter="user"></MenuItem>
             </MenuItem>
             <MenuItem Header="Production"  Command="{Binding navCommand}" CommandParameter="production"></MenuItem>
             <MenuItem Header="Sales"  Command="{Binding navCommand}" CommandParameter="sales"></MenuItem>

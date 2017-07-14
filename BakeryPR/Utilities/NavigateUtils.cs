@@ -35,7 +35,7 @@ namespace BakeryPR.Utilities
                     title = "Manage Sales";
                     return new UCDashboard();
                 case "user":
-                    title = "User Manage";
+                    title = "User Management";
                     return new UserManagement();
                 case "reports":
                     title = "Manage Report";
