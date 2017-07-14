@@ -101,6 +101,18 @@ namespace BakeryPR.Models
             }
         }
 
+        private string _confirmPassword;
+
+        public string confirmPassword
+        {
+            get { return _confirmPassword; }
+            set
+            {
+                _confirmPassword = value;
+                this.NotifyPropertyChanged("confirmPassword");
+            }
+        }
+
 
 
         #region property change

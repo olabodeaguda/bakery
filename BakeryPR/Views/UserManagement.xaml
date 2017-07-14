@@ -15,7 +15,7 @@
             <RowDefinition Height="60"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-        <Button Width="90" Height="40" HorizontalAlignment="Left" Command="{Binding loadCommand}">Add</Button>
+        <Button Width="90" Height="40" HorizontalAlignment="Left" Command="{Binding loadAddCommand}">Add</Button>
         <ListView Width="{Binding winWidth}" 
                   ItemsSource="{Binding products,Mode=TwoWay}" IsSynchronizedWithCurrentItem="True" HorizontalAlignment="Left" 
                   HorizontalContentAlignment="Left" Margin="5" Grid.RowSpan="2" Grid.Row="1">

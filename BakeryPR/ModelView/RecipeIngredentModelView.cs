@@ -89,7 +89,6 @@ namespace BakeryPR.ModelView
                             return;
                         }
 
-
                         bool result = this.riDao.add(this.recipeIngredent);
                         if (result)
                         {
