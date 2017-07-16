@@ -15,14 +15,13 @@ using System.Windows.Shapes;
 namespace BakeryPR.Views
 {
     /// <summary>
-    /// Interaction logic for LoginView.xaml
+    /// Interaction logic for ChangePwd.xaml
     /// </summary>
-    public partial class LoginView : Window
+    public partial class ChangePwd : Window
     {
-        public LoginView()
+        public ChangePwd()
         {
             InitializeComponent();
         }
-        
     }
 }

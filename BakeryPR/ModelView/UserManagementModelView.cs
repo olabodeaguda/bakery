@@ -38,9 +38,23 @@ namespace BakeryPR.ModelView
                     this.profile = (Profile)s;
                     user.DataContext = this;
                     user.ShowDialog();
+                    this.profile = new Profile();
                 });
             }
         }
+
+        private ChangePass _changePass = new ChangePass();
+
+        public ChangePass changePass
+        {
+            get { return _changePass; }
+            set
+            {
+                _changePass = value;
+                this.NotifyPropertyChanged("changePass");
+            }
+        }
+
 
         public DelegateCommand<object> updateUserCommand
         {
@@ -48,8 +62,31 @@ namespace BakeryPR.ModelView
             {
                 return new DelegateCommand<object>(async (s) =>
                 {
-                    await Task.Run(()=> {
-                            
+                    await Task.Run(() =>
+                    {
+                        try
+                        {
+                            Profile res = userDao.byProfile(this.profile);
+                            if (res != null)
+                            {
+                                throw new Exception("Username already exist for another user");
+                            }
+                            bool result = userDao.Update(this.profile);
+                            if (result)
+                            {
+                                MessageBox.Show("Saved");
+                                this.profiles = new ObservableCollection<Profile>(userDao.all());
+                            }
+                            else
+                            {
+                                MessageBox.Show("not saved");
+                            }
+                        }
+                        catch (Exception x)
+                        {
+                            MessageBox.Show(x.Message);
+                        }
+
                     });
                 });
             }
@@ -61,12 +98,72 @@ namespace BakeryPR.ModelView
             {
                 return new DelegateCommand<object>((s) =>
                 {
-
                     AddUser user = new AddUser();
+                    user.DataContext = this;
                     user.ShowDialog();
                 });
             }
         }
+
+        public DelegateCommand<object> loadChangePwdCommand
+        {
+            get
+            {
+                return new DelegateCommand<object>((s) =>
+                {
+                    Profile p = (Profile)s;
+                    ChangePwd user = new ChangePwd();
+                    this.changePass.id = p.id;
+                    user.DataContext = this;
+                    user.ShowDialog();
+                    this.changePass = new ChangePass();
+                });
+            }
+        }
+
+        public DelegateCommand<object> ChangePwdCommand
+        {
+            get
+            {
+                return new DelegateCommand<object>(async (s) =>
+                {
+                    this.isSpin = Visibility.Visible;
+                    await Task.Run(() =>
+                    {
+                        try
+                        {
+                            if (!this.changePass.newPassword.Equals(this.changePass.confirmPassword))
+                            {
+                                throw new Exception("Password does not match");
+                            }
+
+                            byte[] bt = Encoding.ASCII.GetBytes(this.changePass.newPassword);
+                            this.changePass.newPassword = Convert.ToBase64String(bt);
+                            bool result = userDao.ChangePwd(this.changePass);
+                            if (result)
+                            {
+                                MessageBox.Show("User Password have been changed successfully", "Change Password", MessageBoxButton.OK,
+                                    MessageBoxImage.Information);
+                                this.profile = new Profile();                               
+                            }
+                            else
+                            {
+                                MessageBox.Show("User Password have not been changed successfully, Please try again or contact admin", "Error", MessageBoxButton.OK,
+                                    MessageBoxImage.Error);
+                            }
+
+                        }
+                        catch (Exception x)
+                        {
+                            MessageBox.Show(x.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
+                        this.isSpin = Visibility.Collapsed;
+                    });
+
+                });
+            }
+        }
+
 
         public DelegateCommand<object> addUserCommand
         {
@@ -83,15 +180,24 @@ namespace BakeryPR.ModelView
                             {
                                 throw new Exception("Password does not match");
                             }
+
+                            //check if user already exist
+                            Profile pFile = userDao.byUsername(this.profile.username);
+                            if (pFile != null)
+                            {
+                                throw new Exception(this.profile.username + " already exist");
+                            }
+
                             this.profile.status = UserSatus.ACTIVE.ToString();
                             byte[] bt = Encoding.ASCII.GetBytes(this.profile.pwd);
                             this.profile.pwd = Convert.ToBase64String(bt);
                             bool result = userDao.add(this.profile);
                             if (result)
                             {
-                                this.profiles = new ObservableCollection<Profile>(userDao.all());
-                                MessageBox.Show("User have been created", "Saved", MessageBoxButton.OK, 
+                                MessageBox.Show("User have been created", "Saved", MessageBoxButton.OK,
                                     MessageBoxImage.Information);
+                                this.profile = new Profile();
+                                this.profiles = new ObservableCollection<Profile>(userDao.all());
                             }
                             else
                             {
@@ -106,6 +212,7 @@ namespace BakeryPR.ModelView
                         }
                         this.isSpin = Visibility.Collapsed;
                     });
+
                 });
             }
         }
@@ -123,7 +230,7 @@ namespace BakeryPR.ModelView
         }
 
 
-        private ObservableCollection<Profile> _profiles = new ObservableCollection<Profile>();
+        private ObservableCollection<Profile> _profiles;
 
         public ObservableCollection<Profile> profiles
         {
