@@ -118,6 +118,7 @@
     <Compile Include="ModelView\OverheadModelView.cs" />
     <Compile Include="ModelView\ProductionViewModel.cs" />
     <Compile Include="ModelView\ProductViewModel.cs" />
+    <Compile Include="Utilities\ICloseable.cs" />
     <Compile Include="Utilities\ProfileConfigHelper.cs" />
     <Compile Include="ModelView\RecipeIngredentModelView.cs" />
     <Compile Include="ModelView\UCDashboardModelView.cs" />

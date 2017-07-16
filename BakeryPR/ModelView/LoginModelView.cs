@@ -12,7 +12,7 @@ using System.Windows;
 
 namespace BakeryPR.ModelView
 {
-    public class LoginModelView : INotifyPropertyChanged
+    public class LoginModelView : INotifyPropertyChanged, ICloseable
     {
         private LoginModel _loginmodel = new LoginModel();
 
@@ -71,6 +71,9 @@ namespace BakeryPR.ModelView
                                 username = details.username,
                                 isLogin = "1"
                             });
+
+                            this.isSpin = Visibility.Collapsed;
+                            close();
                         }
                         catch (Exception x)
                         {
@@ -78,10 +81,6 @@ namespace BakeryPR.ModelView
                         }
                     });
 
-
-                    LoginModel lg = appconfigDao.read();
-
-                    this.isSpin = Visibility.Collapsed;
                 });
             }
         }
@@ -103,10 +102,18 @@ namespace BakeryPR.ModelView
         }
 
 
+        public void close()
+        {
+            if (this is ICloseable)
+            {
+                (this as ICloseable).RequestClose += (_, __) => this.close();
+            }
+        }
 
         #region property change
 
         public event PropertyChangedEventHandler PropertyChanged;
+        public event EventHandler<EventArgs> RequestClose;
 
         protected void NotifyPropertyChanged(String info)
         {
