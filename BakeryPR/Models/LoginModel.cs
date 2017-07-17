@@ -33,6 +33,23 @@ namespace BakeryPR.Models
             }
         }
 
+        private string _displayname;
+
+        public string displayname
+        {
+            get
+            {
+                _displayname = $"Welcome, {fullname}";
+                return _displayname;
+            }
+            set
+            {
+                _displayname = value;
+                this.NotifyPropertyChanged("displayname");
+            }
+        }
+
+
         private string _status;
 
         public string status

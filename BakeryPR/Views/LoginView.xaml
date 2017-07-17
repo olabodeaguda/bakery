@@ -11,6 +11,7 @@
     <Window.DataContext>
         <vm:LoginModelView></vm:LoginModelView>
     </Window.DataContext>
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
@@ -23,7 +24,7 @@
 
         <StackPanel Grid.Row="1" >
             <TextBlock Margin="8 0 0 0">User Name</TextBlock>
-            <TextBox Height="30" Text="{Binding loginModel.username,Mode=TwoWay}"></TextBox>
+            <TextBox Height="30" Text="{Binding loginModel.username,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
         </StackPanel>
 
         <StackPanel Grid.Row="2">
@@ -35,7 +36,7 @@
         <StackPanel  Grid.Row="3" Grid.Column="3" Orientation="Horizontal" HorizontalAlignment="Right">
             <fa:ImageAwesome Icon="Refresh" Spin="True" Visibility="{Binding isSpin,Mode=TwoWay}" Height="20" Width="30" />
             <Button Style="{StaticResource btnSubmitStyle}" Width="120" Grid.Column="1" Command="{Binding loginCommand}"
-                    Height="Auto"  >Login</Button>
+                    Height="Auto" IsDefault="True" >Login</Button>
         </StackPanel>
 
     </Grid>

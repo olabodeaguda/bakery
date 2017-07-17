@@ -9,26 +9,12 @@
         xmlns:vm="clr-namespace:BakeryPR.ModelView"
         Title="Bakery" Height="{Binding winHeight}" Width="{Binding winWidth}" WindowState="Maximized" WindowStyle="SingleBorderWindow"
         WindowStartupLocation="CenterScreen" Style="{StaticResource {x:Type Window}}">
-    <!--<Window.Background>
-        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-            <GradientStop Color="Black" Offset="0"/>
-            <GradientStop Color="White" Offset="0.192"/>
-            <GradientStop Color="#FF434343" Offset="0.896"/>
-        </LinearGradientBrush>
-    </Window.Background>-->
+
     <Window.DataContext>
         <vm:DashboardModelView></vm:DashboardModelView>
     </Window.DataContext>
+
     <Grid>
-        <!--<Grid.Background>
-            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                <GradientStop Color="Black" Offset="0"/>
-                <GradientStop Color="White" Offset="0.273"/>
-                <GradientStop Color="#FF0F0F0F" Offset="0.944"/>
-                <GradientStop Color="#FEC3C3C3" Offset="0.667"/>
-                <GradientStop Color="#FF5B5353" Offset="0.486"/>
-            </LinearGradientBrush>
-        </Grid.Background>-->
         <Grid.RowDefinitions>
             <RowDefinition Height="50"></RowDefinition>
             <RowDefinition Height="80"></RowDefinition>
@@ -36,7 +22,7 @@
             <RowDefinition Height="40"></RowDefinition>
         </Grid.RowDefinitions>
         <Menu>
-            
+
             <MenuItem Header="_File" >
                 <MenuItem Header="E_xit" Command="{Binding navCommand}" CommandParameter="exit"></MenuItem>
             </MenuItem>
@@ -53,15 +39,27 @@
             <MenuItem Header="Reports" Command="{Binding navCommand}" CommandParameter="reports"></MenuItem>
             <MenuItem Header="About" Command="{Binding navCommand}" CommandParameter="about"></MenuItem>
         </Menu>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <TextBlock  Style="{StaticResource boldheadings}" Text="{Binding title}"></TextBlock>
+            <StackPanel Margin="5" HorizontalAlignment="Right" Grid.Column="1" Visibility="{Binding isLogin, Mode=TwoWay}" Orientation="Horizontal">
+                <TextBlock Visibility="{Binding isLogin, Mode=TwoWay}" MinWidth="250" Margin="5"
+                           Text="{Binding loginModel.displayname,Mode=TwoWay}"
+                           TextAlignment="Right" >
+                </TextBlock>
+                <Button Visibility="{Binding isLogin, Mode=TwoWay}" Command="{Binding logoutCommand}" Height="30" Width="100" VerticalAlignment="Top">Log Out</Button>
+            </StackPanel>
+        </Grid>
 
-        <TextBlock Grid.Row="1" Style="{StaticResource boldheadings}" Text="{Binding title}"></TextBlock>
-        
         <DockPanel Grid.Row="2">
             <!--<fa:ImageAwesome Icon="Refresh" Spin="True" Height="48" Width="48"
                              Margin="400 0 0 0" />-->
             <ContentPresenter Content="{Binding navState}"  Width="{Binding winWidth}"></ContentPresenter>
         </DockPanel>
-       
+
         <TextBlock TextAlignment="Center" Foreground="White" TextWrapping="WrapWithOverflow" Width="{Binding winWidth}" Text="{Binding footerText}" Grid.Row="3" FontSize="16" HorizontalAlignment="Center"></TextBlock>
     </Grid>
 </Window>

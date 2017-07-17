@@ -31,6 +31,84 @@ namespace BakeryPR.ModelView
             this.NotifyPropertyChanged("navState");
         }
 
+        public DelegateCommand<object> logoutCommand
+        {
+            get
+            {
+                return new DelegateCommand<object>((s) =>
+                {
+                    Dashboard dh = null;
+                    foreach (Window tm in Application.Current.Windows)
+                    {
+                        if (tm is Dashboard)
+                        {
+                            dh = (Dashboard)tm;
+                            break;
+                        }
+                    }
+                    if (dh != null)
+                    {
+                        appConfigDao.updateConfig(new LoginModel()
+                        {
+                            username = "",
+                            isLogin = "0",
+                            status = ""
+                        });
+                        LoginView lv = new LoginView();
+                        lv.Show();
+                        dh.Close();
+                    }
+                });
+            }
+        }
+
+        private LoginModel _loginModel;
+
+        public LoginModel loginModel
+        {
+            get
+            {
+                _loginModel = this.appConfigDao.read();
+                return _loginModel;
+            }
+            set
+            {
+                _loginModel = value;
+                this.NotifyPropertyChanged("loginModel");
+            }
+        }
+
+        private Visibility _isLogin = Visibility.Collapsed;
+
+        public Visibility isLogin
+        {
+            get
+            {
+                if (this.loginModel.isLogin.Equals("1"))
+                {
+                    _isLogin = Visibility.Visible;
+                }
+                else
+                {
+                    _isLogin = Visibility.Collapsed;
+                }
+                return _isLogin;
+            }
+            set
+            {
+                _isLogin = value;
+                this.NotifyPropertyChanged("isLogin");
+            }
+        }
+
+        public AppConfigDao appConfigDao
+        {
+            get
+            {
+                return new AppConfigDao();
+            }
+        }
+
         private string _title = "";
 
         public string title
