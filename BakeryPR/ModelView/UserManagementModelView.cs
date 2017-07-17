@@ -16,6 +16,23 @@ namespace BakeryPR.ModelView
     public class UserManagementModelView : INotifyPropertyChanged
     {
 
+        public RoleDao roleDao
+        {
+            get
+            {
+                return new RoleDao();
+            }
+        }
+
+        public ObservableCollection<Role> roles
+        {
+            get
+            {
+                return new ObservableCollection<Role>(this.roleDao.all());
+            }
+        }
+
+
         private Profile _profile = new Profile();
 
         public Profile profile
@@ -54,7 +71,6 @@ namespace BakeryPR.ModelView
                 this.NotifyPropertyChanged("changePass");
             }
         }
-
 
         public DelegateCommand<object> updateUserCommand
         {
@@ -144,7 +160,7 @@ namespace BakeryPR.ModelView
                             {
                                 MessageBox.Show("User Password have been changed successfully", "Change Password", MessageBoxButton.OK,
                                     MessageBoxImage.Information);
-                                this.profile = new Profile();                               
+                                this.profile = new Profile();
                             }
                             else
                             {

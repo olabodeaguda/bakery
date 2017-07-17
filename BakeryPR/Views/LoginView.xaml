@@ -12,7 +12,7 @@
         <vm:LoginModelView></vm:LoginModelView>
     </Window.DataContext>
     
-    <Grid>
+    <Grid Margin="5">
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
             <RowDefinition Height="60"></RowDefinition>
