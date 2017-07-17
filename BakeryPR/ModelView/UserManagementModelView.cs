@@ -32,6 +32,20 @@ namespace BakeryPR.ModelView
             }
         }
 
+        public DelegateCommand<object> loadAssignUserRole
+        {
+            get
+            {
+                return new DelegateCommand<object>((s) =>
+                {
+                    AssignUserRole assignUR = new AssignUserRole();
+                    assignUR.DataContext = this;
+
+                    assignUR.ShowDialog();
+                });
+            }
+        }
+
 
         private Profile _profile = new Profile();
 

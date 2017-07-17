@@ -12,7 +12,7 @@ using System.Windows;
 
 namespace BakeryPR.ModelView
 {
-    public class LoginModelView : INotifyPropertyChanged, ICloseable
+    public class LoginModelView : INotifyPropertyChanged
     {
         private LoginModel _loginmodel = new LoginModel();
 
@@ -130,16 +130,7 @@ namespace BakeryPR.ModelView
             get { return _isSpin; }
             set { _isSpin = value; }
         }
-
-
-        public void close()
-        {
-            if (this is ICloseable)
-            {
-                (this as ICloseable).RequestClose += (_, __) => this.close();
-            }
-        }
-
+        
         #region property change
 
         public event PropertyChangedEventHandler PropertyChanged;
