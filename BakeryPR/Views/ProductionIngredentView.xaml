@@ -9,9 +9,50 @@
     <Grid Margin="5">
         <Grid.RowDefinitions>
             <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
         <TextBlock Style="{StaticResource headings}"  Grid.ColumnSpan="2" Text="{Binding productionName,Mode=TwoWay}"></TextBlock>
-        
+
+        <Button Margin="5 0 0 5" Grid.Row="1" Width="100" HorizontalAlignment="Left">Add</Button>
+        <ListView x:Name="ProductLst"  Width="{Binding winWidth}" 
+                  ItemsSource="{Binding productionIngredents,Mode=TwoWay}" IsSynchronizedWithCurrentItem="True" HorizontalAlignment="Left" 
+                  HorizontalContentAlignment="Left" Margin="5" Grid.Row="2" >
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn>
+                        <GridViewColumn.CellTemplate >
+                            <DataTemplate>
+                                <Button Content="Edit"  CommandParameter="{Binding}"
+                                        Command="{Binding Path=DataContext.loadEditProductionCommand, 
+                                    RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
+
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <GridViewColumn >
+                        <GridViewColumn.CellTemplate >
+                            <DataTemplate>
+                                <Button Content="Delete"  CommandParameter="{Binding}"
+                                        Command="{Binding Path=DataContext.loadOverheadCommand, 
+                                    RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Width="200"  HeaderContainerStyle="{StaticResource ListViewStyle}" 
+                                    Header="Ingredent Name"  DisplayMemberBinding="{Binding ingredentName}" />
+                    <GridViewColumn Width="200"  HeaderContainerStyle="{StaticResource ListViewStyle}" 
+                                    Header="Quantity"  DisplayMemberBinding="{Binding amount}" />
+                    <GridViewColumn Width="200"  HeaderContainerStyle="{StaticResource ListViewStyle}" 
+                                    Header="Total cost"  DisplayMemberBinding="{Binding totalUnitCost}" />
+                    <GridViewColumn Width="100" HeaderContainerStyle="{StaticResource ListViewStyle}" 
+                                    Header="Date Created" DisplayMemberBinding="{Binding dateCreated,StringFormat=yyyy-MM-dd}" />
+                    <GridViewColumn Width="100" HeaderContainerStyle="{StaticResource ListViewStyle}" 
+                                    Header="Created By" DisplayMemberBinding="{Binding createdBy}" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+
     </Grid>
 </Window>

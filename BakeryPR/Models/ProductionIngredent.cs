@@ -105,6 +105,40 @@ namespace BakeryPR.Models
             }
         }
 
+        private string _measureType;
+
+        public string measureType
+        {
+            get { return _measureType; }
+            set
+            {
+                _measureType = value;
+                this.NotifyPropertyChanged("measureType");
+            }
+        }
+
+        private double _unitCost;
+
+        public double unitCost
+        {
+            get { return _unitCost; }
+            set
+            {
+                _unitCost = value;
+                this.NotifyPropertyChanged("uniCost");
+            }
+        }
+
+        public string totalUnitCost
+        {
+            get
+            {
+                return $"{this.amount * unitCost}{this.measureType}";
+            }
+        }
+
+
+
         #region property change
 
         public event PropertyChangedEventHandler PropertyChanged;

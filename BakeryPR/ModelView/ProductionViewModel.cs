@@ -548,7 +548,15 @@ namespace BakeryPR.ModelView
 
         #region production
 
-        public DelegateCommand<object> loadRecipeCommand
+        public ProductionIngredentDao PIDao
+        {
+            get
+            {
+                return new ProductionIngredentDao();
+            }
+        }
+
+        public DelegateCommand<object> loadIngredentCommand
         {
             get
             {
@@ -557,12 +565,25 @@ namespace BakeryPR.ModelView
                     ProductionIngredentView pi = new ProductionIngredentView();
                     this.production = (Production)s;
                     this.productionName = $"Production title {this.production.title}";
-
+                    this.productionIngredents = new ObservableCollection<ProductionIngredent>(PIDao.byProductionId(this.production.id));
 
                     pi.DataContext = this;
                 });
             }
         }
+
+        private ObservableCollection<ProductionIngredent> _productionIngredents = new ObservableCollection<ProductionIngredent>();
+
+        public ObservableCollection<ProductionIngredent> productionIngredents
+        {
+            get { return _productionIngredents; }
+            set
+            {
+                _productionIngredents = value;
+                this.NotifyPropertyChanged("productionIngredents");
+            }
+        }
+
 
         private string _productionName;
 
