@@ -1,0 +1,17 @@
+﻿<Window x:Class="BakeryPR.Views.ProductionIngredentView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BakeryPR.Views"
+        mc:Ignorable="d"
+        Title="Production Ingredent"  Height="400" Width="700" Style="{StaticResource {x:Type Window}}" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+    <Grid Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <TextBlock Style="{StaticResource headings}"  Grid.ColumnSpan="2" Text="{Binding productionName,Mode=TwoWay}"></TextBlock>
+        
+    </Grid>
+</Window>

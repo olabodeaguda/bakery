@@ -88,6 +88,7 @@
     <Compile Include="DAO\OverheadDao.cs" />
     <Compile Include="DAO\ProductDao.cs" />
     <Compile Include="DAO\ProductionDao.cs" />
+    <Compile Include="DAO\ProductionIngredentDao.cs" />
     <Compile Include="DAO\ProductionOverheadDao.cs" />
     <Compile Include="DAO\ProductionProductDao.cs" />
     <Compile Include="DAO\RecipeDao.cs" />
@@ -95,6 +96,7 @@
     <Compile Include="DAO\RoleDao.cs" />
     <Compile Include="DAO\UserDao.cs" />
     <Compile Include="Models\ChangePwd.cs" />
+    <Compile Include="Models\DropdownModel.cs" />
     <Compile Include="Models\Error.cs" />
     <Compile Include="Models\Ingredent.cs" />
     <Compile Include="Models\InventoryHistory.cs" />
@@ -104,6 +106,7 @@
     <Compile Include="Models\Overhead.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\Production.cs" />
+    <Compile Include="Models\ProductionIngredent.cs" />
     <Compile Include="Models\ProductionOverhead.cs" />
     <Compile Include="Models\ProductionProduct.cs" />
     <Compile Include="Models\Profile.cs" />
@@ -161,6 +164,9 @@
     <Compile Include="Views\ChangePwd.xaml.cs">
       <DependentUpon>ChangePwd.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ChangeUserStatus.xaml.cs">
+      <DependentUpon>ChangeUserStatus.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Dashboard.xaml.cs">
       <DependentUpon>Dashboard.xaml</DependentUpon>
     </Compile>
@@ -206,6 +212,9 @@
     </Compile>
     <Compile Include="Views\OverheadView.xaml.cs">
       <DependentUpon>OverheadView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ProductionIngredentView.xaml.cs">
+      <DependentUpon>ProductionIngredentView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ProductionView.xaml.cs">
       <DependentUpon>ProductionView.xaml</DependentUpon>
@@ -269,6 +278,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\ChangeUserStatus.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Dashboard.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -322,6 +335,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\OverheadView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ProductionIngredentView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

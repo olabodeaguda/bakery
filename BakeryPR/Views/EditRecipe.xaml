@@ -59,7 +59,7 @@
                 </ListView.View>
             </ListView>
 
-            <Button Width="50" Height="25"  HorizontalAlignment="Left" Grid.Row="2">Submit</Button>
+            <!--<Button Width="50" Height="25"  HorizontalAlignment="Left" Grid.Row="2">Submit</Button>-->
 
         </Grid>
     </Grid>

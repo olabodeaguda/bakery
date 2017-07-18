@@ -7,45 +7,31 @@ using System.Threading.Tasks;
 
 namespace BakeryPR.Models
 {
-    public class Role : INotifyPropertyChanged
+    public class DropdownModel : INotifyPropertyChanged
     {
         private int _id;
 
         public int id
         {
             get { return _id; }
-            set
-            {
-                _id = value;
-                this.NotifyPropertyChanged("id");
-            }
+            set { _id = value; }
         }
 
-        private string _name;
+        private string _valueId;
 
-        public string name
+        public string valuesId
         {
-            get { return _name; }
-            set
-            {
-                _name = value;
-                this.NotifyPropertyChanged("name");
-            }
+            get { return _valueId; }
+            set { _valueId = value; }
         }
 
-        private int _userId;
+        private string _value;
 
-        public int userId
+        public string value
         {
-            get { return _userId; }
-            set
-            {
-                _userId = value;
-                this.NotifyPropertyChanged("userId");
-            }
+            get { return _value; }
+            set { _value = value; }
         }
-
-
 
         #region property change
 

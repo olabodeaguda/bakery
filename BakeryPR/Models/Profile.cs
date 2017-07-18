@@ -42,6 +42,7 @@ namespace BakeryPR.Models
             {
                 _surname = value;
                 this.NotifyPropertyChanged("surname");
+                this.NotifyPropertyChanged("fullName");
             }
         }
 
@@ -54,6 +55,7 @@ namespace BakeryPR.Models
             {
                 _othername = value;
                 this.NotifyPropertyChanged("othername");
+                this.NotifyPropertyChanged("fullName");
             }
         }
 
@@ -81,11 +83,19 @@ namespace BakeryPR.Models
             }
         }
 
+        private string _fullName;
+
         public string fullName
         {
             get
             {
-                return $"{this.surname} {this.othername}";
+                _fullName = $"{this.surname} {this.othername}";
+                return _fullName;
+            }
+            set
+            {
+                _fullName = $"{this.surname} {this.othername}";
+                this.NotifyPropertyChanged("fullName");
             }
         }
 

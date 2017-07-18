@@ -172,5 +172,57 @@ namespace BakeryPR.DAO
             return error;
 
         }
+
+        public ProductionIngredentDao productionIngredentDao
+        {
+            get
+            {
+                return new ProductionIngredentDao();
+            }
+        }
+
+        public AppConfigDao appConfigao
+        {
+            get
+            {
+                return new AppConfigDao();
+            }
+        }
+
+        public bool addProdIngredentDB(Production production)
+        {
+            LoginModel lm = appConfigao.read();
+            Error error = new Error() { success = true, errorMsg = "" };
+            Recipe recipe = this.byId(production.recipeId);
+            double ratio = 0;
+
+            ratio = recipe.quantity == 0 ? 1 : (production.quantity / recipe.quantity);
+
+            String query = "";
+            List<Ingredent> lst = ingreDao.all();
+            List<RecipeIngredents> lstrecipeIngredent = riDao.byRecipeId(production.recipeId);
+            foreach (var tm in lstrecipeIngredent)
+            {
+                var r = lst.FirstOrDefault(x => x.id == tm.ingredentId);
+                if (r != null)
+                {
+                    double comp = tm.quantity * ratio;
+                    ProductionIngredent pi = new ProductionIngredent();
+                    pi.amount = comp;
+                    pi.createdBy = lm.fullname;
+                    pi.ingredentId = tm.ingredentId;
+                    pi.productionId = production.id;
+                    query = query + productionIngredentDao.getProdString(pi);
+                }
+            }
+
+            if (string.IsNullOrEmpty(query))
+            {
+                throw new Exception("Please try again. If problem continue contact administrator");
+            }
+
+            return this.execute(query);
+        }
+
     }
 }

@@ -39,7 +39,7 @@ namespace BakeryPR.ModelView
                     {
                         try
                         {
-                            Error checkResource = rdao.checkRecipeQuantity(this.production.recipeId,this.production.quantity);
+                            Error checkResource = rdao.checkRecipeQuantity(this.production.recipeId, this.production.quantity);
 
                             if (checkResource.success)
                             {
@@ -87,28 +87,29 @@ namespace BakeryPR.ModelView
                 {
                     try
                     {
-                        if(this.production.quantity == 0)
+                        if (this.production.quantity == 0)
                         {
-                            throw new Exception("Qantity can't be zero");
+                            throw new Exception("Quantity can't be zero");
                         }
-                        Error checkResource = rdao.checkRecipeQuantity(this.production.recipeId,this.production.quantity);
+                        Error checkResource = rdao.checkRecipeQuantity(this.production.recipeId, this.production.quantity);
 
-                        if (checkResource.success)
+                        if (!checkResource.success)
                         {
-                            // check if it already exist
-                            this.production.title = this.production.title + DateTime.Now.ToString("yyyy-MM-dd");
-                            bool sd = dao.add(this.production);
-                            if (sd)
-                            {
-                                MessageBox.Show("Production have been added successfully");
-                                this.production = new Production();
-                                this.productions = new ObservableCollection<Production>(dao.all());
-                            }
+                            throw new Exception(checkResource.errorMsg);
                         }
-                        else
+                        // check if it already exist
+                        this.production.id = dao.add(this.production);
+
+                        //add selected ingredend from recipe 
+                        bool result = rdao.addProdIngredentDB(this.production);
+                        if (!result)
                         {
-                            MessageBox.Show(checkResource.errorMsg);
+                            MessageBox.Show("Please Ingredent addtion failed.. Please Try again or add ingredent manually");
                         }
+                        MessageBox.Show("Production have been added successfully");
+                        this.production = new Production();
+                        this.productions = new ObservableCollection<Production>(dao.all());
+
                     }
                     catch (Exception x)
                     {
@@ -542,6 +543,39 @@ namespace BakeryPR.ModelView
                 this.NotifyPropertyChanged("productionProducts");
             }
         }
+
+        #endregion
+
+        #region production
+
+        public DelegateCommand<object> loadRecipeCommand
+        {
+            get
+            {
+                return new DelegateCommand<object>((s) =>
+                {
+                    ProductionIngredentView pi = new ProductionIngredentView();
+                    this.production = (Production)s;
+                    this.productionName = $"Production title {this.production.title}";
+
+
+                    pi.DataContext = this;
+                });
+            }
+        }
+
+        private string _productionName;
+
+        public string productionName
+        {
+            get { return _productionName; }
+            set
+            {
+                _productionName = value;
+                this.NotifyPropertyChanged("productionName");
+            }
+        }
+
 
         #endregion
 

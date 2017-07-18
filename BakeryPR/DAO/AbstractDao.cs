@@ -21,17 +21,24 @@ namespace BakeryPR.DAO
         {
             bool result = false;
 
-            using (SQLiteConnection conn = new SQLiteConnection(connectionString))
+            try
             {
-                conn.Open();
-                SQLiteCommand cmd = new SQLiteCommand(conn);
-                cmd.CommandText = query;
-                cmd.CommandType = CommandType.Text;
-                int count = cmd.ExecuteNonQuery();
-                if (count > 0)
+                using (SQLiteConnection conn = new SQLiteConnection(connectionString))
                 {
-                    result = true;
+                    conn.Open();
+                    SQLiteCommand cmd = new SQLiteCommand(conn);
+                    cmd.CommandText = query;
+                    cmd.CommandType = CommandType.Text;
+                    int count = cmd.ExecuteNonQuery();
+                    if (count > 0)
+                    {
+                        result = true;
+                    }
                 }
+            }
+            catch (Exception x)
+            {
+                throw new Exception(x.Message);
             }
 
             return result;

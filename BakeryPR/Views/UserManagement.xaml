@@ -45,7 +45,7 @@
                         <GridViewColumn.CellTemplate >
                             <DataTemplate>
                                 <Button Content="Deactivate User"  CommandParameter="{Binding}"
-                                        Command="{Binding Path=DataContext.loadUpdateCommand, 
+                                        Command="{Binding Path=DataContext.loadChangeUserStatus, 
                                     RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
 
                             </DataTemplate>
@@ -55,7 +55,7 @@
                         <GridViewColumn.CellTemplate >
                             <DataTemplate>
                                 <Button Content="Assign Role"  CommandParameter="{Binding}"
-                                        Command="{Binding Path=DataContext.loadUpdateCommand, 
+                                        Command="{Binding Path=DataContext.loadAssignUserRole, 
                                     RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
 
                             </DataTemplate>

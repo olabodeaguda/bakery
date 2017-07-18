@@ -33,7 +33,7 @@ namespace BakeryPR.Models
             }
         }
 
-        private int _roleId;
+        private int _roleId = -1;
 
         public int roleId
         {

@@ -15,13 +15,13 @@
         <TextBlock Style="{StaticResource headings}">Assign Role</TextBlock>
         <StackPanel Grid.Row="1" Orientation="Horizontal">
             <TextBlock Height="30">Select Role</TextBlock>
-            <ComboBox Width="200" Height="30" SelectedValue="{Binding production.recipeId,Mode=TwoWay}"  Grid.Row="2" Grid.Column="1"
-                  ItemsSource="{Binding recipes}" ></ComboBox>
-            <Button Height="30" Width="100">Add</Button>
+            <ComboBox Width="200" Height="30" SelectedValue="{Binding userRole.roleId,Mode=TwoWay}"  Grid.Row="2" Grid.Column="1"
+                  ItemsSource="{Binding roles}" DisplayMemberPath="name" SelectedValuePath="id" ></ComboBox>
+            <Button Height="30" Width="100" Command="{Binding addAssignUserRole}">Add</Button>
         </StackPanel>
 
-        <ListView x:Name="ProductLst"  Width="480" 
-                  ItemsSource="{Binding productions,Mode=TwoWay}" IsSynchronizedWithCurrentItem="True" HorizontalAlignment="Left" 
+        <ListView x:Name="userRoles"  Width="480" 
+                  ItemsSource="{Binding lstUserRole,Mode=TwoWay}" IsSynchronizedWithCurrentItem="True" HorizontalAlignment="Left" 
                   HorizontalContentAlignment="Left" Margin="5" Grid.RowSpan="2" Grid.Row="2">
             <ListView.View>
                 <GridView>
@@ -29,17 +29,7 @@
                         <GridViewColumn.CellTemplate >
                             <DataTemplate>
                                 <Button Content="Delete"  CommandParameter="{Binding}"
-                                        Command="{Binding Path=DataContext.loadEditProductionCommand, 
-                                    RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
-
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn>
-                        <GridViewColumn.CellTemplate >
-                            <DataTemplate>
-                                <Button Content="Edit"  CommandParameter="{Binding}"
-                                        Command="{Binding Path=DataContext.loadEditProductionCommand, 
+                                        Command="{Binding Path=DataContext.deleteUserRoleCommand, 
                                     RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
 
                             </DataTemplate>

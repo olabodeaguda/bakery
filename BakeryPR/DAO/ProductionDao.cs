@@ -40,29 +40,35 @@ namespace BakeryPR.DAO
             return lst;
         }
 
-        public bool add(Production values)
+        public int add(Production values)
         {
             using (SQLiteConnection conn = new SQLiteConnection(connectionString))
             {
                 conn.Open();
                 SQLiteCommand cmd = new SQLiteCommand(conn);
                 cmd.CommandText = "insert into production(title,dateCreated,lastUpdated,createdBy,recipeId,quantity) " +
-                    "values(@title,@dateCreated,@lastUpdated,@createdBy,@recipeId,@quantity)";
+                    " values(@title,@dateCreated,@lastUpdated,@createdBy,@recipeId,@quantity); SELECT last_insert_rowid();";
                 cmd.Parameters.AddWithValue("@title", values.title);
                 cmd.Parameters.AddWithValue("@createdBy", values.createdBY);
                 cmd.Parameters.AddWithValue("@recipeId", values.recipeId);
                 cmd.Parameters.AddWithValue("@quantity", values.quantity);
                 cmd.Parameters.AddWithValue("@dateCreated", DateTime.Now.ToString("yyyy-MM-dd"));
                 cmd.Parameters.AddWithValue("@lastUpdated", DateTime.Now.ToString("yyyy-MM-dd"));
+                
                 cmd.CommandType = CommandType.Text;
-                int count = cmd.ExecuteNonQuery();
-                if (count > 0)
+                object obj = cmd.ExecuteScalar(); //cmd.ExecuteNonQuery();
+
+                int l = Convert.ToInt32(obj);
+
+                if (l < 1)
                 {
-                    return true;
+                    throw new Exception("An error occur while trying to add production. Try again or contact administrator");
+                }
+                else
+                {
+                    return l;
                 }
             }
-
-            return false;
         }
 
         public bool update(Production values)
@@ -115,5 +121,7 @@ namespace BakeryPR.DAO
 
             return lst;
         }
+
+
     }
 }

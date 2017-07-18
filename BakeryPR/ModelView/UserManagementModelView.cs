@@ -15,6 +15,73 @@ namespace BakeryPR.ModelView
 {
     public class UserManagementModelView : INotifyPropertyChanged
     {
+        public ObservableCollection<DropdownModel> userStatus
+        {
+            get
+            {
+                List<DropdownModel> lst = new List<DropdownModel>()
+                {
+                    new DropdownModel(){ valuesId="-1", value="Select Status"}
+                };
+
+                lst.AddRange(userDao.lstUserStatus());
+                return new ObservableCollection<DropdownModel>(lst);
+            }
+        }
+
+        public DelegateCommand<object> ChangeUserStatusCommand
+        {
+            get
+            {
+                return new DelegateCommand<object>(async (s) =>
+                {
+                    this.isSpin = Visibility.Visible;
+                    await Task.Run(() =>
+                    {
+                        try
+                        {
+                            bool result = this.userDao.UpdateStatus(this.profile);
+                            if (result)
+                            {
+                                MessageBox.Show("Saved", "Result", MessageBoxButton.OK, MessageBoxImage.Information);
+                            }
+                        }
+                        catch (Exception x)
+                        {
+                            MessageBox.Show(x.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                            throw;
+                        }
+                    });
+                    this.isSpin = Visibility.Collapsed;
+                });
+            }
+        }
+
+        public DelegateCommand<object> loadChangeUserStatus
+        {
+            get
+            {
+                return new DelegateCommand<object>((s) =>
+                {
+                    ChangeUserStatus assignUR = new ChangeUserStatus();
+                    this.profile = (Profile)s;
+                    assignUR.DataContext = this;
+                    assignUR.ShowDialog();
+                });
+            }
+        }
+
+        private UserRole _userRole = new UserRole();
+
+        public UserRole userRole
+        {
+            get { return _userRole; }
+            set
+            {
+                _userRole = value;
+                this.NotifyPropertyChanged("userRole");
+            }
+        }
 
         public RoleDao roleDao
         {
@@ -28,7 +95,94 @@ namespace BakeryPR.ModelView
         {
             get
             {
-                return new ObservableCollection<Role>(this.roleDao.all());
+                List<Role> lstRole = new List<Role>() { new Role() { id = -1, name = "Select Role" } };
+                lstRole.AddRange(this.roleDao.all());
+                return new ObservableCollection<Role>(lstRole);
+            }
+        }
+        private ObservableCollection<Role> _lstUserRole;
+
+        public ObservableCollection<Role> lstUserRole
+        {
+            get
+            {
+                if (this.profile != null)
+                {
+
+                }
+                return _lstUserRole;
+            }
+            set
+            {
+                _lstUserRole = value;
+                this.NotifyPropertyChanged("lstUserRole");
+            }
+        }
+
+        public DelegateCommand<object> addAssignUserRole
+        {
+            get
+            {
+                return new DelegateCommand<object>(async (s) =>
+                {
+                    await Task.Run(() =>
+                    {
+                        try
+                        {
+                            if (this.userRole.roleId == -1)
+                            {
+                                throw new Exception("Role is required!!");
+                            }
+                            bool result = roleDao.assignRoleTouser(this.userRole);
+                            if (result)
+                            {
+                                MessageBox.Show("Saved", "Successfull", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                                this.lstUserRole = new ObservableCollection<Role>(roleDao.byProfileId(this.userRole.userId));
+                                this.userRole = new UserRole();
+                            }
+                        }
+                        catch (Exception x)
+                        {
+                            MessageBox.Show(x.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
+                    });
+                });
+            }
+        }
+
+        public DelegateCommand<object> deleteUserRoleCommand
+        {
+            get
+            {
+                return new DelegateCommand<object>(async (s) =>
+                {
+                    await Task.Run(() =>
+                    {
+                        try
+                        {
+                            Role p = (Role)s;
+
+                            MessageBoxResult msg = MessageBox.Show("Are you sure?", "Deletion", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                            if (msg == MessageBoxResult.No)
+                            {
+                                return;
+                            }
+
+                            bool result = roleDao.deletebyProfileId(p.userId, p.id);
+                            if (result)
+                            {
+                                MessageBox.Show("Deleted", "Successfull", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                                this.lstUserRole = new ObservableCollection<Role>(roleDao.byProfileId(this.userRole.userId));
+                            }
+                        }
+                        catch (Exception x)
+                        {
+                            MessageBox.Show(x.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
+                    });
+                });
             }
         }
 
@@ -39,13 +193,15 @@ namespace BakeryPR.ModelView
                 return new DelegateCommand<object>((s) =>
                 {
                     AssignUserRole assignUR = new AssignUserRole();
+                    Profile p = (Profile)s;
+                    this.userRole.userId = p.id;
+                    this.lstUserRole = new ObservableCollection<Role>(roleDao.byProfileId(this.userRole.userId));
                     assignUR.DataContext = this;
 
                     assignUR.ShowDialog();
                 });
             }
         }
-
 
         private Profile _profile = new Profile();
 
@@ -194,7 +350,6 @@ namespace BakeryPR.ModelView
             }
         }
 
-
         public DelegateCommand<object> addUserCommand
         {
             get
@@ -258,7 +413,6 @@ namespace BakeryPR.ModelView
                 this.NotifyPropertyChanged("isSpin");
             }
         }
-
 
         private ObservableCollection<Profile> _profiles;
 

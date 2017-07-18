@@ -54,7 +54,7 @@ namespace BakeryPR.DAO
 
             return false;
         }
-    
+
         public bool UpdateUserRole(UserRole ur)
         {
             using (SQLiteConnection conn = new SQLiteConnection(connectionString))
@@ -75,8 +75,46 @@ namespace BakeryPR.DAO
             return false;
         }
 
+        public List<Role> byProfileId(int profileId)
+        {
+            using (SQLiteConnection conn = new SQLiteConnection(connectionString))
+            {
+                conn.Open();
+                DataSet dt = new DataSet();
+                SQLiteCommand cmd = new SQLiteCommand(conn);
+                cmd.CommandText = "select Role.id,Role.name,UserRole.userId from UserRole inner join Role on Role.id = userRole.roleId where userRole.userId= @id";
+                cmd.Parameters.AddWithValue("@id", profileId);
+                cmd.CommandType = CommandType.Text;
+                this.SQLiteAdaptor(dt, cmd);
 
+                return dt.Tables[0].Rows.Cast<DataRow>().Select(x => new Role()
+                {
+                    id = int.Parse(x["id"].ToString()),
+                    name = x["name"].ToString(),
+                    userId = int.Parse(x["userId"].ToString())
+                }).ToList();
+            }
+        }
 
+        public bool deletebyProfileId(int userId, int roleId)
+        {
+            using (SQLiteConnection conn = new SQLiteConnection(connectionString))
+            {
+                conn.Open();
+                DataSet dt = new DataSet();
+                SQLiteCommand cmd = new SQLiteCommand(conn);
+                cmd.CommandText = " delete from UserRole where userId=@userId and roleId=@roleId";
+                cmd.Parameters.AddWithValue("@userId", userId);
+                cmd.Parameters.AddWithValue("@roleId", roleId);
+                cmd.CommandType = CommandType.Text;
+                int count = cmd.ExecuteNonQuery();
+                if (count > 0)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
 
 
     }

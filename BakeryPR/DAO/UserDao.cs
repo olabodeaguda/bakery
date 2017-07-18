@@ -1,4 +1,5 @@
 ﻿using BakeryPR.Models;
+using BakeryPR.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -89,7 +90,7 @@ namespace BakeryPR.DAO
                     username = x["username"].ToString()
                 }).FirstOrDefault();
             }
-        }
+        }        
 
         public List<Profile> all()
         {
@@ -189,6 +190,35 @@ namespace BakeryPR.DAO
             }
 
             return false;
+        }
+
+        public bool UpdateStatus(Profile values)
+        {
+            using (SQLiteConnection conn = new SQLiteConnection(connectionString))
+            {
+                conn.Open();
+                SQLiteCommand cmd = new SQLiteCommand(conn);
+
+                cmd.CommandText = "update profile set status=@status where id=@id";
+                cmd.Parameters.AddWithValue("@status", values.status);
+                cmd.Parameters.AddWithValue("@id", values.id);
+
+                cmd.CommandType = CommandType.Text;
+                int count = cmd.ExecuteNonQuery();
+                if (count > 0)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+
+
+        public List<DropdownModel> lstUserStatus()
+        {
+            return Enum.GetNames(typeof(UserSatus)).Select(x => new DropdownModel() { valuesId = x, value = x }).ToList();
         }
     }
 }
