@@ -33,7 +33,9 @@ namespace BakeryPR.DAO
                     quantity = String.IsNullOrEmpty(x["quantity"].ToString()) ? 0 : double.Parse(x["quantity"].ToString()),
                     recipeId = int.Parse(x["recipeId"].ToString()),
                     dateCreated = DateTime.Parse(x["dateCreated"].ToString(), new CultureInfo("en-US", true)),
-                    lastUpdated = DateTime.Parse(x["lastUpdated"].ToString(), new CultureInfo("en-US", true))
+                    lastUpdated = DateTime.Parse(x["lastUpdated"].ToString(), new CultureInfo("en-US", true)),
+                     approval = x["approval"].ToString(),
+                     approveBy = x["approveBy"].ToString()
                 }).ToList();
             }
 

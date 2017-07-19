@@ -63,6 +63,16 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
+                    <GridViewColumn >
+                        <GridViewColumn.CellTemplate >
+                            <DataTemplate>
+                                <Button Content="Approve"  CommandParameter="{Binding}"
+                                        Command="{Binding Path=DataContext.approveProductionCommand, 
+                                    RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
+
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
                     <GridViewColumn Width="200"  HeaderContainerStyle="{StaticResource ListViewStyle}" 
                                     Header="Title"  DisplayMemberBinding="{Binding title}" />
                     <GridViewColumn Width="200"  HeaderContainerStyle="{StaticResource ListViewStyle}" 
@@ -73,6 +83,10 @@
                                     Header="Date Created" DisplayMemberBinding="{Binding dateCreated,StringFormat=yyyy-MM-dd}" />
                     <GridViewColumn Width="100" HeaderContainerStyle="{StaticResource ListViewStyle}" 
                                     Header="Last Updated" DisplayMemberBinding="{Binding lastUpdated,StringFormat=yyyy-MM-dd}" />
+                    <GridViewColumn Width="100" HeaderContainerStyle="{StaticResource ListViewStyle}" 
+                                    Header="Approval Status" DisplayMemberBinding="{Binding approval}" />
+                    <GridViewColumn Width="100" HeaderContainerStyle="{StaticResource ListViewStyle}" 
+                                    Header="Approval By" DisplayMemberBinding="{Binding approveBy}" />
                 </GridView>
             </ListView.View>
         </ListView>

@@ -27,7 +27,7 @@ namespace BakeryPR.DAO
             return query;
         }
 
-        public bool byProductionIngredent(int productionId,int ingredentId)
+        public bool byProductionIngredent(int productionId, int ingredentId)
         {
             using (SQLiteConnection conn = new SQLiteConnection(this.connectionString))
             {
@@ -123,6 +123,28 @@ namespace BakeryPR.DAO
                     return true;
                 }
             }
+
+            return false;
+        }
+
+        public bool changeProdApprovalStatus(String status, int productionId, string createdBy)
+        {
+            using (SQLiteConnection conn = new SQLiteConnection(connectionString))
+            {
+                conn.Open();
+                SQLiteCommand cmd = new SQLiteCommand(conn);
+                cmd.CommandText = "update production set approval=@approval, approveBy=@approveBy where id=@id";
+                cmd.CommandType = CommandType.Text;
+                cmd.Parameters.AddWithValue("@approval", status);
+                cmd.Parameters.AddWithValue("@approveBy", createdBy);
+                cmd.Parameters.AddWithValue("@id", productionId);
+                int count = cmd.ExecuteNonQuery();
+                if (count > 0)
+                {
+                    return true;
+                }
+            }
+
 
             return false;
         }

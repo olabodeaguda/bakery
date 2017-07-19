@@ -703,7 +703,7 @@ namespace BakeryPR.ModelView
                             {
                                 throw new Exception("Selected ingredent already exist");
                             }
-                            
+
                             //checked if amount is available
                             var ru = ingredents.FirstOrDefault(x => x.id == this.ingredent.id);
                             if (this.ingredent.quantity > ru.quantity)
@@ -735,6 +735,55 @@ namespace BakeryPR.ModelView
                             MessageBox.Show(x.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                         }
                         isSpin = Visibility.Collapsed;
+                    });
+                });
+            }
+        }
+
+        public AppConfigDao appConfigDao
+        {
+            get
+            {
+                return new AppConfigDao();
+            }
+        }
+
+        public DelegateCommand<object> approveProductionCommand
+        {
+            get
+            {
+                return new DelegateCommand<object>(async (s) =>
+                {
+                    await Task.Run(() =>
+                    {
+                        try
+                        {
+                            MessageBoxResult msg = MessageBox.Show("Are you sure", "Approve Production", MessageBoxButton.YesNo, MessageBoxImage.Information);
+                            if (msg == MessageBoxResult.No)
+                            {
+                                return;
+                            }
+                            Production p = (Production)s;
+                            var ru = this.appConfigDao.read();
+                            bool result = PIDao.changeProdApprovalStatus(ProductionStatus.APPROVED.ToString(),
+                                p.id, ru.username);
+
+                            if (result)
+                            {
+                                // update product
+
+                                this.productions = new ObservableCollection<Production>(dao.all());
+                                MessageBox.Show("Approval was successfull", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                            }
+                            else
+                            {
+                                throw new Exception("Update was not successfull. Please try again or contact an administrator");
+                            }
+                        }
+                        catch (Exception x)
+                        {
+                            MessageBox.Show(x.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
                     });
                 });
             }
