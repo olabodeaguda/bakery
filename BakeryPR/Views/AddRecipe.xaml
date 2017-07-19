@@ -1,0 +1,65 @@
+﻿<Window x:Class="BakeryPR.Views.AddRecipe"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BakeryPR.Views"
+        mc:Ignorable="d"
+        Title="Add Recipe" Height="400" Width="700" Style="{StaticResource {x:Type Window}}"  WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="120"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <TextBlock Style="{StaticResource headings}"  Grid.ColumnSpan="2">Add Recipe</TextBlock>
+        <StackPanel Grid.Row="1">
+            <TextBlock Padding="6 0 0 0">Quantity(KG)</TextBlock>
+            <TextBox Padding="0 0 0 6" HorizontalAlignment="Left" Width="200" Height="21" Text="{Binding recipe.quantity}" Margin="5,5,0,5"></TextBox>
+            <TextBlock Padding="6 0 0 0">Title</TextBlock>
+            <StackPanel Orientation="Horizontal" Height="30">
+                <TextBox HorizontalAlignment="Left" Width="200" Text="{Binding recipe.title}"></TextBox>
+                <Button Width="50" Height="25" Command="{Binding addCommand}">Add</Button>
+            </StackPanel>
+        </StackPanel>
+
+        <Grid Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition Height="30"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Button Command="{Binding loadAddIngredntCommmand}" Width="100" Height="25" HorizontalAlignment="Left" IsEnabled="{Binding isAddIngredent}">Add Ingredent</Button>
+
+            <ListView x:Name="IngredentLst"  Width="{Binding winWidth}" 
+                  ItemsSource="{Binding riIngredents}" IsSynchronizedWithCurrentItem="True" HorizontalAlignment="Left" HorizontalContentAlignment="Left" 
+                  Grid.Row="1">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn  x:Name="gridV">
+                            <GridViewColumn.CellTemplate >
+                                <DataTemplate>
+                                    <Button Content="Edit"  CommandParameter="{Binding}"
+                                        Command="{Binding Path=DataContext.loadEditCommand, 
+                                    RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
+
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Width="200"  HeaderContainerStyle="{StaticResource ListViewStyle}" 
+                                    Header="Ingredent"  DisplayMemberBinding="{Binding ingredentName}" />
+                        <GridViewColumn Width="100" HeaderContainerStyle="{StaticResource ListViewStyle}" 
+                                    Header="Quantity" DisplayMemberBinding="{Binding quantityView}" />
+                        <GridViewColumn Width="200" HeaderContainerStyle="{StaticResource ListViewStyle}" 
+                                    Header="Cost/Unit" DisplayMemberBinding="{Binding unitCost}" />
+                        <GridViewColumn Width="200" HeaderContainerStyle="{StaticResource ListViewStyle}" 
+                                    Header="Total Cost" DisplayMemberBinding="{Binding totalCost}" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
+
+            <Button Width="50" Height="25"  HorizontalAlignment="Left" Grid.Row="2">Submit</Button>
+
+        </Grid>
+    </Grid>
+</Window>

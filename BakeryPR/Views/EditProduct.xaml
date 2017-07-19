@@ -1,0 +1,45 @@
+﻿<Window x:Class="BakeryPR.Views.EditProduct"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BakeryPR.Views"
+        mc:Ignorable="d"
+        Title="EditProduct" Height="410" Width="450" Style="{StaticResource {x:Type Window}}" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+    <Grid Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="150"></ColumnDefinition>
+            <ColumnDefinition Width="250"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <TextBlock Style="{StaticResource headings}"  Grid.ColumnSpan="2">Edit Product</TextBlock>
+        <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center">Description</TextBlock>
+        <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center">Weight</TextBlock>
+        <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center">Weight Measurement Type</TextBlock>
+        <TextBlock Grid.Row="4" Grid.Column="0" VerticalAlignment="Center">Cost of Package</TextBlock>
+        <TextBlock Grid.Row="5" Grid.Column="0" VerticalAlignment="Center">Retail price</TextBlock>
+        <TextBlock Grid.Row="6" Grid.Column="0" VerticalAlignment="Center">Wholesales Price</TextBlock>
+        <TextBlock Grid.Row="7" Grid.Column="0" VerticalAlignment="Center">Product Name</TextBlock>
+
+        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding product.descripton,Mode=TwoWay}"></TextBox>
+        <TextBox  Grid.Row="2" Grid.Column="1" Text="{Binding product.weight,Mode=TwoWay}"></TextBox>
+        <ComboBox SelectedValue="{Binding product.mTypeId,Mode=TwoWay}"  Grid.Row="3" Grid.Column="1" ItemsSource="{Binding MeasurementTypes}" DisplayMemberPath="name" SelectedValuePath="id"></ComboBox>
+        <TextBox  Grid.Row="4" Grid.Column="1" Text="{Binding product.costOfPackage,Mode=TwoWay}"></TextBox>
+        <TextBox  Grid.Row="5" Grid.Column="1" Text="{Binding product.retailPrice,Mode=TwoWay}"></TextBox>
+        <TextBox  Grid.Row="6" Grid.Column="1" Text="{Binding product.wholeSales,Mode=TwoWay}"></TextBox>
+        <TextBox  Grid.Row="7" Grid.Column="1" Text="{Binding product.name,Mode=TwoWay}"></TextBox>
+
+        <Button Style="{StaticResource btnSubmitStyle}" Grid.Column="1" Grid.Row="8" Command="{Binding UpdateCommand}" >Update</Button>
+
+    </Grid>
+</Window>

@@ -1,0 +1,78 @@
+﻿<Window x:Class="BakeryPR.Views.AddProductionOverhead"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BakeryPR.Views"
+        xmlns:vm="clr-namespace:BakeryPR.ModelView"
+        xmlns:fa="http://schemas.fontawesome.io/icons/"
+        mc:Ignorable="d"
+        Title="Add Production Overhead" Height="400" Width="700" Style="{StaticResource {x:Type Window}}"  WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+    <Window.DataContext>
+        <vm:ProductionViewModel></vm:ProductionViewModel>
+    </Window.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="100"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <TextBlock Style="{StaticResource headings}" >Add Overhead</TextBlock>
+
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="130"></ColumnDefinition>
+                <ColumnDefinition Width="210"></ColumnDefinition>
+                <ColumnDefinition Width="377"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <TextBlock Padding="6" Margin="5" Height="30">Select Overhead</TextBlock>
+            <TextBlock Padding="6" Margin="5" Height="30" Grid.Row="1" >Count</TextBlock>
+
+            <ComboBox HorizontalAlignment="Left" Width="200" 
+                      SelectedValue="{Binding prodOverhead.overheadId,Mode=TwoWay}"  
+                       Grid.Column="1" ItemsSource="{Binding overheads}" 
+                  DisplayMemberPath="name" SelectedValuePath="id" Margin="5,5,0,5" Height="30"></ComboBox>
+            <TextBox Grid.Row="1" Grid.Column="1" Height="30" Text="{Binding prodOverhead.overheadCount,Mode=TwoWay}"></TextBox>
+
+            <StackPanel Grid.Column="2" Orientation="Horizontal">
+                <Button Width="50"  HorizontalAlignment="Left" Command="{Binding addOverheadCommand}" Margin="12">Add</Button>
+                <fa:ImageAwesome Icon="Refresh" Spin="True" Visibility="{Binding isSpin,Mode=TwoWay}" Height="20" Width="30" />
+            </StackPanel>
+
+        </Grid>
+
+        <Grid Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <ListView x:Name="IngredentLst" 
+                  ItemsSource="{Binding prodOverheads,Mode=TwoWay}" IsSynchronizedWithCurrentItem="True" >
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn  x:Name="gridV">
+                            <GridViewColumn.CellTemplate >
+                                <DataTemplate>
+                                    <Button Content="Edit"  CommandParameter="{Binding}"
+                                        Command="{Binding Path=DataContext.loadupdateProdOverhead, 
+                                    RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
+
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Width="200"  HeaderContainerStyle="{StaticResource ListViewStyle}" 
+                                    Header="Overhead Name"  DisplayMemberBinding="{Binding overheadName}" />
+                        <GridViewColumn Width="100" HeaderContainerStyle="{StaticResource ListViewStyle}" 
+                                    Header="Count" DisplayMemberBinding="{Binding overheadCount}" />
+                        <GridViewColumn Width="200" HeaderContainerStyle="{StaticResource ListViewStyle}" 
+                                    Header="Amount" DisplayMemberBinding="{Binding totalCost}" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </Grid>
+    </Grid>
+</Window>

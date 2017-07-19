@@ -1,0 +1,46 @@
+﻿<Window x:Class="BakeryPR.Views.ChangePwd"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BakeryPR.Views"
+        xmlns:vm="clr-namespace:BakeryPR.ModelView"
+        xmlns:utility="clr-namespace:BakeryPR.Utilities"
+        xmlns:fa="http://schemas.fontawesome.io/icons/"
+        mc:Ignorable="d"
+        Title="Change Password" Height="300" Width="450" 
+        Style="{StaticResource {x:Type Window}}" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+
+    <Grid Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="113.6"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <TextBlock Style="{StaticResource headings}"  Grid.ColumnSpan="2" Margin="15,0,14.6,0">Change Password</TextBlock>
+
+        <TextBlock Height="30" Grid.Row="1">New Password</TextBlock>
+        <TextBlock Height="30" Grid.Row="2">Confirm Password</TextBlock>
+
+        <PasswordBox Grid.Column="1" Grid.Row="1" Height="30"  utility:PasswordBoxAssistant.BindPassword="True" 
+                     utility:PasswordBoxAssistant.BoundPassword="{Binding Path=changePass.newPassword,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" PasswordChar="*" />
+
+        <PasswordBox Grid.Column="1" Grid.Row="2" Height="30"  utility:PasswordBoxAssistant.BindPassword="True" 
+                     utility:PasswordBoxAssistant.BoundPassword="{Binding Path=changePass.confirmPassword,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" PasswordChar="*" />
+
+
+        <StackPanel  Grid.Row="4" Grid.Column="3" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Style="{StaticResource btnSubmitStyle}" Width="120" Grid.Column="1" Command="{Binding ChangePwdCommand}"
+                    Height="Auto"  >Update</Button>
+            <fa:ImageAwesome Icon="Refresh" Spin="True" Visibility="{Binding isSpin,Mode=TwoWay}" Height="20" Width="30" />
+        </StackPanel>
+
+
+
+    </Grid>
+</Window>
