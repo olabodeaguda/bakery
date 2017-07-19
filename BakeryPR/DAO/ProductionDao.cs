@@ -40,17 +40,47 @@ namespace BakeryPR.DAO
             return lst;
         }
 
+        public List<Production> byStatus(string status)
+        {
+            List<Production> lst = new List<Production>();
+            using (SQLiteConnection conn = new SQLiteConnection(this.connectionString))
+            {
+                conn.Open();
+                DataSet dt = new DataSet();
+                SQLiteCommand cmd = new SQLiteCommand(conn);
+                cmd.CommandText = "select production.*,recipe.title as recipeTitle from production inner join recipe on recipe.id=production.recipeId where production.approval=@approval order by production.title desc";
+                cmd.CommandType = CommandType.Text;
+                cmd.Parameters.AddWithValue("@approval", status);
+                this.SQLiteAdaptor(dt, cmd);
+
+                lst = dt.Tables[0].Rows.Cast<DataRow>().Select(x => new Production()
+                {
+                    id = int.Parse(x["id"].ToString()),
+                    createdBY = x["createdBy"].ToString(),
+                    title = x["title"].ToString(),
+                    recipeTitle = x["recipeTitle"].ToString(),
+                    quantity = String.IsNullOrEmpty(x["quantity"].ToString()) ? 0 : double.Parse(x["quantity"].ToString()),
+                    recipeId = int.Parse(x["recipeId"].ToString()),
+                    dateCreated = DateTime.Parse(x["dateCreated"].ToString(), new CultureInfo("en-US", true)),
+                    lastUpdated = DateTime.Parse(x["lastUpdated"].ToString(), new CultureInfo("en-US", true))
+                }).ToList();
+            }
+
+            return lst;
+        }
+
         public int add(Production values)
         {
             using (SQLiteConnection conn = new SQLiteConnection(connectionString))
             {
                 conn.Open();
                 SQLiteCommand cmd = new SQLiteCommand(conn);
-                cmd.CommandText = "insert into production(title,dateCreated,lastUpdated,createdBy,recipeId,quantity) " +
-                    " values(@title,@dateCreated,@lastUpdated,@createdBy,@recipeId,@quantity); SELECT last_insert_rowid();";
+                cmd.CommandText = "insert into production(title,dateCreated,lastUpdated,createdBy,recipeId,quantity,approval) " +
+                    " values(@title,@dateCreated,@lastUpdated,@createdBy,@recipeId,@quantity,@approval); SELECT last_insert_rowid();";
                 cmd.Parameters.AddWithValue("@title", values.title);
                 cmd.Parameters.AddWithValue("@createdBy", values.createdBY);
                 cmd.Parameters.AddWithValue("@recipeId", values.recipeId);
+                cmd.Parameters.AddWithValue("@approval", values.approval);
                 cmd.Parameters.AddWithValue("@quantity", values.quantity);
                 cmd.Parameters.AddWithValue("@dateCreated", DateTime.Now.ToString("yyyy-MM-dd"));
                 cmd.Parameters.AddWithValue("@lastUpdated", DateTime.Now.ToString("yyyy-MM-dd"));

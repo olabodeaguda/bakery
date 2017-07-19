@@ -130,6 +130,7 @@
     <Compile Include="Utilities\OverheadType.cs" />
     <Compile Include="Utilities\PageParameter.cs" />
     <Compile Include="Utilities\PasswordBoxAssistant.cs" />
+    <Compile Include="Utilities\ProductionStatus.cs" />
     <Compile Include="Utilities\UserSatus.cs" />
     <Compile Include="Views\AddIngredent.xaml.cs">
       <DependentUpon>AddIngredent.xaml</DependentUpon>
@@ -142,6 +143,9 @@
     </Compile>
     <Compile Include="Views\AddProduction.xaml.cs">
       <DependentUpon>AddProduction.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AddProductionIngredient.xaml.cs">
+      <DependentUpon>AddProductionIngredient.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\AddProductionOverhead.xaml.cs">
       <DependentUpon>AddProductionOverhead.xaml</DependentUpon>
@@ -247,6 +251,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\AddProduction.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AddProductionIngredient.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

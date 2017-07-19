@@ -14,7 +14,9 @@ namespace BakeryPR.Models
         public string measureTypeName
         {
             get { return _measureTypeName; }
-            set { _measureTypeName = value;
+            set
+            {
+                _measureTypeName = value;
                 this.NotifyPropertyChanged("measureTypeName");
             }
         }
@@ -24,7 +26,9 @@ namespace BakeryPR.Models
         public int mTypeId
         {
             get { return _mTypeId; }
-            set { _mTypeId = value;
+            set
+            {
+                _mTypeId = value;
                 this.NotifyPropertyChanged("mTypeId");
             }
         }
@@ -35,7 +39,9 @@ namespace BakeryPR.Models
         public double quantity
         {
             get { return _quantity; }
-            set { _quantity = value;
+            set
+            {
+                _quantity = value;
                 this.NotifyPropertyChanged("quantity");
             }
         }
@@ -48,23 +54,26 @@ namespace BakeryPR.Models
             }
         }
 
-
         private int _id;
 
         public int id
         {
             get { return _id; }
-            set { _id = value;
+            set
+            {
+                _id = value;
                 this.NotifyPropertyChanged("id");
             }
         }
-       
+
         private double _unitCost;
 
         public double unitCost
         {
             get { return _unitCost; }
-            set { _unitCost = value;
+            set
+            {
+                _unitCost = value;
                 this.NotifyPropertyChanged("unitCost");
             }
         }
@@ -74,8 +83,18 @@ namespace BakeryPR.Models
         public string ingredentName
         {
             get { return _ingredentName; }
-            set { _ingredentName = value;
+            set
+            {
+                _ingredentName = value;
                 this.NotifyPropertyChanged("ingredentName");
+            }
+        }
+
+        public string ingredentNameDisplay
+        {
+            get
+            {
+                return $"{ingredentName} (in {measureTypeName})";
             }
         }
 

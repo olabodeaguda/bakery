@@ -129,11 +129,16 @@ namespace BakeryPR.Models
             }
         }
 
+        public string displayQuantity
+        {
+            get { return $"{ this.amount}{this.measureType}"; }
+        }
+
         public string totalUnitCost
         {
             get
             {
-                return $"{this.amount * unitCost}{this.measureType}";
+                return $"{this.amount * unitCost}";
             }
         }
 

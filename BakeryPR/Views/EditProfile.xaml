@@ -39,8 +39,5 @@
                     Height="Auto"  >Update</Button>
             <fa:ImageAwesome Icon="Refresh" Spin="True" Visibility="{Binding isSpin,Mode=TwoWay}" Height="20" Width="30" />
         </StackPanel>
-
-
-
     </Grid>
 </Window>

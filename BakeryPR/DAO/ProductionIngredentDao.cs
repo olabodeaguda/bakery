@@ -27,6 +27,33 @@ namespace BakeryPR.DAO
             return query;
         }
 
+        public bool byProductionIngredent(int productionId,int ingredentId)
+        {
+            using (SQLiteConnection conn = new SQLiteConnection(this.connectionString))
+            {
+                conn.Open();
+                DataSet dt = new DataSet();
+                SQLiteCommand cmd = new SQLiteCommand(conn);
+                cmd.CommandText = "select * from ProductionIngredient where productionId=@pid and ingredentId = @ingreId";
+                cmd.CommandType = CommandType.Text;
+                cmd.Parameters.AddWithValue("@pid", productionId);
+                cmd.Parameters.AddWithValue("@ingreId", ingredentId);
+                this.SQLiteAdaptor(dt, cmd);
+
+                var re = dt.Tables[0].Rows.Cast<DataRow>().Select(x => new ProductionIngredent()
+                {
+                    id = int.Parse(x["id"].ToString()),
+                    amount = double.Parse(x["amount"].ToString()),
+                }).FirstOrDefault();
+                if (re != null)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         public List<ProductionIngredent> byProductionId(int productionId)
         {
             List<ProductionIngredent> lst = new List<ProductionIngredent>();
@@ -62,5 +89,42 @@ namespace BakeryPR.DAO
             return lst;
         }
 
+        public bool add(ProductionIngredent pi)
+        {
+
+            using (SQLiteConnection conn = new SQLiteConnection(connectionString))
+            {
+                conn.Open();
+                SQLiteCommand cmd = new SQLiteCommand(conn);
+                cmd.CommandText = getProdString(pi);
+                cmd.CommandType = CommandType.Text;
+                int count = cmd.ExecuteNonQuery();
+                if (count > 0)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public bool delete(int id)
+        {
+            using (SQLiteConnection conn = new SQLiteConnection(connectionString))
+            {
+                conn.Open();
+                SQLiteCommand cmd = new SQLiteCommand(conn);
+                cmd.CommandText = "delete from ProductionIngredient where id=@id";
+                cmd.Parameters.AddWithValue("@id", id);
+                cmd.CommandType = CommandType.Text;
+                int count = cmd.ExecuteNonQuery();
+                if (count > 0)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
     }
 }

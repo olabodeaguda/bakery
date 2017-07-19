@@ -215,13 +215,13 @@ namespace BakeryPR.DAO
                     query = query + productionIngredentDao.getProdString(pi);
                 }
             }
-
+            bool res = false;
             if (string.IsNullOrEmpty(query))
             {
-                throw new Exception("Please try again. If problem continue contact administrator");
+                res = this.execute(query);
             }
 
-            return this.execute(query);
+            return res;
         }
 
     }

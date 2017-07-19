@@ -91,21 +91,35 @@ namespace BakeryPR.ModelView
                         {
                             throw new Exception("Quantity can't be zero");
                         }
+
+                        List<Production> bystatuslst = dao.byStatus(ProductionStatus.NOT_APPROVED.ToString());
+                        if (bystatuslst.Count > 0)
+                        {
+                            MessageBoxResult msg = MessageBox.Show("You still have some production pending approval. Do you still want to continue ?", "Information", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                            if (msg == MessageBoxResult.No)
+                            {
+                                return;
+                            }
+                        }
+
                         Error checkResource = rdao.checkRecipeQuantity(this.production.recipeId, this.production.quantity);
 
                         if (!checkResource.success)
                         {
                             throw new Exception(checkResource.errorMsg);
                         }
-                        // check if it already exist
+
+                        //check if thier is an ongoing production...
+                        this.production.approval = ProductionStatus.NOT_APPROVED.ToString();
                         this.production.id = dao.add(this.production);
 
                         //add selected ingredend from recipe 
                         bool result = rdao.addProdIngredentDB(this.production);
                         if (!result)
                         {
-                            MessageBox.Show("Please Ingredent addtion failed.. Please Try again or add ingredent manually");
+                            MessageBox.Show("Please Ingredent addition failed.. Please add ingredent manually");
                         }
+
                         MessageBox.Show("Production have been added successfully");
                         this.production = new Production();
                         this.productions = new ObservableCollection<Production>(dao.all());
@@ -494,7 +508,6 @@ namespace BakeryPR.ModelView
             }
         }
 
-
         public ProductDao productDao
         {
             get
@@ -556,6 +569,44 @@ namespace BakeryPR.ModelView
             }
         }
 
+        public DelegateCommand<object> loadDeleteprodIngredentCommand
+        {
+            get
+            {
+                return new DelegateCommand<object>(async (s) =>
+                {
+                    await Task.Run(() =>
+                    {
+                        try
+                        {
+                            MessageBoxResult msg = MessageBox.Show("Are you sure?", "Information", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                            if (msg == MessageBoxResult.No)
+                            {
+                                return;
+                            }
+                            ProductionIngredent p = (ProductionIngredent)s;
+
+                            bool result = PIDao.delete(p.id);
+
+                            if (result)
+                            {
+                                this.productionIngredents = new ObservableCollection<ProductionIngredent>(PIDao.byProductionId(p.productionId));
+                                MessageBox.Show("Deletion was successfull", "Deletion", MessageBoxButton.OK, MessageBoxImage.Error);
+                            }
+                            else
+                            {
+                                throw new Exception("An error occur while creating you request. Try again or contanct your administrator");
+                            }
+                        }
+                        catch (Exception x)
+                        {
+                            MessageBox.Show(x.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
+                    });
+                });
+            }
+        }
+
         public DelegateCommand<object> loadIngredentCommand
         {
             get
@@ -568,6 +619,7 @@ namespace BakeryPR.ModelView
                     this.productionIngredents = new ObservableCollection<ProductionIngredent>(PIDao.byProductionId(this.production.id));
 
                     pi.DataContext = this;
+                    pi.ShowDialog();
                 });
             }
         }
@@ -584,7 +636,6 @@ namespace BakeryPR.ModelView
             }
         }
 
-
         private string _productionName;
 
         public string productionName
@@ -597,6 +648,97 @@ namespace BakeryPR.ModelView
             }
         }
 
+        public IngredentDao ingredentDao
+        {
+            get { return new IngredentDao(); }
+        }
+
+        public ObservableCollection<Ingredent> ingredents
+        {
+            get
+            {
+                return new ObservableCollection<Ingredent>(ingredentDao.all());
+            }
+        }
+
+        private Ingredent _ingredent = new Ingredent();
+
+        public Ingredent ingredent
+        {
+            get { return _ingredent; }
+            set
+            {
+                _ingredent = value;
+                this.NotifyPropertyChanged("ingredent");
+            }
+        }
+
+        public DelegateCommand<object> loadAddProductionIngredient
+        {
+            get
+            {
+                return new DelegateCommand<object>((s) =>
+                {
+                    AddProductionIngredient addp = new AddProductionIngredient();
+                    addp.DataContext = this;
+                    addp.Show();
+                });
+            }
+        }
+
+        public DelegateCommand<object> AddProductionIngredientCommand
+        {
+            get
+            {
+                return new DelegateCommand<object>(async (s) =>
+                {
+                    await Task.Run(() =>
+                    {
+
+                        try
+                        {
+                            isSpin = Visibility.Visible;
+                            //check if ingredent already exist for the production
+                            if (this.PIDao.byProductionIngredent(this.production.id, this.ingredent.id))
+                            {
+                                throw new Exception("Selected ingredent already exist");
+                            }
+                            
+                            //checked if amount is available
+                            var ru = ingredents.FirstOrDefault(x => x.id == this.ingredent.id);
+                            if (this.ingredent.quantity > ru.quantity)
+                            {
+                                throw new Exception("Amount og ingredent left in stock is " + ru.quantity);
+                            }
+
+                            ProductionIngredent pi = new ProductionIngredent()
+                            {
+                                amount = this.ingredent.quantity,
+                                ingredentId = this.ingredent.id,
+                                productionId = this.production.id,
+                            };
+
+                            bool res = PIDao.add(pi);
+                            if (res)
+                            {
+                                this.productionIngredents = new ObservableCollection<ProductionIngredent>(PIDao.byProductionId(pi.productionId));
+                                MessageBox.Show("Saved", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                            }
+                            else
+                            {
+                                throw new Exception("An error occur while trying to process the request.. try again, or contact your administrator");
+                            }
+
+                        }
+                        catch (Exception x)
+                        {
+                            MessageBox.Show(x.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
+                        isSpin = Visibility.Collapsed;
+                    });
+                });
+            }
+        }
 
         #endregion
 

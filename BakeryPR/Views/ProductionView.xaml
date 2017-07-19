@@ -57,7 +57,7 @@
                         <GridViewColumn.CellTemplate >
                             <DataTemplate>
                                 <Button Content="Recipe"  CommandParameter="{Binding}"
-                                        Command="{Binding Path=DataContext.loadProductCommand, 
+                                        Command="{Binding Path=DataContext.loadIngredentCommand, 
                                     RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
 
                             </DataTemplate>
