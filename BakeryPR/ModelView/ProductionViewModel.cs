@@ -763,6 +763,12 @@ namespace BakeryPR.ModelView
                             {
                                 return;
                             }
+
+                            //check if total ingredent is in storage
+
+
+
+
                             Production p = (Production)s;
                             var ru = this.appConfigDao.read();
                             bool result = PIDao.changeProdApprovalStatus(ProductionStatus.APPROVED.ToString(),
