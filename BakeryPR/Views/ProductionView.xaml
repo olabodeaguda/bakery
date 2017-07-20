@@ -56,6 +56,16 @@
                     <GridViewColumn >
                         <GridViewColumn.CellTemplate >
                             <DataTemplate>
+                                <Button Content="Move Product"  CommandParameter="{Binding}"
+                                        Command="{Binding Path=DataContext.loadManageProduction, 
+                                    RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
+
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn >
+                        <GridViewColumn.CellTemplate >
+                            <DataTemplate>
                                 <Button Content="Recipe"  CommandParameter="{Binding}"
                                         Command="{Binding Path=DataContext.loadIngredentCommand, 
                                     RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"/>

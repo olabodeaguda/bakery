@@ -57,6 +57,20 @@ namespace BakeryPR.Models
             }
         }
 
+        private double _expectedQuantity = 0;
+
+        public double expectedQuantity
+        {
+            get { return _expectedQuantity; }
+            set
+            {
+                _expectedQuantity = value;
+                this.NotifyPropertyChanged("expectedQuantity");
+            }
+        }
+
+
+
         private string _productName;
 
         public string productName
@@ -100,6 +114,8 @@ namespace BakeryPR.Models
                 return $"{(weight * quantity)}{measureTypeName}";
             }
         }
+
+
 
 
         #region property change

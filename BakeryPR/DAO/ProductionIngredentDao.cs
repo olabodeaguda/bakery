@@ -12,6 +12,13 @@ namespace BakeryPR.DAO
 {
     public class ProductionIngredentDao : AbstractDao
     {
+        public IngredentDao ingrdentDao
+        {
+            get
+            {
+                return new IngredentDao();
+            }
+        }
         public String getProdString(ProductionIngredent pi)
         {
             String query = "";
@@ -147,6 +154,35 @@ namespace BakeryPR.DAO
 
 
             return false;
+        }
+
+        public void checkIngredentAvalabilityByProdId(int prodId)
+        {
+            List<ProductionIngredent> lst = byProductionId(prodId);
+            if (lst.Count <= 0)
+            {
+                throw new Exception("No Ingredeint have been added to the production");
+            }
+
+            List<Ingredent> lstIngredent = ingrdentDao.all();
+
+            foreach (var tm in lst)
+            {
+                var ng = lstIngredent.FirstOrDefault(x => x.id == tm.ingredentId);
+                if (ng != null)
+                {
+                    if (ng.quantity < tm.amount)
+                    {
+                        throw new Exception(ng.ingredentName + " does not have enough quantity in stock");
+                    }
+                }
+            }
+        }
+
+        public double sumtotalIngredientInKg(int pId)
+        {
+            var e = byProductionId(pId);
+            return e.Sum(x => x.measureType.Equals("gram") ? x.amount / 100 : x.amount);
         }
     }
 }

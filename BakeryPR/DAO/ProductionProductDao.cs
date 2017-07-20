@@ -111,6 +111,7 @@ namespace BakeryPR.DAO
                     productId = int.Parse(x["productId"].ToString()),
                     productionId = int.Parse(x["productionId"].ToString()),
                     quantity = double.Parse(x["quantity"].ToString()),
+                    expectedQuantity = double.Parse(x["quantity"].ToString()),
                     productName = x["productName"].ToString(),
                     weight = int.Parse(x["weight"].ToString())
                 }).ToList();

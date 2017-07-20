@@ -766,10 +766,10 @@ namespace BakeryPR.ModelView
 
                             //check if total ingredent is in storage
 
-
-
-
                             Production p = (Production)s;
+
+                            PIDao.checkIngredentAvalabilityByProdId(p.id);
+
                             var ru = this.appConfigDao.read();
                             bool result = PIDao.changeProdApprovalStatus(ProductionStatus.APPROVED.ToString(),
                                 p.id, ru.username);
@@ -824,6 +824,79 @@ namespace BakeryPR.ModelView
                 PropertyChanged(this, new PropertyChangedEventArgs(info));
             }
         }
+        #endregion
+
+        #region Manage Production Product
+
+        private ObservableCollection<ProductionProduct> _mpp;
+
+        public ObservableCollection<ProductionProduct> mpp
+        {
+            get
+            {
+
+                _mpp = new ObservableCollection<ProductionProduct>(pProductDao.byproductionId(this.production.id));
+                return _mpp;
+            }
+            set
+            {
+                _mpp = value;
+                this.NotifyPropertyChanged("mpp");
+            }
+        }
+
+
+
+
+        public DelegateCommand<object> loadManageProduction
+        {
+            get
+            {
+                return new DelegateCommand<object>((s) =>
+                {
+                    ManageProductionProduct mp = new ManageProductionProduct();
+                    this.production = (Production)s;
+
+                    mp.DataContext = this;
+                    mp.ShowDialog();
+                    this.production = new Production();
+                });
+            }
+        }
+
+        private double _totalP;
+
+        public double totalP
+        {
+            get
+            {
+                _totalP = PIDao.sumtotalIngredientInKg(this.production.id);
+                return _totalP;
+            }
+            set
+            {
+                _totalP = value;
+                this.NotifyPropertyChanged("totalP");
+            }
+        }
+
+        private string _totalProduction;
+
+        public string totalProduction
+        {
+            get
+            {
+                _totalProduction = $"{this.totalP}Kg";
+                return _totalProduction;
+            }
+            set
+            {
+                _totalProduction = value;
+                this.NotifyPropertyChanged("totalProduction");
+            }
+        }
+
+
         #endregion
 
     }
