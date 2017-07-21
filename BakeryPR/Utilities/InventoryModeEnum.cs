@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace BakeryPR.Utilities
 {
-    public enum ProductionStatus
+    public enum InventoryModeEnum
     {
-        APPROVED, NOT_APPROVED,CLOSED
+        ADD,SUBSTRACT
     }
 }

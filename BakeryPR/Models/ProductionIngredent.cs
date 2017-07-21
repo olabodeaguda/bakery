@@ -21,7 +21,7 @@ namespace BakeryPR.Models
             }
         }
 
-        private int _ingredentId;
+        private int _ingredentId = -1;
 
         public int ingredentId
         {

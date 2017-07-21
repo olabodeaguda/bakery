@@ -38,7 +38,8 @@ namespace BakeryPR.DAO
                     pwd = x["pwd"].ToString(),
                     status = x["status"].ToString(),
                     surname = x["surname"].ToString(),
-                    username = x["username"].ToString()
+                    username = x["username"].ToString(),
+                    roleName = x["roleName"].ToString()
                 }).FirstOrDefault();
             }
         }
@@ -90,7 +91,7 @@ namespace BakeryPR.DAO
                     username = x["username"].ToString()
                 }).FirstOrDefault();
             }
-        }        
+        }
 
         public List<Profile> all()
         {

@@ -33,7 +33,7 @@ namespace BakeryPR.Utilities
                     return new ProductionView();
                 case "sales":
                     title = "Manage Sales";
-                    return new UCDashboard();
+                    return new SalesView();
                 case "user":
                     title = "User Management";
                     return new UserManagement();

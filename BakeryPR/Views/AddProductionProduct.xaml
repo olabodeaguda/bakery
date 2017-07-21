@@ -17,7 +17,16 @@
             <RowDefinition Height="100"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
-        <TextBlock Style="{StaticResource headings}" >Add Product</TextBlock>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Style="{StaticResource headings}" >Add Product</TextBlock>
+            <TextBlock Grid.Column="1" Text="{Binding production.title}" HorizontalAlignment="Right" 
+                   Style="{StaticResource headings}" ></TextBlock>
+        </Grid>
 
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>

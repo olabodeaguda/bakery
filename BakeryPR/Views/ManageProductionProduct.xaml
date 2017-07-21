@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BakeryPR.Views"
+        xmlns:fa="http://schemas.fontawesome.io/icons/"
         mc:Ignorable="d"
         Title="Manage Production Product"  Height="400" Width="700" Style="{StaticResource {x:Type Window}}" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Grid Margin="5">
@@ -11,10 +12,17 @@
             <RowDefinition Height="50"></RowDefinition>
             <RowDefinition Height="50"></RowDefinition>
             <RowDefinition></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
         </Grid.RowDefinitions>
-
         <TextBlock Style="{StaticResource headings}" >Manage Production Product</TextBlock>
-        <TextBlock Grid.Row="1" Text="{Binding totalProduction,Mode=TwoWay}"></TextBlock>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Row="1" Text="{Binding totalProduction,Mode=TwoWay}"></TextBlock>
+            <TextBlock Grid.Column="1" Text="{Binding totalProductWeight,Mode=TwoWay}"></TextBlock>
+        </Grid>
         <ListView Grid.Row="2" x:Name="productLst" 
                   ItemsSource="{Binding mpp,Mode=TwoWay}" IsSynchronizedWithCurrentItem="True" >
             <ListView.View>
@@ -36,10 +44,15 @@
                     <GridViewColumn Width="100" HeaderContainerStyle="{StaticResource ListViewStyle}" 
                                     Header="Expected Quantity" DisplayMemberBinding="{Binding quantity}" />
                     <GridViewColumn Width="200" HeaderContainerStyle="{StaticResource ListViewStyle}" 
-                                    Header="Total Cost" DisplayMemberBinding="{Binding totalWeight}" />
+                                    Header="Total Weight" DisplayMemberBinding="{Binding totalWeight}" />
                 </GridView>
             </ListView.View>
         </ListView>
 
+        <StackPanel  Grid.Row="3"  Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Style="{StaticResource btnSubmitStyle}" Width="120" Grid.Column="1" Command="{Binding UpdateMoveToSalesCommand}"
+                    Height="Auto"  >Move to Sales</Button>
+            <fa:ImageAwesome Icon="Refresh" Spin="True" Visibility="{Binding isSpin,Mode=TwoWay}" Height="20" Width="30" />
+        </StackPanel>
     </Grid>
 </Window>

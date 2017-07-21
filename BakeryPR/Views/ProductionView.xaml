@@ -28,7 +28,6 @@
                                 <Button Content="Edit"  CommandParameter="{Binding}"
                                         Command="{Binding Path=DataContext.loadEditProductionCommand, 
                                     RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
-
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -59,7 +58,6 @@
                                 <Button Content="Move Product"  CommandParameter="{Binding}"
                                         Command="{Binding Path=DataContext.loadManageProduction, 
                                     RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
-
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -69,7 +67,6 @@
                                 <Button Content="Recipe"  CommandParameter="{Binding}"
                                         Command="{Binding Path=DataContext.loadIngredentCommand, 
                                     RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
-
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -79,7 +76,6 @@
                                 <Button Content="Approve"  CommandParameter="{Binding}"
                                         Command="{Binding Path=DataContext.approveProductionCommand, 
                                     RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
-
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>

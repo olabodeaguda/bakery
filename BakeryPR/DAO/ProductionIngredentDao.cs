@@ -182,7 +182,29 @@ namespace BakeryPR.DAO
         public double sumtotalIngredientInKg(int pId)
         {
             var e = byProductionId(pId);
-            return e.Sum(x => x.measureType.Equals("gram") ? x.amount / 100 : x.amount);
+            return e.Sum(x => x.measureType.ToLower() == "gram" ? x.amount / 100 : x.amount);
         }
+
+        public bool Update(ProductionIngredent pi)
+        {
+            using (SQLiteConnection conn = new SQLiteConnection(connectionString))
+            {
+                conn.Open();
+                SQLiteCommand cmd = new SQLiteCommand(conn);
+                cmd.CommandText = "Update ProductionIngredient set ingredentId=@ingredient, amount=@amount where id=@id";
+                cmd.CommandType = CommandType.Text;
+                cmd.Parameters.AddWithValue("@ingredient", pi.ingredentId);
+                cmd.Parameters.AddWithValue("@amount", pi.amount);
+                cmd.Parameters.AddWithValue("@id", pi.id);
+                int count = cmd.ExecuteNonQuery();
+                if (count > 0)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
     }
 }

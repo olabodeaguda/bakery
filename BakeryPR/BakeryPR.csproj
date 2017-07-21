@@ -87,6 +87,7 @@
     <Compile Include="DAO\MeasureTypeDao.cs" />
     <Compile Include="DAO\OverheadDao.cs" />
     <Compile Include="DAO\ProductDao.cs" />
+    <Compile Include="DAO\ProductInventoryHistoryDao.cs" />
     <Compile Include="DAO\ProductionDao.cs" />
     <Compile Include="DAO\ProductionIngredentDao.cs" />
     <Compile Include="DAO\ProductionOverheadDao.cs" />
@@ -105,6 +106,7 @@
     <Compile Include="Models\MeasurementType.cs" />
     <Compile Include="Models\Overhead.cs" />
     <Compile Include="Models\Product.cs" />
+    <Compile Include="Models\ProductInventoryHistory.cs" />
     <Compile Include="Models\Production.cs" />
     <Compile Include="Models\ProductionIngredent.cs" />
     <Compile Include="Models\ProductionOverhead.cs" />
@@ -122,10 +124,13 @@
     <Compile Include="ModelView\ProductionViewModel.cs" />
     <Compile Include="ModelView\ProductViewModel.cs" />
     <Compile Include="ModelView\RecipeIngredentModelView.cs" />
+    <Compile Include="ModelView\SalesModelView.cs" />
     <Compile Include="ModelView\UCDashboardModelView.cs" />
     <Compile Include="ModelView\UserManagementModelView.cs" />
     <Compile Include="Utilities\AppConfigUtils.cs" />
     <Compile Include="Utilities\DelegateCommand.cs" />
+    <Compile Include="Utilities\GridViewColumnVisibilityManager.cs" />
+    <Compile Include="Utilities\InventoryModeEnum.cs" />
     <Compile Include="Utilities\NavigateUtils.cs" />
     <Compile Include="Utilities\OverheadType.cs" />
     <Compile Include="Utilities\PageParameter.cs" />
@@ -193,6 +198,9 @@
     <Compile Include="Views\EditProductionOverhead.xaml.cs">
       <DependentUpon>EditProductionOverhead.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\EditProductionRecipe.xaml.cs">
+      <DependentUpon>EditProductionRecipe.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\EditProfile.xaml.cs">
       <DependentUpon>EditProfile.xaml</DependentUpon>
     </Compile>
@@ -231,6 +239,9 @@
     </Compile>
     <Compile Include="Views\RecipeIngredentView.xaml.cs">
       <DependentUpon>RecipeIngredentView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SalesView.xaml.cs">
+      <DependentUpon>SalesView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\UCDashboard.xaml.cs">
       <DependentUpon>UCDashboard.xaml</DependentUpon>
@@ -317,6 +328,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\EditProductionRecipe.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\EditProfile.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -366,6 +381,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\RecipeIngredentView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SalesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

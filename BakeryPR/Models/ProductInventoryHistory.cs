@@ -4,10 +4,11 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace BakeryPR.Models
 {
-    public class ProductionProduct : INotifyPropertyChanged
+    public class ProductInventoryHistory : INotifyPropertyChanged
     {
         private int _id;
 
@@ -21,7 +22,7 @@ namespace BakeryPR.Models
             }
         }
 
-        private int _productId = -1;
+        private int _productId;
 
         public int productId
         {
@@ -30,18 +31,6 @@ namespace BakeryPR.Models
             {
                 _productId = value;
                 this.NotifyPropertyChanged("productId");
-            }
-        }
-
-        private int _productionId = -1;
-
-        public int productionId
-        {
-            get { return _productionId; }
-            set
-            {
-                _productionId = value;
-                this.NotifyPropertyChanged("productionId");
             }
         }
 
@@ -57,68 +46,58 @@ namespace BakeryPR.Models
             }
         }
 
-        private int _expectedQuantity = 0;
+        private string _createdBy;
 
-        public int expectedQuantity
+        public string createdBy
         {
-            get { return _expectedQuantity; }
+            get { return _createdBy; }
             set
             {
-                _expectedQuantity = value;
-                this.NotifyPropertyChanged("expectedQuantity");
+                _createdBy = value;
+                this.NotifyPropertyChanged("createdBy");
+            }
+        }
+        private DateTime _createdDate;
+
+        public DateTime createdDate
+        {
+            get { return _createdDate; }
+            set
+            {
+                _createdDate = value;
+                this.NotifyPropertyChanged("_createdDate");
             }
         }
 
+        private string _inventoryMode;
 
-
-        private string _productName;
-
-        public string productName
+        public string inventoryMode
         {
-            get { return _productName; }
+            get { return _inventoryMode; }
             set
             {
-                _productName = value;
-                this.NotifyPropertyChanged("productName");
+                _inventoryMode = value;
+                this.NotifyPropertyChanged("inventoryMode");
             }
         }
 
-        private string _measureTypeName;
+        #region property change
 
-        public string measureTypeName
-        {
-            get { return _measureTypeName; }
-            set
-            {
-                _measureTypeName = value;
-                this.NotifyPropertyChanged("measureTypeName");
-            }
-        }
-
-        private double _weight;
-
-        public double weight
-        {
-            get { return _weight; }
-            set
-            {
-                _weight = value;
-                this.NotifyPropertyChanged("weight");
-            }
-        }
-
-        public string totalWeight
+        public double winHeight
         {
             get
             {
-                return $"{(weight * quantity)}{measureTypeName}";
+                return SystemParameters.PrimaryScreenHeight - 100;
             }
         }
 
-
-
-
-        #region property change
+        public double winWidth
+        {
+            get
+            {
+                return SystemParameters.PrimaryScreenWidth;
+            }
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -130,5 +109,6 @@ namespace BakeryPR.Models
             }
         }
         #endregion
+
     }
 }

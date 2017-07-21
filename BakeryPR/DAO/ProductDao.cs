@@ -33,7 +33,8 @@ namespace BakeryPR.DAO
                     mTypeId = int.Parse(x["mTypeId"].ToString()),
                     wholeSales = double.Parse(x["wholeSales"].ToString()),
                     measureTypeName = x["measureTypeName"].ToString(),
-                     name =x["name"].ToString()
+                    name = x["name"].ToString(),
+                    inventoryStore = String.IsNullOrEmpty(x["inventoryStore"].ToString()) ? 0 : int.Parse(x["inventoryStore"].ToString())
                 }).ToList();
             }
 
@@ -92,6 +93,32 @@ namespace BakeryPR.DAO
             return false;
         }
 
+
+        public String updateStoreQuery(Product pr)
+        {
+            string query = "update product set inventoryStore=" + pr.inventoryStore + " where id = '" + pr.id+"' ;";
+            return query;
+        }
+
+        public bool updateInventoryStore(Product values)
+        {
+            using (SQLiteConnection conn = new SQLiteConnection(connectionString))
+            {
+                conn.Open();
+                SQLiteCommand cmd = new SQLiteCommand(conn);
+                cmd.CommandText = "update product set inventoryStore=@inventoryStore where id = @id";
+                cmd.Parameters.AddWithValue("@inventoryStore", values.inventoryStore);
+                cmd.Parameters.AddWithValue("@id", values.id);
+                cmd.CommandType = CommandType.Text;
+                int count = cmd.ExecuteNonQuery();
+                if (count > 0)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
 
     }
 }
