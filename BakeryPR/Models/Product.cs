@@ -137,8 +137,29 @@ namespace BakeryPR.Models
             }
         }
 
+        private bool _isDiscount;
 
+        public bool isDiscount
+        {
+            get { return _isDiscount; }
+            set
+            {
+                _isDiscount = value;
+                this.NotifyPropertyChanged("isDiscount");
+            }
+        }
 
+        private double _discount;
+
+        public double discount
+        {
+            get { return _discount; }
+            set
+            {
+                _discount = value;
+                this.NotifyPropertyChanged("discount");
+            }
+        }
 
         #region property change
 

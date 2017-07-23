@@ -4,13 +4,43 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:BakeryPR.Views"
-        xmlns:vm="clr-namespace:BakeryPR.ModelView"
-        xmlns:fa="http://schemas.fontawesome.io/icons/"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+            xmlns:vm="clr-namespace:BakeryPR.ModelView"
+            xmlns:fa="http://schemas.fontawesome.io/icons/"
              mc:Ignorable="d" 
-             d:DesignHeight="{Binding winHeight}" d:DesignWidth="{Binding winWidth}">
+             d:DesignHeight="{Binding winHeight}" d:DesignWidth="{Binding winWidth}" >
     <UserControl.DataContext>
         <vm:SalesModelView></vm:SalesModelView>
     </UserControl.DataContext>
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding loadCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
+    <UserControl.InputBindings>
+        <KeyBinding Key="Enter" Command="{Binding enterKeyCommand}" ></KeyBinding>
+    </UserControl.InputBindings>
+        
+    <UserControl.Resources>
+        <Style x:Key="lstVDoubleClick" TargetType="{x:Type ListViewItem}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ListViewItem}">
+                        <GridViewRowPresenter Content="{TemplateBinding Content}"
+                            Columns="{TemplateBinding GridView.ColumnCollection}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="MouseDoubleClick">
+                                    <i:InvokeCommandAction Command="{Binding itmLstDblCommand}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </GridViewRowPresenter>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
     <Grid Margin="5">
         <Grid.RowDefinitions>
             <RowDefinition Height="70"></RowDefinition>
@@ -19,15 +49,150 @@
 
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="350"></ColumnDefinition>
+                <ColumnDefinition Width="500"></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
 
-            <StackPanel>
-                <TextBlock >Item</TextBlock>
-            </StackPanel>
-            
-        </Grid>                
+            <Border BorderThickness="2" BorderBrush="BurlyWood" Margin="5">
+            <Grid Margin="5">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <TextBlock Style="{StaticResource headings}" TextAlignment="Center" >Items</TextBlock>
+                <StackPanel Grid.Row="1"  Margin="5">
+                    <TextBox Height="40" BorderThickness="3" Text="{Binding searchItem,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+                    </TextBox>
+                        <ListView Margin="8" SelectedItem="{Binding selectedProduct,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  ItemsSource="{Binding itemLst,Mode=TwoWay}" IsSynchronizedWithCurrentItem="True">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseDoubleClick">
+                                <i:InvokeCommandAction Command="{Binding itmLstDblCommand}" CommandParameter="{Binding}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <TextBlock Name="itemName" Text="{Binding name,Mode=TwoWay}" ></TextBlock>
+                                    <StackPanel Orientation="Horizontal">
+                                            <TextBlock Name="itemPrice" Text="{Binding retailPrice,Mode=TwoWay}"></TextBlock>
+                                           <!-- <TextBlock Name="discountPrice" Text="{Binding discount,Mode=TwoWay}"></TextBlock>-->
+                                    </StackPanel>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </StackPanel>
+            </Grid>
+            </Border>
+            <Border Grid.Column="1"  BorderThickness="2" BorderBrush="BurlyWood" Margin="5">
+            <Grid Grid.Column="1"  Margin="5" DataContext="{Binding cartModel}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="400"></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid Margin="5" VerticalAlignment="Top">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"></RowDefinition>
+                            <RowDefinition Height="30"></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <TextBlock Style="{StaticResource headings}" TextAlignment="Center" >Cart</TextBlock>
+                        <StackPanel Orientation="Horizontal" Grid.Row="1"  Margin="5">
+                            <RadioButton GroupName="salesType" IsChecked="{Binding isWholesales}" >Is WholeSales</RadioButton>
+                            <RadioButton Margin="50 0 0 0"  IsChecked="{Binding isRetails}"   GroupName="salesType">Retails</RadioButton>
+                        </StackPanel>
+                        <StackPanel  Grid.Row="2">
+                            <TextBlock Style="{StaticResource headings}" TextAlignment="Center" Foreground="White" >Cart List</TextBlock>
+                            <ListView  ItemsSource="{Binding itemLst,Mode=TwoWay}" IsSynchronizedWithCurrentItem="True">
+                                <ListView.View>
+                                    <GridView>
+                                        <GridViewColumn HeaderContainerStyle="{StaticResource ListViewStyle}" 
+                                    Header="Product"  DisplayMemberBinding="{Binding productName}"></GridViewColumn>
+                                        <GridViewColumn HeaderContainerStyle="{StaticResource ListViewStyle}" 
+                                    Header="Quantity">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBox Text="{Binding Path=quantity,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+                                                        <i:Interaction.Triggers>
+                                                            <i:EventTrigger EventName="TextChanged">
+                                                                <i:InvokeCommandAction Command="{Binding quantityChangedCommand}" CommandParameter="{Binding}" >
+                                                                    
+                                                                </i:InvokeCommandAction>                                                                    
+                                                            </i:EventTrigger>
+                                                        </i:Interaction.Triggers>
+                                                    </TextBox>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn HeaderContainerStyle="{StaticResource ListViewStyle}" 
+                                    Header="Price"  DisplayMemberBinding="{Binding price}"></GridViewColumn>
+                                    </GridView>
+                                </ListView.View>
+                                <ListView.Style>
+                                    <Style TargetType="ListView">
+                                        <Style.Triggers>
+                                            <Trigger Property="HasItems"
+                         Value="False">
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate TargetType="ListView">
+                                                            <TextBlock Text="No items in cart..."/>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+
+                                </ListView.Style>
+                            </ListView>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+            </Border>
+            <Border Grid.Column="2"  BorderThickness="2" BorderBrush="BurlyWood" Margin="5">
+                <Grid Grid.Column="2" Margin="5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <TextBlock Style="{StaticResource headings}" TextAlignment="Center" >History</TextBlock>
+                    <StackPanel Grid.Row="1" Margin="5">
+                        <TextBox Height="40" BorderThickness="3"></TextBox>
+                        <ListView  Margin="8">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <TextBlock Name="itemName" ></TextBlock>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Name="itemPrice"></TextBlock>
+                                            <TextBlock Name="discountPrice"></TextBlock>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+
+                            <ListView.Style>
+                                <Style TargetType="ListView">
+                                    <Style.Triggers>
+                                        <Trigger Property="HasItems"
+                         Value="False">
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="ListView">
+                                                        <TextBlock Text="No items..."/>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </ListView.Style>
+                        </ListView>
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </Grid>
     </Grid>
 </UserControl>

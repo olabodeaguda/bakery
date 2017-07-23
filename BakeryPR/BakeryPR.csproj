@@ -55,11 +55,19 @@
     <Reference Include="FontAwesome.WPF, Version=4.7.0.37774, Culture=neutral, PublicKeyToken=0758b07a11a4f466, processorArchitecture=MSIL">
       <HintPath>..\packages\FontAwesome.WPF.4.7.0.9\lib\net40\FontAwesome.WPF.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\Microsoft.Expression.Interactions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.SQLite, Version=1.0.105.2, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Data.SQLite.Core.1.0.105.2\lib\net451\System.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\System.Windows.Interactivity.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -96,12 +104,15 @@
     <Compile Include="DAO\RecipeIngredentDao.cs" />
     <Compile Include="DAO\RoleDao.cs" />
     <Compile Include="DAO\UserDao.cs" />
+    <Compile Include="Models\CartModel.cs" />
+    <Compile Include="Models\CartProductModel.cs" />
     <Compile Include="Models\ChangePwd.cs" />
     <Compile Include="Models\DropdownModel.cs" />
     <Compile Include="Models\Error.cs" />
     <Compile Include="Models\Ingredent.cs" />
     <Compile Include="Models\InventoryHistory.cs" />
     <Compile Include="Models\InventoryMode.cs" />
+    <Compile Include="Models\ItemModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\MeasurementType.cs" />
     <Compile Include="Models\Overhead.cs" />
@@ -128,6 +139,7 @@
     <Compile Include="ModelView\UCDashboardModelView.cs" />
     <Compile Include="ModelView\UserManagementModelView.cs" />
     <Compile Include="Utilities\AppConfigUtils.cs" />
+    <Compile Include="Utilities\CartStatus.cs" />
     <Compile Include="Utilities\DelegateCommand.cs" />
     <Compile Include="Utilities\GridViewColumnVisibilityManager.cs" />
     <Compile Include="Utilities\InventoryModeEnum.cs" />
@@ -136,6 +148,7 @@
     <Compile Include="Utilities\PageParameter.cs" />
     <Compile Include="Utilities\PasswordBoxAssistant.cs" />
     <Compile Include="Utilities\ProductionStatus.cs" />
+    <Compile Include="Utilities\SalesType.cs" />
     <Compile Include="Utilities\UserSatus.cs" />
     <Compile Include="Views\AddIngredent.xaml.cs">
       <DependentUpon>AddIngredent.xaml</DependentUpon>
