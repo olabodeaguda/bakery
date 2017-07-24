@@ -14,7 +14,7 @@
         </Grid.RowDefinitions>
 
         <TextBlock Style="{StaticResource headings}"  Grid.ColumnSpan="2" >Cart Summary</TextBlock>
-        <ListView Grid.Row="1">
+        <ListView Grid.Row="1"  ItemsSource="{Binding cartModel.itemLst,Mode=TwoWay}" IsSynchronizedWithCurrentItem="True">
             <ListView.View>
                 <GridView>
                     <GridViewColumn HeaderContainerStyle="{StaticResource ListViewStyle}" 
@@ -28,9 +28,7 @@
         </ListView>
 
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button HorizontalAlignment="Right" Width="80" Height="30" VerticalAlignment="Center">Close</Button>
-            <Button HorizontalAlignment="Right" Width="80" Height="30" VerticalAlignment="Center">Cancel</Button>
-            <Button HorizontalAlignment="Right" Width="80" Height="30" VerticalAlignment="Center">Good</Button>
+            <Button Command="{Binding CheckOutCommand}" HorizontalAlignment="Right" Width="80" Height="30" VerticalAlignment="Center">Check Out</Button>
         </StackPanel>
     </Grid>
 </Window>

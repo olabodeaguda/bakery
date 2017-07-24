@@ -14,7 +14,19 @@ using System.Windows;
 namespace BakeryPR.ModelView
 {
     public class SalesModelView : INotifyPropertyChanged
-    {
+    {      
+        public DelegateCommand<object> CheckOutCommand
+        {
+            get
+            {
+                return new DelegateCommand<object>((s) =>
+                {
+                    cartSummary cSummary = new cartSummary();
+                    cSummary.DataContext = this;
+                    cSummary.ShowDialog();
+                });
+            }
+        }
 
         public DelegateCommand<object> enterKeyCommand
         {
@@ -25,7 +37,7 @@ namespace BakeryPR.ModelView
                     var sd = this.cartModel;
                     cartSummary summary = new cartSummary();
                     summary.DataContext = this;
-                    summary.ShowDialog();
+                    bool? close = summary.ShowDialog();
                 });
             }
         }
