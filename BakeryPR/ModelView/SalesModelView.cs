@@ -22,6 +22,21 @@ namespace BakeryPR.ModelView
                 return new DelegateCommand<object>((s) =>
                 {
                     var sd = this.cartModel;
+                    
+                });
+            }
+        }
+
+        public DelegateCommand<object> clrCartCommand
+        {
+            get
+            {
+                return new DelegateCommand<object>((s) =>
+                {
+                    App.Current.Dispatcher.Invoke((Action)delegate
+                    {
+                        this.cartModel.itemLst.Clear();
+                    });
                 });
             }
         }

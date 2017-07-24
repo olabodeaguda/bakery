@@ -976,7 +976,6 @@ namespace BakeryPR.ModelView
             }
         }
 
-
         public DelegateCommand<object> loadProdIngredent
         {
             get

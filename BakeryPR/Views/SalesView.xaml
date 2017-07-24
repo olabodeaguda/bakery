@@ -86,7 +86,7 @@
             </Grid>
             </Border>
             <Border Grid.Column="1"  BorderThickness="2" BorderBrush="BurlyWood" Margin="5">
-            <Grid Grid.Column="1"  Margin="5" DataContext="{Binding cartModel}">
+            <Grid Grid.Column="1"  Margin="5">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="400"></RowDefinition>
                         <RowDefinition></RowDefinition>
@@ -97,20 +97,29 @@
                             <RowDefinition Height="30"></RowDefinition>
                             <RowDefinition></RowDefinition>
                         </Grid.RowDefinitions>
-                        <TextBlock Style="{StaticResource headings}" TextAlignment="Center" >Cart</TextBlock>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Style="{StaticResource headings}" TextAlignment="Center" >Cart</TextBlock>
+                            <Button Grid.Column="1" Width="100" HorizontalAlignment="Right" Command="{Binding clrCartCommand}">Clear</Button>
+
+                        </Grid>
+                        
                         <StackPanel Orientation="Horizontal" Grid.Row="1"  Margin="5">
-                            <RadioButton GroupName="salesType" IsChecked="{Binding isWholesales}" >Is WholeSales</RadioButton>
-                            <RadioButton Margin="50 0 0 0"  IsChecked="{Binding isRetails}"   GroupName="salesType">Retails</RadioButton>
+                            <RadioButton GroupName="salesType" IsChecked="{Binding cartModel.isWholesales}" >Is WholeSales</RadioButton>
+                            <RadioButton Margin="50 0 0 0"  IsChecked="{Binding cartModel.isRetails}"   GroupName="salesType">Retails</RadioButton>
                         </StackPanel>
                         <StackPanel  Grid.Row="2">
                             <TextBlock Style="{StaticResource headings}" TextAlignment="Center" Foreground="White" >Cart List</TextBlock>
-                            <ListView  ItemsSource="{Binding itemLst,Mode=TwoWay}" IsSynchronizedWithCurrentItem="True">
+                            <ListView  ItemsSource="{Binding cartModel.itemLst,Mode=TwoWay}" IsSynchronizedWithCurrentItem="True">
                                 <ListView.View>
                                     <GridView>
                                         <GridViewColumn HeaderContainerStyle="{StaticResource ListViewStyle}" 
                                     Header="Product"  DisplayMemberBinding="{Binding productName}"></GridViewColumn>
                                         <GridViewColumn HeaderContainerStyle="{StaticResource ListViewStyle}" 
-                                    Header="Quantity">
+                                    Header="Quantity" Width="200">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
                                                     <TextBox Text="{Binding Path=quantity,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
@@ -126,7 +135,7 @@
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
                                         <GridViewColumn HeaderContainerStyle="{StaticResource ListViewStyle}" 
-                                    Header="Price"  DisplayMemberBinding="{Binding price}"></GridViewColumn>
+                                    Header="Price"  DisplayMemberBinding="{Binding price}" Width="200"></GridViewColumn>
                                     </GridView>
                                 </ListView.View>
                                 <ListView.Style>

@@ -183,6 +183,9 @@
     <Compile Include="Views\AssignUserRole.xaml.cs">
       <DependentUpon>AssignUserRole.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\cartSummary.xaml.cs">
+      <DependentUpon>cartSummary.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ChangePwd.xaml.cs">
       <DependentUpon>ChangePwd.xaml</DependentUpon>
     </Compile>
@@ -306,6 +309,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\AssignUserRole.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\cartSummary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
