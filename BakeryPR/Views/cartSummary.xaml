@@ -12,6 +12,8 @@
             <RowDefinition></RowDefinition>
             <RowDefinition Height="40"></RowDefinition>
         </Grid.RowDefinitions>
+
+        <TextBlock Style="{StaticResource headings}"  Grid.ColumnSpan="2" >Cart Summary</TextBlock>
         <ListView Grid.Row="1">
             <ListView.View>
                 <GridView>
@@ -25,8 +27,10 @@
             </ListView.View>
         </ListView>
 
-        <StackPanel Grid.Row="2">
-            <Button HorizontalAlignment="Right" Width="80" Height="30" VerticalAlignment="Center">Go</Button>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button HorizontalAlignment="Right" Width="80" Height="30" VerticalAlignment="Center">Close</Button>
+            <Button HorizontalAlignment="Right" Width="80" Height="30" VerticalAlignment="Center">Cancel</Button>
+            <Button HorizontalAlignment="Right" Width="80" Height="30" VerticalAlignment="Center">Good</Button>
         </StackPanel>
     </Grid>
 </Window>

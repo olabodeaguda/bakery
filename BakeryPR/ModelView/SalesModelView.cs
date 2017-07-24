@@ -1,6 +1,7 @@
 ﻿using BakeryPR.DAO;
 using BakeryPR.Models;
 using BakeryPR.Utilities;
+using BakeryPR.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -22,7 +23,9 @@ namespace BakeryPR.ModelView
                 return new DelegateCommand<object>((s) =>
                 {
                     var sd = this.cartModel;
-                    
+                    cartSummary summary = new cartSummary();
+                    summary.DataContext = this;
+                    summary.ShowDialog();
                 });
             }
         }
