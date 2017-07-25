@@ -89,6 +89,8 @@
     </ApplicationDefinition>
     <Compile Include="DAO\AbstractDao.cs" />
     <Compile Include="DAO\AppConfigDao.cs" />
+    <Compile Include="DAO\CartDao.cs" />
+    <Compile Include="DAO\CartProductDao.cs" />
     <Compile Include="DAO\CommonDao.cs" />
     <Compile Include="DAO\IngredentDao.cs" />
     <Compile Include="DAO\InventoryHistoryDao.cs" />

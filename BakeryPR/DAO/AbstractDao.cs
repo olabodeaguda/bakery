@@ -44,6 +44,25 @@ namespace BakeryPR.DAO
             return result;
         }
 
+        protected int executeScalar(string query)
+        {
+            try
+            {
+                using (SQLiteConnection conn = new SQLiteConnection(connectionString))
+                {
+                    conn.Open();
+                    SQLiteCommand cmd = new SQLiteCommand(conn);
+                    cmd.CommandText = query;
+                    cmd.CommandType = CommandType.Text;
+                    return (int)cmd.ExecuteScalar();
+                }
+            }
+            catch (Exception x)
+            {
+                throw new Exception(x.Message);
+            }
+        }
+
         protected void SQLiteAdaptor(DataSet dt, SQLiteCommand cmd)
         {
             using (SQLiteDataAdapter da = new SQLiteDataAdapter(cmd))

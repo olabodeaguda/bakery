@@ -20,10 +20,9 @@ namespace BakeryPR.ModelView
             get
             {
                 return new DelegateCommand<object>((s) =>
-                {
-                    cartSummary cSummary = new cartSummary();
-                    cSummary.DataContext = this;
-                    cSummary.ShowDialog();
+                {                  
+                   //save cart
+                   //deduct from product repo
                 });
             }
         }
@@ -34,6 +33,11 @@ namespace BakeryPR.ModelView
             {
                 return new DelegateCommand<object>((s) =>
                 {
+                    if (this.cartModel.itemLst.Count < 1)
+                    {
+                        return;
+                    }
+
                     var sd = this.cartModel;
                     cartSummary summary = new cartSummary();
                     summary.DataContext = this;
