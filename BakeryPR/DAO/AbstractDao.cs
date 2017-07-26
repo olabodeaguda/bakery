@@ -62,7 +62,7 @@ namespace BakeryPR.DAO
                 throw new Exception(x.Message);
             }
         }
-
+       
         protected void SQLiteAdaptor(DataSet dt, SQLiteCommand cmd)
         {
             using (SQLiteDataAdapter da = new SQLiteDataAdapter(cmd))

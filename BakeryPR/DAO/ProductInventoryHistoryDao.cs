@@ -14,7 +14,7 @@ namespace BakeryPR.DAO
         public string insertQuery(ProductInventoryHistory p)
         {
             string query = "insert into ProductInventoryHistory(productId,quantity,createdBy,createdDate,inventoryMode) ";
-            query = query + "values('"+p.productId+"',"+p.quantity+",'"+p.createdBy+"','"+ p.createdDate.ToString("yyyy-MM-dd") + "','"+p.inventoryMode+"'); ";
+            query = query + "values('"+p.productId+"',"+p.quantity+",'"+p.createdBy+"','"+  DateTime.Now.ToString("yyyy-MM-dd") + "','"+p.inventoryMode+"'); ";
 
             return query;
         }

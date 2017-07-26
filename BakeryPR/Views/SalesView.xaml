@@ -60,7 +60,7 @@
                     <RowDefinition Height="50"></RowDefinition>
                     <RowDefinition></RowDefinition>
                 </Grid.RowDefinitions>
-                <TextBlock Style="{StaticResource headings}" TextAlignment="Center" >Items</TextBlock>
+                    <TextBlock Style="{StaticResource headings}" TextAlignment="Center" >Product</TextBlock>
                 <StackPanel Grid.Row="1"  Margin="5">
                     <TextBox Height="40" BorderThickness="3" Text="{Binding searchItem,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
                     </TextBox>
@@ -168,17 +168,33 @@
                     </Grid.RowDefinitions>
                     <TextBlock Style="{StaticResource headings}" TextAlignment="Center" >History</TextBlock>
                     <StackPanel Grid.Row="1" Margin="5">
-                        <TextBox Height="40" BorderThickness="3"></TextBox>
-                        <ListView  Margin="8">
+                        <TextBox Height="40" BorderThickness="3" Text="{Binding searchHisory,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                        <ListView  Margin="8"  ItemsSource="{Binding dailyCartHistory,Mode=TwoWay}" IsSynchronizedWithCurrentItem="True" 
+                                   ScrollViewer.CanContentScroll="True">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
-                                    <StackPanel>
-                                        <TextBlock Name="itemName" ></TextBlock>
-                                        <StackPanel Orientation="Horizontal">
-                                            <TextBlock Name="itemPrice"></TextBlock>
-                                            <TextBlock Name="discountPrice"></TextBlock>
-                                        </StackPanel>
-                                    </StackPanel>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition></ColumnDefinition>
+                                            <ColumnDefinition></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Row="0">Customer Name</TextBlock>
+                                        <TextBlock Grid.Row="1">Product Name</TextBlock>
+                                        <TextBlock Grid.Row="2">Quantity</TextBlock>
+                                        <TextBlock Grid.Row="3">Price</TextBlock>
+
+                                        <TextBlock Margin="10 0 0 0" Grid.Row="0" Grid.Column="1" Text="{Binding customerName,Mode=TwoWay}"></TextBlock>
+                                        <TextBlock Margin="10 0 0 0" Grid.Row="1" Grid.Column="1" Text="{Binding pName,Mode=TwoWay}"></TextBlock>
+                                        <TextBlock Margin="10 0 0 0" Grid.Row="2" Grid.Column="1" Text="{Binding quantity,Mode=TwoWay}"></TextBlock>
+                                        <TextBlock Margin="10 0 0 0" Grid.Row="3" Grid.Column="1" Text="{Binding price,Mode=TwoWay}"></TextBlock>
+
+                                    </Grid>
                                 </DataTemplate>
                             </ListView.ItemTemplate>
 

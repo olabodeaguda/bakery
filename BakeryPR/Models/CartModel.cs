@@ -66,7 +66,7 @@ namespace BakeryPR.Models
             get { return _isRetails; }
             set
             {
-                _isRetails = value;                
+                _isRetails = value;
                 this.NotifyPropertyChanged("isRetails");
             }
         }
@@ -132,6 +132,44 @@ namespace BakeryPR.Models
                 this.NotifyPropertyChanged("lastModifiedDate");
             }
         }
+
+        private int _quantity;
+
+        public int quantity
+        {
+            get { return _quantity; }
+            set
+            {
+                _quantity = value;
+                this.NotifyPropertyChanged("quantity");
+            }
+        }
+
+        private double _price;
+
+        public double price
+        {
+            get { return _price; }
+            set
+            {
+                _price = value;
+                this.NotifyPropertyChanged("price");
+            }
+        }
+
+        private string _pName;
+
+        public string pName
+        {
+            get { return _pName; }
+            set
+            {
+                _pName = value;
+                this.NotifyPropertyChanged("pName");
+            }
+        }
+
+
 
         private ObservableCollection<CartProductModel> _itemLst = new ObservableCollection<CartProductModel>();
 

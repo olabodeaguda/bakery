@@ -14,16 +14,175 @@ using System.Windows;
 namespace BakeryPR.ModelView
 {
     public class SalesModelView : INotifyPropertyChanged
-    {      
+    {
+        private string _searchHisory;
+
+        public string searchHisory
+        {
+            get { return _searchHisory; }
+            set
+            {
+                if (_searchHisory != value)
+                {
+                    _searchHisory = value;
+                    List<CartModel> s = dailyHistory.Where(x => x.pName.ToLower().Contains(value) || x.customerName.ToLower().Contains(value)).ToList();
+                    this.dailyCartHistory = new ObservableCollection<CartModel>(s);                    
+                    this.NotifyPropertyChanged("searchHisory");
+                }
+            }
+        }
+
+        public List<CartModel> dailyHistory
+        {
+            get
+            {
+                return this.cartDao.byDaily(DateTime.Now.ToString("yyyy-MM-dd"));
+            }
+        }
+
+        private ObservableCollection<CartModel> _dailyCartHistory;
+
+        public ObservableCollection<CartModel> dailyCartHistory
+        {
+            get
+            {
+                return _dailyCartHistory;
+            }
+            set
+            {
+                _dailyCartHistory = value;
+                this.NotifyPropertyChanged("dailyCartHistory");
+            }
+        }
+
+
         public DelegateCommand<object> CheckOutCommand
         {
             get
             {
-                return new DelegateCommand<object>((s) =>
-                {                  
-                   //save cart
-                   //deduct from product repo
+                return new DelegateCommand<object>(async (s) =>
+                {
+                    await Task.Run(() =>
+                    {
+                        try
+                        {
+                            if (this.cartModel.itemLst.Count <= 0)
+                            {
+                                return;
+                            }
+                            MessageBoxResult mresult = MessageBox.Show("Are you sure?", "Submit Cart", MessageBoxButton.YesNo, MessageBoxImage.Information);
+
+                            if(mresult == MessageBoxResult.No)
+                            {
+                                return;
+                            }
+
+                            _cartModel.cartStatus = CartStatus.PROCESSING.ToString();
+                            List<CartModel> cartByDate = cartDao.byDate(DateTime.Now.ToString("yyyy-MM-dd"));
+                            this.cartModel.customerName = $"Customer{cartByDate.Count + 1}";
+                            int cartId = cartDao.add(this.cartModel);
+                            string cardString = string.Empty;
+                            List<Product> productsCurrent = lstItem;
+
+                            foreach (CartProductModel tm in cartModel.itemLst)
+                            {
+                                Product p = productsCurrent.FirstOrDefault(x => x.id == tm.productId);
+
+                                if (p == null)
+                                {
+                                    this.itemLst = new ObservableCollection<Product>(productsCurrent);
+                                    throw new Exception($"{tm.productName} is no more available");
+                                }
+                                if (p.inventoryStore < tm.quantity)
+                                {
+                                    this.itemLst = new ObservableCollection<Product>(productsCurrent);
+                                    throw new Exception($"{tm.productName} does not have up to the requested quantity in inventory.");
+                                }
+
+                                tm.cartId = cartId;
+
+                                cardString = cardString + cartProductDao.getInsertQuery(tm);
+                                cardString = cardString + productDao.updateStoreQuery(new Product()
+                                {
+                                    id = tm.productId,
+                                    inventoryStore = p.inventoryStore - tm.quantity
+                                });
+
+                                //update Inventory history
+                                cardString = cardString + PIHDao.insertQuery(new ProductInventoryHistory()
+                                {
+                                    createdBy = this.cartModel.createdBy,
+                                    inventoryMode = InventoryMode.ADD.ToString(),
+                                    productId = tm.productId,
+                                    quantity = tm.quantity
+                                });
+
+                            }
+
+                            cardString = cardString + cartDao.updateQuery(new CartModel() { id = cartId, cartStatus = CartStatus.DONE.ToString() });
+
+                            bool d = cartDao.executeQuery(cardString);
+                            if (d)
+                            {
+                                MessageBox.Show("Card was successfull", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                                App.Current.Dispatcher.Invoke((Action)delegate
+                                {
+                                    this.dailyCartHistory = new ObservableCollection<CartModel>(dailyHistory);
+                                    this.cartModel.itemLst.Clear();
+                                });
+                            }
+                            else
+                            {
+                                throw new Exception("Transaction was not successfull please try again, or contact administrator");
+                            }
+                        }
+                        catch (Exception x)
+                        {
+                            MessageBox.Show(x.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
+
+                    });
                 });
+            }
+        }
+
+        public ProductInventoryHistoryDao PIHDao
+        {
+            get
+            {
+                return new ProductInventoryHistoryDao();
+            }
+        }
+
+        public ProductDao productDao
+        {
+            get
+            {
+                return new ProductDao();
+            }
+        }
+
+        public AppConfigDao appConfigDao
+        {
+            get
+            {
+                return new AppConfigDao();
+            }
+        }
+
+        public CartDao cartDao
+        {
+            get
+            {
+                return new CartDao();
+            }
+        }
+
+        public CartProductDao cartProductDao
+        {
+            get
+            {
+                return new CartProductDao();
             }
         }
 
@@ -77,11 +236,23 @@ namespace BakeryPR.ModelView
             }
         }
 
+        public LoginModel loginModel
+        {
+            get
+            {
+                return appConfigDao.read();
+            }
+        }
+
         private CartModel _cartModel = new CartModel();
 
         public CartModel cartModel
         {
-            get { return _cartModel; }
+            get
+            {
+                _cartModel.createdBy = this.loginModel.fullname;
+                return _cartModel;
+            }
             set
             {
                 _cartModel = value;
@@ -107,6 +278,7 @@ namespace BakeryPR.ModelView
                     await Task.Run(() =>
                     {
                         itemLst = new ObservableCollection<Product>(this.lstItem);
+                        dailyCartHistory = new ObservableCollection<CartModel>(this.dailyHistory);
                     });
                 });
             }

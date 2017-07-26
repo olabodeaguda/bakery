@@ -20,17 +20,5 @@ namespace BakeryPR.DAO
             return query;
         }
 
-        public string updateProductInventory(int productId)
-        {
-            string query = "insert into cartProduct(price,quantity,productId,cartId) values(";
-            //query = query + "'" + c.price + "',";
-            //query = query + "'" + c.quantity + "',";
-            //query = query + "'" + c.productId + "',";
-            //query = query + "'" + c.cartId + "'";
-            //query = query + " );";
-            return query;
-        }
-
-
     }
 }

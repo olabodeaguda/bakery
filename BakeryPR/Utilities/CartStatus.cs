@@ -8,6 +8,6 @@ namespace BakeryPR.Utilities
 {
     public enum CartStatus
     {
-        DONE,DRAFT
+        DONE,DRAFT,PROCESSING
     }
 }

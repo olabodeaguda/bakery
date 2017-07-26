@@ -16,6 +16,20 @@ namespace BakeryPR.ModelView
     public class ProductViewModel : INotifyPropertyChanged
     {
 
+        public DelegateCommand<object> reportCommand
+        {
+            get
+            {
+                return new DelegateCommand<object>(async(s) =>
+                {
+                    await Task.Run(() =>
+                    {
+                        // generate report
+                    });
+                });
+            }
+        }
+
         public DelegateCommand<object> loadCommand
         {
             get
