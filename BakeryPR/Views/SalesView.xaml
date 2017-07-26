@@ -60,11 +60,18 @@
                     <RowDefinition Height="50"></RowDefinition>
                     <RowDefinition></RowDefinition>
                 </Grid.RowDefinitions>
-                    <TextBlock Style="{StaticResource headings}" TextAlignment="Center" >Product</TextBlock>
-                <StackPanel Grid.Row="1"  Margin="5">
+                    <TextBlock Style="{StaticResource headings}" TextAlignment="Center" >Finished Goods</TextBlock>
+                <Grid Grid.Row="1"  Margin="5">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="50"></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
                     <TextBox Height="40" BorderThickness="3" Text="{Binding searchItem,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
                     </TextBox>
-                        <ListView Margin="8" SelectedItem="{Binding selectedProduct,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  ItemsSource="{Binding itemLst,Mode=TwoWay}" IsSynchronizedWithCurrentItem="True">
+                        <ListView Grid.Row="1" Margin="8" 
+                                  SelectedItem="{Binding selectedProduct,Mode=TwoWay, 
+                            UpdateSourceTrigger=PropertyChanged}"  ItemsSource="{Binding itemLst,Mode=TwoWay}"
+                                  IsSynchronizedWithCurrentItem="True" ScrollViewer.CanContentScroll="True">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="MouseDoubleClick">
                                 <i:InvokeCommandAction Command="{Binding itmLstDblCommand}" CommandParameter="{Binding}" />
@@ -75,14 +82,15 @@
                                 <StackPanel>
                                     <TextBlock Name="itemName" Text="{Binding name,Mode=TwoWay}" ></TextBlock>
                                     <StackPanel Orientation="Horizontal">
-                                            <TextBlock Name="itemPrice" Text="{Binding retailPrice,Mode=TwoWay}"></TextBlock>
-                                           <!-- <TextBlock Name="discountPrice" Text="{Binding discount,Mode=TwoWay}"></TextBlock>-->
+                                            <TextBlock Text="{Binding quantityString,Mode=TwoWay}"></TextBlock>
+                                            <TextBlock Margin="5 0 0 0" Text="{Binding retailString,Mode=TwoWay}"></TextBlock>
+                                            <TextBlock Margin="5 0 0 0" Text="{Binding wholeString,Mode=TwoWay}"></TextBlock>
                                     </StackPanel>
                                 </StackPanel>
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
-                </StackPanel>
+                </Grid>
             </Grid>
             </Border>
             <Border Grid.Column="1"  BorderThickness="2" BorderBrush="BurlyWood" Margin="5">
@@ -102,7 +110,8 @@
                                 <ColumnDefinition></ColumnDefinition>
                                 <ColumnDefinition></ColumnDefinition>
                             </Grid.ColumnDefinitions>
-                            <TextBlock Style="{StaticResource headings}" TextAlignment="Center" >Cart</TextBlock>
+                            <TextBlock Style="{StaticResource headings}" TextAlignment="Center" Height="30"
+                                       VerticalAlignment="Top" >Invoice</TextBlock>
                             <Button Grid.Column="1" Width="100" HorizontalAlignment="Right" Command="{Binding clrCartCommand}">Clear</Button>
 
                         </Grid>
@@ -167,9 +176,14 @@
                         <RowDefinition></RowDefinition>
                     </Grid.RowDefinitions>
                     <TextBlock Style="{StaticResource headings}" TextAlignment="Center" >History</TextBlock>
-                    <StackPanel Grid.Row="1" Margin="5">
+                    <Grid Grid.Row="1" Margin="5">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="50"></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
                         <TextBox Height="40" BorderThickness="3" Text="{Binding searchHisory,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></TextBox>
-                        <ListView  Margin="8"  ItemsSource="{Binding dailyCartHistory,Mode=TwoWay}" IsSynchronizedWithCurrentItem="True" 
+                        <ListView Grid.Row="1"  Margin="8"  ItemsSource="{Binding dailyCartHistory,Mode=TwoWay}"
+                                  IsSynchronizedWithCurrentItem="True" 
                                    ScrollViewer.CanContentScroll="True">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
@@ -215,7 +229,7 @@
                                 </Style>
                             </ListView.Style>
                         </ListView>
-                    </StackPanel>
+                    </Grid>
                 </Grid>
             </Border>
         </Grid>

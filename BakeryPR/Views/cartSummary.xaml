@@ -17,18 +17,19 @@
         <ListView Grid.Row="1"  ItemsSource="{Binding cartModel.itemLst,Mode=TwoWay}" IsSynchronizedWithCurrentItem="True">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn HeaderContainerStyle="{StaticResource ListViewStyle}" 
+                    <GridViewColumn Width="100" HeaderContainerStyle="{StaticResource ListViewStyle}" 
                                     Header="Product"  DisplayMemberBinding="{Binding productName}"></GridViewColumn>
-                    <GridViewColumn HeaderContainerStyle="{StaticResource ListViewStyle}" 
+                    <GridViewColumn Width="100" HeaderContainerStyle="{StaticResource ListViewStyle}" 
                                      Header="Quantity"  DisplayMemberBinding="{Binding quantity}"></GridViewColumn>
-                    <GridViewColumn HeaderContainerStyle="{StaticResource ListViewStyle}" 
+                    <GridViewColumn Width="150" HeaderContainerStyle="{StaticResource ListViewStyle}" 
                                     Header="Price"  DisplayMemberBinding="{Binding price}"></GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>
 
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Command="{Binding CheckOutCommand}" HorizontalAlignment="Right" Width="80" Height="30" VerticalAlignment="Center">Check Out</Button>
+            <Button Command="{Binding CheckOutCommand}" HorizontalAlignment="Right" 
+                    Width="110" Height="30" VerticalAlignment="Center">Check Out Invoice</Button>
         </StackPanel>
     </Grid>
 </Window>
