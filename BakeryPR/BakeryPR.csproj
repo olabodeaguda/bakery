@@ -138,6 +138,7 @@
     <Compile Include="ModelView\ProductionViewModel.cs" />
     <Compile Include="ModelView\ProductViewModel.cs" />
     <Compile Include="ModelView\RecipeIngredentModelView.cs" />
+    <Compile Include="ModelView\Sales2ViewModel.cs" />
     <Compile Include="ModelView\SalesModelView.cs" />
     <Compile Include="ModelView\UCDashboardModelView.cs" />
     <Compile Include="ModelView\UserManagementModelView.cs" />
@@ -264,6 +265,9 @@
     </Compile>
     <Compile Include="Views\SalesView.xaml.cs">
       <DependentUpon>SalesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SalesView2.xaml.cs">
+      <DependentUpon>SalesView2.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\UCDashboard.xaml.cs">
       <DependentUpon>UCDashboard.xaml</DependentUpon>
@@ -415,6 +419,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\SalesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SalesView2.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -129,6 +129,7 @@ namespace BakeryPR.ModelView
                                 {
                                     this.dailyCartHistory = new ObservableCollection<CartModel>(dailyHistory);
                                     this.cartModel.itemLst.Clear();
+                                    itemLst = new ObservableCollection<Product>(this.lstItem);
                                 });
                             }
                             else

@@ -421,6 +421,7 @@ namespace BakeryPR.ModelView
                 {
                     EditProductionProduct epp = new EditProductionProduct();
                     this.productionProduct = (ProductionProduct)s;
+                    this.checkvalidation();
                     epp.DataContext = this;
                     epp.ShowDialog();
                 });
@@ -534,7 +535,7 @@ namespace BakeryPR.ModelView
                         AddProductionProduct prod = new AddProductionProduct();
                         productionProduct = new ProductionProduct();
                         this.production = (Production)s;
-                        this.checkvalidation();
+                        //this.checkvalidation();
                         prod.DataContext = this;
                         prod.ShowDialog();
                     }
