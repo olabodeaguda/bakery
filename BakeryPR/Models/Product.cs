@@ -177,32 +177,20 @@ namespace BakeryPR.Models
         }
 
 
-        private string _retailString;
         public string retailString
         {
             get
             {
                 return $"Retail: {retailPrice}";
             }
-            set
-            {
-                retailString = value;
-                this.NotifyPropertyChanged("retailString");
-            }
         }
 
 
-        private string _wholeString;
         public string wholeString
         {
             get
             {
                 return $"Wholesales: {wholeSales}";
-            }
-            set
-            {
-                _wholeString = value;
-                this.NotifyPropertyChanged("wholeString");
             }
         }
 

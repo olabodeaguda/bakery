@@ -10,6 +10,8 @@ namespace BakeryPR.Models
 {
     public class ProductInventoryHistory : INotifyPropertyChanged
     {
+
+
         private int _id;
 
         public int id
@@ -80,6 +82,19 @@ namespace BakeryPR.Models
                 this.NotifyPropertyChanged("inventoryMode");
             }
         }
+
+        private string _productName;
+
+        public string productName
+        {
+            get { return _productName; }
+            set
+            {
+                _productName = value;
+                this.NotifyPropertyChanged("productName");
+            }
+        }
+
 
         #region property change
 

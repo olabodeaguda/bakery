@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="BakeryPR.Views.ProductionIngredientHistory"
+﻿<UserControl x:Class="BakeryPR.Views.ProductinventoryHistory"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -8,7 +8,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="{Binding winHeight}" d:DesignWidth="{Binding winWidth}">
     <UserControl.DataContext>
-        <vm:ProductionIngredientHistoryModelView></vm:ProductionIngredientHistoryModelView>
+        <vm:ProductInventoryHistoryViewModel></vm:ProductInventoryHistoryViewModel>
     </UserControl.DataContext>
     <Grid Margin="5">
         <Grid.RowDefinitions>
@@ -16,27 +16,29 @@
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal">
-            <TextBlock VerticalAlignment="Center">Select Ingredient</TextBlock>
-            <ComboBox SelectedValue="{Binding selectedIngredent,Mode=TwoWay}" Width="250"
-                  ItemsSource="{Binding Ingredients}" Margin="15 0 0 0"
-                  DisplayMemberPath="ingredentNameDisplay" SelectedValuePath="id" Height="30"></ComboBox>
+            <TextBlock VerticalAlignment="Center">Select Product</TextBlock>
+            <ComboBox SelectedValue="{Binding selectedproduct,Mode=TwoWay}" Width="250"
+                  ItemsSource="{Binding products}" Margin="15 0 0 0"
+                  DisplayMemberPath="name" SelectedValuePath="id" Height="30"></ComboBox>
         </StackPanel>
 
         <ListView Width="{Binding winWidth}" 
-                  ItemsSource="{Binding inventoryHistory,Mode=TwoWay}" IsSynchronizedWithCurrentItem="True" HorizontalAlignment="Left" 
-                  HorizontalContentAlignment="Left" Margin="5" Grid.Row="1"  ScrollViewer.CanContentScroll="True">
-            <ListView.View> 
+                  ItemsSource="{Binding productHistory,Mode=TwoWay}" IsSynchronizedWithCurrentItem="True" HorizontalAlignment="Left" 
+                  HorizontalContentAlignment="Left" Margin="5" Grid.Row="1"  ScrollViewer.CanContentScroll="True" >
+            <ListView.View>
                 <GridView>
                     <GridViewColumn Width="200"  HeaderContainerStyle="{StaticResource ListViewStyle}" 
-                                    Header="Quantity"  DisplayMemberBinding="{Binding amountDisplay}" />
+                                    Header="Product Name"  DisplayMemberBinding="{Binding productName}" />
                     <GridViewColumn Width="200"  HeaderContainerStyle="{StaticResource ListViewStyle}" 
-                                    Header="Date Added"  DisplayMemberBinding="{Binding dateCreated,StringFormat=yyyy-MM-dd}" />
+                                    Header="Quantity"  DisplayMemberBinding="{Binding quantity}" />
                     <GridViewColumn Width="200"  HeaderContainerStyle="{StaticResource ListViewStyle}" 
-                                    Header="Added By"  DisplayMemberBinding="{Binding addedBy}" />
+                                    Header="Created Date"  DisplayMemberBinding="{Binding createdDate,StringFormat=yyyy-MM-dd}" />
+                    <GridViewColumn Width="200"  HeaderContainerStyle="{StaticResource ListViewStyle}" 
+                                    Header="Created By"  DisplayMemberBinding="{Binding createdBy}" />
                 </GridView>
             </ListView.View>
         </ListView>
-        
-        
+
+
     </Grid>
 </UserControl>

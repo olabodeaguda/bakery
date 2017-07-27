@@ -11,58 +11,58 @@ using System.Windows;
 
 namespace BakeryPR.ModelView
 {
-    public class ProductionIngredientHistoryModelView : INotifyPropertyChanged
+    public class ProductInventoryHistoryViewModel : INotifyPropertyChanged
     {
-
-        private int _selectIngredent;
-
-        public int selectedIngredent
+        public ProductInventoryHistoryDao piDao
         {
-            get { return _selectIngredent; }
+            get
+            {
+                return new ProductInventoryHistoryDao();
+            }
+        }
+
+        public ProductDao productDao
+        {
+            get
+            {
+                return new ProductDao();
+            }
+        }
+
+        private int _selectedproduct;
+
+        public int selectedproduct
+        {
+            get { return _selectedproduct; }
             set
             {
-                _selectIngredent = value;
-                this.inventoryHistory = new ObservableCollection<InventoryHistory>(inventoryDao.byId(_selectIngredent));
-                this.NotifyPropertyChanged("selectedIngredent");
+                _selectedproduct = value;
+                this.productHistory = new ObservableCollection<ProductInventoryHistory>(piDao.byId(value));
+                this.NotifyPropertyChanged("selectedproduct");
             }
         }
 
 
-        public IngredentDao ingredentDao
+        public List<Product> products
         {
             get
             {
-                return new IngredentDao();
+                return this.productDao.all();
             }
         }
 
-        public InventoryHistoryDao inventoryDao
-        {
-            get
-            {
-                return new InventoryHistoryDao();
-            }
-        }
+        private ObservableCollection<ProductInventoryHistory> _productHistory = new ObservableCollection<ProductInventoryHistory>();
 
-        public List<Ingredent> Ingredients
+        public ObservableCollection<ProductInventoryHistory> productHistory
         {
-            get
-            {
-                return this.ingredentDao.all();
-            }
-        }
-
-        private ObservableCollection<InventoryHistory> _inventoryHistory = new ObservableCollection<InventoryHistory>();
-
-        public ObservableCollection<InventoryHistory> inventoryHistory
-        {
-            get { return _inventoryHistory; }
+            get { return _productHistory; }
             set
             {
-                _inventoryHistory = value;
-                this.NotifyPropertyChanged("inventoryHistory");
+                _productHistory = value;
+                this.NotifyPropertyChanged("productHistory");
             }
         }
+
 
         #region property change
 
