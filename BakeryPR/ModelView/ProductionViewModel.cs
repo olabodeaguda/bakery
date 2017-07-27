@@ -15,6 +15,36 @@ namespace BakeryPR.ModelView
 {
     public class ProductionViewModel : INotifyPropertyChanged
     {
+        private string _filename;
+
+        public string filename
+        {
+            get { return _filename; }
+            set
+            {
+                _filename = value;
+                this.NotifyPropertyChanged("filename");
+            }
+        }
+
+        public DelegateCommand<object> reportCommand
+        {
+            get
+            {
+                return new DelegateCommand<object>((s) =>
+                {
+                    Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+                    dlg.DefaultExt = ".xls";
+                    dlg.Filter = "Excel Files|*.xls;*.xlsx;";
+                    Nullable<bool> result = dlg.ShowDialog();
+
+                    if (result == true)
+                    {
+                        filename = dlg.FileName;
+                    }
+                });
+            }
+        }
         public DelegateCommand<object> loadEditProductionCommand
         {
             get
@@ -23,7 +53,7 @@ namespace BakeryPR.ModelView
                 {
                     try
                     {
-                        
+
                         EditProduction prod = new EditProduction();
                         this.production = (Production)s;
                         this.checkvalidation();
@@ -62,7 +92,7 @@ namespace BakeryPR.ModelView
 
                                 if (!isUpdateRecipe)
                                 {
-                                     sd = dao.update(this.production); 
+                                    sd = dao.update(this.production);
                                 }
                                 else
                                 {
@@ -1107,7 +1137,7 @@ namespace BakeryPR.ModelView
 
                             List<ProductionIngredent> lstPI = PIDao.byProductionId(this.production.id);
                             //update ingredient weight
-                            query = query + ingredentDao.updateIngredientQuantityQuery(this.production,lstPI);
+                            query = query + ingredentDao.updateIngredientQuantityQuery(this.production, lstPI);
 
                             bool result = pihDao.add(query);
                             if (result)

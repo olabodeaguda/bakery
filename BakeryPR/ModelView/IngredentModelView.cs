@@ -100,6 +100,22 @@ namespace BakeryPR.ModelView
             }
         }
 
+        public AppConfigDao appConfigDao
+        {
+            get
+            {
+                return new AppConfigDao();
+            }
+        }
+
+        public LoginModel loginModel
+        {
+            get
+            {
+                return appConfigDao.read();
+            }
+        }
+
         public DelegateCommand<object> updateQuantityCommand
         {
             get
@@ -110,7 +126,7 @@ namespace BakeryPR.ModelView
                     {
                         Ingredent ig = this.ingredent;
                         this.inventoryHistory.inventoryMode = InventoryMode.ADD.ToString();
-
+                        this.inventoryHistory.addedBy = loginModel.fullname;
                         bool result = invenHistoryDao.add(this.inventoryHistory);
                         if (result)
                         {
