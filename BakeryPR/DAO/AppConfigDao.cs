@@ -17,6 +17,7 @@ namespace BakeryPR.DAO
                 config.AppSettings.Settings["fullname"].Value = lm.fullname;
                 config.AppSettings.Settings["status"].Value = lm.status;
                 config.AppSettings.Settings["isLogin"].Value = lm.isLogin;
+                config.AppSettings.Settings["role"].Value = lm.role;
                 config.Save(ConfigurationSaveMode.Modified);
                 ConfigurationManager.RefreshSection("appSettings");
             }
@@ -34,6 +35,7 @@ namespace BakeryPR.DAO
             loginM.fullname = config.AppSettings.Settings["fullname"]?.Value;
             loginM.status = config.AppSettings.Settings["status"]?.Value;
             loginM.isLogin = config.AppSettings.Settings["isLogin"]?.Value;
+            loginM.role = config.AppSettings.Settings["role"]?.Value;
 
             return loginM;
         }

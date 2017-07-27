@@ -8,6 +8,6 @@ namespace BakeryPR.Utilities
 {
     public enum ProductionStatus
     {
-        APPROVED, NOT_APPROVED
+        APPROVED, NOT_APPROVED,CLOSED
     }
 }

@@ -20,6 +20,8 @@
         </Grid.RowDefinitions>
 
         <TextBlock Style="{StaticResource headings}"  Grid.ColumnSpan="2"> Update Production</TextBlock>
+        <TextBlock Grid.Column="2" Text="{Binding production.title}" HorizontalAlignment="Right" 
+                   Style="{StaticResource headings}" ></TextBlock>
 
         <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center">Production Title</TextBlock>
         <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center">Select Recipe</TextBlock>

@@ -12,6 +12,13 @@ namespace BakeryPR.DAO
 {
     public class ProductionIngredentDao : AbstractDao
     {
+        public IngredentDao ingrdentDao
+        {
+            get
+            {
+                return new IngredentDao();
+            }
+        }
         public String getProdString(ProductionIngredent pi)
         {
             String query = "";
@@ -27,7 +34,7 @@ namespace BakeryPR.DAO
             return query;
         }
 
-        public bool byProductionIngredent(int productionId,int ingredentId)
+        public bool byProductionIngredent(int productionId, int ingredentId)
         {
             using (SQLiteConnection conn = new SQLiteConnection(this.connectionString))
             {
@@ -126,5 +133,78 @@ namespace BakeryPR.DAO
 
             return false;
         }
+
+        public bool changeProdApprovalStatus(String status, int productionId, string createdBy)
+        {
+            using (SQLiteConnection conn = new SQLiteConnection(connectionString))
+            {
+                conn.Open();
+                SQLiteCommand cmd = new SQLiteCommand(conn);
+                cmd.CommandText = "update production set approval=@approval, approveBy=@approveBy where id=@id";
+                cmd.CommandType = CommandType.Text;
+                cmd.Parameters.AddWithValue("@approval", status);
+                cmd.Parameters.AddWithValue("@approveBy", createdBy);
+                cmd.Parameters.AddWithValue("@id", productionId);
+                int count = cmd.ExecuteNonQuery();
+                if (count > 0)
+                {
+                    return true;
+                }
+            }
+
+
+            return false;
+        }
+
+        public void checkIngredentAvalabilityByProdId(int prodId)
+        {
+            List<ProductionIngredent> lst = byProductionId(prodId);
+            if (lst.Count <= 0)
+            {
+                throw new Exception("No Ingredeint have been added to the production");
+            }
+
+            List<Ingredent> lstIngredent = ingrdentDao.all();
+
+            foreach (var tm in lst)
+            {
+                var ng = lstIngredent.FirstOrDefault(x => x.id == tm.ingredentId);
+                if (ng != null)
+                {
+                    if (ng.quantity < tm.amount)
+                    {
+                        throw new Exception(ng.ingredentName + " does not have enough quantity in stock");
+                    }
+                }
+            }
+        }
+
+        public double sumtotalIngredientInKg(int pId)
+        {
+            var e = byProductionId(pId);
+            return e.Sum(x => x.measureType.ToLower() == "gram" ? x.amount / 100 : x.amount);
+        }
+
+        public bool Update(ProductionIngredent pi)
+        {
+            using (SQLiteConnection conn = new SQLiteConnection(connectionString))
+            {
+                conn.Open();
+                SQLiteCommand cmd = new SQLiteCommand(conn);
+                cmd.CommandText = "Update ProductionIngredient set ingredentId=@ingredient, amount=@amount where id=@id";
+                cmd.CommandType = CommandType.Text;
+                cmd.Parameters.AddWithValue("@ingredient", pi.ingredentId);
+                cmd.Parameters.AddWithValue("@amount", pi.amount);
+                cmd.Parameters.AddWithValue("@id", pi.id);
+                int count = cmd.ExecuteNonQuery();
+                if (count > 0)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
     }
 }

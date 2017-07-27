@@ -1,0 +1,44 @@
+﻿<UserControl x:Class="BakeryPR.Views.ProductinventoryHistory"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:BakeryPR.Views"
+             xmlns:vm="clr-namespace:BakeryPR.ModelView"
+             mc:Ignorable="d" 
+             d:DesignHeight="{Binding winHeight}" d:DesignWidth="{Binding winWidth}">
+    <UserControl.DataContext>
+        <vm:ProductInventoryHistoryViewModel></vm:ProductInventoryHistoryViewModel>
+    </UserControl.DataContext>
+    <Grid Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock VerticalAlignment="Center">Select Product</TextBlock>
+            <ComboBox SelectedValue="{Binding selectedproduct,Mode=TwoWay}" Width="250"
+                  ItemsSource="{Binding products}" Margin="15 0 0 0"
+                  DisplayMemberPath="name" SelectedValuePath="id" Height="30"></ComboBox>
+        </StackPanel>
+
+        <ListView Width="{Binding winWidth}" 
+                  ItemsSource="{Binding productHistory,Mode=TwoWay}" IsSynchronizedWithCurrentItem="True" HorizontalAlignment="Left" 
+                  HorizontalContentAlignment="Left" Margin="5" Grid.Row="1"  ScrollViewer.CanContentScroll="True" >
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Width="200"  HeaderContainerStyle="{StaticResource ListViewStyle}" 
+                                    Header="Product Name"  DisplayMemberBinding="{Binding productName}" />
+                    <GridViewColumn Width="200"  HeaderContainerStyle="{StaticResource ListViewStyle}" 
+                                    Header="Quantity"  DisplayMemberBinding="{Binding quantity}" />
+                    <GridViewColumn Width="200"  HeaderContainerStyle="{StaticResource ListViewStyle}" 
+                                    Header="Created Date"  DisplayMemberBinding="{Binding createdDate,StringFormat=yyyy-MM-dd}" />
+                    <GridViewColumn Width="200"  HeaderContainerStyle="{StaticResource ListViewStyle}" 
+                                    Header="Created By"  DisplayMemberBinding="{Binding createdBy}" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+
+    </Grid>
+</UserControl>

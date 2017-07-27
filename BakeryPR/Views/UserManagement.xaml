@@ -64,6 +64,10 @@
                     <GridViewColumn Width="200"  HeaderContainerStyle="{StaticResource ListViewStyle}" 
                                     Header="Full Name"  DisplayMemberBinding="{Binding fullName}" />
                     <GridViewColumn Width="100" HeaderContainerStyle="{StaticResource ListViewStyle}" 
+                                    Header="Status" DisplayMemberBinding="{Binding username}" />
+                    <GridViewColumn Width="100" HeaderContainerStyle="{StaticResource ListViewStyle}" 
+                                    Header="User Role" DisplayMemberBinding="{Binding roleName}" />
+                    <GridViewColumn Width="100" HeaderContainerStyle="{StaticResource ListViewStyle}" 
                                     Header="Status" DisplayMemberBinding="{Binding status}" />
                 </GridView>
             </ListView.View>

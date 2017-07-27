@@ -94,6 +94,25 @@ namespace BakeryPR.Models
             }
         }
 
+        private string _measureType;
+
+        public string measureType
+        {
+            get { return _measureType; }
+            set
+            {
+                _measureType = value;
+                this.NotifyPropertyChanged("measureType");
+            }
+        }
+
+        public string amountDisplay
+        {
+            get
+            {
+                return $"{amount}{measureType}";
+            }
+        }
 
         #region property change
 

@@ -19,7 +19,7 @@ namespace BakeryPR.DAO
                 conn.Open();
                 DataSet dt = new DataSet();
                 SQLiteCommand cmd = new SQLiteCommand(conn);
-                cmd.CommandText = "select ingredent.*,measurementType.measureTypeName from ingredent inner join measurementType on ingredent.mTypeId = measurementType.id";
+                cmd.CommandText = "select ingredent.*,measurementType.measureTypeName from ingredent inner join measurementType on ingredent.mTypeId = measurementType.id order by ingredent.ingredentName";
                 cmd.CommandType = CommandType.Text;
                 this.SQLiteAdaptor(dt, cmd);
 
@@ -72,10 +72,10 @@ namespace BakeryPR.DAO
                 SQLiteCommand cmd = new SQLiteCommand(conn);
                 cmd.CommandText = "insert into ingredent(ingredentName,unitCost,quantity,mTypeid) " +
                     "values(@ingredentName,@unitCost,@quantity,@mTypeid)";
-                cmd.Parameters.AddWithValue("@ingredentName",values.ingredentName);
-                cmd.Parameters.AddWithValue("@unitCost",values.unitCost);
-                cmd.Parameters.AddWithValue("@quantity",values.quantity);
-                cmd.Parameters.AddWithValue("@mTypeid",values.mTypeId);
+                cmd.Parameters.AddWithValue("@ingredentName", values.ingredentName);
+                cmd.Parameters.AddWithValue("@unitCost", values.unitCost);
+                cmd.Parameters.AddWithValue("@quantity", values.quantity);
+                cmd.Parameters.AddWithValue("@mTypeid", values.mTypeId);
                 cmd.CommandType = CommandType.Text;
                 int count = cmd.ExecuteNonQuery();
                 if (count > 0)
@@ -109,7 +109,7 @@ namespace BakeryPR.DAO
             return false;
         }
 
-        public bool updateIngredent(int ingredntId,double quantity)
+        public bool updateIngredent(int ingredntId, double quantity)
         {
             using (SQLiteConnection conn = new SQLiteConnection(connectionString))
             {
@@ -128,6 +128,24 @@ namespace BakeryPR.DAO
 
             return false;
         }
+
+        public string updateIngredientQuantityQuery(Production p, List<ProductionIngredent> lstOfPI)
+        {
+            string query = "";
+            List<Ingredent> lst = all();
+            foreach (var tm in lstOfPI)
+            {
+                var ini = lst.FirstOrDefault(x => x.id == tm.ingredentId);
+                if (ini != null)
+                {
+                    double quantity = ini.quantity - tm.amount;
+                    query = query + "update ingredent set quantity ='" + quantity + "' where id = '" + tm.ingredentId + "';";
+                }
+            }
+
+            return query;
+        }
+
 
         public bool delete(int id)
         {

@@ -33,7 +33,7 @@ namespace BakeryPR.Utilities
                     return new ProductionView();
                 case "sales":
                     title = "Manage Sales";
-                    return new UCDashboard();
+                    return new SalesView();
                 case "user":
                     title = "User Management";
                     return new UserManagement();
@@ -43,6 +43,12 @@ namespace BakeryPR.Utilities
                 case "recipe":
                     title = "Manage Recipe";
                     return new RecipeIngredentView();
+                case "IngredientInventory":
+                    title = "Ingredient Inventory History";
+                    return new ProductionIngredientHistory();
+                case "ProductInventory":
+                    title = "Ingredient Inventory History";
+                    return new ProductinventoryHistory();
                 default:
                     title = "Error";
                     return new ErrorView();

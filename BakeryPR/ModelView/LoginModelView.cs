@@ -37,7 +37,7 @@ namespace BakeryPR.ModelView
             }
         }
 
-        
+
         public DelegateCommand<object> loginCommand
         {
             get
@@ -82,8 +82,9 @@ namespace BakeryPR.ModelView
                                     fullname = details.fullName,
                                     status = details.status,
                                     username = details.username,
-                                    isLogin = "1"
-                                }); 
+                                    isLogin = "1",
+                                    role = details.roleName
+                                });
                             }
                             else
                             {
@@ -109,7 +110,7 @@ namespace BakeryPR.ModelView
                             Dashboard dh = new Dashboard();
                             dh.Show();
                             lv.Close();
-                        } 
+                        }
                     }
                 });
             }
@@ -130,7 +131,7 @@ namespace BakeryPR.ModelView
             get { return _isSpin; }
             set { _isSpin = value; }
         }
-        
+
         #region property change
 
         public event PropertyChangedEventHandler PropertyChanged;

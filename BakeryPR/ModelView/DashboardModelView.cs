@@ -101,6 +101,30 @@ namespace BakeryPR.ModelView
             }
         }
 
+        private Visibility _isAccessible = Visibility.Collapsed;
+
+        public Visibility isAccessible
+        {
+            get
+            {
+                if (this.loginModel.role.ToLower().Equals("administrator"))
+                {
+                    _isAccessible = Visibility.Visible;
+                }
+                else
+                {
+                    _isAccessible = Visibility.Collapsed;
+                }
+                return _isAccessible;
+            }
+            set
+            {
+                _isAccessible = value;
+                this.NotifyPropertyChanged("");
+            }
+        }
+
+
         public AppConfigDao appConfigDao
         {
             get

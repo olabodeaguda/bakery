@@ -38,7 +38,8 @@ namespace BakeryPR.DAO
                     pwd = x["pwd"].ToString(),
                     status = x["status"].ToString(),
                     surname = x["surname"].ToString(),
-                    username = x["username"].ToString()
+                    username = x["username"].ToString(),
+                    roleName = x["roleName"].ToString()
                 }).FirstOrDefault();
             }
         }
@@ -47,10 +48,15 @@ namespace BakeryPR.DAO
         {
             using (SQLiteConnection conn = new SQLiteConnection(connectionString))
             {
+                String query = "select profile.*,Role.name as roleName from profile ";
+                query = query + "left join userRole on userRole.userId = profile.id ";
+                query = query + "left join Role on Role.id = userRole.roleId ";
+                query = query + "where username = @username and profile.id = @id";
+
                 conn.Open();
                 DataSet dt = new DataSet();
                 SQLiteCommand cmd = new SQLiteCommand(conn);
-                cmd.CommandText = "select * from profile where username = @username and id != @id";
+                cmd.CommandText = query;// "select * from profile where username = @username and id != @id";
                 cmd.Parameters.AddWithValue("@username", profile.username);
                 cmd.Parameters.AddWithValue("@id", profile.id);
                 cmd.CommandType = CommandType.Text;
@@ -63,7 +69,8 @@ namespace BakeryPR.DAO
                     pwd = x["pwd"].ToString(),
                     status = x["status"].ToString(),
                     surname = x["surname"].ToString(),
-                    username = x["username"].ToString()
+                    username = x["username"].ToString(),
+                    roleName = x["roleName"].ToString()
                 }).FirstOrDefault();
             }
         }
@@ -90,7 +97,7 @@ namespace BakeryPR.DAO
                     username = x["username"].ToString()
                 }).FirstOrDefault();
             }
-        }        
+        }
 
         public List<Profile> all()
         {

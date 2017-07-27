@@ -85,6 +85,17 @@ namespace BakeryPR.Models
             }
         }
 
+        private string _role;
+
+        public string role
+        {
+            get { return _role; }
+            set
+            {
+                _role = value;
+                this.NotifyPropertyChanged("role");
+            }
+        }
 
         #region property change
 

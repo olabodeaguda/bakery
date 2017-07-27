@@ -79,7 +79,7 @@ namespace BakeryPR.DAO
                     measureTypeName = x["measureTypeName"].ToString(),
                     productId = int.Parse(x["productId"].ToString()),
                     productionId = int.Parse(x["productionId"].ToString()),
-                    quantity = double.Parse(x["quantity"].ToString()),
+                    quantity = int.Parse(x["quantity"].ToString()),
                     productName = x["productName"].ToString(),
                     weight = int.Parse(x["weight"].ToString())
                 }).FirstOrDefault();
@@ -110,13 +110,19 @@ namespace BakeryPR.DAO
                     measureTypeName = x["measureTypeName"].ToString(),
                     productId = int.Parse(x["productId"].ToString()),
                     productionId = int.Parse(x["productionId"].ToString()),
-                    quantity = double.Parse(x["quantity"].ToString()),
+                    quantity = int.Parse(x["quantity"].ToString()),
+                    expectedQuantity = int.Parse(x["quantity"].ToString()),
                     productName = x["productName"].ToString(),
                     weight = int.Parse(x["weight"].ToString())
                 }).ToList();
             }
 
             return lst;
+        }
+
+        public double sumTotalProductInKg(List<ProductionProduct> e)
+        {
+            return e.Sum(x => x.measureTypeName.Equals("gram") ? (x.weight * x.quantity) / 100 : (x.weight * x.quantity));
         }
     }
 }

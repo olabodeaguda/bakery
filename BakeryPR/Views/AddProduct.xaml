@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:BakeryPR.Views"
         xmlns:vm="clr-namespace:BakeryPR.ModelView"
         mc:Ignorable="d"
-        Title="Add Product" Height="410" Width="450" Style="{StaticResource {x:Type Window}}" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+        Title="Add Product" Height="490" Width="450" Style="{StaticResource {x:Type Window}}" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <!--<Window.DataContext>
         <vm:ProductViewModel></vm:ProductViewModel>
     </Window.DataContext>-->
@@ -14,6 +14,8 @@
     <Grid Margin="5">
         <Grid.RowDefinitions>
             <RowDefinition Height="70"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
@@ -35,6 +37,8 @@
         <TextBlock Grid.Row="5" Grid.Column="0" VerticalAlignment="Center">Retail price</TextBlock>
         <TextBlock Grid.Row="6" Grid.Column="0" VerticalAlignment="Center">Wholesales Price</TextBlock>
         <TextBlock Grid.Row="7" Grid.Column="0" VerticalAlignment="Center">Product Name</TextBlock>
+        <TextBlock Grid.Row="8" Grid.Column="0" VerticalAlignment="Center">Is Discount</TextBlock>
+        <TextBlock Grid.Row="9" Grid.Column="0" VerticalAlignment="Center">Discount Name</TextBlock>
 
         <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding product.descripton,Mode=TwoWay}"></TextBox>
         <TextBox  Grid.Row="2" Grid.Column="1" Text="{Binding product.weight,Mode=TwoWay}"></TextBox>
@@ -43,8 +47,10 @@
         <TextBox  Grid.Row="5" Grid.Column="1" Text="{Binding product.retailPrice,Mode=TwoWay}"></TextBox>
         <TextBox  Grid.Row="6" Grid.Column="1" Text="{Binding product.wholeSales,Mode=TwoWay}"></TextBox>
         <TextBox  Grid.Row="7" Grid.Column="1" Text="{Binding product.name,Mode=TwoWay}"></TextBox>
+        <RadioButton IsChecked="{Binding product.isDiscount,Mode=TwoWay}" Margin="9 0 0 0" Grid.Row="8" Grid.Column="1" VerticalAlignment="Center"></RadioButton>
+        <TextBox  Grid.Row="9" Grid.Column="1" Text="{Binding product.discount,Mode=TwoWay}"></TextBox>
 
-        <Button Style="{StaticResource btnSubmitStyle}" Grid.Column="1" Grid.Row="8" Command="{Binding addCommand}" >Add</Button>
+        <Button Style="{StaticResource btnSubmitStyle}" Grid.Column="1" Grid.Row="10" Command="{Binding addCommand}" >Add</Button>
 
     </Grid>
 </Window>

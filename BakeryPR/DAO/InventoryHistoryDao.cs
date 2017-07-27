@@ -20,9 +20,15 @@ namespace BakeryPR.DAO
             using (SQLiteConnection conn = new SQLiteConnection(this.connectionString))
             {
                 conn.Open();
+                string query = " select inventoryHistory.*,ingredent.ingredentName, measurementType.measureTypeName from inventoryHistory ";
+                query = query + "inner join ingredent on ingredent.id = inventoryHistory.ingredentId ";
+                query = query + "inner join measurementType on measurementType.id = ingredent.mTypeId ";
+                query = query + "where ingredentId =@ingredentId ";
+                query = query + " order by inventoryHistory.id desc ";
+
                 DataSet dt = new DataSet();
                 SQLiteCommand cmd = new SQLiteCommand(conn);
-                cmd.CommandText = "select * from inventoryHistory where ingredentId =@ingredentId";
+                cmd.CommandText = query;// "select * from inventoryHistory where ingredentId =@ingredentId";
                 cmd.Parameters.AddWithValue("ingredentId", ingredentId);
                 cmd.CommandType = CommandType.Text;
                 this.SQLiteAdaptor(dt, cmd);
@@ -34,7 +40,7 @@ namespace BakeryPR.DAO
                     ingredentId = int.Parse(x["ingredentId"].ToString()),
                     amount = double.Parse(x["amount"].ToString()),
                     inventoryMode = x["inventoryMode"].ToString(),
-                    dateCreated = DateTime.Parse(x["dateCreated"].ToString(), new CultureInfo("en-US", true))
+                    dateCreated = DateTime.ParseExact(x["dateCreated"].ToString(), "dd-MM-yyyy", CultureInfo.InvariantCulture)
                 }).ToList();
             }
 
@@ -84,6 +90,8 @@ namespace BakeryPR.DAO
 
             return amount;
         }
+
+
         
     }
 }

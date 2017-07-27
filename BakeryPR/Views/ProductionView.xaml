@@ -28,7 +28,6 @@
                                 <Button Content="Edit"  CommandParameter="{Binding}"
                                         Command="{Binding Path=DataContext.loadEditProductionCommand, 
                                     RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
-
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -56,10 +55,36 @@
                     <GridViewColumn >
                         <GridViewColumn.CellTemplate >
                             <DataTemplate>
+                                <Button Content="Move Product"  CommandParameter="{Binding}"
+                                        Command="{Binding Path=DataContext.loadManageProduction, 
+                                    RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn >
+                        <GridViewColumn.CellTemplate >
+                            <DataTemplate>
                                 <Button Content="Recipe"  CommandParameter="{Binding}"
                                         Command="{Binding Path=DataContext.loadIngredentCommand, 
                                     RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
-
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn >
+                        <GridViewColumn.CellTemplate >
+                            <DataTemplate>
+                                <Button Content="Approve"  CommandParameter="{Binding}"
+                                        Command="{Binding Path=DataContext.approveProductionCommand, 
+                                    RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn >
+                        <GridViewColumn.CellTemplate >
+                            <DataTemplate>
+                                <Button Content="Report"  CommandParameter="{Binding}"
+                                        Command="{Binding Path=DataContext.reportCommand, 
+                                    RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -73,6 +98,10 @@
                                     Header="Date Created" DisplayMemberBinding="{Binding dateCreated,StringFormat=yyyy-MM-dd}" />
                     <GridViewColumn Width="100" HeaderContainerStyle="{StaticResource ListViewStyle}" 
                                     Header="Last Updated" DisplayMemberBinding="{Binding lastUpdated,StringFormat=yyyy-MM-dd}" />
+                    <GridViewColumn Width="100" HeaderContainerStyle="{StaticResource ListViewStyle}" 
+                                    Header="Approval Status" DisplayMemberBinding="{Binding approval}" />
+                    <GridViewColumn Width="100" HeaderContainerStyle="{StaticResource ListViewStyle}" 
+                                    Header="Approval By" DisplayMemberBinding="{Binding approveBy}" />
                 </GridView>
             </ListView.View>
         </ListView>

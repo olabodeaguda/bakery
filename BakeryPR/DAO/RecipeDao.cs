@@ -224,5 +224,31 @@ namespace BakeryPR.DAO
             return res;
         }
 
+        public string addProdIngredentDBQuery(Production production)
+        {
+            LoginModel lm = appConfigao.read();
+            Recipe recipe = this.byId(production.recipeId);
+            double ratio = 0;
+
+            ratio = recipe.quantity == 0 ? 1 : (production.quantity / recipe.quantity);
+            string query = "";
+            List<Ingredent> lst = ingreDao.all();
+            List<RecipeIngredents> lstrecipeIngredent = riDao.byRecipeId(production.recipeId);
+            foreach (var tm in lstrecipeIngredent)
+            {
+                var r = lst.FirstOrDefault(x => x.id == tm.ingredentId);
+                if (r != null)
+                {
+                    double comp = tm.quantity * ratio;
+                    ProductionIngredent pi = new ProductionIngredent();
+                    pi.amount = comp;
+                    pi.createdBy = lm.fullname;
+                    pi.ingredentId = tm.ingredentId;
+                    pi.productionId = production.id;
+                    query = query + productionIngredentDao.getProdString(pi);
+                }
+            }
+            return query;
+        }
     }
 }

@@ -55,11 +55,19 @@
     <Reference Include="FontAwesome.WPF, Version=4.7.0.37774, Culture=neutral, PublicKeyToken=0758b07a11a4f466, processorArchitecture=MSIL">
       <HintPath>..\packages\FontAwesome.WPF.4.7.0.9\lib\net40\FontAwesome.WPF.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\Microsoft.Expression.Interactions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.SQLite, Version=1.0.105.2, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Data.SQLite.Core.1.0.105.2\lib\net451\System.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\System.Windows.Interactivity.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -81,12 +89,15 @@
     </ApplicationDefinition>
     <Compile Include="DAO\AbstractDao.cs" />
     <Compile Include="DAO\AppConfigDao.cs" />
+    <Compile Include="DAO\CartDao.cs" />
+    <Compile Include="DAO\CartProductDao.cs" />
     <Compile Include="DAO\CommonDao.cs" />
     <Compile Include="DAO\IngredentDao.cs" />
     <Compile Include="DAO\InventoryHistoryDao.cs" />
     <Compile Include="DAO\MeasureTypeDao.cs" />
     <Compile Include="DAO\OverheadDao.cs" />
     <Compile Include="DAO\ProductDao.cs" />
+    <Compile Include="DAO\ProductInventoryHistoryDao.cs" />
     <Compile Include="DAO\ProductionDao.cs" />
     <Compile Include="DAO\ProductionIngredentDao.cs" />
     <Compile Include="DAO\ProductionOverheadDao.cs" />
@@ -95,16 +106,20 @@
     <Compile Include="DAO\RecipeIngredentDao.cs" />
     <Compile Include="DAO\RoleDao.cs" />
     <Compile Include="DAO\UserDao.cs" />
+    <Compile Include="Models\CartModel.cs" />
+    <Compile Include="Models\CartProductModel.cs" />
     <Compile Include="Models\ChangePwd.cs" />
     <Compile Include="Models\DropdownModel.cs" />
     <Compile Include="Models\Error.cs" />
     <Compile Include="Models\Ingredent.cs" />
     <Compile Include="Models\InventoryHistory.cs" />
     <Compile Include="Models\InventoryMode.cs" />
+    <Compile Include="Models\ItemModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\MeasurementType.cs" />
     <Compile Include="Models\Overhead.cs" />
     <Compile Include="Models\Product.cs" />
+    <Compile Include="Models\ProductInventoryHistory.cs" />
     <Compile Include="Models\Production.cs" />
     <Compile Include="Models\ProductionIngredent.cs" />
     <Compile Include="Models\ProductionOverhead.cs" />
@@ -119,18 +134,26 @@
     <Compile Include="ModelView\IngredentModelView.cs" />
     <Compile Include="ModelView\LoginModelView.cs" />
     <Compile Include="ModelView\OverheadModelView.cs" />
+    <Compile Include="ModelView\ProductInventoryHistoryViewModel.cs" />
+    <Compile Include="ModelView\ProductionIngredientHistoryModelView.cs" />
     <Compile Include="ModelView\ProductionViewModel.cs" />
     <Compile Include="ModelView\ProductViewModel.cs" />
     <Compile Include="ModelView\RecipeIngredentModelView.cs" />
+    <Compile Include="ModelView\Sales2ViewModel.cs" />
+    <Compile Include="ModelView\SalesModelView.cs" />
     <Compile Include="ModelView\UCDashboardModelView.cs" />
     <Compile Include="ModelView\UserManagementModelView.cs" />
     <Compile Include="Utilities\AppConfigUtils.cs" />
+    <Compile Include="Utilities\CartStatus.cs" />
     <Compile Include="Utilities\DelegateCommand.cs" />
+    <Compile Include="Utilities\GridViewColumnVisibilityManager.cs" />
+    <Compile Include="Utilities\InventoryModeEnum.cs" />
     <Compile Include="Utilities\NavigateUtils.cs" />
     <Compile Include="Utilities\OverheadType.cs" />
     <Compile Include="Utilities\PageParameter.cs" />
     <Compile Include="Utilities\PasswordBoxAssistant.cs" />
     <Compile Include="Utilities\ProductionStatus.cs" />
+    <Compile Include="Utilities\SalesType.cs" />
     <Compile Include="Utilities\UserSatus.cs" />
     <Compile Include="Views\AddIngredent.xaml.cs">
       <DependentUpon>AddIngredent.xaml</DependentUpon>
@@ -165,6 +188,9 @@
     <Compile Include="Views\AssignUserRole.xaml.cs">
       <DependentUpon>AssignUserRole.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\cartSummary.xaml.cs">
+      <DependentUpon>cartSummary.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ChangePwd.xaml.cs">
       <DependentUpon>ChangePwd.xaml</DependentUpon>
     </Compile>
@@ -193,6 +219,9 @@
     <Compile Include="Views\EditProductionOverhead.xaml.cs">
       <DependentUpon>EditProductionOverhead.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\EditProductionRecipe.xaml.cs">
+      <DependentUpon>EditProductionRecipe.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\EditProfile.xaml.cs">
       <DependentUpon>EditProfile.xaml</DependentUpon>
     </Compile>
@@ -214,11 +243,20 @@
     <Compile Include="Views\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ManageProductionProduct.xaml.cs">
+      <DependentUpon>ManageProductionProduct.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\OverheadView.xaml.cs">
       <DependentUpon>OverheadView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ProductinventoryHistory.xaml.cs">
+      <DependentUpon>ProductinventoryHistory.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ProductionIngredentView.xaml.cs">
       <DependentUpon>ProductionIngredentView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ProductionIngredientHistory.xaml.cs">
+      <DependentUpon>ProductionIngredientHistory.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ProductionView.xaml.cs">
       <DependentUpon>ProductionView.xaml</DependentUpon>
@@ -228,6 +266,12 @@
     </Compile>
     <Compile Include="Views\RecipeIngredentView.xaml.cs">
       <DependentUpon>RecipeIngredentView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SalesView.xaml.cs">
+      <DependentUpon>SalesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SalesView2.xaml.cs">
+      <DependentUpon>SalesView2.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\UCDashboard.xaml.cs">
       <DependentUpon>UCDashboard.xaml</DependentUpon>
@@ -282,6 +326,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\cartSummary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\ChangePwd.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -314,6 +362,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\EditProductionRecipe.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\EditProfile.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -342,13 +394,25 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\ManageProductionProduct.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\OverheadView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ProductinventoryHistory.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ProductionIngredentView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ProductionIngredientHistory.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\ProductionView.xaml">
       <SubType>Designer</SubType>
@@ -359,6 +423,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\RecipeIngredentView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SalesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SalesView2.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
