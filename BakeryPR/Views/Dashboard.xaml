@@ -36,7 +36,10 @@
             </MenuItem>
             <MenuItem Header="Production"  Visibility="{Binding isAccessible,Mode=TwoWay}" Command="{Binding navCommand}" CommandParameter="production"></MenuItem>
             <MenuItem Header="Sales"  Command="{Binding navCommand}" CommandParameter="sales"></MenuItem>
-            <MenuItem Header="Reports" Command="{Binding navCommand}" CommandParameter="reports"></MenuItem>
+            <MenuItem Header="Reports" Command="{Binding navCommand}" CommandParameter="reports">
+                <MenuItem Header="Product" Command="{Binding navCommand}" CommandParameter="Product Cart History"></MenuItem>
+                <MenuItem Header="Ingredient" Command="{Binding navCommand}" CommandParameter="Ingredient inventory"></MenuItem>
+            </MenuItem>
             <MenuItem Header="About" Command="{Binding navCommand}" CommandParameter="about"></MenuItem>
         </Menu>
         <Grid Grid.Row="1">

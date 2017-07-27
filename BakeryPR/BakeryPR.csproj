@@ -134,6 +134,7 @@
     <Compile Include="ModelView\IngredentModelView.cs" />
     <Compile Include="ModelView\LoginModelView.cs" />
     <Compile Include="ModelView\OverheadModelView.cs" />
+    <Compile Include="ModelView\ProductionIngredientHistoryModelView.cs" />
     <Compile Include="ModelView\ProductionViewModel.cs" />
     <Compile Include="ModelView\ProductViewModel.cs" />
     <Compile Include="ModelView\RecipeIngredentModelView.cs" />
@@ -248,6 +249,9 @@
     </Compile>
     <Compile Include="Views\ProductionIngredentView.xaml.cs">
       <DependentUpon>ProductionIngredentView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ProductionIngredientHistory.xaml.cs">
+      <DependentUpon>ProductionIngredientHistory.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ProductionView.xaml.cs">
       <DependentUpon>ProductionView.xaml</DependentUpon>
@@ -391,6 +395,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ProductionIngredentView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ProductionIngredientHistory.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
