@@ -109,7 +109,10 @@ namespace BakeryPR.ModelView
                             LoginView lv = (LoginView)Application.Current.MainWindow;
                             Dashboard dh = new Dashboard();
                             dh.Show();
-                            lv.Close();
+                            if (lv != null)
+                            {
+                                lv.Close();
+                            }
                         }
                     }
                 });

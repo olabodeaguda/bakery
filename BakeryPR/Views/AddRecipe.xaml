@@ -27,12 +27,12 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="30"></RowDefinition>
                 <RowDefinition></RowDefinition>
-                <RowDefinition Height="30"></RowDefinition>
             </Grid.RowDefinitions>
             <Button Command="{Binding loadAddIngredntCommmand}" Width="100" Height="25" HorizontalAlignment="Left" IsEnabled="{Binding isAddIngredent}">Add Ingredent</Button>
 
             <ListView x:Name="IngredentLst"  Width="{Binding winWidth}" 
-                  ItemsSource="{Binding riIngredents}" IsSynchronizedWithCurrentItem="True" HorizontalAlignment="Left" HorizontalContentAlignment="Left" 
+                  ItemsSource="{Binding riIngredents}" 
+                       ScrollViewer.CanContentScroll="True" IsSynchronizedWithCurrentItem="True" HorizontalAlignment="Left" HorizontalContentAlignment="Left" 
                   Grid.Row="1">
                 <ListView.View>
                     <GridView>
@@ -57,9 +57,6 @@
                     </GridView>
                 </ListView.View>
             </ListView>
-
-            <Button Width="50" Height="25"  HorizontalAlignment="Left" Grid.Row="2">Submit</Button>
-
         </Grid>
     </Grid>
 </Window>

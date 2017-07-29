@@ -41,10 +41,6 @@
                                     Header="Cost of Package" DisplayMemberBinding="{Binding costOfPackage}" />
                     <GridViewColumn Width="100" HeaderContainerStyle="{StaticResource ListViewStyle}" 
                                     Header="Retail Price" DisplayMemberBinding="{Binding retailPrice}" />
-                    <GridViewColumn Width="100" HeaderContainerStyle="{StaticResource ListViewStyle}" 
-                                    Header="Wholesales Price" DisplayMemberBinding="{Binding wholeSales}" />
-                    <GridViewColumn Width="100" HeaderContainerStyle="{StaticResource ListViewStyle}" 
-                                    Header="Discount" DisplayMemberBinding="{Binding discount}" />
                 </GridView>
             </ListView.View>
         </ListView>

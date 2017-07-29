@@ -12,7 +12,14 @@
             <RowDefinition Height="5"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
-        <TextBlock Style="{StaticResource headings}"  Grid.ColumnSpan="2" Text="{Binding productionName,Mode=TwoWay}"></TextBlock>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <TextBlock Style="{StaticResource headings}" Text="{Binding productionName,Mode=TwoWay}"></TextBlock>
+            <TextBlock Style="{StaticResource headings}" Text="{Binding totalProdIngredent,Mode=TwoWay}" Grid.Column="1"></TextBlock>
+        </Grid>
 
         <!--<Button Command="{Binding loadAddProductionIngredient}" Margin="5 0 0 5" Grid.Row="1" Width="100" HorizontalAlignment="Left">Add</Button>-->
         <ListView x:Name="ProductLst"  Width="{Binding winWidth}" 

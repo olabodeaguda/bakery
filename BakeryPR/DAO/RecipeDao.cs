@@ -216,7 +216,7 @@ namespace BakeryPR.DAO
                 }
             }
             bool res = false;
-            if (string.IsNullOrEmpty(query))
+            if (!string.IsNullOrEmpty(query))
             {
                 res = this.execute(query);
             }

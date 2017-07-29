@@ -34,9 +34,7 @@ namespace BakeryPR.DAO
                     wholeSales = double.Parse(x["wholeSales"].ToString()),
                     measureTypeName = x["measureTypeName"].ToString(),
                     name = x["name"].ToString(),
-                    inventoryStore = String.IsNullOrEmpty(x["inventoryStore"].ToString()) ? 0 : int.Parse(x["inventoryStore"].ToString()),
-                    isDiscount = string.IsNullOrEmpty(x["isDiscount"].ToString()) ? false : (int.Parse(x["isDiscount"].ToString()) == 1 ? true : false),
-                    discount = string.IsNullOrEmpty(x["discount"].ToString()) ? 0.0 : (double.Parse(x["discount"].ToString()))
+                    inventoryStore = String.IsNullOrEmpty(x["inventoryStore"].ToString()) ? 0 : int.Parse(x["inventoryStore"].ToString())
                 }).ToList();
             }
 
@@ -80,7 +78,7 @@ namespace BakeryPR.DAO
             {
                 conn.Open();
                 SQLiteCommand cmd = new SQLiteCommand(conn);
-                cmd.CommandText = "insert into product(weight,descripton,costOfPackage,retailPrice,wholeSales,mTypeId,name,isDiscount,discount) " +
+                cmd.CommandText = "insert into product(weight,descripton,costOfPackage,retailPrice,wholeSales,mTypeId,name) " +
                     "values(@weight,@descripton,@costOfPackage,@retailPrice,@wholeSales,@mTypeId,@name)";
                 cmd.Parameters.AddWithValue("@weight", values.weight);
                 cmd.Parameters.AddWithValue("@descripton", values.descripton);
@@ -89,8 +87,6 @@ namespace BakeryPR.DAO
                 cmd.Parameters.AddWithValue("@wholeSales", values.wholeSales);
                 cmd.Parameters.AddWithValue("@mTypeId", values.mTypeId);
                 cmd.Parameters.AddWithValue("@name", values.name);
-                cmd.Parameters.AddWithValue("@isDiscount", values.isDiscount ? 1 : 0);
-                cmd.Parameters.AddWithValue("@discount", values.discount);
                 cmd.CommandType = CommandType.Text;
                 int count = cmd.ExecuteNonQuery();
                 if (count > 0)
@@ -108,7 +104,7 @@ namespace BakeryPR.DAO
             {
                 conn.Open();
                 SQLiteCommand cmd = new SQLiteCommand(conn);
-                cmd.CommandText = "update product set discount=@discount,isDiscount=@isDiscount ,name=@name, retailPrice=@retailPrice,wholeSales=@wholeSales,mTypeId=@mTypeId, weight = @weight,descripton=@descripton,costOfPackage = @costOfPackage where id = @id";
+                cmd.CommandText = "update product set name=@name, retailPrice=@retailPrice,wholeSales=@wholeSales,mTypeId=@mTypeId, weight = @weight,descripton=@descripton,costOfPackage = @costOfPackage where id = @id";
                 cmd.Parameters.AddWithValue("@weight", values.weight);
                 cmd.Parameters.AddWithValue("@descripton", values.descripton);
                 cmd.Parameters.AddWithValue("@costOfPackage", values.costOfPackage);
@@ -117,8 +113,6 @@ namespace BakeryPR.DAO
                 cmd.Parameters.AddWithValue("@mTypeId", values.mTypeId);
                 cmd.Parameters.AddWithValue("@name", values.name);
                 cmd.Parameters.AddWithValue("@id", values.id);
-                cmd.Parameters.AddWithValue("@discount", values.name);
-                cmd.Parameters.AddWithValue("@isDiscount", values.id);
                 cmd.CommandType = CommandType.Text;
                 int count = cmd.ExecuteNonQuery();
                 if (count > 0)

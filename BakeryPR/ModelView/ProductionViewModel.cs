@@ -451,7 +451,7 @@ namespace BakeryPR.ModelView
                 {
                     EditProductionProduct epp = new EditProductionProduct();
                     this.productionProduct = (ProductionProduct)s;
-                    this.checkvalidation();
+                   // this.checkvalidation();
                     epp.DataContext = this;
                     epp.ShowDialog();
                 });
@@ -688,6 +688,19 @@ namespace BakeryPR.ModelView
             }
         }
 
+        private string _totalProdIngredent;
+
+        public string totalProdIngredent
+        {
+            get { return _totalProdIngredent; }
+            set
+            {
+                _totalProdIngredent = value;
+                this.NotifyPropertyChanged("totalProdIngredent");
+            }
+        }
+
+
         public DelegateCommand<object> loadIngredentCommand
         {
             get
@@ -720,6 +733,7 @@ namespace BakeryPR.ModelView
             set
             {
                 _productionIngredents = value;
+                this.totalProdIngredent = $"{value.Sum(x => x.amount)}Kg";
                 this.NotifyPropertyChanged("productionIngredents");
             }
         }
