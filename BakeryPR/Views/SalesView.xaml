@@ -82,9 +82,9 @@
                                 <StackPanel>
                                     <TextBlock Name="itemName" Text="{Binding name,Mode=TwoWay}" ></TextBlock>
                                     <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="{Binding quantityString,Mode=TwoWay}"></TextBlock>
-                                            <TextBlock Margin="5 0 0 0" Text="{Binding retailString,Mode=TwoWay}"></TextBlock>
-                                            <TextBlock Margin="5 0 0 0" Text="{Binding wholeString,Mode=TwoWay}"></TextBlock>
+                                            <TextBlock Text="{Binding quantityString}"></TextBlock>
+                                            <TextBlock Margin="5 0 0 0" Text="{Binding retailString}"></TextBlock>
+                                            <TextBlock Margin="5 0 0 0" Text="{Binding wholeString}"></TextBlock>
                                     </StackPanel>
                                 </StackPanel>
                             </DataTemplate>
