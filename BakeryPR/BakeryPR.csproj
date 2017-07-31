@@ -57,27 +57,32 @@
     </Reference>
     <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\ICSharpCode.SharpZipLib.dll</HintPath>
+      <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\Microsoft.Expression.Interactions.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="NPOI, Version=2.0.6.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+    <Reference Include="NPOI, Version=2.3.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\NPOI.dll</HintPath>
+      <HintPath>..\packages\NPOI.2.3.0\lib\net40\NPOI.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="NPOI.OOXML, Version=2.0.6.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+    <Reference Include="NPOI.OOXML, Version=2.3.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\NPOI.OOXML.dll</HintPath>
+      <HintPath>..\packages\NPOI.2.3.0\lib\net40\NPOI.OOXML.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="NPOI.OpenXml4Net, Version=2.0.6.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+    <Reference Include="NPOI.OpenXml4Net, Version=2.3.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\NPOI.OpenXml4Net.dll</HintPath>
+      <HintPath>..\packages\NPOI.2.3.0\lib\net40\NPOI.OpenXml4Net.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="NPOI.OpenXmlFormats, Version=2.0.6.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+    <Reference Include="NPOI.OpenXmlFormats, Version=2.3.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\NPOI.OpenXmlFormats.dll</HintPath>
+      <HintPath>..\packages\NPOI.2.3.0\lib\net40\NPOI.OpenXmlFormats.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
@@ -135,6 +140,7 @@
     <Compile Include="Models\ChangePwd.cs" />
     <Compile Include="Models\DropdownModel.cs" />
     <Compile Include="Models\Error.cs" />
+    <Compile Include="Models\ExcelModel.cs" />
     <Compile Include="Models\Ingredent.cs" />
     <Compile Include="Models\InventoryHistory.cs" />
     <Compile Include="Models\InventoryMode.cs" />
@@ -145,6 +151,7 @@
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\ProductInventoryHistory.cs" />
     <Compile Include="Models\Production.cs" />
+    <Compile Include="Models\ProductionCostModel.cs" />
     <Compile Include="Models\ProductionIngredent.cs" />
     <Compile Include="Models\ProductionOverhead.cs" />
     <Compile Include="Models\ProductionProduct.cs" />
@@ -152,6 +159,7 @@
     <Compile Include="Models\Recipe.cs" />
     <Compile Include="Models\RecipeIngredents.cs" />
     <Compile Include="Models\Role.cs" />
+    <Compile Include="Models\SalesRevenueModel.cs" />
     <Compile Include="Models\UserRole.cs" />
     <Compile Include="Models\UserStatusModel.cs" />
     <Compile Include="ModelView\DashboardModelView.cs" />
@@ -170,6 +178,7 @@
     <Compile Include="Utilities\AppConfigUtils.cs" />
     <Compile Include="Utilities\CartStatus.cs" />
     <Compile Include="Utilities\DelegateCommand.cs" />
+    <Compile Include="Utilities\ExcelUtils.cs" />
     <Compile Include="Utilities\GridViewColumnVisibilityManager.cs" />
     <Compile Include="Utilities\InventoryModeEnum.cs" />
     <Compile Include="Utilities\NavigateUtils.cs" />

@@ -15,6 +15,14 @@ namespace BakeryPR.ModelView
 {
     public class ProductionViewModel : INotifyPropertyChanged
     {
+        public ExcelUtils ExcelU
+        {
+            get
+            {
+                return new ExcelUtils();
+            }
+        }
+
         private string _filename;
 
         public string filename
@@ -33,15 +41,31 @@ namespace BakeryPR.ModelView
             {
                 return new DelegateCommand<object>((s) =>
                 {
-                    Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
-                    dlg.DefaultExt = ".xls";
-                    dlg.Filter = "Excel Files|*.xls;*.xlsx;";
+                    Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
+                    dlg.DefaultExt = ".xlsx";
+                    dlg.Filter = "Excel Files|*.xlsx;";
                     Nullable<bool> result = dlg.ShowDialog();
 
                     if (result == true)
                     {
                         filename = dlg.FileName;
                     }
+                    Production p = (Production)s;
+
+                    List<ProductionCostModel> lst = PIDao.byProductionId(p.id).Select(x => new ProductionCostModel()
+                    {
+                         ingredentName = x.ingredentName,
+                          quantity = x.amount,
+                           
+                    }).ToList();
+                    ExcelModel excelmodel = null;
+
+                    if (excelmodel != null)
+                    {
+                        ExcelU.Export(p.id, filename, excelmodel); 
+                    }
+
+
                 });
             }
         }
@@ -451,7 +475,7 @@ namespace BakeryPR.ModelView
                 {
                     EditProductionProduct epp = new EditProductionProduct();
                     this.productionProduct = (ProductionProduct)s;
-                   // this.checkvalidation();
+                    this.checkvalidation();
                     epp.DataContext = this;
                     epp.ShowDialog();
                 });
@@ -475,6 +499,8 @@ namespace BakeryPR.ModelView
                 });
             }
         }
+
+
 
         public DelegateCommand<object> UpdateProdproduct
         {

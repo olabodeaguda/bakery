@@ -48,7 +48,7 @@ namespace BakeryPR.ModelView
                     await Task.Run(() =>
                     {
                         try
-                        {
+                        {                          
                             if (string.IsNullOrEmpty(this.loginModel.username))
                             {
                                 throw new Exception("Username is required");

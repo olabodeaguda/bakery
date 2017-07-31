@@ -19,7 +19,7 @@ namespace BakeryPR.DAO
                 conn.Open();
                 DataSet dt = new DataSet();
                 SQLiteCommand cmd = new SQLiteCommand(conn);
-                cmd.CommandText = "select overheads.*,measurementType.measureTypeName from overheads inner join measurementType on overheads.mTypeId = measurementType.id";
+                cmd.CommandText = "select overheads.*,measurementType.measureTypeName from overheads left join measurementType on overheads.mTypeId = measurementType.id";
                 cmd.CommandType = CommandType.Text;
                 this.SQLiteAdaptor(dt, cmd);
 

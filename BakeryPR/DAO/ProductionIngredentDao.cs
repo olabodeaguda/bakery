@@ -19,6 +19,7 @@ namespace BakeryPR.DAO
                 return new IngredentDao();
             }
         }
+
         public String getProdString(ProductionIngredent pi)
         {
             String query = "";
