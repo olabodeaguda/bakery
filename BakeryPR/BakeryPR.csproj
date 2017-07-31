@@ -120,6 +120,8 @@
     <Compile Include="DAO\InventoryHistoryDao.cs" />
     <Compile Include="DAO\MeasureTypeDao.cs" />
     <Compile Include="DAO\OverheadDao.cs" />
+    <Compile Include="DAO\OverheadDetailsDao.cs" />
+    <Compile Include="DAO\OverheadDetailsGroupDao.cs" />
     <Compile Include="DAO\ProductDao.cs" />
     <Compile Include="DAO\ProductInventoryHistoryDao.cs" />
     <Compile Include="DAO\ProductionDao.cs" />

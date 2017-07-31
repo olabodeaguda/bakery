@@ -22,8 +22,37 @@ namespace BakeryPR.Models
         public string groupName
         {
             get { return _groupName; }
-            set { _groupName = value; }
+            set
+            {
+                _groupName = value;
+                this.NotifyPropertyChanged("groupName");
+            }
         }
+
+        private int _overheadId;
+
+        public int overheadId
+        {
+            get { return _overheadId; }
+            set
+            {
+                _overheadId = value;
+                this.NotifyPropertyChanged("overheadId");
+            }
+        }
+
+        private double _overheadQuantity;
+
+        public double overheadQuantity
+        {
+            get { return _overheadQuantity; }
+            set
+            {
+                _overheadQuantity = value;
+                this.NotifyPropertyChanged("overheadQuantity");
+            }
+        }
+
 
         #region property change
 
