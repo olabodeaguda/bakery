@@ -17,8 +17,10 @@ namespace BakeryPR.DAO
             using (SQLiteConnection conn = new SQLiteConnection(this.connectionString))
             {
                 conn.Open();
-                string query = "select overheadGrpDetails.*,overheadGrpDetailsExt.overheadId,overheadGrpDetailsExt.quantity from overheadGrpDetails ";
+                string query = "select overheadGrpDetails.*,overheadGrpDetailsExt.overheadId,overheadGrpDetailsExt.quantity,measurementType.measureTypeName  from overheadGrpDetails ";
                 query = query + "inner join overheadGrpDetailsExt where overheadGrpDetailsExt.grpId = overheadGrpDetails.id ";
+                query = query + "inner join overheads on overheads.id = overheadGrpDetailsExt.overheadId ";
+                query = query + "inner join measurementType on measurementType.id = overheads.mTypeId  ";
                 query = query + "order by overheadGrpDetails.groupName desc;";
                 DataSet dt = new DataSet();
                 SQLiteCommand cmd = new SQLiteCommand(conn);
@@ -31,7 +33,8 @@ namespace BakeryPR.DAO
                     id = int.Parse(x["id"].ToString()),
                     groupName = x["groupName"].ToString(),
                     overheadId = int.Parse(x["overheadId"].ToString()),
-                    overheadQuantity = double.Parse(x["quantity"].ToString())
+                    overheadQuantity = double.Parse(x["quantity"].ToString()),
+                    measureType = x["measureTypeName"].ToString()
                 }).ToList();
             }
 

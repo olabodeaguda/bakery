@@ -45,6 +45,19 @@ namespace BakeryPR.Models
             }
         }
 
+        private string _measureType;
+
+        public string measureType
+        {
+            get { return _measureType; }
+            set
+            {
+                _measureType = value;
+                this.NotifyPropertyChanged("measureType");
+            }
+        }
+
+
         private double _quantity;
 
         public double quantity
@@ -56,6 +69,20 @@ namespace BakeryPR.Models
                 this.NotifyPropertyChanged("quantity");
             }
         }
+
+        private string _overheadName;
+
+        public string overheadName
+        {
+            get { return _overheadName; }
+            set
+            {
+                _overheadName = value;
+                this.NotifyPropertyChanged("overheadName");
+            }
+        }
+
+
 
 
         #region property change

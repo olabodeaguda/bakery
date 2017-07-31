@@ -9,6 +9,18 @@ namespace BakeryPR.Models
 {
     public class OverheadDetails : INotifyPropertyChanged
     {
+        private string _measureType;
+
+        public string measureType
+        {
+            get { return _measureType; }
+            set
+            {
+                _measureType = value;
+                this.NotifyPropertyChanged("measureType");
+            }
+        }
+
         private int _id;
 
         public int id
