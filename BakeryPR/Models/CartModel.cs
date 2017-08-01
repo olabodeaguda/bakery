@@ -169,8 +169,6 @@ namespace BakeryPR.Models
             }
         }
 
-
-
         private ObservableCollection<CartProductModel> _itemLst = new ObservableCollection<CartProductModel>();
 
         public ObservableCollection<CartProductModel> itemLst
