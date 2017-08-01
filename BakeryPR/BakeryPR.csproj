@@ -190,6 +190,9 @@
     <Compile Include="Views\AddOverhead.xaml.cs">
       <DependentUpon>AddOverhead.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\AddOverheadGrp.xaml.cs">
+      <DependentUpon>AddOverheadGrp.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\AddProduct.xaml.cs">
       <DependentUpon>AddProduct.xaml</DependentUpon>
     </Compile>
@@ -319,6 +322,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\AddOverhead.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AddOverheadGrp.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
