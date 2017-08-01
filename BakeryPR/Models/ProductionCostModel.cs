@@ -10,7 +10,7 @@ namespace BakeryPR.Models
     {
         public int ingredentId { get; set; }
         public string ingredentName { get; set; }
-        public int quantity { get; set; }
+        public double quantity { get; set; }
         public double UnitCost { get; set; }
         public double totalCost { get; set; }
     }

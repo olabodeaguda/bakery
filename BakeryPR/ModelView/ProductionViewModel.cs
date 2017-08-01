@@ -35,6 +35,14 @@ namespace BakeryPR.ModelView
             }
         }
 
+        public CartDao cartDao
+        {
+            get
+            {
+                return new CartDao();
+            }
+        }
+
         public DelegateCommand<object> reportCommand
         {
             get
@@ -54,15 +62,32 @@ namespace BakeryPR.ModelView
 
                     List<ProductionCostModel> lst = PIDao.byProductionId(p.id).Select(x => new ProductionCostModel()
                     {
-                         ingredentName = x.ingredentName,
-                          quantity = x.amount,
-                           
+                        ingredentName = x.ingredentName,
+                        quantity = x.amount,
+                        UnitCost = x.unitCost,
+                        totalCost = x.amount * x.unitCost
                     }).ToList();
-                    ExcelModel excelmodel = null;
+
+                    List<SalesRevenueModel> salesRM = cartDao.byDaily(p.dateCreated.ToString("yyyy-MM-dd"))
+                    .Select(x => new SalesRevenueModel()
+                    {
+                        ProductName = x.pName,
+                        QuantityProduced = x.quantity,
+                        UnitPrice = x.salesType == SalesType.RETAIL.ToString() ? x.retailPrice : x.wholeSales,
+                        totalPrice = x.price
+                    }).ToList();
+
+
+                    ExcelModel excelmodel = new ExcelModel()
+                    {
+                        ProductionCost = lst,
+                        SalesCost = salesRM
+                    };
+
 
                     if (excelmodel != null)
                     {
-                        ExcelU.Export(p.id, filename, excelmodel); 
+                        ExcelU.Export(p.id, filename, excelmodel);
                     }
 
 

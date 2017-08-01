@@ -59,7 +59,7 @@ namespace BakeryPR.DAO
             List<CartModel> lst = new List<CartModel>();
             using (SQLiteConnection conn = new SQLiteConnection(this.connectionString))
             {
-                string query = "select cart.*,cartProduct.quantity,cartProduct.price,product.name as pName from cart ";
+                string query = "select cart.*,cartProduct.quantity,cartProduct.price,product.name as pName,product.retailPrice,product.wholeSales from cart ";
                 query = query + "inner join cartProduct on cartProduct.cartId = cart.id ";
                 query = query + "inner join product on product.id = cartProduct.productId where cart.dateCreated = @date order by cart.id desc";
                 conn.Open();
@@ -81,8 +81,9 @@ namespace BakeryPR.DAO
                     isWholesales = x["salesType"].ToString() == SalesType.WHOLESALES.ToString() ? true : false,
                     pName = x["pName"].ToString(),
                     price = double.Parse(x["price"].ToString()),
-                    quantity = int.Parse(x["quantity"].ToString())
-
+                    quantity = int.Parse(x["quantity"].ToString()),
+                    retailPrice = double.Parse(x["retailPrice"].ToString()),
+                    wholeSales = double.Parse(x["wholeSales"].ToString())
                 }).ToList();
             }
 
