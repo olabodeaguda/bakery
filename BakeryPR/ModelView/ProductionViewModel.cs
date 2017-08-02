@@ -49,47 +49,54 @@ namespace BakeryPR.ModelView
             {
                 return new DelegateCommand<object>((s) =>
                 {
-                    Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
-                    dlg.DefaultExt = ".xlsx";
-                    dlg.Filter = "Excel Files|*.xlsx;";
-                    Nullable<bool> result = dlg.ShowDialog();
-
-                    if (result == true)
+                    try
                     {
-                        filename = dlg.FileName;
+                        Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
+                        dlg.DefaultExt = ".xlsx";
+                        dlg.Filter = "Excel Files|*.xlsx;";
+
+                        Nullable<bool> result = dlg.ShowDialog();
+
+                        if (result == true)
+                        {
+                            filename = dlg.FileName;
+                        }
+
+                        Production p = (Production)s;
+
+                        List<ProductionCostModel> lst = PIDao.byProductionId(p.id).Select(x => new ProductionCostModel()
+                        {
+                            ingredentName = x.ingredentName,
+                            quantity = x.amount,
+                            UnitCost = x.unitCost,
+                            totalCost = x.amount * x.unitCost
+                        }).ToList();
+
+                        List<SalesRevenueModel> salesRM = cartDao.byDaily(p.dateCreated.ToString("yyyy-MM-dd"))
+                        .Select(x => new SalesRevenueModel()
+                        {
+                            ProductName = x.pName,
+                            QuantityProduced = x.quantity,
+                            UnitPrice = x.salesType == SalesType.RETAIL.ToString() ? x.retailPrice : x.wholeSales,
+                            totalPrice = x.price
+                        }).ToList();
+
+
+                        ExcelModel excelmodel = new ExcelModel()
+                        {
+                            ProductionCost = lst,
+                            SalesCost = salesRM
+                        };
+
+                        if (excelmodel != null)
+                        {
+                            ExcelU.Export(p.id, filename, excelmodel);
+                        }
                     }
-                    Production p = (Production)s;
-
-                    List<ProductionCostModel> lst = PIDao.byProductionId(p.id).Select(x => new ProductionCostModel()
+                    catch (Exception x)
                     {
-                        ingredentName = x.ingredentName,
-                        quantity = x.amount,
-                        UnitCost = x.unitCost,
-                        totalCost = x.amount * x.unitCost
-                    }).ToList();
-
-                    List<SalesRevenueModel> salesRM = cartDao.byDaily(p.dateCreated.ToString("yyyy-MM-dd"))
-                    .Select(x => new SalesRevenueModel()
-                    {
-                        ProductName = x.pName,
-                        QuantityProduced = x.quantity,
-                        UnitPrice = x.salesType == SalesType.RETAIL.ToString() ? x.retailPrice : x.wholeSales,
-                        totalPrice = x.price
-                    }).ToList();
-
-
-                    ExcelModel excelmodel = new ExcelModel()
-                    {
-                        ProductionCost = lst,
-                        SalesCost = salesRM
-                    };
-
-
-                    if (excelmodel != null)
-                    {
-                        ExcelU.Export(p.id, filename, excelmodel);
+                        MessageBox.Show(x.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
-
 
                 });
             }

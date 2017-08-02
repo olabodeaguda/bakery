@@ -11,6 +11,30 @@ namespace BakeryPR.DAO
 {
     public class OverheadDetailsDao : AbstractDao
     {
+        public List<OverheadDetails> allSingle()
+        {
+            List<OverheadDetails> lst = new List<OverheadDetails>();
+            using (SQLiteConnection conn = new SQLiteConnection(this.connectionString))
+            {
+                conn.Open();
+                string query = "select * from overheadGrpDetails order by overheadGrpDetails.groupName desc; ";
+                DataSet dt = new DataSet();
+                SQLiteCommand cmd = new SQLiteCommand(conn);
+                cmd.CommandText = query;
+                cmd.CommandType = CommandType.Text;
+                this.SQLiteAdaptor(dt, cmd);
+
+                lst = dt.Tables[0].Rows.Cast<DataRow>().Select(x => new OverheadDetails()
+                {
+                    id = int.Parse(x["id"].ToString()),
+                    groupName = x["groupName"].ToString(),
+                    quantity = double.Parse(x["quantity"].ToString())
+                }).ToList();
+            }
+
+            return lst;
+        }
+
         public List<OverheadDetails> all()
         {
             List<OverheadDetails> lst = new List<OverheadDetails>();
@@ -64,8 +88,9 @@ namespace BakeryPR.DAO
             {
                 conn.Open();
                 SQLiteCommand cmd = new SQLiteCommand(conn);
-                cmd.CommandText = "update overheadGrpDetails groupName = @grpName,quantity=@quantity where id=@id";
+                cmd.CommandText = "update overheadGrpDetails set groupName = @grpName,quantity=@quantity where id=@id";
                 cmd.Parameters.AddWithValue("@grpName", values.groupName);
+                cmd.Parameters.AddWithValue("@quantity", values.quantity);
                 cmd.Parameters.AddWithValue("@id", values.id);
                 cmd.CommandType = CommandType.Text;
                 int count = cmd.ExecuteNonQuery();

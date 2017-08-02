@@ -4,6 +4,7 @@ using BakeryPR.Utilities;
 using BakeryPR.Views;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -25,6 +26,37 @@ namespace BakeryPR.ModelView
                 this.NotifyPropertyChanged("overheaddetailGrp");
             }
         }
+
+        private ObservableCollection<OverheadDetails> _grpoverheadLst = new ObservableCollection<OverheadDetails>();
+
+        public ObservableCollection<OverheadDetails> grpoverheadLst
+        {
+            get
+            {
+                return _grpoverheadLst;
+            }
+            set
+            {
+                _grpoverheadLst = value;
+                this.NotifyPropertyChanged("grpoverheadLst");
+            }
+
+        }
+
+        public DelegateCommand<object> loadOvHeadCommand
+        {
+            get
+            {
+                return new DelegateCommand<object>(async (s) =>
+                {
+                    await Task.Run(() =>
+                    {
+                        this.grpoverheadLst = new ObservableCollection<OverheadDetails>(overheadDetailsDao.allSingle());
+                    });
+                });
+            }
+        }
+
 
         private OverheadDetails _overheadDetail = new OverheadDetails();
 
@@ -58,6 +90,60 @@ namespace BakeryPR.ModelView
                 {
                     addGrpOverhead addgrp = new addGrpOverhead();
                     addgrp.ShowDialog();
+                });
+            }
+        }
+
+        public DelegateCommand<object> loadUpdateCommand
+        {
+            get
+            {
+                return new DelegateCommand<object>((s) =>
+                {
+                    overheadDetail = (OverheadDetails)s;
+                    EditOverhead eov = new EditOverhead();
+                    eov.DataContext = this;
+                    eov.ShowDialog();
+
+                });
+            }
+        }
+
+        public DelegateCommand<object> loadOverheadUpdateCommand
+        {
+            get
+            {
+                return new DelegateCommand<object>((s) =>
+                {
+                    overheadDetail = (OverheadDetails)s;
+                    EditGrpOverhead eov = new EditGrpOverhead();
+                    eov.DataContext = this;
+                    eov.ShowDialog();
+
+                });
+            }
+        }
+
+        public DelegateCommand<object> addOverheadUpdateCommand
+        {
+            get
+            {
+                return new DelegateCommand<object>((s) =>
+                {
+                    if (!string.IsNullOrEmpty(overheadDetail.groupName))
+                    {
+                        bool res = overheadDetailsDao.update(overheadDetail);
+                        if (res)
+                        {
+                            MessageBox.Show("Saved", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                            App.Current.Dispatcher.Invoke(() =>
+                            {
+                                this.grpoverheadLst = new ObservableCollection<OverheadDetails>(overheadDetailsDao.allSingle());
+                            });
+
+                        }
+                    }
+
                 });
             }
         }

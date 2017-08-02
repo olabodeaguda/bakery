@@ -41,6 +41,14 @@ namespace BakeryPR.Models
             }
         }
 
+        public string quantityConfigured
+        {
+            get
+            {
+                return $"{this.quantity}Kg";
+            }
+        }
+
         private double _quantity;
 
         public double quantity

@@ -248,6 +248,9 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Views\EditGrpOverhead.xaml.cs">
+      <DependentUpon>EditGrpOverhead.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\EditIngredent.xaml.cs">
       <DependentUpon>EditIngredent.xaml</DependentUpon>
     </Compile>
@@ -394,6 +397,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Dashboard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EditGrpOverhead.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
