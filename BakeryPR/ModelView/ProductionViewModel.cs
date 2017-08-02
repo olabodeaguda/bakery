@@ -15,6 +15,14 @@ namespace BakeryPR.ModelView
 {
     public class ProductionViewModel : INotifyPropertyChanged
     {
+        public ExcelUtils ExcelU
+        {
+            get
+            {
+                return new ExcelUtils();
+            }
+        }
+
         private string _filename;
 
         public string filename
@@ -27,21 +35,62 @@ namespace BakeryPR.ModelView
             }
         }
 
+        public CartDao cartDao
+        {
+            get
+            {
+                return new CartDao();
+            }
+        }
+
         public DelegateCommand<object> reportCommand
         {
             get
             {
                 return new DelegateCommand<object>((s) =>
                 {
-                    Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
-                    dlg.DefaultExt = ".xls";
-                    dlg.Filter = "Excel Files|*.xls;*.xlsx;";
+                    Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
+                    dlg.DefaultExt = ".xlsx";
+                    dlg.Filter = "Excel Files|*.xlsx;";
                     Nullable<bool> result = dlg.ShowDialog();
 
                     if (result == true)
                     {
                         filename = dlg.FileName;
                     }
+                    Production p = (Production)s;
+
+                    List<ProductionCostModel> lst = PIDao.byProductionId(p.id).Select(x => new ProductionCostModel()
+                    {
+                        ingredentName = x.ingredentName,
+                        quantity = x.amount,
+                        UnitCost = x.unitCost,
+                        totalCost = x.amount * x.unitCost
+                    }).ToList();
+
+                    List<SalesRevenueModel> salesRM = cartDao.byDaily(p.dateCreated.ToString("yyyy-MM-dd"))
+                    .Select(x => new SalesRevenueModel()
+                    {
+                        ProductName = x.pName,
+                        QuantityProduced = x.quantity,
+                        UnitPrice = x.salesType == SalesType.RETAIL.ToString() ? x.retailPrice : x.wholeSales,
+                        totalPrice = x.price
+                    }).ToList();
+
+
+                    ExcelModel excelmodel = new ExcelModel()
+                    {
+                        ProductionCost = lst,
+                        SalesCost = salesRM
+                    };
+
+
+                    if (excelmodel != null)
+                    {
+                        ExcelU.Export(p.id, filename, excelmodel);
+                    }
+
+
                 });
             }
         }
@@ -476,6 +525,8 @@ namespace BakeryPR.ModelView
             }
         }
 
+
+
         public DelegateCommand<object> UpdateProdproduct
         {
             get
@@ -688,6 +739,19 @@ namespace BakeryPR.ModelView
             }
         }
 
+        private string _totalProdIngredent;
+
+        public string totalProdIngredent
+        {
+            get { return _totalProdIngredent; }
+            set
+            {
+                _totalProdIngredent = value;
+                this.NotifyPropertyChanged("totalProdIngredent");
+            }
+        }
+
+
         public DelegateCommand<object> loadIngredentCommand
         {
             get
@@ -720,6 +784,7 @@ namespace BakeryPR.ModelView
             set
             {
                 _productionIngredents = value;
+                this.totalProdIngredent = $"{value.Sum(x => x.amount)}Kg";
                 this.NotifyPropertyChanged("productionIngredents");
             }
         }

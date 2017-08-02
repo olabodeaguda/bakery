@@ -10,67 +10,51 @@
     <UserControl.DataContext>
         <vm:GrpOverheadModelView></vm:GrpOverheadModelView>
     </UserControl.DataContext>
-    <Grid Margin="10">
+    <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="60"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
-        <Button Width="90" Height="40" HorizontalAlignment="Left" Command="{Binding loadAddCommand}">Add</Button>
-        <ListView Width="{Binding winWidth}" 
-                  ItemsSource="{Binding profiles,Mode=TwoWay}" IsSynchronizedWithCurrentItem="True" HorizontalAlignment="Left" 
-                  HorizontalContentAlignment="Left" Margin="5" Grid.RowSpan="2" Grid.Row="1">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn  x:Name="gridV">
-                        <GridViewColumn.CellTemplate >
-                            <DataTemplate>
-                                <Button Content="Edit Profile"  CommandParameter="{Binding}"
-                                        Command="{Binding Path=DataContext.loadUpdateCommand, 
+        <TextBlock Style="{StaticResource headings}"  Grid.ColumnSpan="2">Manage Overhead</TextBlock>
+       
+        <Grid Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            
+            <ListView x:Name="OverheadLst"  Width="{Binding winWidth}" 
+                  ItemsSource="{Binding riIngredents}" IsSynchronizedWithCurrentItem="True" HorizontalAlignment="Left" HorizontalContentAlignment="Left" 
+                  Grid.Row="1">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn  x:Name="gridV">
+                            <GridViewColumn.CellTemplate >
+                                <DataTemplate>
+                                    <Button Content="Edit"  CommandParameter="{Binding}"
+                                        Command="{Binding Path=DataContext.loadEditCommand, 
                                     RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
 
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn >
-                        <GridViewColumn.CellTemplate >
-                            <DataTemplate>
-                                <Button Content="Change Pwd"  CommandParameter="{Binding}"
-                                        Command="{Binding Path=DataContext.loadChangePwdCommand, 
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn  x:Name="add">
+                            <GridViewColumn.CellTemplate >
+                                <DataTemplate>
+                                    <Button Content="Manage Overhead"  CommandParameter="{Binding}"
+                                        Command="{Binding Path=DataContext.loadEditCommand, 
                                     RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
 
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn>
-                        <GridViewColumn.CellTemplate >
-                            <DataTemplate>
-                                <Button Content="Deactivate User"  CommandParameter="{Binding}"
-                                        Command="{Binding Path=DataContext.loadChangeUserStatus, 
-                                    RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
-
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn>
-                        <GridViewColumn.CellTemplate >
-                            <DataTemplate>
-                                <Button Content="Assign Role"  CommandParameter="{Binding}"
-                                        Command="{Binding Path=DataContext.loadAssignUserRole, 
-                                    RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
-
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn Width="200"  HeaderContainerStyle="{StaticResource ListViewStyle}" 
-                                    Header="Full Name"  DisplayMemberBinding="{Binding fullName}" />
-                    <GridViewColumn Width="100" HeaderContainerStyle="{StaticResource ListViewStyle}" 
-                                    Header="Status" DisplayMemberBinding="{Binding username}" />
-                    <GridViewColumn Width="100" HeaderContainerStyle="{StaticResource ListViewStyle}" 
-                                    Header="User Role" DisplayMemberBinding="{Binding roleName}" />
-                    <GridViewColumn Width="100" HeaderContainerStyle="{StaticResource ListViewStyle}" 
-                                    Header="Status" DisplayMemberBinding="{Binding status}" />
-                </GridView>
-            </ListView.View>
-        </ListView>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Width="200"  HeaderContainerStyle="{StaticResource ListViewStyle}" 
+                                    Header="Group Name"  DisplayMemberBinding="{Binding ingredentName}" />
+                        <GridViewColumn Width="100" HeaderContainerStyle="{StaticResource ListViewStyle}" 
+                                    Header="Quantity" DisplayMemberBinding="{Binding quantityView}" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </Grid>
     </Grid>
 </UserControl>

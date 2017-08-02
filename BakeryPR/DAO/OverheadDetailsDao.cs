@@ -34,30 +34,28 @@ namespace BakeryPR.DAO
                     groupName = x["groupName"].ToString(),
                     overheadId = int.Parse(x["overheadId"].ToString()),
                     overheadQuantity = double.Parse(x["quantity"].ToString()),
-                    measureType = x["measureTypeName"].ToString()
+                    measureType = x["measureTypeName"].ToString(),
+                    quantity = double.Parse(x["quantity"].ToString())
                 }).ToList();
             }
 
             return lst;
         }
 
-        public bool add(OverheadDetails values)
+        public int add(OverheadDetails values)
         {
             using (SQLiteConnection conn = new SQLiteConnection(connectionString))
             {
                 conn.Open();
                 SQLiteCommand cmd = new SQLiteCommand(conn);
-                cmd.CommandText = "insert into overheadGrpDetails(groupName) values(@grpName)";
+                cmd.CommandText = "insert into overheadGrpDetails(groupName,quantity) values(@grpName,@quantity); SELECT last_insert_rowid();";
                 cmd.Parameters.AddWithValue("@grpName", values.groupName);
+                cmd.Parameters.AddWithValue("@quantity", values.quantity);
                 cmd.CommandType = CommandType.Text;
-                int count = cmd.ExecuteNonQuery();
-                if (count > 0)
-                {
-                    return true;
-                }
+                object obj = cmd.ExecuteScalar();
+                int id = Convert.ToInt32(obj);
+                return id;
             }
-
-            return false;
         }
 
         public bool update(OverheadDetails values)
@@ -66,7 +64,7 @@ namespace BakeryPR.DAO
             {
                 conn.Open();
                 SQLiteCommand cmd = new SQLiteCommand(conn);
-                cmd.CommandText = "update overheadGrpDetails groupName = @grpName where id=@id";
+                cmd.CommandText = "update overheadGrpDetails groupName = @grpName,quantity=@quantity where id=@id";
                 cmd.Parameters.AddWithValue("@grpName", values.groupName);
                 cmd.Parameters.AddWithValue("@id", values.id);
                 cmd.CommandType = CommandType.Text;

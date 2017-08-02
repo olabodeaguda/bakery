@@ -124,7 +124,7 @@ namespace BakeryPR.ModelView
                             bool d = cartDao.executeQuery(cardString);
                             if (d)
                             {
-                                MessageBox.Show("Card was successfull", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                                MessageBox.Show("Sales was successfull", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
                                 App.Current.Dispatcher.Invoke((Action)delegate
                                 {
                                     this.dailyCartHistory = new ObservableCollection<CartModel>(dailyHistory);

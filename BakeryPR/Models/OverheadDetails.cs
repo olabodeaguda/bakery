@@ -41,6 +41,19 @@ namespace BakeryPR.Models
             }
         }
 
+        private double _quantity;
+
+        public double quantity
+        {
+            get { return _quantity; }
+            set
+            {
+                _quantity = value;
+                this.NotifyPropertyChanged("quantity");
+            }
+        }
+
+
         private int _overheadId;
 
         public int overheadId

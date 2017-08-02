@@ -12,7 +12,15 @@
             <RowDefinition Height="120"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
-        <TextBlock Style="{StaticResource headings}"  Grid.ColumnSpan="2">Update Recipe</TextBlock>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <TextBlock Style="{StaticResource headings}" >Update Recipe</TextBlock>
+            <TextBlock Style="{StaticResource headings}" Text="{Binding totalProdIngredent,Mode=TwoWay}" Grid.Column="1"></TextBlock>
+        </Grid>
+        
         <StackPanel Grid.Row="1">
             <TextBlock Padding="6 0 0 0">Quantity(KG)</TextBlock>
             <TextBox Padding="0 0 0 6" HorizontalAlignment="Left" Width="200" Height="21" Text="{Binding recipe.quantity}" Margin="5,5,0,5"></TextBox>
@@ -27,14 +35,13 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="30"></RowDefinition>
                 <RowDefinition></RowDefinition>
-                <RowDefinition Height="30"></RowDefinition>
             </Grid.RowDefinitions>
             <Button Command="{Binding loadAddIngredntCommmand}" Width="100" Height="25" HorizontalAlignment="Left" IsEnabled="{Binding isAddIngredent}">Add Ingredent</Button>
 
             <ListView x:Name="IngredentLst"  Width="{Binding winWidth}" 
                   ItemsSource="{Binding riIngredents}" IsSynchronizedWithCurrentItem="True" 
                       HorizontalAlignment="Left" HorizontalContentAlignment="Left" 
-                  Grid.Row="1">
+                  Grid.Row="1" ScrollViewer.CanContentScroll="True" >
                 <ListView.View>
                     <GridView>
                         <GridViewColumn  x:Name="gridV">

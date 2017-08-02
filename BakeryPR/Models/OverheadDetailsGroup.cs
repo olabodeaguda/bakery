@@ -33,7 +33,7 @@ namespace BakeryPR.Models
             }
         }
 
-        private int _overheadId;
+        private int _overheadId = -1;
 
         public int overheadId
         {
@@ -81,8 +81,6 @@ namespace BakeryPR.Models
                 this.NotifyPropertyChanged("overheadName");
             }
         }
-
-
 
 
         #region property change

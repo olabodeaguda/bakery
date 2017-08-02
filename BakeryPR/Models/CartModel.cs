@@ -22,6 +22,27 @@ namespace BakeryPR.Models
             }
         }
 
+        private double _retailPrice;
+
+        public double retailPrice
+        {
+            get { return _retailPrice; }
+            set { _retailPrice = value; }
+        }
+
+        private double _wholeSales;
+
+        public double wholeSales
+        {
+            get { return _wholeSales; }
+            set
+            {
+                _wholeSales = value;
+                this.NotifyPropertyChanged("wholeSales");
+            }
+        }
+
+
         private string _customerName;
 
         public string customerName
