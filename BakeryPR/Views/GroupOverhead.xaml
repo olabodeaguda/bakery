@@ -13,29 +13,16 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40"></RowDefinition>
-            <RowDefinition Height="120"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
-        <TextBlock Style="{StaticResource headings}"  Grid.ColumnSpan="2">Manage </TextBlock>
-        <StackPanel Grid.Row="1">
-            <TextBlock Padding="6 0 0 0">Quantity(KG)</TextBlock>
-            <TextBox Padding="0 0 0 6" HorizontalAlignment="Left" Width="200" Height="21" 
-                     Text="{Binding overheadDetail.quantity}" Margin="5,5,0,5"></TextBox>
-            <TextBlock Padding="6 0 0 0">Title</TextBlock>
-            <StackPanel Orientation="Horizontal" Height="30">
-                <TextBox HorizontalAlignment="Left" Width="200" Text="{Binding overheadDetail.groupName}"></TextBox>
-                <Button Width="50" Height="25" Command="{Binding addCommand}">Add</Button>
-            </StackPanel>
-        </StackPanel>
-
+        <TextBlock Style="{StaticResource headings}"  Grid.ColumnSpan="2">Manage Overhead</TextBlock>
+       
         <Grid Grid.Row="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="30"></RowDefinition>
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
-            <Button Command="{Binding addOverheadCommand}" Width="100" Height="25" 
-                    HorizontalAlignment="Left" IsEnabled="{Binding isAddoverhead}">Add Overhead</Button>
-
+            
             <ListView x:Name="OverheadLst"  Width="{Binding winWidth}" 
                   ItemsSource="{Binding riIngredents}" IsSynchronizedWithCurrentItem="True" HorizontalAlignment="Left" HorizontalContentAlignment="Left" 
                   Grid.Row="1">
@@ -51,14 +38,20 @@
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
+                        <GridViewColumn  x:Name="add">
+                            <GridViewColumn.CellTemplate >
+                                <DataTemplate>
+                                    <Button Content="Manage Overhead"  CommandParameter="{Binding}"
+                                        Command="{Binding Path=DataContext.loadEditCommand, 
+                                    RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
+
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
                         <GridViewColumn Width="200"  HeaderContainerStyle="{StaticResource ListViewStyle}" 
-                                    Header="Ingredent"  DisplayMemberBinding="{Binding ingredentName}" />
+                                    Header="Group Name"  DisplayMemberBinding="{Binding ingredentName}" />
                         <GridViewColumn Width="100" HeaderContainerStyle="{StaticResource ListViewStyle}" 
                                     Header="Quantity" DisplayMemberBinding="{Binding quantityView}" />
-                        <GridViewColumn Width="200" HeaderContainerStyle="{StaticResource ListViewStyle}" 
-                                    Header="Cost/Unit" DisplayMemberBinding="{Binding unitCost}" />
-                        <GridViewColumn Width="200" HeaderContainerStyle="{StaticResource ListViewStyle}" 
-                                    Header="Total Cost" DisplayMemberBinding="{Binding totalCost}" />
                     </GridView>
                 </ListView.View>
             </ListView>

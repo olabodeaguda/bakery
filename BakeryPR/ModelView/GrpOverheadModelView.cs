@@ -14,7 +14,7 @@ namespace BakeryPR.ModelView
 {
     public class GrpOverheadModelView : INotifyPropertyChanged
     {
-        private OverheadDetailsGroup _overheaddetailGrp;
+        private OverheadDetailsGroup _overheaddetailGrp = new OverheadDetailsGroup();
 
         public OverheadDetailsGroup overheaddetailGrp
         {
@@ -50,7 +50,55 @@ namespace BakeryPR.ModelView
             }
         }
 
+        public DelegateCommand<object> loadCommand
+        {
+            get
+            {
+                return new DelegateCommand<object>((s) =>
+                {
+                    addGrpOverhead addgrp = new addGrpOverhead();
+                    addgrp.ShowDialog();
+                });
+            }
+        }
+
         public DelegateCommand<object> addOverheadCommand
+        {
+            get
+            {
+                return new DelegateCommand<object>(async (s) =>
+                {
+                    await Task.Run(() =>
+                    {
+                        try
+                        {
+                            if (overheaddetailGrp.id == -1)
+                            {
+                                return;
+                            }
+                            else if (overheaddetailGrp.overheadId == -1)
+                            {
+                                throw new Exception("overhead is required");
+                            }
+                            else if (overheaddetailGrp.quantity < 1)
+                            {
+                                throw new Exception("Quantity is required");
+                            }
+
+
+
+                        }
+                        catch (Exception x)
+                        {
+                            MessageBox.Show(x.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
+                    });
+                });
+            }
+        }
+
+
+        public DelegateCommand<object> loadOverheadCommand
         {
             get
             {

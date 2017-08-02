@@ -184,6 +184,9 @@
     <Compile Include="Utilities\ProductionStatus.cs" />
     <Compile Include="Utilities\SalesType.cs" />
     <Compile Include="Utilities\UserSatus.cs" />
+    <Compile Include="Views\addGroupOverhead.xaml.cs">
+      <DependentUpon>addGroupOverhead.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\AddIngredent.xaml.cs">
       <DependentUpon>AddIngredent.xaml</DependentUpon>
     </Compile>
@@ -317,6 +320,10 @@
     <Compile Include="Views\UserManagement.xaml.cs">
       <DependentUpon>UserManagement.xaml</DependentUpon>
     </Compile>
+    <Page Include="Views\addGroupOverhead.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\AddIngredent.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
