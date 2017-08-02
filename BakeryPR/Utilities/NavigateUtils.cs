@@ -49,6 +49,9 @@ namespace BakeryPR.Utilities
                 case "ProductInventory":
                     title = "Ingredient Inventory History";
                     return new ProductinventoryHistory();
+                case "grpOverhead":
+                    title = "Group Overhead";
+                    return new GroupOverhead();
                 default:
                     title = "Error";
                     return new ErrorView();

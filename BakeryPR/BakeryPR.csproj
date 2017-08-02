@@ -125,6 +125,8 @@
     <Compile Include="DAO\InventoryHistoryDao.cs" />
     <Compile Include="DAO\MeasureTypeDao.cs" />
     <Compile Include="DAO\OverheadDao.cs" />
+    <Compile Include="DAO\OverheadDetailsDao.cs" />
+    <Compile Include="DAO\OverheadDetailsGroupDao.cs" />
     <Compile Include="DAO\ProductDao.cs" />
     <Compile Include="DAO\ProductInventoryHistoryDao.cs" />
     <Compile Include="DAO\ProductionDao.cs" />
@@ -148,6 +150,8 @@
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\MeasurementType.cs" />
     <Compile Include="Models\Overhead.cs" />
+    <Compile Include="Models\OverheadDetails.cs" />
+    <Compile Include="Models\OverheadDetailsGroup.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\ProductInventoryHistory.cs" />
     <Compile Include="Models\Production.cs" />
@@ -163,6 +167,7 @@
     <Compile Include="Models\UserRole.cs" />
     <Compile Include="Models\UserStatusModel.cs" />
     <Compile Include="ModelView\DashboardModelView.cs" />
+    <Compile Include="ModelView\GrpOverheadModelView.cs" />
     <Compile Include="ModelView\IngredentModelView.cs" />
     <Compile Include="ModelView\LoginModelView.cs" />
     <Compile Include="ModelView\OverheadModelView.cs" />
@@ -188,11 +193,17 @@
     <Compile Include="Utilities\ProductionStatus.cs" />
     <Compile Include="Utilities\SalesType.cs" />
     <Compile Include="Utilities\UserSatus.cs" />
+    <Compile Include="Views\addGroupOverhead.xaml.cs">
+      <DependentUpon>addGroupOverhead.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\AddIngredent.xaml.cs">
       <DependentUpon>AddIngredent.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\AddOverhead.xaml.cs">
       <DependentUpon>AddOverhead.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AddOverheadGrp.xaml.cs">
+      <DependentUpon>AddOverheadGrp.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\AddProduct.xaml.cs">
       <DependentUpon>AddProduct.xaml</DependentUpon>
@@ -267,6 +278,9 @@
     <Compile Include="Views\ErrorView.xaml.cs">
       <DependentUpon>ErrorView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\GroupOverhead.xaml.cs">
+      <DependentUpon>GroupOverhead.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\IngredentView.xaml.cs">
       <DependentUpon>IngredentView.xaml</DependentUpon>
     </Compile>
@@ -315,11 +329,19 @@
     <Compile Include="Views\UserManagement.xaml.cs">
       <DependentUpon>UserManagement.xaml</DependentUpon>
     </Compile>
+    <Page Include="Views\addGroupOverhead.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\AddIngredent.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\AddOverhead.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AddOverheadGrp.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -412,6 +434,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ErrorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\GroupOverhead.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
