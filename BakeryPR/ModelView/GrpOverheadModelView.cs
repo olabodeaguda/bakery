@@ -33,7 +33,7 @@ namespace BakeryPR.ModelView
         {
             get
             {
-                _grpoverheadLst= new ObservableCollection<OverheadDetails>(overheadDetailsDao.allSingle());
+                _grpoverheadLst = new ObservableCollection<OverheadDetails>(overheadDetailsDao.allSingle());
                 return _grpoverheadLst;
             }
             set
@@ -58,6 +58,25 @@ namespace BakeryPR.ModelView
             }
         }
 
+        public DelegateCommand<object> loadManageoverheadGrp
+        {
+            get
+            {
+                return new DelegateCommand<object>((s) =>
+                {
+
+                    overheadDetail = (OverheadDetails)s;
+                    overHeaddetailsLst = new ObservableCollection<OverheadDetailsGroup>(overheadDetailGDao.byGrpId(overheadDetail.id));
+                    App.Current.Dispatcher.Invoke(() =>
+                    {
+                        this.NotifyPropertyChanged("overHeaddetailsLst"); //= new ObservableCollection<OverheadDetails>(overheadDetailsDao.allSingle());
+                    });
+                    ManageOverheadGrp mog = new ManageOverheadGrp();
+                    mog.DataContext = this;
+                    mog.ShowDialog();
+                });
+            }
+        }
 
         private OverheadDetails _overheadDetail = new OverheadDetails();
 
@@ -90,6 +109,7 @@ namespace BakeryPR.ModelView
                 return new DelegateCommand<object>((s) =>
                 {
                     addGrpOverhead addgrp = new addGrpOverhead();
+                    overheadDetail = new OverheadDetails();
                     addgrp.DataContext = this;
                     addgrp.ShowDialog();
                 });
@@ -139,10 +159,7 @@ namespace BakeryPR.ModelView
                         if (res)
                         {
                             MessageBox.Show("Saved", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-                            //App.Current.Dispatcher.Invoke(() =>
-                            //{ });
                             this.grpoverheadLst = new ObservableCollection<OverheadDetails>(overheadDetailsDao.allSingle());
-
                         }
                     }
                 });
@@ -189,11 +206,16 @@ namespace BakeryPR.ModelView
                             {
                                 throw new Exception("Quantity is required");
                             }
-
+                            overheaddetailGrp.grpId = overheadDetail.id;
                             bool res = overheadDetailGDao.add(overheaddetailGrp);
                             if (res)
                             {
-                                overHeaddetailsLst = new ObservableCollection<OverheadDetailsGroup>(overheadDetailGDao.byGrpId(overheaddetailGrp.id));
+                                overHeaddetailsLst = new ObservableCollection<OverheadDetailsGroup>(overheadDetailGDao.byGrpId(overheaddetailGrp.grpId));
+                                App.Current.Dispatcher.Invoke(() =>
+                                {
+                                    this.NotifyPropertyChanged("overHeaddetailsLst");
+                                });
+
                                 MessageBox.Show("Saved", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
                             }
                             else
@@ -211,13 +233,63 @@ namespace BakeryPR.ModelView
             }
         }
 
-        public DelegateCommand<object> loadOverheadEditCommand
+        public DelegateCommand<object> editOverheadGrp
         {
             get
             {
                 return new DelegateCommand<object>((s) =>
                 {
+                    overheaddetailGrp = (OverheadDetailsGroup)s;
+                    EditOverheadGrp eog = new EditOverheadGrp();
+                    eog.DataContext = this;
+                    eog.ShowDialog();
+                });
+            }
+        }
 
+        public DelegateCommand<object> editOverheadGrpUpdate
+        {
+            get
+            {
+                return new DelegateCommand<object>((s) =>
+                {
+                    overheaddetailGrp = (OverheadDetailsGroup)s;
+                    overheaddetailGrp.grpId = overheadDetail.id;
+                    EditOverheadGrp eog = new EditOverheadGrp();
+                    eog.DataContext = this;
+                    eog.ShowDialog();
+                });
+            }
+        }
+
+        public DelegateCommand<object> loadOverheadEditCommand
+        {
+            get
+            {
+                return new DelegateCommand<object>(async (s) =>
+                {
+                    await Task.Run(() =>
+                    {
+                        isSpin = Visibility.Visible;
+                        try
+                        {
+                            bool t = overheadDetailGDao.update(this.overheaddetailGrp);
+                            if (t)
+                            {
+                                overHeaddetailsLst = new ObservableCollection<OverheadDetailsGroup>(overheadDetailGDao.byGrpId(overheadDetail.id));
+                                App.Current.Dispatcher.Invoke(() =>
+                                {
+                                    this.NotifyPropertyChanged("overHeaddetailsLst");
+                                });
+                                MessageBox.Show("Saved", "successfull", MessageBoxButton.OK, MessageBoxImage.Information);
+                            }
+                        }
+                        catch (Exception x)
+                        {
+                            MessageBox.Show(x.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
+                        isSpin = Visibility.Collapsed;
+                    });
                 });
             }
         }
@@ -240,6 +312,7 @@ namespace BakeryPR.ModelView
                 return new DelegateCommand<object>((s) =>
                 {
                     AddOverheadGrp addoverhead = new AddOverheadGrp();
+                    overheaddetailGrp = new OverheadDetailsGroup();
                     addoverhead.DataContext = this;
                     addoverhead.ShowDialog();
                 });
@@ -269,9 +342,10 @@ namespace BakeryPR.ModelView
                             //addOverheadCommand
                             App.Current.Dispatcher.Invoke(() =>
                             {
+                                //overHeaddetailsLst
                                 this.NotifyPropertyChanged("grpoverheadLst"); //= new ObservableCollection<OverheadDetails>(overheadDetailsDao.allSingle());
                             });
-                            
+
                         }
                     }
                     catch (Exception x)
@@ -354,7 +428,7 @@ namespace BakeryPR.ModelView
                 return overheadDao.all();
             }
         }
-        
+
         #region property change
 
         public double winHeight

@@ -152,6 +152,19 @@ namespace BakeryPR.Models
             }
         }
 
+        private int _overheadGrpId = -1;
+
+        public int overheadGrpId
+        {
+            get { return _overheadGrpId; }
+            set
+            {
+                _overheadGrpId = value;
+                this.NotifyPropertyChanged("overheadGrpId");
+            }
+        }
+
+
         #region property change
 
         public event PropertyChangedEventHandler PropertyChanged;

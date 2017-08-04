@@ -9,6 +9,18 @@ namespace BakeryPR.Models
 {
     public class OverheadDetailsGroup : INotifyPropertyChanged
     {
+        private int _extId;
+
+        public int extId
+        {
+            get { return _extId; }
+            set
+            {
+                _extId = value;
+                this.NotifyPropertyChanged("extId");
+            }
+        }
+
         private int _id;
 
         public int id

@@ -21,6 +21,8 @@ namespace BakeryPR.DAO
             return query;
         }
 
+        //public
+
         public List<OverheadDetailsGroup> all()
         {
             List<OverheadDetailsGroup> lst = new List<OverheadDetailsGroup>();
@@ -59,7 +61,7 @@ namespace BakeryPR.DAO
             using (SQLiteConnection conn = new SQLiteConnection(this.connectionString))
             {
                 conn.Open();
-                string query = "select overheadGrpDetails.*,overheadGrpDetailsExt.quantity,overheads.name,overheads.unitCost,measurementType.measureTypeName from overheadGrpDetails ";
+                string query = "select overheadGrpDetails.*,overheadGrpDetailsExt.id as extId,overheadGrpDetailsExt.overheadId,overheadGrpDetailsExt.quantity as ExtQuantity,overheads.name,overheads.unitCost,measurementType.measureTypeName from overheadGrpDetails ";
                 query = query + "inner join overheadGrpDetailsExt on overheadGrpDetailsExt.grpId = overheadGrpDetails.id ";
                 query = query + "inner join overheads on overheads.id = overheadGrpDetailsExt.overheadId ";
                 query = query + "inner join measurementType on measurementType.id = overheads.mTypeId where  overheadGrpDetailsExt.grpId=@grpId ";
@@ -76,10 +78,12 @@ namespace BakeryPR.DAO
                     id = int.Parse(x["id"].ToString()),
                     groupName = x["groupName"].ToString(),
                     overheadId = int.Parse(x["overheadId"].ToString()),
+                    //grpId = int.Parse(x["grpId"].ToString()),
                     unitCost = double.Parse(x["unitCost"].ToString()),
                     measureType = x["measureTypeName"].ToString(),
-                    quantity = double.Parse(x["quantity"].ToString()),
-                    overheadName = x["name"].ToString()
+                    quantity = double.Parse(x["ExtQuantity"].ToString()),
+                    overheadName = x["name"].ToString(),
+                    extId = int.Parse(x["extId"].ToString())
                 }).ToList();
             }
 
@@ -113,11 +117,11 @@ namespace BakeryPR.DAO
             {
                 conn.Open();
                 SQLiteCommand cmd = new SQLiteCommand(conn);
-                cmd.CommandText = "update overheadGrpDetailsExt grpId=@grpId,overheadId=@overheadId,quantity=@quantity where id=@id";
-                cmd.Parameters.AddWithValue("@grpId", values.grpId);
+                cmd.CommandText = "update overheadGrpDetailsExt set grpId=@grpId,overheadId=@overheadId,quantity=@quantity where id=@id";
+                cmd.Parameters.AddWithValue("@grpId", values.id);
                 cmd.Parameters.AddWithValue("@overheadId", values.overheadId);
                 cmd.Parameters.AddWithValue("@quantity", values.quantity);
-                cmd.Parameters.AddWithValue("@id", values.id);
+                cmd.Parameters.AddWithValue("@id", values.extId);
                 cmd.CommandType = CommandType.Text;
                 int count = cmd.ExecuteNonQuery();
                 if (count > 0)

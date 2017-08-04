@@ -1,0 +1,38 @@
+﻿<Window x:Class="BakeryPR.Views.EditOverheadGrp"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BakeryPR.Views"
+        xmlns:fa="http://schemas.fontawesome.io/icons/"
+        mc:Ignorable="d"
+        Title="Edit Overhead" Height="250" Width="300" Style="{StaticResource {x:Type Window}}" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+    <Grid Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="92"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <TextBlock Style="{StaticResource headings}"  Grid.ColumnSpan="2">Update Overhead</TextBlock>
+        <TextBlock Text="{Binding OverheadDetails.groupName,Mode=TwoWay}" Grid.Column="1" VerticalAlignment="Bottom"></TextBlock>
+
+        <TextBlock Grid.Row="1">Select Overhead</TextBlock>
+        <TextBlock Grid.Row="2">Quantity</TextBlock>
+
+        <ComboBox SelectedValue="{Binding overheaddetailGrp.overheadId,Mode=TwoWay}" 
+                  Grid.Row="1" Grid.Column="1" ItemsSource="{Binding overheadLst}" 
+                  DisplayMemberPath="name" SelectedValuePath="id"></ComboBox>
+        <TextBox Grid.Row="2" Grid.Column="1" Height="30" Text="{Binding overheaddetailGrp.quantity,Mode=TwoWay}"></TextBox>
+        <StackPanel  Grid.Row="3" Grid.Column="1" Orientation="Horizontal" Margin="0 9 0 0" HorizontalAlignment="Right">
+            <Button Style="{StaticResource btnSubmitStyle}" Height="30" Width="120" 
+                    Grid.Column="1" Command="{Binding loadOverheadEditCommand}"
+                    VerticalAlignment="Top" >Update</Button>
+            <fa:ImageAwesome Icon="Refresh" VerticalAlignment="Top" Spin="True" Visibility="{Binding isSpin,Mode=TwoWay}" Height="20" Width="30" />
+        </StackPanel>
+    </Grid>
+</Window>
