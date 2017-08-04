@@ -21,13 +21,115 @@ namespace BakeryPR.DAO
             return query;
         }
 
-        public string updateQuery(OverheadDetailsGroup values)
+        public List<OverheadDetailsGroup> all()
         {
-            return "update overheadGrpDetailsExt grpId=@grpId,overheadId=@overheadId,quantity=@quantity where id=@id";
+            List<OverheadDetailsGroup> lst = new List<OverheadDetailsGroup>();
+            using (SQLiteConnection conn = new SQLiteConnection(this.connectionString))
+            {
+                conn.Open();
+                string query = "select overheadGrpDetails.*,overheadGrpDetailsExt.quantity,overheads.name,overheads.unitCost,measurementType.measureTypeName from overheadGrpDetails ";
+                query = query + "inner join overheadGrpDetailsExt on overheadGrpDetailsExt.grpId = overheadGrpDetails.id ";
+                query = query + "inner join overheads on overheads.id = overheadGrpDetailsExt.overheadId ";
+                query = query + "inner join measurementType on measurementType.id = overheads.mTypeId ";
+                query = query + "order by overheadGrpDetails.groupName desc";
+                DataSet dt = new DataSet();
+                SQLiteCommand cmd = new SQLiteCommand(conn);
+                cmd.CommandText = query;
+                cmd.CommandType = CommandType.Text;
+                this.SQLiteAdaptor(dt, cmd);
+
+                lst = dt.Tables[0].Rows.Cast<DataRow>().Select(x => new OverheadDetailsGroup()
+                {
+                    id = int.Parse(x["id"].ToString()),
+                    groupName = x["groupName"].ToString(),
+                    overheadId = int.Parse(x["overheadId"].ToString()),
+                    unitCost = double.Parse(x["unitCost"].ToString()),
+                    measureType = x["measureTypeName"].ToString(),
+                    quantity = double.Parse(x["quantity"].ToString()),
+                    overheadName = x["name"].ToString()
+                }).ToList();
+            }
+
+            return lst;
         }
 
-
         public List<OverheadDetailsGroup> byGrpId(int grpId)
+        {
+            List<OverheadDetailsGroup> lst = new List<OverheadDetailsGroup>();
+            using (SQLiteConnection conn = new SQLiteConnection(this.connectionString))
+            {
+                conn.Open();
+                string query = "select overheadGrpDetails.*,overheadGrpDetailsExt.quantity,overheads.name,overheads.unitCost,measurementType.measureTypeName from overheadGrpDetails ";
+                query = query + "inner join overheadGrpDetailsExt on overheadGrpDetailsExt.grpId = overheadGrpDetails.id ";
+                query = query + "inner join overheads on overheads.id = overheadGrpDetailsExt.overheadId ";
+                query = query + "inner join measurementType on measurementType.id = overheads.mTypeId where  overheadGrpDetailsExt.grpId=@grpId ";
+                query = query + "order by overheadGrpDetails.groupName desc";
+                DataSet dt = new DataSet();
+                SQLiteCommand cmd = new SQLiteCommand(conn);
+                cmd.CommandText = query;
+                cmd.Parameters.AddWithValue("@grpId", grpId);
+                cmd.CommandType = CommandType.Text;
+                this.SQLiteAdaptor(dt, cmd);
+
+                lst = dt.Tables[0].Rows.Cast<DataRow>().Select(x => new OverheadDetailsGroup()
+                {
+                    id = int.Parse(x["id"].ToString()),
+                    groupName = x["groupName"].ToString(),
+                    overheadId = int.Parse(x["overheadId"].ToString()),
+                    unitCost = double.Parse(x["unitCost"].ToString()),
+                    measureType = x["measureTypeName"].ToString(),
+                    quantity = double.Parse(x["quantity"].ToString()),
+                    overheadName = x["name"].ToString()
+                }).ToList();
+            }
+
+            return lst;
+        }
+
+        public bool add(OverheadDetailsGroup values)
+        {
+            using (SQLiteConnection conn = new SQLiteConnection(connectionString))
+            {
+                conn.Open();
+                SQLiteCommand cmd = new SQLiteCommand(conn);
+                cmd.CommandText = insertQuery(values); //"update overheadGrpDetailsExt grpId=@grpId,overheadId=@overheadId,quantity=@quantity where id=@id";
+                cmd.Parameters.AddWithValue("@grpId", values.grpId);
+                cmd.Parameters.AddWithValue("@overheadId", values.overheadId);
+                cmd.Parameters.AddWithValue("@quantity", values.quantity);
+                cmd.CommandType = CommandType.Text;
+                int count = cmd.ExecuteNonQuery();
+                if (count > 0)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public bool update(OverheadDetailsGroup values)
+        {
+            using (SQLiteConnection conn = new SQLiteConnection(connectionString))
+            {
+                conn.Open();
+                SQLiteCommand cmd = new SQLiteCommand(conn);
+                cmd.CommandText = "update overheadGrpDetailsExt grpId=@grpId,overheadId=@overheadId,quantity=@quantity where id=@id";
+                cmd.Parameters.AddWithValue("@grpId", values.grpId);
+                cmd.Parameters.AddWithValue("@overheadId", values.overheadId);
+                cmd.Parameters.AddWithValue("@quantity", values.quantity);
+                cmd.Parameters.AddWithValue("@id", values.id);
+                cmd.CommandType = CommandType.Text;
+                int count = cmd.ExecuteNonQuery();
+                if (count > 0)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public List<OverheadDetailsGroup> byGrpId2(int grpId)
         {
             List<OverheadDetailsGroup> lst = new List<OverheadDetailsGroup>();
             using (SQLiteConnection conn = new SQLiteConnection(this.connectionString))

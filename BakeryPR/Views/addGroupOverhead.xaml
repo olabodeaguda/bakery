@@ -5,11 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BakeryPR.Views"
         xmlns:vm="clr-namespace:BakeryPR.ModelView"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         mc:Ignorable="d"
-        Title="addGrpOverhead" Height="400" Width="500" Style="{StaticResource {x:Type Window}}" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
-    <Window.DataContext>
+        Title="Manage Overhead" Height="400" Width="500" Style="{StaticResource {x:Type Window}}" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+    <!--<Window.DataContext>
         <vm:GrpOverheadModelView></vm:GrpOverheadModelView>
-    </Window.DataContext>
+    </Window.DataContext>-->
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="35.2"></RowDefinition>
@@ -37,7 +39,8 @@
                     HorizontalAlignment="Left" IsEnabled="{Binding isAddoverhead}">Add Overhead</Button>
 
             <ListView x:Name="OverheadLst"  Width="490" Margin="2" 
-                  ItemsSource="{Binding riIngredents}" IsSynchronizedWithCurrentItem="True" HorizontalAlignment="Left" HorizontalContentAlignment="Left" 
+                  ItemsSource="{Binding overHeaddetailsLst,Mode=TwoWay}" IsSynchronizedWithCurrentItem="True"
+                      HorizontalAlignment="Left" HorizontalContentAlignment="Left" 
                   Grid.Row="1">
                 <ListView.View>
                     <GridView>
@@ -45,14 +48,14 @@
                             <GridViewColumn.CellTemplate >
                                 <DataTemplate>
                                     <Button Content="Edit"  CommandParameter="{Binding}"
-                                        Command="{Binding Path=DataContext.loadEditCommand, 
+                                        Command="{Binding Path=DataContext.loadOverheadEditCommand, 
                                     RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
 
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
                         <GridViewColumn Width="200"  HeaderContainerStyle="{StaticResource ListViewStyle}" 
-                                    Header="Ingredent"  DisplayMemberBinding="{Binding ingredentName}" />
+                                    Header="Overhead Name"  DisplayMemberBinding="{Binding overheadName}" />
                         <GridViewColumn Width="100" HeaderContainerStyle="{StaticResource ListViewStyle}" 
                                     Header="Quantity" DisplayMemberBinding="{Binding quantityView}" />
                         <GridViewColumn Width="200" HeaderContainerStyle="{StaticResource ListViewStyle}" 
