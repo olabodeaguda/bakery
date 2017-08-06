@@ -9,6 +9,18 @@ namespace BakeryPR.Models
 {
     public class OverheadDetailsGroup : INotifyPropertyChanged
     {
+        private int _extId;
+
+        public int extId
+        {
+            get { return _extId; }
+            set
+            {
+                _extId = value;
+                this.NotifyPropertyChanged("extId");
+            }
+        }
+
         private int _id;
 
         public int id
@@ -81,7 +93,45 @@ namespace BakeryPR.Models
                 this.NotifyPropertyChanged("overheadName");
             }
         }
+        private string _groupName;
 
+        public string groupName
+        {
+            get { return _groupName; }
+            set
+            {
+                _groupName = value;
+                this.NotifyPropertyChanged("groupName");
+            }
+        }
+
+        private double _unitCost;
+
+        public double unitCost
+        {
+            get { return _unitCost; }
+            set
+            {
+                _unitCost = value;
+                this.NotifyPropertyChanged("unitCost");
+            }
+        }
+
+        public double totalCost
+        {
+            get
+            {
+                return unitCost * quantity;
+            }
+        }
+
+        public string quantityView
+        {
+            get
+            {
+                return $"{quantity}{measureType}";
+            }
+        }
 
         #region property change
 

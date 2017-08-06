@@ -4,35 +4,40 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
               xmlns:local="clr-namespace:BakeryPR.Views"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:vm="clr-namespace:BakeryPR.ModelView"
              mc:Ignorable="d" 
               d:DesignHeight="{Binding winHeight}" d:DesignWidth="{Binding winWidth}">
     <UserControl.DataContext>
         <vm:GrpOverheadModelView></vm:GrpOverheadModelView>
     </UserControl.DataContext>
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding loadOvHeadCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
-        <TextBlock Style="{StaticResource headings}"  Grid.ColumnSpan="2">Manage Overhead</TextBlock>
-       
+       <Button Grid.Row="0" Width="100" Height="30" HorizontalAlignment="Left" Command="{Binding loadCommand}">Add</Button>
+
         <Grid Grid.Row="2">
             <Grid.RowDefinitions>
-                <RowDefinition Height="30"></RowDefinition>
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
-            
-            <ListView x:Name="OverheadLst"  Width="{Binding winWidth}" 
-                  ItemsSource="{Binding riIngredents}" IsSynchronizedWithCurrentItem="True" HorizontalAlignment="Left" HorizontalContentAlignment="Left" 
-                  Grid.Row="1">
+
+            <ListView  Width="{Binding winWidth}" 
+                  ItemsSource="{Binding grpoverheadLst,Mode=TwoWay}" IsSynchronizedWithCurrentItem="True" 
+                      HorizontalAlignment="Left" HorizontalContentAlignment="Left" ScrollViewer.CanContentScroll="True" >
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn  x:Name="gridV">
+                        <GridViewColumn >
                             <GridViewColumn.CellTemplate >
                                 <DataTemplate>
                                     <Button Content="Edit"  CommandParameter="{Binding}"
-                                        Command="{Binding Path=DataContext.loadEditCommand, 
+                                        Command="{Binding Path=DataContext.loadOverheadUpdateCommand, 
                                     RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
 
                                 </DataTemplate>
@@ -42,16 +47,16 @@
                             <GridViewColumn.CellTemplate >
                                 <DataTemplate>
                                     <Button Content="Manage Overhead"  CommandParameter="{Binding}"
-                                        Command="{Binding Path=DataContext.loadEditCommand, 
+                                        Command="{Binding Path=DataContext.loadManageoverheadGrp, 
                                     RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
 
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
                         <GridViewColumn Width="200"  HeaderContainerStyle="{StaticResource ListViewStyle}" 
-                                    Header="Group Name"  DisplayMemberBinding="{Binding ingredentName}" />
+                                    Header="Group Name"  DisplayMemberBinding="{Binding groupName}" />
                         <GridViewColumn Width="100" HeaderContainerStyle="{StaticResource ListViewStyle}" 
-                                    Header="Quantity" DisplayMemberBinding="{Binding quantityView}" />
+                                    Header="Quantity" DisplayMemberBinding="{Binding quantityConfigured}" />
                     </GridView>
                 </ListView.View>
             </ListView>

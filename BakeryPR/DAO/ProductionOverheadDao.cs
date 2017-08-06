@@ -63,9 +63,9 @@ namespace BakeryPR.DAO
                 conn.Open();
                 DataSet dt = new DataSet();
                 SQLiteCommand cmd = new SQLiteCommand(conn);
-                string query = "select productionOverhead.*,overheads.name as overheadName,measurementType.measureTypeName,overheads.unitCost  from productionOverhead ";
+                string query = "select productionOverhead.*,overheads.name as overheadName,overheads.unitCost  from productionOverhead ";
                 query += "inner join overheads on overheads.id = productionOverhead.overheadId ";
-                query += "inner join measurementType on measurementType.id = overheads.mTypeId where productionOverhead.productionId = @productionId";
+                query += " where productionOverhead.productionId = @productionId";
 
                 cmd.CommandText = query;
                 cmd.Parameters.AddWithValue("@productionId", prodId);
@@ -75,7 +75,6 @@ namespace BakeryPR.DAO
                 lst = dt.Tables[0].Rows.Cast<DataRow>().Select(x => new ProductionOverhead()
                 {
                     id = int.Parse(x["id"].ToString()),
-                    mType = x["measureTypeName"].ToString(),
                     overheadId = int.Parse(x["overheadId"].ToString()),
                     productionId = int.Parse(x["productionId"].ToString()),
                     unitCost = double.Parse(x["unitCost"].ToString()),

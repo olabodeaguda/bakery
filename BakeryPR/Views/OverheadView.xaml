@@ -34,8 +34,10 @@
                     </GridViewColumn>
                     <GridViewColumn Width="200"  HeaderContainerStyle="{StaticResource ListViewStyle}" 
                                     Header="Overhead Name"  DisplayMemberBinding="{Binding name}" />
+                    <GridViewColumn Width="200"  HeaderContainerStyle="{StaticResource ListViewStyle}" 
+                                    Header="Quantity(KG)"  DisplayMemberBinding="{Binding mTypeId}" />
                     <GridViewColumn Width="100" HeaderContainerStyle="{StaticResource ListViewStyle}" 
-                                    Header="Unit Cost" DisplayMemberBinding="{Binding unitCostExpression}" />
+                                    Header="Price for a Quantity(Naira)" DisplayMemberBinding="{Binding unitCost}" />
                     <GridViewColumn Width="100" HeaderContainerStyle="{StaticResource ListViewStyle}" 
                                     Header="Overhead Type" DisplayMemberBinding="{Binding overheadType}" />
                 </GridView>

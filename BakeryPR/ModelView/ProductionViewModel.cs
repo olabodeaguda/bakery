@@ -49,47 +49,54 @@ namespace BakeryPR.ModelView
             {
                 return new DelegateCommand<object>((s) =>
                 {
-                    Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
-                    dlg.DefaultExt = ".xlsx";
-                    dlg.Filter = "Excel Files|*.xlsx;";
-                    Nullable<bool> result = dlg.ShowDialog();
-
-                    if (result == true)
+                    try
                     {
-                        filename = dlg.FileName;
+                        Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
+                        dlg.DefaultExt = ".xlsx";
+                        dlg.Filter = "Excel Files|*.xlsx;";
+
+                        Nullable<bool> result = dlg.ShowDialog();
+
+                        if (result == true)
+                        {
+                            filename = dlg.FileName;
+                        }
+
+                        Production p = (Production)s;
+
+                        List<ProductionCostModel> lst = PIDao.byProductionId(p.id).Select(x => new ProductionCostModel()
+                        {
+                            ingredentName = x.ingredentName,
+                            quantity = x.amount,
+                            UnitCost = x.unitCost,
+                            totalCost = x.amount * x.unitCost
+                        }).ToList();
+
+                        List<SalesRevenueModel> salesRM = cartDao.byDaily(p.dateCreated.ToString("yyyy-MM-dd"))
+                        .Select(x => new SalesRevenueModel()
+                        {
+                            ProductName = x.pName,
+                            QuantityProduced = x.quantity,
+                            UnitPrice = x.salesType == SalesType.RETAIL.ToString() ? x.retailPrice : x.wholeSales,
+                            totalPrice = x.price
+                        }).ToList();
+
+
+                        ExcelModel excelmodel = new ExcelModel()
+                        {
+                            ProductionCost = lst,
+                            SalesCost = salesRM
+                        };
+
+                        if (excelmodel != null)
+                        {
+                            ExcelU.Export(p.id, filename, excelmodel);
+                        }
                     }
-                    Production p = (Production)s;
-
-                    List<ProductionCostModel> lst = PIDao.byProductionId(p.id).Select(x => new ProductionCostModel()
+                    catch (Exception x)
                     {
-                        ingredentName = x.ingredentName,
-                        quantity = x.amount,
-                        UnitCost = x.unitCost,
-                        totalCost = x.amount * x.unitCost
-                    }).ToList();
-
-                    List<SalesRevenueModel> salesRM = cartDao.byDaily(p.dateCreated.ToString("yyyy-MM-dd"))
-                    .Select(x => new SalesRevenueModel()
-                    {
-                        ProductName = x.pName,
-                        QuantityProduced = x.quantity,
-                        UnitPrice = x.salesType == SalesType.RETAIL.ToString() ? x.retailPrice : x.wholeSales,
-                        totalPrice = x.price
-                    }).ToList();
-
-
-                    ExcelModel excelmodel = new ExcelModel()
-                    {
-                        ProductionCost = lst,
-                        SalesCost = salesRM
-                    };
-
-
-                    if (excelmodel != null)
-                    {
-                        ExcelU.Export(p.id, filename, excelmodel);
+                        MessageBox.Show(x.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
-
 
                 });
             }
@@ -147,7 +154,9 @@ namespace BakeryPR.ModelView
                                 {
                                     string query = dao.updateProductionQuery(this.production);
                                     query = query + dao.deleteProductionQuery(this.production);
+                                    query = query + overheadDao.deleteProductionQuery(this.production);
                                     query = query + rdao.addProdIngredentDBQuery(this.production);
+                                    query = query + ovDetilsDao.ProductionInsert(this.production.quantity, production.id);
 
                                     sd = dao.exec(query);
                                 }
@@ -186,6 +195,22 @@ namespace BakeryPR.ModelView
             }
         }
 
+        public List<OverheadDetails> overheadGrp
+        {
+            get
+            {
+                return overheadDetailDao.allSingle();
+            }
+        }
+
+        public OverheadDetailsDao overheadDetailDao
+        {
+            get
+            {
+                return new OverheadDetailsDao();
+            }
+        }
+
         public DelegateCommand<object> addCommand
         {
             get
@@ -220,8 +245,17 @@ namespace BakeryPR.ModelView
                         this.production.approval = ProductionStatus.NOT_APPROVED.ToString();
                         this.production.id = dao.add(this.production);
 
+                        //get registered overhead
+                        //create a string insertion
+                        bool result = false;
+
+                        string ovQuery = ovDetilsDao.ProductionInsert(this.production.quantity, production.id);
+
+
+                        result = rdao.addProduction(this.production, ovQuery);
+
                         //add selected ingredend from recipe 
-                        bool result = rdao.addProdIngredentDB(this.production);
+
                         if (!result)
                         {
                             MessageBox.Show("Please Ingredent addition failed.. Please add ingredent manually");
@@ -238,6 +272,14 @@ namespace BakeryPR.ModelView
                     }
 
                 });
+            }
+        }
+
+        public OverheadDetailsGroupDao ovDetilsDao
+        {
+            get
+            {
+                return new OverheadDetailsGroupDao();
             }
         }
 

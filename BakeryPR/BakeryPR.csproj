@@ -248,11 +248,17 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Views\EditGrpOverhead.xaml.cs">
+      <DependentUpon>EditGrpOverhead.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\EditIngredent.xaml.cs">
       <DependentUpon>EditIngredent.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\EditOverhead.xaml.cs">
       <DependentUpon>EditOverhead.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EditOverheadGrp.xaml.cs">
+      <DependentUpon>EditOverheadGrp.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\EditProduct.xaml.cs">
       <DependentUpon>EditProduct.xaml</DependentUpon>
@@ -289,6 +295,9 @@
     </Compile>
     <Compile Include="Views\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ManageOverheadGrp.xaml.cs">
+      <DependentUpon>ManageOverheadGrp.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ManageProductionProduct.xaml.cs">
       <DependentUpon>ManageProductionProduct.xaml</DependentUpon>
@@ -397,11 +406,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\EditGrpOverhead.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\EditIngredent.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\EditOverhead.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EditOverheadGrp.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -450,6 +467,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\LoginView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ManageOverheadGrp.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

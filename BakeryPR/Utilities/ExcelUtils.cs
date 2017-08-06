@@ -23,6 +23,14 @@ namespace BakeryPR.Utilities
 
             // create sheet
             sh = (XSSFSheet)wb.CreateSheet("Sheet1");
+
+            sh.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(0, 0, 1, 9));
+            var header = sh.CreateRow(0);
+            header.CreateCell(1).SetCellValue("DAILY BAKERY ACTIVITY REGISTER");
+            
+            
+            //header.RowStyle.SetFont(new XSSFFont(new CT_Font().)
+
             int row = 5;
             var tblHeader = sh.CreateRow(row++);
             tblHeader.CreateCell(1).SetCellValue("Ingredients");
