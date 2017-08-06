@@ -62,7 +62,7 @@
             <ListView x:Name="IngredentLst" 
                   ItemsSource="{Binding prodOverheads,Mode=TwoWay}" IsSynchronizedWithCurrentItem="True" >
                 <ListView.View>
-                    <3>
+                    <GridView>
                         <GridViewColumn  x:Name="gridV">
                             <GridViewColumn.CellTemplate >
                                 <DataTemplate>
@@ -78,7 +78,7 @@
                         <GridViewColumn Width="100" HeaderContainerStyle="{StaticResource ListViewStyle}" 
                                     Header="Amount" DisplayMemberBinding="{Binding overheadCount}" />
                         
-                    </>
+                    </GridView>
                 </ListView.View>
             </ListView>
         </Grid>
