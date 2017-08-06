@@ -257,6 +257,9 @@
     <Compile Include="Views\EditOverhead.xaml.cs">
       <DependentUpon>EditOverhead.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\EditOverheadGrp.xaml.cs">
+      <DependentUpon>EditOverheadGrp.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\EditProduct.xaml.cs">
       <DependentUpon>EditProduct.xaml</DependentUpon>
     </Compile>
@@ -292,6 +295,9 @@
     </Compile>
     <Compile Include="Views\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ManageOverheadGrp.xaml.cs">
+      <DependentUpon>ManageOverheadGrp.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ManageProductionProduct.xaml.cs">
       <DependentUpon>ManageProductionProduct.xaml</DependentUpon>
@@ -412,6 +418,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\EditOverheadGrp.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\EditProduct.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -457,6 +467,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\LoginView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ManageOverheadGrp.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

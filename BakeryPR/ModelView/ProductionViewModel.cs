@@ -193,6 +193,22 @@ namespace BakeryPR.ModelView
             }
         }
 
+        public List<OverheadDetails> overheadGrp
+        {
+            get
+            {
+                return overheadDetailDao.allSingle();
+            }
+        }
+
+        public OverheadDetailsDao overheadDetailDao
+        {
+            get
+            {
+                return new OverheadDetailsDao();
+            }
+        }
+
         public DelegateCommand<object> addCommand
         {
             get
@@ -226,6 +242,9 @@ namespace BakeryPR.ModelView
                         //check if thier is an ongoing production...
                         this.production.approval = ProductionStatus.NOT_APPROVED.ToString();
                         this.production.id = dao.add(this.production);
+
+                        //get registered overhead
+                        //create a string insersion
 
                         //add selected ingredend from recipe 
                         bool result = rdao.addProdIngredentDB(this.production);

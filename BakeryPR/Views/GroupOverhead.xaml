@@ -28,13 +28,12 @@
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
 
-            <ListView x:Name="OverheadLst"  Width="{Binding winWidth}" 
-                  ItemsSource="{Binding grpoverheadLst}" IsSynchronizedWithCurrentItem="True" 
-                      HorizontalAlignment="Left" HorizontalContentAlignment="Left" 
-                  >
+            <ListView  Width="{Binding winWidth}" 
+                  ItemsSource="{Binding grpoverheadLst,Mode=TwoWay}" IsSynchronizedWithCurrentItem="True" 
+                      HorizontalAlignment="Left" HorizontalContentAlignment="Left" ScrollViewer.CanContentScroll="True" >
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn  x:Name="gridV">
+                        <GridViewColumn >
                             <GridViewColumn.CellTemplate >
                                 <DataTemplate>
                                     <Button Content="Edit"  CommandParameter="{Binding}"
@@ -48,7 +47,7 @@
                             <GridViewColumn.CellTemplate >
                                 <DataTemplate>
                                     <Button Content="Manage Overhead"  CommandParameter="{Binding}"
-                                        Command="{Binding Path=DataContext.loadEditCommand, 
+                                        Command="{Binding Path=DataContext.loadManageoverheadGrp, 
                                     RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
 
                                 </DataTemplate>
