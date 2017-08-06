@@ -57,7 +57,7 @@
                   ItemsSource="{Binding prodOverheads,Mode=TwoWay}" IsSynchronizedWithCurrentItem="True" >
                 <ListView.View>
                     <GridView>
-                       <!-- <GridViewColumn  x:Name="gridV">
+                        <GridViewColumn  x:Name="gridV">
                             <GridViewColumn.CellTemplate >
                                 <DataTemplate>
                                     <Button Content="Edit"  CommandParameter="{Binding}"
@@ -66,11 +66,11 @@
 
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
-                        </GridViewColumn>-->
+                        </GridViewColumn>
                         <GridViewColumn Width="200"  HeaderContainerStyle="{StaticResource ListViewStyle}" 
                                     Header="Overhead Name"  DisplayMemberBinding="{Binding overheadName}" />
                         <GridViewColumn Width="100" HeaderContainerStyle="{StaticResource ListViewStyle}" 
-                                    Header="Amount" DisplayMemberBinding="{Binding overheadCount}" />
+                                    Header="Amount(Naira)" DisplayMemberBinding="{Binding overheadCount}" />
 
                     </GridView>
                 </ListView.View>
