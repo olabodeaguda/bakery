@@ -154,7 +154,9 @@ namespace BakeryPR.ModelView
                                 {
                                     string query = dao.updateProductionQuery(this.production);
                                     query = query + dao.deleteProductionQuery(this.production);
+                                    query = query + overheadDao.deleteProductionQuery(this.production);
                                     query = query + rdao.addProdIngredentDBQuery(this.production);
+                                    query = query + ovDetilsDao.ProductionInsert(this.production.quantity, production.id);
 
                                     sd = dao.exec(query);
                                 }
@@ -251,7 +253,7 @@ namespace BakeryPR.ModelView
 
 
                         result = rdao.addProduction(this.production, ovQuery);
-                        
+
                         //add selected ingredend from recipe 
 
                         if (!result)

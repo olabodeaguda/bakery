@@ -11,6 +11,11 @@ namespace BakeryPR.DAO
 {
     public class OverheadDao : AbstractDao
     {
+        public string deleteProductionQuery(Production p)
+        {
+            return "delete from productionOverhead where productionId = '" + p.id + "';";
+        }
+        
         public List<Overhead> all()
         {
             List<Overhead> lst = new List<Overhead>();
