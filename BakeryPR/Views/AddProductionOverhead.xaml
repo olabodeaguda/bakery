@@ -62,7 +62,7 @@
             <ListView x:Name="IngredentLst" 
                   ItemsSource="{Binding prodOverheads,Mode=TwoWay}" IsSynchronizedWithCurrentItem="True" >
                 <ListView.View>
-                    <GridView>
+                    <3>
                         <GridViewColumn  x:Name="gridV">
                             <GridViewColumn.CellTemplate >
                                 <DataTemplate>
@@ -76,10 +76,9 @@
                         <GridViewColumn Width="200"  HeaderContainerStyle="{StaticResource ListViewStyle}" 
                                     Header="Overhead Name"  DisplayMemberBinding="{Binding overheadName}" />
                         <GridViewColumn Width="100" HeaderContainerStyle="{StaticResource ListViewStyle}" 
-                                    Header="Count" DisplayMemberBinding="{Binding overheadCount}" />
-                        <GridViewColumn Width="200" HeaderContainerStyle="{StaticResource ListViewStyle}" 
-                                    Header="Amount" DisplayMemberBinding="{Binding totalCost}" />
-                    </GridView>
+                                    Header="Amount" DisplayMemberBinding="{Binding overheadCount}" />
+                        
+                    </>
                 </ListView.View>
             </ListView>
         </Grid>

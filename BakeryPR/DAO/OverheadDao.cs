@@ -19,7 +19,7 @@ namespace BakeryPR.DAO
                 conn.Open();
                 DataSet dt = new DataSet();
                 SQLiteCommand cmd = new SQLiteCommand(conn);
-                cmd.CommandText = "select overheads.*,measurementType.measureTypeName from overheads left join measurementType on overheads.mTypeId = measurementType.id";
+                cmd.CommandText = "select * from overheads order by name";
                 cmd.CommandType = CommandType.Text;
                 this.SQLiteAdaptor(dt, cmd);
 
@@ -29,7 +29,6 @@ namespace BakeryPR.DAO
                     name = x["name"].ToString(),
                     mTypeId = int.Parse(x["mTypeId"].ToString()),
                     unitCost = double.Parse(x["unitCost"].ToString()),
-                    measureTypeName = x["measureTypeName"].ToString(),
                      overheadType = x["overheadType"].ToString()
                 }).ToList();
             }

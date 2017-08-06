@@ -244,10 +244,16 @@ namespace BakeryPR.ModelView
                         this.production.id = dao.add(this.production);
 
                         //get registered overhead
-                        //create a string insersion
+                        //create a string insertion
+                        bool result = false;
 
+                        string ovQuery = ovDetilsDao.ProductionInsert(this.production.quantity, production.id);
+
+
+                        result = rdao.addProduction(this.production, ovQuery);
+                        
                         //add selected ingredend from recipe 
-                        bool result = rdao.addProdIngredentDB(this.production);
+
                         if (!result)
                         {
                             MessageBox.Show("Please Ingredent addition failed.. Please add ingredent manually");
@@ -264,6 +270,14 @@ namespace BakeryPR.ModelView
                     }
 
                 });
+            }
+        }
+
+        public OverheadDetailsGroupDao ovDetilsDao
+        {
+            get
+            {
+                return new OverheadDetailsGroupDao();
             }
         }
 

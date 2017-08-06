@@ -20,7 +20,7 @@ namespace BakeryPR.DAO
                 conn.Open();
                 DataSet dt = new DataSet();
                 SQLiteCommand cmd = new SQLiteCommand(conn);
-                cmd.CommandText = "select production.*,recipe.title as recipeTitle from production inner join recipe on recipe.id=production.recipeId order by production.title desc";
+                cmd.CommandText = "select production.*,recipe.title as recipeTitle from production inner join recipe on recipe.id=production.recipeId order by production.id desc";
                 cmd.CommandType = CommandType.Text;
                 this.SQLiteAdaptor(dt, cmd);
 

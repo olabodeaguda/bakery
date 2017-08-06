@@ -30,10 +30,10 @@
             <MenuItem Header="_Settings" Visibility="{Binding isAccessible,Mode=TwoWay}">
                 <MenuItem Header="Ingredient" Command="{Binding navCommand}" CommandParameter="ingredient"></MenuItem>
                 <MenuItem Header="Product" Command="{Binding navCommand}" CommandParameter="product"></MenuItem>
-                <MenuItem Header="Manage Overhead">
-                    <MenuItem Header="Add Overhead" Command="{Binding navCommand}" CommandParameter="overhead"></MenuItem>
+                <MenuItem Header="Add Overhead" Command="{Binding navCommand}" CommandParameter="overhead"></MenuItem>
+                <!--<MenuItem Header="Manage Overhead">
                     <MenuItem Header="Group Overhead" Command="{Binding navCommand}" CommandParameter="grpOverhead"></MenuItem>
-                </MenuItem>
+                </MenuItem>-->
                 <MenuItem Header="Manage Recipe" Command="{Binding navCommand}" CommandParameter="recipe"></MenuItem>
                 <MenuItem Header="User Management" Command="{Binding navCommand}" CommandParameter="user"></MenuItem>
             </MenuItem>

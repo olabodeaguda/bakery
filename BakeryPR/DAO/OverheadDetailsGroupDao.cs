@@ -11,6 +11,41 @@ namespace BakeryPR.DAO
 {
     public class OverheadDetailsGroupDao : AbstractDao
     {
+        public OverheadDao overheadDao
+        {
+            get
+            {
+                return new OverheadDao();
+            }
+        }
+
+        public string ProductionInsert(double measure, int prodId)
+        {
+            List<Overhead> allOverheads = overheadDao.all();
+
+            if (allOverheads.Count > 0)
+            {
+                string query = "";
+                foreach (var tm in allOverheads)
+                {
+                    query = query + "insert into productionOverhead(overheadId,productionId,overheadCount)values( ";
+                    query = query + "'" + tm.id + "',";
+                    query = query + "'" + prodId + "',";
+                    double d = (measure * tm.unitCost) / tm.mTypeId;
+                    query = query + "'" + d + "'";
+                    query = query + ");";
+                }
+                return query;
+            }
+
+            return null;
+        }
+
+        public string ProductionInsert(int prodId)
+        {
+            return "delete from productionOverhead where productionId = '" + prodId + "';";
+        }
+
         public string insertQuery(OverheadDetailsGroup values)
         {
             string query = "insert into overheadGrpDetailsExt(grpId,overheadId,quantity) values(";
@@ -149,6 +184,7 @@ namespace BakeryPR.DAO
                 SQLiteCommand cmd = new SQLiteCommand(conn);
                 cmd.CommandText = query;
                 cmd.CommandType = CommandType.Text;
+                cmd.Parameters.AddWithValue("@grpId", grpId);
                 this.SQLiteAdaptor(dt, cmd);
 
                 lst = dt.Tables[0].Rows.Cast<DataRow>().Select(x => new OverheadDetailsGroup()
