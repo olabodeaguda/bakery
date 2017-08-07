@@ -38,6 +38,7 @@ namespace BakeryPR.ModelView
                     try
                     {
                         Overhead sd = this.overhead;
+                        sd.mTypeId = 50;
                         bool result = dao.update(sd);
                         if (result)
                         {
@@ -61,6 +62,7 @@ namespace BakeryPR.ModelView
                     try
                     {
                         Overhead ig = this.overhead;
+                        ig.mTypeId = 50;
 
                         bool result = dao.add(ig);
                         if (result)

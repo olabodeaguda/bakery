@@ -9,29 +9,31 @@
     <Grid Margin="5">
         <Grid.RowDefinitions>
             <RowDefinition Height="70"></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
+            <RowDefinition Height="38*"></RowDefinition>
+            <RowDefinition Height="8*"></RowDefinition>
+            <RowDefinition Height="43*"></RowDefinition>
+            <RowDefinition Height="43*"></RowDefinition>
+            <RowDefinition Height="59*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="150"></ColumnDefinition>
             <ColumnDefinition Width="250"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <TextBlock Style="{StaticResource headings}"  Grid.ColumnSpan="2">Add Overhead</TextBlock>
-        <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center">Overhead Name</TextBlock>
-        <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center">Quantity(KG)</TextBlock>
-        <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" TextWrapping="Wrap">Price for a Quantity</TextBlock>
-        <TextBlock Grid.Row="4" Grid.Column="0" VerticalAlignment="Center">Overhead Type</TextBlock>
+        <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Height="16" Margin="0,11">Overhead Name</TextBlock>
+        <!--<TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center">Quantity(KG)</TextBlock>-->
+        <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" TextWrapping="Wrap" Height="16" Margin="0,18,0,9">Price for a 50Kg</TextBlock>
+        <TextBlock Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Height="16" Margin="0,25,0,1.721">Overhead Type</TextBlock>
 
         <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding overhead.name,Mode=TwoWay}"></TextBox>
-        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding overhead.mTypeId,Mode=TwoWay}"></TextBox>
+        <!--<TextBox Grid.Row="2" Grid.Column="1" Text="{Binding overhead.mTypeId,Mode=TwoWay}"></TextBox>-->
         <TextBox  Grid.Row="3" Grid.Column="1" Text="{Binding overhead.unitCost,Mode=TwoWay}"></TextBox>
-        <ComboBox SelectedValue="{Binding overhead.overheadType,Mode=TwoWay}"  Grid.Row="4" Grid.Column="1" ItemsSource="{Binding OverheadTypes}" 
-                  ></ComboBox>
+        <ComboBox SelectedValue="{Binding overhead.overheadType,Mode=TwoWay}"  Grid.Row="4" Grid.Column="1" ItemsSource="{Binding OverheadTypes}" Margin="5,5,5,0" RenderTransformOrigin="0.5,0.5" 
+                  >
+            
+        </ComboBox>
 
-        <Button Style="{StaticResource btnSubmitStyle}" Grid.Column="1" Grid.Row="5" Command="{Binding addCommand}" >Add</Button>
+        <Button Style="{StaticResource btnSubmitStyle}" Grid.Column="1" Grid.Row="5" Command="{Binding addCommand}" Height="Auto" Margin="75,24.279,76,5" Width="Auto" >Add</Button>
 
     </Grid>
 </Window>
