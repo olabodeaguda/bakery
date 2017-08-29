@@ -36,7 +36,7 @@
                     <GridViewColumn>
                         <GridViewColumn.CellTemplate >
                             <DataTemplate>
-                                <Button Content="Inventory"  CommandParameter="{Binding}"
+                                <Button Content="Replenish Ingredient"  CommandParameter="{Binding}"
                                         Command="{Binding Path=DataContext.loadUpdateInventoryCommand, 
                                     RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
 

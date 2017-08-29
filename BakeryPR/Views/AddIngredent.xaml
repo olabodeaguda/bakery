@@ -26,7 +26,7 @@
         </Grid.ColumnDefinitions>
         <TextBlock Style="{StaticResource headings}"  Grid.ColumnSpan="2">Add Ingredent</TextBlock>
         <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center">Ingredent Name</TextBlock>
-        <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center">Measurement Type</TextBlock>
+        <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center">Measurement Unit</TextBlock>
         <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center">A Unit Cost</TextBlock>
 
         <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding ingredent.ingredentName,Mode=TwoWay}"></TextBox>
