@@ -5,10 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BakeryPR.Views"
         mc:Ignorable="d"
-        Title="Update Inventory" Height="262.867" Width="500"  Style="{StaticResource {x:Type Window}}"  WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+        Title="Update Inventory" Height="450" Width="500"  Style="{StaticResource {x:Type Window}}"  WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Grid Margin="5">
         <Grid.RowDefinitions>
             <RowDefinition Height="70"></RowDefinition>
+            <RowDefinition  Height="50"></RowDefinition>
+            <RowDefinition  Height="50"></RowDefinition>
+            <RowDefinition  Height="50"></RowDefinition>
             <RowDefinition  Height="50"></RowDefinition>
             <RowDefinition  Height="50"></RowDefinition>
             <RowDefinition  Height="50"></RowDefinition>
@@ -20,13 +23,21 @@
         </Grid.ColumnDefinitions>
         <TextBlock Style="{StaticResource headings}"  Grid.ColumnSpan="2">Replenish Ingredient</TextBlock>
         <TextBlock  Grid.Row="1" Grid.Column="0" VerticalAlignment="Center">Ingredent Name</TextBlock>
-        <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center">Quantity</TextBlock>
+        <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center">Current Quantity</TextBlock>
+        <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center">Current Unit Cost</TextBlock>
+        <TextBlock Grid.Row="4" Grid.Column="0" VerticalAlignment="Center">Quantity</TextBlock>
+        <TextBlock Grid.Row="5" Grid.Column="0" VerticalAlignment="Center">Unit Cost</TextBlock>
 
-        <TextBox  IsEnabled="False" Grid.Row="1" Grid.Column="1" Text="{Binding inventoryHistory.ingredentName,Mode=TwoWay}" Height="40"></TextBox>
+        <TextBox  IsEnabled="False" Grid.Row="1" Grid.Column="1" 
+                  Text="{Binding inventoryHistory.ingredentName,Mode=TwoWay}" Height="40"></TextBox>
 
-        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding inventoryHistory.amount,Mode=TwoWay}" Height="40"></TextBox>
+        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding inventoryHistory.amount,Mode=TwoWay}" Height="40" IsEnabled="false"></TextBox>
+        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding inventoryHistory.oldUnitCost,Mode=TwoWay}" Height="40" IsEnabled="False"></TextBox>
+        <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding inventoryHistory.newQuantity,Mode=TwoWay}" Height="40"></TextBox>
+        <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding inventoryHistory.newUnitCost,Mode=TwoWay}" Height="40"></TextBox>
 
-        <Button Style="{StaticResource btnSubmitStyle}" Grid.Column="1" Grid.Row="3" Command="{Binding updateQuantityCommand}" >Add</Button>
+
+        <Button Style="{StaticResource btnSubmitStyle}" Grid.Column="1" Grid.Row="6" Height="40" Command="{Binding updateQuantityCommand}" >Add</Button>
 
     </Grid>
 </Window>

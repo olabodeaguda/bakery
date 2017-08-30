@@ -89,12 +89,13 @@ namespace BakeryPR.ModelView
                         this.inventoryHistory = new InventoryHistory()
                         {
                             ingredentId = sd.id,
-                            ingredentName = sd.ingredentName
+                            ingredentName = sd.ingredentName,
+                            amount = sd.quantity,
+                            oldUnitCost = sd.unitCost
                         };
 
                         inven.DataContext = this;
-                        inven.ShowDialog();
-                        this.Ingredents = new ObservableCollection<Ingredent>(dao.all());
+                        inven.ShowDialog();                        
                     }
                 });
             }
@@ -125,11 +126,19 @@ namespace BakeryPR.ModelView
                     try
                     {
                         Ingredent ig = this.ingredent;
+
+                        if (this.inventoryHistory.newQuantity < 1)
+                        {
+                            throw new Exception("Quantity can't be zero");
+                        }
+
                         this.inventoryHistory.inventoryMode = InventoryMode.ADD.ToString();
                         this.inventoryHistory.addedBy = loginModel.fullname;
+
                         bool result = invenHistoryDao.add(this.inventoryHistory);
                         if (result)
                         {
+                            this.Ingredents = new ObservableCollection<Ingredent>(dao.all());
                             MessageBox.Show("Saved");
                         }
                         else
@@ -261,7 +270,7 @@ namespace BakeryPR.ModelView
             }
         }
 
-        private InventoryHistory _inventoryHistory;
+        private InventoryHistory _inventoryHistory = new InventoryHistory();
 
         public InventoryHistory inventoryHistory
         {

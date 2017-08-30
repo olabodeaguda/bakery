@@ -193,6 +193,7 @@
     <Compile Include="Utilities\ProductionStatus.cs" />
     <Compile Include="Utilities\SalesType.cs" />
     <Compile Include="Utilities\UserSatus.cs" />
+    <Compile Include="Utilities\WeightAverageCostUtil.cs" />
     <Compile Include="Views\addGroupOverhead.xaml.cs">
       <DependentUpon>addGroupOverhead.xaml</DependentUpon>
     </Compile>

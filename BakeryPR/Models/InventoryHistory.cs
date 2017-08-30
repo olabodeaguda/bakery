@@ -114,6 +114,43 @@ namespace BakeryPR.Models
             }
         }
 
+        private double _newQuantity;
+
+        public double newQuantity
+        {
+            get { return _newQuantity; }
+            set
+            {
+                _newQuantity = value;
+                this.NotifyPropertyChanged("newQuantity");
+            }
+        }
+
+        private double _newUnitCost;
+
+        public double newUnitCost
+        {
+            get { return _newUnitCost; }
+            set
+            {
+                _newUnitCost = value;
+                this.NotifyPropertyChanged("newUnitCost");
+            }
+        }
+
+        private double _oldUnitCost;
+
+        public double oldUnitCost
+        {
+            get { return _oldUnitCost; }
+            set
+            {
+                _oldUnitCost = value;
+                this.NotifyPropertyChanged("oldUnitCost");
+            }
+        }
+
+
         #region property change
 
         public event PropertyChangedEventHandler PropertyChanged;

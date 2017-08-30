@@ -129,6 +129,28 @@ namespace BakeryPR.DAO
             return false;
         }
 
+        public bool updateIngredent(int ingredntId, double quantity,double unitCost)
+        {
+            using (SQLiteConnection conn = new SQLiteConnection(connectionString))
+            {
+                conn.Open();
+                SQLiteCommand cmd = new SQLiteCommand(conn);
+                cmd.CommandText = "update ingredent set quantity = @quantity,unitCost=@unitCost where id = @id";
+                cmd.Parameters.AddWithValue("@quantity", quantity);
+                cmd.Parameters.AddWithValue("@unitCost", unitCost);
+                cmd.Parameters.AddWithValue("@id", ingredntId);
+                cmd.CommandType = CommandType.Text;
+                int count = cmd.ExecuteNonQuery();
+                if (count > 0)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+
         public string updateIngredientQuantityQuery(Production p, List<ProductionIngredent> lstOfPI)
         {
             string query = "";

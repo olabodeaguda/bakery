@@ -135,6 +135,11 @@ namespace BakeryPR.DAO
             return false;
         }
 
+        public string changeProdApprovalStatusQuery(String status, int productionId, string createdBy)
+        {
+            return $"update production set approval='{status}', approveBy='{createdBy}' where id='{productionId}';";
+        }
+
         public bool changeProdApprovalStatus(String status, int productionId, string createdBy)
         {
             using (SQLiteConnection conn = new SQLiteConnection(connectionString))
@@ -156,6 +161,8 @@ namespace BakeryPR.DAO
 
             return false;
         }
+
+        
 
         public void checkIngredentAvalabilityByProdId(int prodId)
         {

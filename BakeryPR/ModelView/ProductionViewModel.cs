@@ -366,10 +366,18 @@ namespace BakeryPR.ModelView
             {
                 return new DelegateCommand<object>((s) =>
                 {
-                    this.prodOverhead = (ProductionOverhead)s;
-                    EditProductionOverhead editPoverhead = new EditProductionOverhead();
-                    editPoverhead.DataContext = this;
-                    editPoverhead.ShowDialog();
+                    try
+                    {
+                        this.checkvalidation();
+                        this.prodOverhead = (ProductionOverhead)s;
+                        EditProductionOverhead editPoverhead = new EditProductionOverhead();
+                        editPoverhead.DataContext = this;
+                        editPoverhead.ShowDialog();
+                    }
+                    catch (Exception x)
+                    {
+                        MessageBox.Show(x.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
                 });
             }
         }
@@ -411,7 +419,7 @@ namespace BakeryPR.ModelView
                     try
                     {
                         this.production = (Production)s;
-                        this.checkvalidation();
+                        //this.checkvalidation();
                         this.prodOverhead.productionId = this.production.id;
                         AddProductionOverhead prodoverhead = new AddProductionOverhead();
                         prodoverhead.DataContext = this;
@@ -753,6 +761,7 @@ namespace BakeryPR.ModelView
                     {
                         try
                         {
+                            this.checkvalidation();
                             MessageBoxResult msg = MessageBox.Show("Are you sure?", "Information", MessageBoxButton.YesNo, MessageBoxImage.Question);
                             if (msg == MessageBoxResult.No)
                             {
@@ -804,7 +813,7 @@ namespace BakeryPR.ModelView
                     {
                         ProductionIngredentView pi = new ProductionIngredentView();
                         this.production = (Production)s;
-                        this.checkvalidation();
+                        //this.checkvalidation();
                         this.productionName = $"Production title {this.production.title}";
                         this.productionIngredents = new ObservableCollection<ProductionIngredent>(PIDao.byProductionId(this.production.id));
                         pi.DataContext = this;
@@ -965,13 +974,19 @@ namespace BakeryPR.ModelView
                             PIDao.checkIngredentAvalabilityByProdId(p.id);
 
                             var ru = this.appConfigDao.read();
-                            bool result = PIDao.changeProdApprovalStatus(ProductionStatus.APPROVED.ToString(),
+                            //bool result = PIDao.changeProdApprovalStatus(ProductionStatus.APPROVED.ToString(),
+                            //    p.id, ru.username);
+
+                            string query = PIDao.changeProdApprovalStatusQuery(ProductionStatus.APPROVED.ToString(),
                                 p.id, ru.username);
 
+                            List<ProductionIngredent> lstPI = PIDao.byProductionId(this.production.id);
+                            //update ingredient weight
+                            query =query + ingredentDao.updateIngredientQuantityQuery(this.production, lstPI);
+
+                            bool result = PIDao.execute(query);
                             if (result)
                             {
-                                // update product
-
                                 this.productions = new ObservableCollection<Production>(dao.all());
                                 MessageBox.Show("Approval was successfull", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
                             }
@@ -1120,10 +1135,18 @@ namespace BakeryPR.ModelView
             {
                 return new DelegateCommand<object>((s) =>
                 {
-                    EditProductionRecipe ePRecipe = new EditProductionRecipe();
-                    this.prodIngredient = (ProductionIngredent)s;
-                    ePRecipe.DataContext = this;
-                    ePRecipe.ShowDialog();
+                    try
+                    {
+                        this.checkvalidation();
+                        EditProductionRecipe ePRecipe = new EditProductionRecipe();
+                        this.prodIngredient = (ProductionIngredent)s;
+                        ePRecipe.DataContext = this;
+                        ePRecipe.ShowDialog();
+                    }
+                    catch (Exception x)
+                    {
+                        MessageBox.Show(x.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
                 });
             }
         }
@@ -1198,6 +1221,14 @@ namespace BakeryPR.ModelView
                                 return;
                             }
 
+                            // check product
+
+                            if (this.productionProducts.Count < 1)
+                            {
+                                MessageBox.Show("Product produced have not been added");
+                                return;
+                            }
+
                             List<ProductionProduct> lst = pProductDao.byproductionId(this.production.id);
                             double ds = pProductDao.sumTotalProductInKg(lst);
                             if (totalP > ds)
@@ -1242,9 +1273,9 @@ namespace BakeryPR.ModelView
                             this.production.approval = ProductionStatus.CLOSED.ToString();
                             query = query + dao.updateApprovalStatusQuery(this.production);
 
-                            List<ProductionIngredent> lstPI = PIDao.byProductionId(this.production.id);
-                            //update ingredient weight
-                            query = query + ingredentDao.updateIngredientQuantityQuery(this.production, lstPI);
+                            //List<ProductionIngredent> lstPI = PIDao.byProductionId(this.production.id);
+                            ////update ingredient weight
+                            //query = query + ingredentDao.updateIngredientQuantityQuery(this.production, lstPI);
 
                             bool result = pihDao.add(query);
                             if (result)

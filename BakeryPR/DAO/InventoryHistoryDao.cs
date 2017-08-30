@@ -1,4 +1,5 @@
 ﻿using BakeryPR.Models;
+using BakeryPR.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -56,7 +57,7 @@ namespace BakeryPR.DAO
                 cmd.CommandText = "insert into inventoryHistory(ingredentId,amount,dateCreated,addedBy,inventoryMode) " +
                     "values(@ingredentId,@amount,@dateCreated,@addedBy,@inventoryMode)";
                 cmd.Parameters.AddWithValue("@ingredentId", values.ingredentId);
-                cmd.Parameters.AddWithValue("@amount", values.amount);
+                cmd.Parameters.AddWithValue("@amount", values.newQuantity);
                 cmd.Parameters.AddWithValue("@dateCreated", DateTime.Now.ToString("dd-MM-yyyy"));
                 cmd.Parameters.AddWithValue("@addedBy", values.addedBy);
                 cmd.Parameters.AddWithValue("@inventoryMode", values.inventoryMode);
@@ -64,7 +65,10 @@ namespace BakeryPR.DAO
                 int count = cmd.ExecuteNonQuery();
                 if (count > 0)
                 {
-                    dao.updateIngredent(values.ingredentId, ingredentQuantity(values.ingredentId) );
+                    //ingredentQuantity(values.ingredentId)
+                    double unitCost = WeightAverageCostUtil.calculate(values.amount, values.oldUnitCost,
+                        values.newQuantity, values.newUnitCost);
+                    dao.updateIngredent(values.ingredentId, values.amount, unitCost);
                     return true;                   
                 }
             }

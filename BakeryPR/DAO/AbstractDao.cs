@@ -17,7 +17,7 @@ namespace BakeryPR.DAO
             this.connectionString = ConfigurationManager.ConnectionStrings["defaultConnection"].ConnectionString;
         }
 
-        protected bool execute(string query)
+        public bool execute(string query)
         {
             bool result = false;
 
