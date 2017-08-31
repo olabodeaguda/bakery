@@ -29,7 +29,7 @@
         <ComboBox HorizontalAlignment="Left" Grid.Row="1" Width="200" 
                       SelectedValue="{Binding productionProduct.productId,Mode=TwoWay}"  
                        Grid.Column="1" ItemsSource="{Binding products}" 
-                  DisplayMemberPath="descripton" SelectedValuePath="id" Margin="0.8,18.8,0,19.2"/>
+                  DisplayMemberPath="descripton" SelectedValuePath="id" Margin="0.8,18.8,0,19.2" />
         <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding productionProduct.quantity,Mode=TwoWay}" Margin="0.8,18.8,4.6,18.4"/>
 
         <StackPanel Grid.Column="1" Grid.Row="3" Orientation="Horizontal" Margin="3.8,8.6,-0.4,9.4">

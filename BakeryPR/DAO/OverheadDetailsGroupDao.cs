@@ -28,6 +28,9 @@ namespace BakeryPR.DAO
                 string query = "";
                 foreach (var tm in allOverheads)
                 {
+                    //calculate overheadCost
+                    //calculate ingredentCost
+
                     query = query + "insert into productionOverhead(overheadId,productionId,overheadCount)values( ";
                     query = query + "'" + tm.id + "',";
                     query = query + "'" + prodId + "',";

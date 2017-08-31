@@ -115,6 +115,31 @@ namespace BakeryPR.Models
             }
         }
 
+        private double _overheadCost;
+
+        public double overheadCost
+        {
+            get { return _overheadCost; }
+            set
+            {
+                _overheadCost = value;
+                this.NotifyPropertyChanged("overheadCost");
+            }
+        }
+
+        private double _ingredientCost;
+
+        public double ingredientCost
+        {
+            get { return _ingredientCost; }
+            set
+            {
+                _ingredientCost = value;
+                this.NotifyPropertyChanged("ingredientCost");
+            }
+        }
+
+
 
 
 

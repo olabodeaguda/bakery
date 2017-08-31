@@ -48,7 +48,8 @@
             <TextBox Grid.Row="1" Grid.Column="1" Height="30" Text="{Binding productionProduct.quantity,Mode=TwoWay}"></TextBox>
 
             <StackPanel Grid.Column="2" Orientation="Horizontal">
-                <Button Width="50"  HorizontalAlignment="Left" Command="{Binding addPProductCommand}" Margin="12">Add</Button>
+                <Button Width="50"  HorizontalAlignment="Left" Command="{Binding addPProductCommand}" 
+                        Margin="12" RenderTransformOrigin="0.457,0.554">Add</Button>
                 <fa:ImageAwesome Icon="Refresh" Spin="True" Visibility="{Binding isSpin,Mode=TwoWay}" Height="20" Width="30" />
             </StackPanel>
 
@@ -76,7 +77,11 @@
                         <GridViewColumn Width="200"  HeaderContainerStyle="{StaticResource ListViewStyle}" 
                                     Header="Product"  DisplayMemberBinding="{Binding productName}" />
                         <GridViewColumn Width="100" HeaderContainerStyle="{StaticResource ListViewStyle}" 
-                                    Header="Count" DisplayMemberBinding="{Binding quantity}" />
+                                    Header="Quantity" DisplayMemberBinding="{Binding quantity}" />
+                        <GridViewColumn Width="200" HeaderContainerStyle="{StaticResource ListViewStyle}" 
+                                    Header="Overhead Cost" DisplayMemberBinding="{Binding overheadCost}" />
+                        <GridViewColumn Width="200" HeaderContainerStyle="{StaticResource ListViewStyle}" 
+                                    Header="Ingredient Cost" DisplayMemberBinding="{Binding ingredientCost}" />
                         <GridViewColumn Width="200" HeaderContainerStyle="{StaticResource ListViewStyle}" 
                                     Header="Total Weight" DisplayMemberBinding="{Binding totalWeight}" />
                     </GridView>

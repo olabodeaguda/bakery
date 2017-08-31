@@ -113,16 +113,30 @@ namespace BakeryPR.DAO
                     quantity = int.Parse(x["quantity"].ToString()),
                     expectedQuantity = int.Parse(x["quantity"].ToString()),
                     productName = x["productName"].ToString(),
-                    weight = int.Parse(x["weight"].ToString())
+                    weight = double.Parse(x["weight"].ToString()),
+                    ingredientCost = double.Parse(x["ingredentCost"].ToString()),
+                    overheadCost = double.Parse(x["overheadCost"].ToString())
                 }).ToList();
             }
 
             return lst;
         }
 
-        public double sumTotalProductInKg(List<ProductionProduct> e)
+        public double sumTotalProductIngram(List<ProductionProduct> e)
         {
-            return e.Sum(x => x.measureTypeName.Equals("gram") ? (x.weight * x.quantity) / 100 : (x.weight * x.quantity));
+            return e.Sum(x => x.measureTypeName.ToLower().Equals("kg") ? ((x.weight * x.quantity) * 100) : (x.weight * x.quantity));
         }
+
+        public string updateString(ProductionProduct pp)
+        {
+            return $"UPDATE productionProduct set overheadCost='{pp.overheadCost}',ingredentCost='{pp.ingredientCost}' where id='{pp.id}' ;";
+        }
+
+        public string insertString(ProductionProduct pp)
+        {
+            return $"insert into productionProduct(productId,productionId,quantity,overheadCost,ingredentCost) " +
+                $"values('{pp.productId}','{pp.productionId}','{pp.quantity}','{pp.overheadCost}','{pp.ingredientCost}');";
+        }
+
     }
 }

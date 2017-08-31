@@ -86,6 +86,7 @@ namespace BakeryPR.ModelView
                         UpdateInventory inven = new UpdateInventory();
 
                         Ingredent sd = (Ingredent)s;
+
                         this.inventoryHistory = new InventoryHistory()
                         {
                             ingredentId = sd.id,
@@ -95,7 +96,7 @@ namespace BakeryPR.ModelView
                         };
 
                         inven.DataContext = this;
-                        inven.ShowDialog();                        
+                        inven.ShowDialog();
                     }
                 });
             }
@@ -164,6 +165,11 @@ namespace BakeryPR.ModelView
                     try
                     {
                         Ingredent ig = this.ingredent;
+                        if (ig.mTypeId == 1)
+                        {
+                            ig.newQuantity = ig.newQuantity * 100;
+                            ig.mTypeId = 2;
+                        }
 
                         bool result = dao.add(ig);
                         if (result)

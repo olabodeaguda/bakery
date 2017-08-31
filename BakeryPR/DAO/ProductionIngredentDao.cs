@@ -193,6 +193,12 @@ namespace BakeryPR.DAO
             return e.Sum(x => x.measureType.ToLower() == "gram" ? x.amount / 100 : x.amount);
         }
 
+        public double sumtotalIngredientInGram(int pId)
+        {
+            var e = byProductionId(pId);
+            return e.Sum(x => x.measureType.ToLower() == "kg" ? (x.amount * 100) : x.amount);
+        }
+
         public bool Update(ProductionIngredent pi)
         {
             using (SQLiteConnection conn = new SQLiteConnection(connectionString))
