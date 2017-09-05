@@ -1,7 +1,10 @@
 ﻿using BakeryPR.Models;
+using NPOI.HSSF.UserModel;
+using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
 using System.IO;
 using System.Linq;
+using System.Windows;
 
 namespace BakeryPR.Utilities
 {
@@ -17,6 +20,12 @@ namespace BakeryPR.Utilities
             set { _subject = value; }
         }
 
+        private void AddBold(IFont font,int size)
+        {
+            font.Boldweight = (short)FontBoldWeight.Bold;
+            font.FontHeightInPoints = (short)size;
+        }
+
         public void Export(int prod_id, string filepart, ExcelModel excelmodel)
         {
             wb = new XSSFWorkbook();
@@ -26,12 +35,70 @@ namespace BakeryPR.Utilities
 
             sh.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(0, 0, 1, 9));
             var header = sh.CreateRow(0);
-            header.CreateCell(1).SetCellValue("DAILY BAKERY ACTIVITY REGISTER");
-            
-            
-            //header.RowStyle.SetFont(new XSSFFont(new CT_Font().)
+            ICell cell = header.CreateCell(1);
+            cell.SetCellValue("DAILY BAKERY ACTIVITY REGISTER");
 
-            int row = 5;
+            #region header Style
+            ICellStyle headerStyle = wb.CreateCellStyle();
+            headerStyle.Alignment = NPOI.SS.UserModel.HorizontalAlignment.Center;
+            IFont font = wb.CreateFont();
+            AddBold(font, 15);
+            headerStyle.SetFont(font);
+            cell.CellStyle = headerStyle; 
+            #endregion
+
+            sh.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(1, 1, 1, 9));
+            var productionDateRow = sh.CreateRow(1);
+
+            #region production Date Style
+            ICell productionDateCell = productionDateRow.CreateCell(1);
+            ICellStyle prodDateStyle = wb.CreateCellStyle();
+            prodDateStyle.Alignment = NPOI.SS.UserModel.HorizontalAlignment.Center;
+            IFont fontprodStyle = wb.CreateFont();
+            AddBold(fontprodStyle, 13);
+            prodDateStyle.SetFont(fontprodStyle);
+            productionDateCell.CellStyle = prodDateStyle;
+            productionDateCell.SetCellValue($"Production Date: {excelmodel.productionDate}");
+            #endregion
+
+            sh.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(2, 2, 1, 4));
+            sh.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(2, 2, 6, 9));
+
+            sh.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(3, 3, 1, 4));
+            sh.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(3, 3, 6, 9));
+
+            var tableTitle = sh.CreateRow(2);
+            ICellStyle tableTitleStyle = wb.CreateCellStyle();
+            tableTitleStyle.Alignment = NPOI.SS.UserModel.HorizontalAlignment.Center;
+
+            IFont fontcell1 = wb.CreateFont();
+            AddBold(fontcell1, 12);
+            tableTitleStyle.SetFont(fontcell1);
+            
+            ICell titleTitleCell1 = tableTitle.CreateCell(1);
+            titleTitleCell1.CellStyle = tableTitleStyle;
+            titleTitleCell1.SetCellValue("PRODUCTION COST");
+
+            ICell titleTitleCell2 = tableTitle.CreateCell(6);
+            titleTitleCell2.CellStyle = tableTitleStyle;
+            titleTitleCell2.SetCellValue("SALES/ REVENUE");
+
+            var tableTitle2 = sh.CreateRow(3);
+            ICellStyle tableTitleStyle2 = wb.CreateCellStyle();
+            tableTitleStyle2.Alignment = NPOI.SS.UserModel.HorizontalAlignment.Center;
+            IFont fontcell2 = wb.CreateFont();
+            AddBold(fontcell2, 11);
+            tableTitleStyle2.SetFont(fontcell2);
+
+            ICell titleTitleCell3 = tableTitle2.CreateCell(1);
+            titleTitleCell3.CellStyle = tableTitleStyle2;
+            titleTitleCell3.SetCellValue("Section A: Material Cost");
+
+            ICell titleTitleCell4 = tableTitle2.CreateCell(6);
+            titleTitleCell4.CellStyle = tableTitleStyle2;
+            titleTitleCell4.SetCellValue("Section D: Sales Value of Production Output");
+
+            int row = 4;
             var tblHeader = sh.CreateRow(row++);
             tblHeader.CreateCell(1).SetCellValue("Ingredients");
             tblHeader.CreateCell(2).SetCellValue("Quantity ");
@@ -42,6 +109,12 @@ namespace BakeryPR.Utilities
             tblHeader.CreateCell(7).SetCellValue("Qty Produced");
             tblHeader.CreateCell(8).SetCellValue("Unit Price");
             tblHeader.CreateCell(9).SetCellValue("Total");
+
+            ICellStyle rowStyle = wb.CreateCellStyle();
+            IFont fontcell5 = wb.CreateFont();
+            AddBold(fontcell5, 10);
+            rowStyle.SetFont(fontcell5);
+            tblHeader.RowStyle = rowStyle;
 
             int totalRow = excelmodel.SalesCost.Count > excelmodel.ProductionCost.Count ? excelmodel.SalesCost.Count : excelmodel.ProductionCost.Count;
 
@@ -96,6 +169,7 @@ namespace BakeryPR.Utilities
             using (var fs = new FileStream(filepart, FileMode.Create, FileAccess.Write))
             {
                 wb.Write(fs);
+                MessageBox.Show("Completed");
             }
 
         }

@@ -24,5 +24,6 @@ namespace BakeryPR.Views
         {
             InitializeComponent();
         }
+
     }
 }

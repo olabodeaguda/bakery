@@ -79,19 +79,32 @@ namespace BakeryPR.DAO
                 cmd.Parameters.AddWithValue("@pId", productionId);
                 this.SQLiteAdaptor(dt, cmd);
 
-                lst = dt.Tables[0].Rows.Cast<DataRow>().Select(x => new ProductionIngredent()
+                foreach (var x in dt.Tables[0].Rows.Cast<DataRow>())
                 {
-                    id = int.Parse(x["id"].ToString()),
-                    amount = double.Parse(x["amount"].ToString()),
-                    createdBy = x["createdBy"].ToString(),
-                    ingredentId = int.Parse(x["ingredentId"].ToString()),
-                    ingredentName = x["ingredentName"].ToString(),
-                    lastModifiiedBy = x.IsNull("lastModifiedBy") ? string.Empty : x["lastModifiiedBy"].ToString(),
-                    dateCreated = DateTime.Parse(x["dateCreated"].ToString(), new CultureInfo("en-US", true)),
-                    productionId = int.Parse(x["productionId"].ToString()),
-                    measureType = x["measureTypeName"].ToString(),
-                    unitCost = double.Parse(x["unitCost"].ToString())
-                }).ToList();
+                    ProductionIngredent pi = new ProductionIngredent();
+                    pi.id = int.Parse(x["id"].ToString());
+                    pi.measureType = x["measureTypeName"].ToString();
+                    if (pi.measureType.ToLower() == "gram")
+                    {
+                        pi.amount = Math.Round(double.Parse(x["amount"].ToString()) /1000,2);
+                        pi.measureType = "kg";
+                    }
+                    else
+                    {
+                        pi.amount = Math.Round(double.Parse(x["amount"].ToString()), 2);
+                    }
+
+                    pi.createdBy = x["createdBy"].ToString();
+                    pi.ingredentId = int.Parse(x["ingredentId"].ToString());
+                    pi.ingredentName = x["ingredentName"].ToString();
+                    pi.lastModifiiedBy = x.IsNull("lastModifiedBy") ? string.Empty : x["lastModifiiedBy"].ToString();
+                    pi.dateCreated = DateTime.Parse(x["dateCreated"].ToString(), new CultureInfo("en-US", true));
+                    pi.productionId = int.Parse(x["productionId"].ToString());
+                    
+                    pi.unitCost = double.Parse(x["unitCost"].ToString());
+                    lst.Add(pi);
+                }
+
             }
 
             return lst;

@@ -9,13 +9,12 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40"></RowDefinition>
-            <RowDefinition Height="120"></RowDefinition>
+            <RowDefinition Height="91.2"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
-        <TextBlock Style="{StaticResource headings}"  Grid.ColumnSpan="2">Add Recipe</TextBlock>
-        <StackPanel Grid.Row="1">
-            <TextBlock Padding="6 0 0 0">Quantity(KG)</TextBlock>
-            <TextBox Padding="0 0 0 6" HorizontalAlignment="Left" Width="200" Height="21" Text="{Binding recipe.quantity}" Margin="5,5,0,5"></TextBox>
+        <TextBlock Style="{StaticResource headings}" Margin="15,0,14.6,0">Add Recipe</TextBlock>
+        <StackPanel Grid.Row="1" Margin="0,0,-0.4,8.2">
+            <TextBlock Padding="6 0 0 0" FontSize="17" FontWeight="Bold">Configure Recipe for 50kg Flour</TextBlock>
             <TextBlock Padding="6 0 0 0">Title</TextBlock>
             <StackPanel Orientation="Horizontal" Height="30">
                 <TextBox HorizontalAlignment="Left" Width="200" Text="{Binding recipe.title}"></TextBox>
@@ -23,16 +22,21 @@
             </StackPanel>
         </StackPanel>
 
-        <Grid Grid.Row="2">
+        <Grid Grid.Row="2" Margin="0,0.8,-0.4,0.4">
             <Grid.RowDefinitions>
                 <RowDefinition Height="30"></RowDefinition>
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
-            <Button Command="{Binding loadAddIngredntCommmand}" Width="100" Height="25" HorizontalAlignment="Left" IsEnabled="{Binding isAddIngredent}">Add Ingredent</Button>
+            <StackPanel Orientation="Horizontal">
+                <Button Command="{Binding loadAddIngredntCommmand}" Width="100" Height="25" HorizontalAlignment="Left" 
+                        IsEnabled="{Binding isAddIngredent}">Add Ingredient</Button>
+                <TextBlock HorizontalAlignment="Right" FontSize="20" FontWeight="Bold" Text="{Binding totalDoughWeight,Mode=TwoWay}"></TextBlock>
+            </StackPanel>
 
-            <ListView x:Name="IngredentLst"  Width="{Binding winWidth}" 
+            <ListView x:Name="IngredentLst" 
                   ItemsSource="{Binding riIngredents}" 
-                       ScrollViewer.CanContentScroll="True" IsSynchronizedWithCurrentItem="True" HorizontalAlignment="Left" HorizontalContentAlignment="Left" 
+                       ScrollViewer.CanContentScroll="True" 
+                      IsSynchronizedWithCurrentItem="True" HorizontalAlignment="Left" HorizontalContentAlignment="Left" 
                   Grid.Row="1">
                 <ListView.View>
                     <GridView>
@@ -47,13 +51,13 @@
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
                         <GridViewColumn Width="200"  HeaderContainerStyle="{StaticResource ListViewStyle}" 
-                                    Header="Ingredent"  DisplayMemberBinding="{Binding ingredentName}" />
+                                    Header="Ingredient"  DisplayMemberBinding="{Binding ingredentName}" />
                         <GridViewColumn Width="100" HeaderContainerStyle="{StaticResource ListViewStyle}" 
                                     Header="Quantity" DisplayMemberBinding="{Binding quantityView}" />
                         <GridViewColumn Width="200" HeaderContainerStyle="{StaticResource ListViewStyle}" 
-                                    Header="Cost/Unit" DisplayMemberBinding="{Binding unitCost}" />
+                                    Header="Cost/Unit" DisplayMemberBinding="{Binding unitCost, StringFormat='# {0:0,0.00}'}" />
                         <GridViewColumn Width="200" HeaderContainerStyle="{StaticResource ListViewStyle}" 
-                                    Header="Total Cost" DisplayMemberBinding="{Binding totalCost}" />
+                                    Header="Total Cost" DisplayMemberBinding="{Binding totalCost, StringFormat='# {0:0,0.00}'}" />
                     </GridView>
                 </ListView.View>
             </ListView>

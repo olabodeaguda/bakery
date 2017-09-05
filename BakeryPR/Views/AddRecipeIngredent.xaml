@@ -19,11 +19,12 @@
             <ColumnDefinition Width="150"></ColumnDefinition>
             <ColumnDefinition Width="250"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <TextBlock Style="{StaticResource headings}"  Grid.ColumnSpan="2">Add Ingredent</TextBlock>
-        <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center">Ingredent</TextBlock>
+        <TextBlock Style="{StaticResource headings}"  Grid.ColumnSpan="2">Add Ingredient</TextBlock>
+        <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center">Ingredient</TextBlock>
         <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center">Quantity</TextBlock>
 
-        <ComboBox SelectedValue="{Binding recipeIngredent.ingredentId,Mode=TwoWay}"  Grid.Row="1" Grid.Column="1" ItemsSource="{Binding ingredents}" DisplayMemberPath="ingredentName" SelectedValuePath="id"></ComboBox>
+        <ComboBox SelectedValue="{Binding recipeIngredent.ingredentId,Mode=TwoWay}"  Grid.Row="1" Grid.Column="1"
+                  ItemsSource="{Binding ingredents}" DisplayMemberPath="ingredentNameDisplay" SelectedValuePath="id"></ComboBox>
         <TextBox  Grid.Row="2" Grid.Column="1" Text="{Binding recipeIngredent.quantity,Mode=TwoWay}"></TextBox>
 
         <Button Style="{StaticResource btnSubmitStyle}" Grid.Column="1" Grid.Row="4" Command="{Binding addIngredntCommmand}" >Add</Button>

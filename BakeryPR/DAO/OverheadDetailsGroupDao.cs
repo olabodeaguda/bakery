@@ -41,7 +41,7 @@ namespace BakeryPR.DAO
                 return query;
             }
 
-            return null;
+            return string.Empty;
         }
 
         public string ProductionInsert(int prodId)

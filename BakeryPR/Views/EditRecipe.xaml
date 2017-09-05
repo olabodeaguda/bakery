@@ -5,14 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BakeryPR.Views"
         mc:Ignorable="d"
-        Title="EditRecipe" Height="400" Width="700" Style="{StaticResource {x:Type Window}}" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+        Title="EditRecipe" Height="400" Width="800" Style="{StaticResource {x:Type Window}}" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40"></RowDefinition>
-            <RowDefinition Height="120"></RowDefinition>
-            <RowDefinition></RowDefinition>
+            <RowDefinition Height="97"></RowDefinition>
+            <RowDefinition Height="250"></RowDefinition>
         </Grid.RowDefinitions>
-        <Grid>
+        <Grid Margin="0,0,-0.4,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
@@ -20,10 +20,9 @@
             <TextBlock Style="{StaticResource headings}" >Update Recipe</TextBlock>
             <TextBlock Style="{StaticResource headings}" Text="{Binding totalProdIngredent,Mode=TwoWay}" Grid.Column="1"></TextBlock>
         </Grid>
-        
-        <StackPanel Grid.Row="1">
-            <TextBlock Padding="6 0 0 0">Quantity(KG)</TextBlock>
-            <TextBox Padding="0 0 0 6" HorizontalAlignment="Left" Width="200" Height="21" Text="{Binding recipe.quantity}" Margin="5,5,0,5"></TextBox>
+
+        <StackPanel Grid.Row="1" Margin="0,0,-0.4,217.4" Grid.RowSpan="2">
+            <TextBlock Padding="6 0 0 0" FontSize="17" FontWeight="Bold">Configure Recipe for 50kg Flour</TextBlock>
             <TextBlock Padding="6 0 0 0">Title</TextBlock>
             <StackPanel Orientation="Horizontal" Height="30">
                 <TextBox HorizontalAlignment="Left" Width="200" Text="{Binding recipe.title}"></TextBox>
@@ -31,17 +30,20 @@
             </StackPanel>
         </StackPanel>
 
-        <Grid Grid.Row="2">
+        <Grid Grid.Row="2" Margin="0,1.2,-0.4,0.4">
             <Grid.RowDefinitions>
                 <RowDefinition Height="30"></RowDefinition>
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
-            <Button Command="{Binding loadAddIngredntCommmand}" Width="100" Height="25" HorizontalAlignment="Left" IsEnabled="{Binding isAddIngredent}">Add Ingredent</Button>
+            <StackPanel Orientation="Horizontal">
+                <Button Command="{Binding loadAddIngredntCommmand}" Width="100" Height="25" HorizontalAlignment="Left"
+                        IsEnabled="{Binding isAddIngredent}">Add Ingredient</Button>
+                <TextBlock HorizontalAlignment="Right" FontSize="20" FontWeight="Bold" Text="{Binding totalDoughWeight,Mode=TwoWay}"></TextBlock>
+            </StackPanel>
 
-            <ListView x:Name="IngredentLst"  Width="{Binding winWidth}" 
+            <ListView x:Name="IngredentLst" 
                   ItemsSource="{Binding riIngredents}" IsSynchronizedWithCurrentItem="True" 
-                      HorizontalAlignment="Left" HorizontalContentAlignment="Left" 
-                  Grid.Row="1" ScrollViewer.CanContentScroll="True" >
+                  Grid.Row="1" ScrollViewer.CanContentScroll="True"  Height="180" >
                 <ListView.View>
                     <GridView>
                         <GridViewColumn  x:Name="gridV">
@@ -54,19 +56,17 @@
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
-                        <GridViewColumn Width="200"  HeaderContainerStyle="{StaticResource ListViewStyle}" 
-                                    Header="Ingredent"  DisplayMemberBinding="{Binding ingredentName}" />
+                        <GridViewColumn  Width="200"  HeaderContainerStyle="{StaticResource ListViewStyle}" 
+                                    Header="Ingredient"  DisplayMemberBinding="{Binding ingredentName}" />
                         <GridViewColumn Width="100" HeaderContainerStyle="{StaticResource ListViewStyle}" 
                                     Header="Quantity" DisplayMemberBinding="{Binding quantityView}" />
+                        <GridViewColumn Width="120" HeaderContainerStyle="{StaticResource ListViewStyle}" 
+                                    Header="Cost/Unit (Naira)" DisplayMemberBinding="{Binding unitCost, StringFormat='# {0:0,0.00}'}" />
                         <GridViewColumn Width="200" HeaderContainerStyle="{StaticResource ListViewStyle}" 
-                                    Header="Cost/Unit" DisplayMemberBinding="{Binding unitCost}" />
-                        <GridViewColumn Width="200" HeaderContainerStyle="{StaticResource ListViewStyle}" 
-                                    Header="Total Cost" DisplayMemberBinding="{Binding totalCost}" />
+                                    Header="Total Cost (Naira)" DisplayMemberBinding="{Binding totalCost, StringFormat='# {0:0,0.00}'}" />
                     </GridView>
                 </ListView.View>
             </ListView>
-
-            <!--<Button Width="50" Height="25"  HorizontalAlignment="Left" Grid.Row="2">Submit</Button>-->
 
         </Grid>
     </Grid>

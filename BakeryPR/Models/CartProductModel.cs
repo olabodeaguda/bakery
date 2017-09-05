@@ -37,15 +37,17 @@ namespace BakeryPR.Models
             {
                 return new DelegateCommand<object>((s) =>
                 {
-                    Product p = pDao.byId(this.productId);
-                    if (this.isRetail)
-                    {
-                        this.price = this.quantity * p.retailPrice;
-                    }
-                    else
-                    {
-                        this.price = this.quantity * p.wholeSales;
-                    }
+                   // Product p = pDao.byId(this.productId);
+                    //if (this.isRetail)
+                    //{
+                    //    //this.price = this.quantity * p.retailPrice;
+                    //    this.price = this.quantity * this.manualPrice;
+                    //}
+                    //else
+                    //{
+                    //    this.price = this.quantity * p.wholeSales;
+                    //}
+                    this.price = this.quantity * this.manualPrice;
                 });
             }
         }
@@ -71,6 +73,18 @@ namespace BakeryPR.Models
             {
                 _price = value;
                 this.NotifyPropertyChanged("price");
+            }
+        }
+
+        private double _manualPrice;
+
+        public double manualPrice
+        {
+            get { return _manualPrice; }
+            set
+            {
+                _manualPrice = value;
+                this.NotifyPropertyChanged("manualPrice");
             }
         }
 

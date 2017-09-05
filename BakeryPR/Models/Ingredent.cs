@@ -94,7 +94,14 @@ namespace BakeryPR.Models
         {
             get
             {
-                return $"{ingredentName} (in {measureTypeName})";
+                if (ingredentName.ToLower() == "none")
+                {
+                    return ingredentName;
+                }
+                else
+                {
+                    return $"{ingredentName} (in {measureTypeName})";
+                }
             }
         }
 

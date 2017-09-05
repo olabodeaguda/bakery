@@ -22,7 +22,7 @@
         <TextBlock Style="{StaticResource headings}"  Grid.ColumnSpan="2">Add Overhead</TextBlock>
         <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Height="16" Margin="0,11">Overhead Name</TextBlock>
         <!--<TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center">Quantity(KG)</TextBlock>-->
-        <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" TextWrapping="Wrap" Height="16" Margin="0,18,0,9">Price for a 50Kg</TextBlock>
+        <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" TextWrapping="Wrap" Height="16" Margin="0,18,0,9">Cost for a 50Kg Flour</TextBlock>
         <TextBlock Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Height="16" Margin="0,25,0,1.721">Overhead Type</TextBlock>
 
         <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding overhead.name,Mode=TwoWay}"></TextBox>

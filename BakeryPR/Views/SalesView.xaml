@@ -128,7 +128,7 @@
                                         <GridViewColumn HeaderContainerStyle="{StaticResource ListViewStyle}" 
                                     Header="Product"  DisplayMemberBinding="{Binding productName}"></GridViewColumn>
                                         <GridViewColumn HeaderContainerStyle="{StaticResource ListViewStyle}" 
-                                    Header="Quantity" Width="200">
+                                    Header="Quantity" Width="100">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
                                                     <TextBox Text="{Binding Path=quantity,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
@@ -143,8 +143,23 @@
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
+                                        <GridViewColumn HeaderContainerStyle="{StaticResource ListViewStyle}" Header="Price" Width="100">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBox Text="{Binding Path=manualPrice,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+                                                        <i:Interaction.Triggers>
+                                                            <i:EventTrigger EventName="TextChanged">
+                                                                <i:InvokeCommandAction Command="{Binding quantityChangedCommand}" CommandParameter="{Binding}" >
+
+                                                                </i:InvokeCommandAction>
+                                                            </i:EventTrigger>
+                                                        </i:Interaction.Triggers>
+                                                    </TextBox>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
                                         <GridViewColumn HeaderContainerStyle="{StaticResource ListViewStyle}" 
-                                    Header="Price"  DisplayMemberBinding="{Binding price}" Width="200"></GridViewColumn>
+                                    Header="Total Price"  DisplayMemberBinding="{Binding price}"></GridViewColumn>
                                     </GridView>
                                 </ListView.View>
                                 <ListView.Style>

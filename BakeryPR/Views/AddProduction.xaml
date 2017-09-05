@@ -8,7 +8,7 @@
         Title="Add Production"  Height="380" Width="450" Style="{StaticResource {x:Type Window}}" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Grid Margin="10">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="100"></ColumnDefinition>
+            <ColumnDefinition Width="139.2"></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -20,19 +20,19 @@
             <!--<RowDefinition Height="50"></RowDefinition>-->
         </Grid.RowDefinitions>
 
-        <TextBlock Style="{StaticResource headings}"  Grid.ColumnSpan="2"> Add Production</TextBlock>
+        <TextBlock Style="{StaticResource headings}"  Grid.ColumnSpan="2" Margin="15,0,15.2,50.2" Grid.RowSpan="2"> Add Production</TextBlock>
 
-        <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center">Production Title</TextBlock>
-        <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center">Select Recipe</TextBlock>
-        <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center">Quantity(in gram)</TextBlock>
+        <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Height="16" Margin="0,17.2,0.2,17.2">Production Title</TextBlock>
+        <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Height="16" Margin="0,16.8,0.2,17.6">Select Recipe</TextBlock>
+        <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Height="16" Margin="0,17.4,0.2,17">Quantity of Flour (in Kg)</TextBlock>
         <!--<TextBlock Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" TextWrapping="Wrap">Select Overhead Type</TextBlock>-->
 
-        <TextBox Grid.Row="1" Height="30" Grid.Column="1" Text="{Binding production.title,Mode=TwoWay}"></TextBox>
+        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding production.title,Mode=TwoWay}" Margin="10.8,10.2,4.2,10.2"/>
         <ComboBox SelectedValue="{Binding production.recipeId,Mode=TwoWay}"  Grid.Row="2" Grid.Column="1"
                   ItemsSource="{Binding recipes}" 
-                  DisplayMemberPath="title" SelectedValuePath="id">
+                  DisplayMemberPath="title" SelectedValuePath="id" Margin="10.8,4.8,4.2,4.6">
         </ComboBox>
-        <TextBox Grid.Row="3" Height="30" Grid.Column="1" Text="{Binding production.quantity,Mode=TwoWay}"></TextBox>
+        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding production.quantity,Mode=TwoWay}" Margin="10.8,10.4,4.2,10"/>
 
 
         <!--<ComboBox SelectedValue="{Binding production.overheadGrpId,Mode=TwoWay}"  Grid.Row="4" Grid.Column="1"
@@ -41,7 +41,7 @@
         </ComboBox>-->
 
         <Button Style="{StaticResource btnSubmitStyle}" HorizontalAlignment="Right" 
-                Grid.Column="1" Grid.Row="5" Command="{Binding addCommand}" >Add</Button>
+                Grid.Column="1" Grid.Row="4" Command="{Binding addCommand}" Height="Auto" Margin="0,10,-0.8,10.4" >Add</Button>
 
 
     </Grid>

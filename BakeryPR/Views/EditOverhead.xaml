@@ -19,12 +19,12 @@
             <ColumnDefinition Width="250"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <TextBlock Style="{StaticResource headings}"  Grid.ColumnSpan="2">Edit Overhead</TextBlock>
-        <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center">Overhead Name</TextBlock>
+        <TextBlock  Grid.Row="1" Grid.Column="0" VerticalAlignment="Center">Overhead Name</TextBlock>
         <!--<TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center">Quantity(Kg)</TextBlock>-->
         <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center">Price for 50Kg</TextBlock>
         <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center">Overhead Type</TextBlock>
 
-        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding overhead.name,Mode=TwoWay}"></TextBox>
+        <TextBox IsEnabled="False" Grid.Row="1" Grid.Column="1" Text="{Binding overhead.name,Mode=TwoWay}"></TextBox>
         <!--<TextBox Grid.Row="2" Grid.Column="1" Text="{Binding overhead.mTypeId,Mode=TwoWay}"></TextBox>-->
         <TextBox  Grid.Row="2" Grid.Column="1" Text="{Binding overhead.unitCost,Mode=TwoWay}"></TextBox>
         <ComboBox SelectedValue="{Binding overhead.overheadType,Mode=TwoWay}"  Grid.Row="3" Grid.Column="1" ItemsSource="{Binding OverheadTypes}" 

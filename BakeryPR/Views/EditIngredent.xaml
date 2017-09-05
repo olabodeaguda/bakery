@@ -28,7 +28,7 @@
         <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center">Measurement Unit</TextBlock>
         <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center">A Unit Cost</TextBlock>
 
-        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding selectIngredent.ingredentName,Mode=TwoWay}"></TextBox>
+        <TextBox IsEnabled="False" Grid.Row="1" Grid.Column="1" Text="{Binding selectIngredent.ingredentName,Mode=TwoWay}"></TextBox>
 
         <ComboBox SelectedValue="{Binding selectIngredent.mTypeId, Mode=TwoWay, NotifyOnSourceUpdated=True}" 
                   Grid.Row="2" Grid.Column="1" 

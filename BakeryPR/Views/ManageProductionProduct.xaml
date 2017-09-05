@@ -24,7 +24,7 @@
             <TextBlock Grid.Column="1" Text="{Binding totalProductWeight,Mode=TwoWay}"></TextBlock>
         </Grid>
         <ListView Grid.Row="2" x:Name="productLst" 
-                  ItemsSource="{Binding mpp,Mode=TwoWay}" IsSynchronizedWithCurrentItem="True" >
+                  ItemsSource="{Binding mpp,Mode=TwoWay}" IsSynchronizedWithCurrentItem="True"  >
             <ListView.View>
                 <GridView>
                     <GridViewColumn  x:Name="gridV">

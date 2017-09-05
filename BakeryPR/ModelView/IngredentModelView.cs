@@ -128,9 +128,14 @@ namespace BakeryPR.ModelView
                     {
                         Ingredent ig = this.ingredent;
 
-                        if (this.inventoryHistory.newQuantity < 1)
+                        double val = 0;
+                        if (!double.TryParse(this.inventoryHistory.newQuantity.ToString(),out val))
                         {
-                            throw new Exception("Quantity can't be zero");
+                            throw new Exception("Invalid input for quantity");
+                        }
+                        else if(!double.TryParse(this.inventoryHistory.newUnitCost.ToString(), out val))
+                        {
+                            throw new Exception("Invalid input for Unit Cost");
                         }
 
                         this.inventoryHistory.inventoryMode = InventoryMode.ADD.ToString();
@@ -165,10 +170,17 @@ namespace BakeryPR.ModelView
                     try
                     {
                         Ingredent ig = this.ingredent;
-                        if (ig.mTypeId == 1)
+
+                        double val = 0;
+                        if (!double.TryParse(ig.newQuantity.ToString(), out val))
                         {
-                            ig.newQuantity = ig.newQuantity * 100;
-                            ig.mTypeId = 2;
+                            throw new Exception("Invalid input for quantity");
+                        }
+
+                        if (ig.measureTypeName.ToLower() == "gram")
+                        {
+                            ig.newQuantity = ig.newQuantity / 1000;
+                            ig.mTypeId = 1;
                         }
 
                         bool result = dao.add(ig);

@@ -17,19 +17,43 @@ namespace BakeryPR.DAO
             using (SQLiteConnection conn = new SQLiteConnection(this.connectionString))
             {
                 conn.Open();
+                string query = "select recipeIngredent.*,ingredent.unitCost,ingredent.ingredentName,measurementType.measureTypeName from recipeIngredent inner join ingredent on ingredent.id=recipeIngredent.ingredentId ";
+                query = query + " inner join measurementType on measurementType.id = ingredent.mTypeId";
+
                 DataSet dt = new DataSet();
                 SQLiteCommand cmd = new SQLiteCommand(conn);
-                cmd.CommandText = "select * from recipeIngredent";
+                cmd.CommandText = query;// "select * from recipeIngredent";
                 cmd.CommandType = CommandType.Text;
                 this.SQLiteAdaptor(dt, cmd);
 
-                lst = dt.Tables[0].Rows.Cast<DataRow>().Select(x => new RecipeIngredents()
+                //lst = dt.Tables[0].Rows.Cast<DataRow>().Select(x => new RecipeIngredents()
+                //{
+                //    id = int.Parse(x["id"].ToString()),
+                //    ingredentId = int.Parse(x["ingredentId"].ToString()),
+                //    quantity = x.Field<double>("quantity"),
+                //    recipeId = x.Field<int>("recipeId")
+                //}).ToList();
+
+
+                foreach (var x in dt.Tables[0].Rows.Cast<DataRow>())
                 {
-                    id = int.Parse(x["id"].ToString()),
-                    ingredentId = int.Parse(x["ingredentId"].ToString()),
-                    quantity = x.Field<double>("quantity"),
-                    recipeId = x.Field<int>("recipeId")
-                }).ToList();
+                    RecipeIngredents ri = new RecipeIngredents();
+                    ri.id = int.Parse(x["id"].ToString());
+                    ri.ingredentId = int.Parse(x["ingredentId"].ToString());
+                    ri.recipeId = int.Parse(x["recipeId"].ToString());
+                    ri.mType = x["measureTypeName"].ToString();
+                    ri.quantity = double.Parse(x["quantity"].ToString());
+
+                    if (ri.mType.ToLower() == "gram")
+                    {
+                        ri.quantity = Math.Round(ri.quantity / 1000, 2);
+                        ri.mType = "kg";
+                    }
+
+                    ri.unitCost = double.Parse(x["unitCost"].ToString());
+                    ri.ingredentName = x["ingredentName"].ToString();
+                    lst.Add(ri);
+                }
             }
 
             return lst;
@@ -94,16 +118,25 @@ namespace BakeryPR.DAO
                 cmd.CommandType = CommandType.Text;
                 this.SQLiteAdaptor(dt, cmd);
 
-                lst = dt.Tables[0].Rows.Cast<DataRow>().Select(x => new RecipeIngredents()
+                foreach (var x in dt.Tables[0].Rows.Cast<DataRow>())
                 {
-                    id = int.Parse(x["id"].ToString()),
-                    ingredentId = int.Parse(x["ingredentId"].ToString()),
-                    quantity = double.Parse(x["quantity"].ToString()),
-                    recipeId = int.Parse(x["recipeId"].ToString()),
-                    mType = x["measureTypeName"].ToString(),
-                    unitCost = double.Parse(x["unitCost"].ToString()),
-                    ingredentName = x["ingredentName"].ToString()
-                }).ToList();
+                    RecipeIngredents ri = new RecipeIngredents();
+                    ri.id = int.Parse(x["id"].ToString());
+                    ri.ingredentId = int.Parse(x["ingredentId"].ToString());
+                    ri.recipeId = int.Parse(x["recipeId"].ToString());
+                    ri.mType = x["measureTypeName"].ToString();
+                    ri.quantity = double.Parse(x["quantity"].ToString());
+
+                    if (ri.mType.ToLower() == "gram")
+                    {
+                        ri.quantity = Math.Round(ri.quantity / 1000, 2);
+                        ri.mType = "kg";
+                    }
+
+                    ri.unitCost = double.Parse(x["unitCost"].ToString());
+                    ri.ingredentName = x["ingredentName"].ToString();
+                    lst.Add(ri);
+                }
             }
 
             return lst;
@@ -111,27 +144,54 @@ namespace BakeryPR.DAO
 
         public RecipeIngredents byRecipeIdIngredent(int recipeId, int ingredentId)
         {
-           using (SQLiteConnection conn = new SQLiteConnection(this.connectionString))
+            using (SQLiteConnection conn = new SQLiteConnection(this.connectionString))
             {
                 conn.Open();
                 DataSet dt = new DataSet();
                 SQLiteCommand cmd = new SQLiteCommand(conn);
-                string query = "select * from recipeIngredent where recipeId=@recipeId and ingredentId = @ingredentId ";
+                string query = "select recipeIngredent.*,ingredent.unitCost,ingredent.ingredentName,measurementType.measureTypeName from recipeIngredent";
+                query = query + " inner join ingredent on ingredent.id=recipeIngredent.ingredentId ";
+                query = query + " inner join measurementType on measurementType.id = ingredent.mTypeId where recipeId = @recipeId and ingredentId = @ingredentId ";
+
+                // string query = "select * from recipeIngredent where recipeId=@recipeId and ingredentId = @ingredentId ";
                 cmd.CommandText = query;
                 cmd.Parameters.AddWithValue("@recipeId", recipeId);
                 cmd.Parameters.AddWithValue("@ingredentId", ingredentId);
                 cmd.CommandType = CommandType.Text;
                 this.SQLiteAdaptor(dt, cmd);
 
-                return dt.Tables[0].Rows.Cast<DataRow>().Select(x => new RecipeIngredents()
+                //return dt.Tables[0].Rows.Cast<DataRow>().Select(x => new RecipeIngredents()
+                //{
+                //    id = int.Parse(x["id"].ToString()),
+                //    ingredentId = int.Parse(x["ingredentId"].ToString()),
+                //    quantity = double.Parse(x["quantity"].ToString()),
+                //    recipeId = int.Parse(x["recipeId"].ToString())
+                //}).FirstOrDefault();
+
+                var x = dt.Tables[0].Rows.Cast<DataRow>().FirstOrDefault();
+
+                if (x != null)
                 {
-                    id = int.Parse(x["id"].ToString()),
-                    ingredentId = int.Parse(x["ingredentId"].ToString()),
-                    quantity = double.Parse(x["quantity"].ToString()),
-                    recipeId = int.Parse(x["recipeId"].ToString())
-                }).FirstOrDefault();
+                    RecipeIngredents ri = new RecipeIngredents();
+                    ri.id = int.Parse(x["id"].ToString());
+                    ri.ingredentId = int.Parse(x["ingredentId"].ToString());
+                    ri.recipeId = int.Parse(x["recipeId"].ToString());
+                    ri.mType = x["measureTypeName"].ToString();
+                    ri.quantity = double.Parse(x["quantity"].ToString());
+
+                    if (ri.mType.ToLower() == "gram")
+                    {
+                        ri.quantity = Math.Round(ri.quantity / 1000, 2);
+                        ri.mType = "kg";
+                    }
+
+                    ri.unitCost = double.Parse(x["unitCost"].ToString());
+                    ri.ingredentName = x["ingredentName"].ToString();
+                    return ri; 
+                }
+                return null;
             }
         }
-        
+
     }
 }

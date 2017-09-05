@@ -68,7 +68,7 @@ namespace BakeryPR.DAO
                     //ingredentQuantity(values.ingredentId)
                     double unitCost = WeightAverageCostUtil.calculate(values.amount, values.oldUnitCost,
                         values.newQuantity, values.newUnitCost);
-                    dao.updateIngredent(values.ingredentId, values.amount, unitCost);
+                    dao.updateIngredent(values.ingredentId, (values.newQuantity+values.amount), unitCost);
                     return true;                   
                 }
             }

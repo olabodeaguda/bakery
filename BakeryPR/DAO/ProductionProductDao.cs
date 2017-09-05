@@ -73,16 +73,43 @@ namespace BakeryPR.DAO
                 cmd.CommandType = CommandType.Text;
                 this.SQLiteAdaptor(dt, cmd);
 
-                return dt.Tables[0].Rows.Cast<DataRow>().Select(x => new ProductionProduct()
+                //return dt.Tables[0].Rows.Cast<DataRow>().Select(x => new ProductionProduct()
+                //{
+                //    id = int.Parse(x["id"].ToString()),
+                //    measureTypeName = x["measureTypeName"].ToString(),
+                //    productId = int.Parse(x["productId"].ToString()),
+                //    productionId = int.Parse(x["productionId"].ToString()),
+                //    quantity = int.Parse(x["quantity"].ToString()),
+                //    productName = x["productName"].ToString(),
+                //    weight = int.Parse(x["weight"].ToString())
+                //}).FirstOrDefault();
+                var x = dt.Tables[0].Rows.Cast<DataRow>().FirstOrDefault();
+
+                if (x != null)
                 {
-                    id = int.Parse(x["id"].ToString()),
-                    measureTypeName = x["measureTypeName"].ToString(),
-                    productId = int.Parse(x["productId"].ToString()),
-                    productionId = int.Parse(x["productionId"].ToString()),
-                    quantity = int.Parse(x["quantity"].ToString()),
-                    productName = x["productName"].ToString(),
-                    weight = int.Parse(x["weight"].ToString())
-                }).FirstOrDefault();
+                    ProductionProduct pp = new ProductionProduct();
+                    pp.id = int.Parse(x["id"].ToString());
+                    pp.measureTypeName = x["measureTypeName"].ToString();
+                    pp.productId = int.Parse(x["productId"].ToString());
+                    pp.productionId = int.Parse(x["productionId"].ToString());
+                    pp.quantity = int.Parse(x["quantity"].ToString());
+                    pp.expectedQuantity = int.Parse(x["quantity"].ToString());
+                    pp.productName = x["productName"].ToString();
+                    pp.weight = double.Parse(x["weight"].ToString());
+                    if (pp.measureTypeName.ToLower() == "gram")
+                    {
+                        pp.weight = pp.weight / 1000;
+                        pp.measureTypeName = "kg";
+                    }
+                    pp.ingredientCost = double.Parse(x["ingredentCost"].ToString());
+                    pp.overheadCost = double.Parse(x["overheadCost"].ToString());
+
+                    return pp; 
+                }
+                else
+                {
+                    return null;
+                }
             }
 
         }
@@ -104,19 +131,41 @@ namespace BakeryPR.DAO
                 cmd.Parameters.AddWithValue("@productionId", productionId);
                 this.SQLiteAdaptor(dt, cmd);
 
-                lst = dt.Tables[0].Rows.Cast<DataRow>().Select(x => new ProductionProduct()
+                //lst = dt.Tables[0].Rows.Cast<DataRow>().Select(x => new ProductionProduct()
+                //{
+                //    id = int.Parse(x["id"].ToString()),
+                //    measureTypeName = x["measureTypeName"].ToString(),
+                //    productId = int.Parse(x["productId"].ToString()),
+                //    productionId = int.Parse(x["productionId"].ToString()),
+                //    quantity = int.Parse(x["quantity"].ToString()),
+                //    expectedQuantity = int.Parse(x["quantity"].ToString()),
+                //    productName = x["productName"].ToString(),
+                //    weight = double.Parse(x["weight"].ToString()),
+                //    ingredientCost = double.Parse(x["ingredentCost"].ToString()),
+                //    overheadCost = double.Parse(x["overheadCost"].ToString())
+                //}).ToList();
+
+                foreach (var x in dt.Tables[0].Rows.Cast<DataRow>())
                 {
-                    id = int.Parse(x["id"].ToString()),
-                    measureTypeName = x["measureTypeName"].ToString(),
-                    productId = int.Parse(x["productId"].ToString()),
-                    productionId = int.Parse(x["productionId"].ToString()),
-                    quantity = int.Parse(x["quantity"].ToString()),
-                    expectedQuantity = int.Parse(x["quantity"].ToString()),
-                    productName = x["productName"].ToString(),
-                    weight = double.Parse(x["weight"].ToString()),
-                    ingredientCost = double.Parse(x["ingredentCost"].ToString()),
-                    overheadCost = double.Parse(x["overheadCost"].ToString())
-                }).ToList();
+                    ProductionProduct pp = new ProductionProduct();
+                    pp.id = int.Parse(x["id"].ToString());
+                    pp.measureTypeName = x["measureTypeName"].ToString();
+                    pp.productId = int.Parse(x["productId"].ToString());
+                    pp.productionId = int.Parse(x["productionId"].ToString());
+                    pp.quantity = int.Parse(x["quantity"].ToString());
+                    pp.expectedQuantity = int.Parse(x["quantity"].ToString());
+                    pp.productName = x["productName"].ToString();
+                    pp.weight = double.Parse(x["weight"].ToString());
+                    if (pp.measureTypeName.ToLower() == "gram")
+                    {
+                        pp.weight = pp.weight / 1000;
+                        pp.measureTypeName = "kg";
+                    }
+                    pp.ingredientCost = double.Parse(x["ingredentCost"].ToString());
+                    pp.overheadCost = double.Parse(x["overheadCost"].ToString());
+                    lst.Add(pp);
+                }
+
             }
 
             return lst;
@@ -125,6 +174,11 @@ namespace BakeryPR.DAO
         public double sumTotalProductIngram(List<ProductionProduct> e)
         {
             return e.Sum(x => x.measureTypeName.ToLower().Equals("kg") ? ((x.weight * x.quantity) * 100) : (x.weight * x.quantity));
+        }
+
+        public double sumTotalProductInKg(List<ProductionProduct> e)
+        {
+            return e.Sum(x => x.measureTypeName.ToLower().Equals("gram") ? ((x.weight * x.quantity) * 100) : (x.weight * x.quantity));
         }
 
         public string updateString(ProductionProduct pp)

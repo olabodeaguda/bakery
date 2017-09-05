@@ -26,7 +26,7 @@ namespace BakeryPR.ModelView
                 {
                     _searchHisory = value;
                     List<CartModel> s = dailyHistory.Where(x => x.pName.ToLower().Contains(value) || x.customerName.ToLower().Contains(value)).ToList();
-                    this.dailyCartHistory = new ObservableCollection<CartModel>(s);                    
+                    this.dailyCartHistory = new ObservableCollection<CartModel>(s);
                     this.NotifyPropertyChanged("searchHisory");
                 }
             }
@@ -72,7 +72,7 @@ namespace BakeryPR.ModelView
                             }
                             MessageBoxResult mresult = MessageBox.Show("Are you sure?", "Submit Cart", MessageBoxButton.YesNo, MessageBoxImage.Information);
 
-                            if(mresult == MessageBoxResult.No)
+                            if (mresult == MessageBoxResult.No)
                             {
                                 return;
                             }
@@ -311,7 +311,7 @@ namespace BakeryPR.ModelView
                             Product p = this.selectedProduct;
                             CartProductModel newCpm = new CartProductModel()
                             {
-                                price = cartModel.isRetails ? p.retailPrice : p.wholeSales,
+                                //price = p. //cartModel.isRetails ? p.retailPrice : p.wholeSales,
                                 productId = p.id,
                                 productName = p.name,
                                 quantity = 1,
@@ -325,7 +325,7 @@ namespace BakeryPR.ModelView
                                     int indx = cartModel.itemLst.IndexOf(cpm);
                                     cartModel.itemLst.Remove(cpm);
                                     cpm.quantity = cpm.quantity + newCpm.quantity;
-                                    cpm.price = newCpm.price * cpm.quantity;
+                                    cpm.price = cpm.manualPrice * cpm.quantity;
                                     cartModel.itemLst.Insert(indx, cpm);
                                 }
                                 else

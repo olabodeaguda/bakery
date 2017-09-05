@@ -40,11 +40,11 @@
                     <GridViewColumn Width="200" HeaderContainerStyle="{StaticResource ListViewStyle}" 
                                     Header="Last Updated" DisplayMemberBinding="{Binding lastUpdated,StringFormat=yyyy-MM-dd}" />
                     <GridViewColumn Width="200" HeaderContainerStyle="{StaticResource ListViewStyle}" 
-                                    Header="No of Ingredent" DisplayMemberBinding="{Binding ingredentNos}" />
+                                    Header="No of Ingredient" DisplayMemberBinding="{Binding ingredentNos}" />
                     <GridViewColumn Width="200" HeaderContainerStyle="{StaticResource ListViewStyle}" 
-                                    Header="Total Cost (Naira)" DisplayMemberBinding="{Binding totalCost}" />
+                                    Header="Total Cost (Naira)" DisplayMemberBinding="{Binding totalCost, StringFormat='# {0:0,0.00}'}" />
                     <GridViewColumn Width="200" HeaderContainerStyle="{StaticResource ListViewStyle}" 
-                                    Header="Quantity (KG)" DisplayMemberBinding="{Binding quantity}" />
+                                    Header="Dough Weight (KG)" DisplayMemberBinding="{Binding totalDoughWeight}" />
                 </GridView>
             </ListView.View>
         </ListView>

@@ -90,9 +90,9 @@ namespace BakeryPR.Models
             }
         }
 
-        public string totalCost
+        public double totalCost
         {
-            get { return (this.unitCost * this.quantity).ToString(); }
+            get { return (this.unitCost * this.quantity); }
         }
 
         private string _ingredentName;

@@ -17,7 +17,7 @@ namespace BakeryPR.Utilities
                     title = "Dashboard";
                     return new UCDashboard();
                 case "ingredient":
-                    title = "Manage Ingredent";
+                    title = "Manage Ingredient";
                     return new IngredentView();
                 case "mAnalysis":
                     title = "Dashboard";

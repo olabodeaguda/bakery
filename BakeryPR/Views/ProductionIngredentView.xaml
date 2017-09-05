@@ -22,12 +22,13 @@
         </Grid>
 
         <!--<Button Command="{Binding loadAddProductionIngredient}" Margin="5 0 0 5" Grid.Row="1" Width="100" HorizontalAlignment="Left">Add</Button>-->
-        <ListView x:Name="ProductLst"  Width="{Binding winWidth}" 
-                  ItemsSource="{Binding productionIngredents,Mode=TwoWay}" IsSynchronizedWithCurrentItem="True" HorizontalAlignment="Left" 
-                  HorizontalContentAlignment="Left" Margin="5" Grid.Row="2" >
+        <ListView x:Name="ProductLst"  
+                  ItemsSource="{Binding productionIngredents,Mode=TwoWay}"
+                  IsSynchronizedWithCurrentItem="True" 
+                  Margin="5" Grid.Row="2" >
             <ListView.View>
                 <GridView>
-                    <GridViewColumn >
+                    <!--<GridViewColumn >
                         <GridViewColumn.CellTemplate >
                             <DataTemplate>
                                 <Button Content="Delete"  CommandParameter="{Binding}"
@@ -35,7 +36,7 @@
                                     RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
+                    </GridViewColumn>-->
                     <GridViewColumn >
                         <GridViewColumn.CellTemplate >
                             <DataTemplate>
@@ -45,12 +46,12 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Width="200"  HeaderContainerStyle="{StaticResource ListViewStyle}" 
-                                    Header="Ingredent Name"  DisplayMemberBinding="{Binding ingredentName}" />
-                    <GridViewColumn Width="200"  HeaderContainerStyle="{StaticResource ListViewStyle}" 
-                                    Header="Quantity"  DisplayMemberBinding="{Binding displayQuantity}" />
-                    <GridViewColumn Width="200"  HeaderContainerStyle="{StaticResource ListViewStyle}" 
-                                    Header="Total cost"  DisplayMemberBinding="{Binding totalUnitCost}" />
+                    <GridViewColumn Width="150"  HeaderContainerStyle="{StaticResource ListViewStyle}" 
+                                    Header="Ingredient Name"  DisplayMemberBinding="{Binding ingredentName}" />
+                    <GridViewColumn Width="150"  HeaderContainerStyle="{StaticResource ListViewStyle}" 
+                                    Header="Quantity (Kg)"  DisplayMemberBinding="{Binding displayQuantity}" />
+                    <GridViewColumn Width="100"  HeaderContainerStyle="{StaticResource ListViewStyle}" 
+                                    Header="Total cost(Naira)"  DisplayMemberBinding="{Binding totalUnitCost, StringFormat='# {0:0,0.00}'}" />
                     <GridViewColumn Width="100" HeaderContainerStyle="{StaticResource ListViewStyle}" 
                                     Header="Date Created" DisplayMemberBinding="{Binding dateCreated,StringFormat=yyyy-MM-dd}" />
                     <GridViewColumn Width="100" HeaderContainerStyle="{StaticResource ListViewStyle}" 

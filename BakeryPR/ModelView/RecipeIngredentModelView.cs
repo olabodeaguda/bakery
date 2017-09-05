@@ -58,6 +58,9 @@ namespace BakeryPR.ModelView
                 return new DelegateCommand<object>((s) =>
                 {
                     AddRecipe prod = new AddRecipe();
+                    this.recipe = new Recipe();
+                    this.riIngredents = new ObservableCollection<RecipeIngredents>();
+                    this.totalDoughWeight = "";
                     prod.DataContext = this;
                     prod.ShowDialog();
                     this.recipes = new ObservableCollection<Recipe>(dao.all());
@@ -77,6 +80,10 @@ namespace BakeryPR.ModelView
                         {
                             throw new Exception("Recipe not available");
                         }
+                        if (this.recipeIngredent.quantity <= 0)
+                        {
+                            throw new Exception("Quantity have been inputted wrongly");
+                        }
 
                         this.recipeIngredent.recipeId = this.recipe.id;
 
@@ -85,7 +92,7 @@ namespace BakeryPR.ModelView
                         RecipeIngredents rri = this.riDao.byRecipeIdIngredent(this.recipeIngredent.recipeId, this.recipeIngredent.ingredentId);
                         if (rri != null)
                         {
-                            MessageBox.Show("recipe already exit");
+                            MessageBox.Show("Ingredient already exist");
                             return;
                         }
 
@@ -94,7 +101,9 @@ namespace BakeryPR.ModelView
                         {
                             MessageBox.Show("saved");
                             this.recipeIngredent = new RecipeIngredents();
-                            this.riIngredents = new ObservableCollection<RecipeIngredents>(riDao.byRecipeId(this.recipe.id));
+                            var t = riDao.byRecipeId(this.recipe.id);
+                            this.totalDoughWeight = $" {t.Sum(x => x.quantity)}";
+                            this.riIngredents = new ObservableCollection<RecipeIngredents>(t);
                         }
                         else
                         {
@@ -135,16 +144,9 @@ namespace BakeryPR.ModelView
                        try
                        {
                            Recipe ig = this.recipe;
-                           double quan = 0;
-                           if (!double.TryParse(this.recipe.quantity.ToString(), out quan))
-                           {
-                               throw new Exception("Quantity is in the wrong format");
-                           }
 
-                           if (quan == 0)
-                           {
-                               throw new Exception("Quantity can't be zero");
-                           }
+
+                           ig.quantity = 50;
 
                            ig.dateCreated = DateTime.Now;
                            ig.lastUpdated = DateTime.Now;
@@ -262,13 +264,35 @@ namespace BakeryPR.ModelView
                         EditRecipe editrecipe = new EditRecipe();
                         editrecipe.DataContext = this;
                         this.recipe = (Recipe)s;
-                        this.riIngredents = new ObservableCollection<RecipeIngredents>(riDao.byRecipeId(this.recipe.id));
+                        var t = riDao.byRecipeId(this.recipe.id);
+                        this.totalDoughWeight = t.Sum(x => x.quantity).ToString();
+                        this.riIngredents = new ObservableCollection<RecipeIngredents>(t);
                         bool? result = editrecipe.ShowDialog();
                         this.recipes = new ObservableCollection<Recipe>(dao.all());
                     }
                 });
             }
         }
+
+        private string _totalDoughWeight;
+
+        public string totalDoughWeight
+        {
+            get { return _totalDoughWeight; }
+            set
+            {
+                if (value == "")
+                {
+                    _totalDoughWeight = value;
+                }
+                else
+                {
+                    _totalDoughWeight = " Total dough weight: " + value + "Kg";
+                }
+                this.NotifyPropertyChanged("totalDoughWeight");
+            }
+        }
+
 
         public DelegateCommand<object> loadEditIngredentCommand
         {
@@ -330,11 +354,18 @@ namespace BakeryPR.ModelView
                 {
                     try
                     {
+                        if (this.recipeIngredent.quantity <= 0)
+                        {
+                            throw new Exception("Wrong quantity have been inputted");
+                        }
+                       
                         bool result = this.riDao.Update(this.recipeIngredent);
                         if (result)
                         {
                             MessageBox.Show("saved");
-                            this.riIngredents = new ObservableCollection<RecipeIngredents>(riDao.byRecipeId(this.recipe.id));
+                            var t = riDao.byRecipeId(this.recipe.id);
+                            this.totalDoughWeight = $"{t.Sum(x => x.quantity)}";
+                            this.riIngredents = new ObservableCollection<RecipeIngredents>(t);
                         }
                         else
                         {

@@ -78,7 +78,15 @@ namespace BakeryPR.Models
 
         public double totalCost
         {
-            get { return this.ingredent.Sum(x => (x.quantity * x.unitCost)); }
+            get { return Math.Round(this.ingredent.Sum(x => (x.quantity * x.unitCost)), 2); }
+        }
+
+        public string totalDoughWeight
+        {
+            get
+            {
+                return $"{Math.Round(this.ingredent.Sum(x => x.quantity), 2)} kg";
+            }
         }
 
         private double _quantity;

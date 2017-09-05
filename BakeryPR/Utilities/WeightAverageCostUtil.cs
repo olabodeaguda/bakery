@@ -8,22 +8,25 @@ namespace BakeryPR.Utilities
 {
     public class WeightAverageCostUtil
     {
-        public static double calculate(double oldQuantity,double oldUnitCost,double newQuantity,double newUnitCost)
+        public static double calculate(double oldQuantity, double oldUnitCost, double newQuantity, double newUnitCost)
         {
-            double tCost = (oldQuantity * oldUnitCost) + (newQuantity*newUnitCost);
+            double tCost = (oldQuantity * oldUnitCost) + (newQuantity * newUnitCost);
             double tQuantity = oldQuantity + newQuantity;
 
-            return Math.Round((tCost / tQuantity),2);
+            double result = Math.Round((tCost / tQuantity), 2);
+            return double.IsNaN(result) || double.IsInfinity(result) ? 0 : result;
         }
 
-        public static double ProductIngredentUnitCost(double productWeigt, double totalRecipeCost,double totalDougt)
+        public static double ProductIngredentUnitCost(double productWeigt, double totalRecipeCost, double totalDougt)
         {
-            return (productWeigt * totalRecipeCost) / totalDougt;
+            double result = (productWeigt * totalRecipeCost) / totalDougt;
+            return double.IsNaN(result) || double.IsInfinity(result) ? 0 : result; ;
         }
 
         public static double ProductOverheadUnitCost(double productWeigt, double totaloverhead, double totalDougt)
         {
-            return (productWeigt * totaloverhead) / totalDougt;
+            double result = (productWeigt * totaloverhead) / totalDougt;
+            return double.IsNaN(result) || double.IsInfinity(result) ? 0 : result;
         }
     }
 }

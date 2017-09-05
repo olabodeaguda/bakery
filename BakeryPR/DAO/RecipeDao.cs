@@ -161,10 +161,10 @@ namespace BakeryPR.DAO
                 if (r != null)
                 {
                     double comp = tm.quantity * ratio;
-                    if (comp > r.quantity)
+                    if (comp > r.quantity && r.unitCost > 0)
                     {
                         //no enough material for
-                        error = new Error() { success = false, errorMsg = r.ingredentName + " is out of stock for the selected recipe" };
+                        error = new Error() { success = false, errorMsg = r.ingredentName + " is out of stock for the selected ingredent" };
                         break;
                     }
                 }

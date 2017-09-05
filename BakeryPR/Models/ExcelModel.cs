@@ -8,6 +8,14 @@ namespace BakeryPR.Models
 {
     public class ExcelModel
     {
+        private string _productionDate;
+
+        public string productionDate
+        {
+            get { return _productionDate; }
+            set { _productionDate = value; }
+        }
+
         private List<ProductionCostModel> _ProductionCost = new List<ProductionCostModel>();
 
         public List<ProductionCostModel> ProductionCost

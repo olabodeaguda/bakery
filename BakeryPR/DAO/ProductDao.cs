@@ -53,21 +53,36 @@ namespace BakeryPR.DAO
                 cmd.Parameters.AddWithValue("@pId", productId);
                 this.SQLiteAdaptor(dt, cmd);
 
-                return dt.Tables[0].Rows.Cast<DataRow>().Select(x => new Product()
+                var x = dt.Tables[0].Rows.Cast<DataRow>().FirstOrDefault();
+
+                if (x != null)
                 {
-                    id = int.Parse(x["id"].ToString()),
-                    costOfPackage = double.Parse(x["costOfPackage"].ToString()),
-                    descripton = x["descripton"].ToString(),
-                    retailPrice = double.Parse(x["retailPrice"].ToString()),
-                    weight = double.Parse(x["weight"].ToString()),
-                    mTypeId = int.Parse(x["mTypeId"].ToString()),
-                    wholeSales = double.Parse(x["wholeSales"].ToString()),
-                    measureTypeName = x["measureTypeName"].ToString(),
-                    name = x["name"].ToString(),
-                    inventoryStore = String.IsNullOrEmpty(x["inventoryStore"].ToString()) ? 0 : int.Parse(x["inventoryStore"].ToString()),
-                    isDiscount = string.IsNullOrEmpty(x["isDiscount"].ToString()) ? false : (int.Parse(x["isDiscount"].ToString()) == 1 ? true : false),
-                    discount = string.IsNullOrEmpty(x["discount"].ToString()) ? 0.0 : (double.Parse(x["discount"].ToString()))
-                }).FirstOrDefault();
+                    Product p = new Product();
+                    p.id = int.Parse(x["id"].ToString());
+                    p.costOfPackage = double.Parse(x["costOfPackage"].ToString());
+                    p.descripton = x["descripton"].ToString();
+                    p.retailPrice = double.Parse(x["retailPrice"].ToString());
+                    p.weight = double.Parse(x["weight"].ToString());
+                    p.mTypeId = int.Parse(x["mTypeId"].ToString());
+                    p.wholeSales = double.Parse(x["wholeSales"].ToString());
+                    p.measureTypeName = x["measureTypeName"].ToString();
+                    if (p.measureTypeName.ToLower() == "gram")
+                    {
+                        p.weight = p.weight / 1000;
+                        p.measureTypeName = "kg";
+                    }
+                   
+                    p.name = x["name"].ToString();
+                    p.inventoryStore = String.IsNullOrEmpty(x["inventoryStore"].ToString()) ? 0 : int.Parse(x["inventoryStore"].ToString());
+                    p.isDiscount = string.IsNullOrEmpty(x["isDiscount"].ToString()) ? false : (int.Parse(x["isDiscount"].ToString()) == 1 ? true : false);
+                    p.discount = string.IsNullOrEmpty(x["discount"].ToString()) ? 0.0 : (double.Parse(x["discount"].ToString()));
+
+                    return p; 
+                }
+                else
+                {
+                    return null;
+                }
             }
 
         }

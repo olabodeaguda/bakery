@@ -31,16 +31,16 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Width="200"  HeaderContainerStyle="{StaticResource ListViewStyle}" 
-                                    Header="Weight"  DisplayMemberBinding="{Binding weightView}" />
                     <GridViewColumn Width="100" HeaderContainerStyle="{StaticResource ListViewStyle}" 
                                     Header="Product Name" DisplayMemberBinding="{Binding name}" />
+                    <GridViewColumn Width="200"  HeaderContainerStyle="{StaticResource ListViewStyle}" 
+                                    Header="Weight"  DisplayMemberBinding="{Binding weightView}" />                    
                     <GridViewColumn Width="100" HeaderContainerStyle="{StaticResource ListViewStyle}" 
                                     Header="Description" DisplayMemberBinding="{Binding descripton}" />
                     <GridViewColumn Width="100" HeaderContainerStyle="{StaticResource ListViewStyle}" 
                                     Header="Cost of Package" DisplayMemberBinding="{Binding costOfPackage}" />
-                    <GridViewColumn Width="100" HeaderContainerStyle="{StaticResource ListViewStyle}" 
-                                    Header="Retail Price" DisplayMemberBinding="{Binding retailPrice}" />
+                    <!--<GridViewColumn Width="100" HeaderContainerStyle="{StaticResource ListViewStyle}" 
+                                    Header="Retail Price" DisplayMemberBinding="{Binding retailPrice}" />-->
                 </GridView>
             </ListView.View>
         </ListView>

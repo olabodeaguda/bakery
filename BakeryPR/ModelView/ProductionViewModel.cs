@@ -15,6 +15,18 @@ namespace BakeryPR.ModelView
 {
     public class ProductionViewModel : INotifyPropertyChanged
     {
+        private bool _isBusyVisible = false;
+
+        public bool isBusyVisible
+        {
+            get { return _isBusyVisible; }
+            set
+            {
+                _isBusyVisible = value;
+                this.NotifyPropertyChanged("isBusyVisible");
+            }
+        }
+
         public ExcelUtils ExcelU
         {
             get
@@ -47,7 +59,7 @@ namespace BakeryPR.ModelView
         {
             get
             {
-                return new DelegateCommand<object>((s) =>
+                return new DelegateCommand<object>(async (s) =>
                 {
                     try
                     {
@@ -59,39 +71,51 @@ namespace BakeryPR.ModelView
 
                         if (result == true)
                         {
+                            isBusyVisible = true;
                             filename = dlg.FileName;
                         }
+                        else
+                        {
+                            return;
+                        }
+                        
 
                         Production p = (Production)s;
-
-                        List<ProductionCostModel> lst = PIDao.byProductionId(p.id).Select(x => new ProductionCostModel()
+                        await Task.Run(() =>
                         {
-                            ingredentName = x.ingredentName,
-                            quantity = x.amount,
-                            UnitCost = x.unitCost,
-                            totalCost = x.amount * x.unitCost
-                        }).ToList();
 
-                        List<SalesRevenueModel> salesRM = cartDao.byDaily(p.dateCreated.ToString("yyyy-MM-dd"))
-                        .Select(x => new SalesRevenueModel()
-                        {
-                            ProductName = x.pName,
-                            QuantityProduced = x.quantity,
-                            UnitPrice = x.salesType == SalesType.RETAIL.ToString() ? x.retailPrice : x.wholeSales,
-                            totalPrice = x.price
-                        }).ToList();
+                            List<ProductionCostModel> lst = PIDao.byProductionId(p.id).Select(x => new ProductionCostModel()
+                            {
+                                ingredentName = x.ingredentName,
+                                quantity = x.amount,
+                                UnitCost = x.unitCost,
+                                totalCost = x.amount * x.unitCost
+                            }).ToList();
+
+                            List<SalesRevenueModel> salesRM = cartDao.byDaily(p.dateCreated.ToString("yyyy-MM-dd"))
+                            .Select(x => new SalesRevenueModel()
+                            {
+                                ProductName = x.pName,
+                                QuantityProduced = x.quantity,
+                                UnitPrice = x.salesType == SalesType.RETAIL.ToString() ? x.retailPrice : x.wholeSales,
+                                totalPrice = x.price
+                            }).ToList();
 
 
-                        ExcelModel excelmodel = new ExcelModel()
-                        {
-                            ProductionCost = lst,
-                            SalesCost = salesRM
-                        };
+                            ExcelModel excelmodel = new ExcelModel()
+                            {
+                                ProductionCost = lst,
+                                SalesCost = salesRM,
+                                productionDate = $"{p.dateCreated.Day}/{p.dateCreated.Month}/{p.dateCreated.Year}"
+                            };
 
-                        if (excelmodel != null)
-                        {
-                            ExcelU.Export(p.id, filename, excelmodel);
-                        }
+                            if (excelmodel != null)
+                            {
+                                ExcelU.Export(p.id, filename, excelmodel);
+                            }
+
+                        });
+                        this.isBusyVisible = false;
                     }
                     catch (Exception x)
                     {
@@ -134,36 +158,40 @@ namespace BakeryPR.ModelView
                     {
                         try
                         {
+                            if (this.production.quantity <= 0)
+                            {
+                                throw new Exception("Quantity has been inputted wrongly");
+                            }
                             Error checkResource = rdao.checkRecipeQuantity(this.production.recipeId, this.production.quantity);
 
                             if (checkResource.success)
                             {
                                 bool isUpdateRecipe = false;
                                 Production oldP = dao.ProductionId(this.production.id);
-                                if (oldP.recipeId != this.production.recipeId)
-                                {
-                                    isUpdateRecipe = true;
-                                }
+                                //if (oldP.recipeId != this.production.recipeId && oldP.quantity == this.production.quantity)
+                                //{
+                                //    isUpdateRecipe = true;
+                                //}
                                 bool sd = false;
 
-                                if (!isUpdateRecipe)
-                                {
-                                    sd = dao.update(this.production);
-                                }
-                                else
-                                {
-                                    string query = dao.updateProductionQuery(this.production);
-                                    query = query + dao.deleteProductionQuery(this.production);
-                                    query = query + overheadDao.deleteProductionQuery(this.production);
-                                    query = query + rdao.addProdIngredentDBQuery(this.production);
-                                    query = query + ovDetilsDao.ProductionInsert(this.production.quantity, production.id);
+                                //if (!isUpdateRecipe)
+                                //{
+                                //    sd = dao.update(this.production);
+                                //}
+                                //else
+                                //{
+                                string query = dao.updateProductionQuery(this.production);
+                                query = query + dao.deleteProductionQuery(this.production);
+                                query = query + overheadDao.deleteProductionQuery(this.production);
+                                query = query + rdao.addProdIngredentDBQuery(this.production);
+                                query = query + ovDetilsDao.ProductionInsert(this.production.quantity, production.id);
 
-                                    sd = dao.exec(query);
-                                }
+                                sd = dao.exec(query);
+                                //}
 
                                 if (sd)
                                 {
-                                    MessageBox.Show("Production have been updated successfully");
+                                    MessageBox.Show("Production has been updated successfully");
                                     this.productions = new ObservableCollection<Production>(dao.all());
                                 }
                             }
@@ -219,9 +247,9 @@ namespace BakeryPR.ModelView
                 {
                     try
                     {
-                        if (this.production.quantity == 0)
+                        if (this.production.quantity <= 0)
                         {
-                            throw new Exception("Quantity can't be zero");
+                            throw new Exception("Quantity of flour has been wrongly inputted");
                         }
 
                         List<Production> bystatuslst = dao.byStatus(ProductionStatus.NOT_APPROVED.ToString());
@@ -258,7 +286,7 @@ namespace BakeryPR.ModelView
 
                         if (!result)
                         {
-                            MessageBox.Show("Please Ingredent addition failed.. Please add ingredent manually");
+                            MessageBox.Show("Please Ingredient addition failed.. Please add ingredient manually");
                         }
 
                         MessageBox.Show("Production have been added successfully");
@@ -581,6 +609,18 @@ namespace BakeryPR.ModelView
             }
         }
 
+        private double _totalDougt;
+
+        public double totalDougt
+        {
+            get { return _totalDougt; }
+            set
+            {
+                _totalDougt = value;
+                this.NotifyPropertyChanged("totalDougt");
+            }
+        }
+
 
 
         public DelegateCommand<object> UpdateProdproduct
@@ -595,8 +635,12 @@ namespace BakeryPR.ModelView
                          {
                              this.isSpin = Visibility.Visible;
 
-                             double overheadSum = this.prodDao.byproductionId(this.productionProduct.productionId).Sum(x => (x.overheadCount * x.unitCost));
-                             double totalIngredentCost = this.PIDao.sumtotalIngredientInGram(this.productionProduct.productionId);
+                             Product pDuct = productDao.byId(this.productionProduct.productId);
+                             this.productionProduct.productionId = production.id;
+                             this.productionProduct.weight = pDuct.weight;
+
+                             double overheadSum = this.prodDao.byproductionId(this.productionProduct.productionId).Sum(x => x.overheadCount);
+                             double totalIngredentCost = this.PIDao.sumtotalIngredientInKg(this.productionProduct.productionId);
                              double totalDough = this.pProductDao.byproductionId(this.productionProduct.productionId).Where(p => p.id != productionProduct.id).Sum(x => (x.weight * x.quantity));
                              totalDough = totalDough + (this.productionProduct.quantity * this.productionProduct.weight);
 
@@ -647,6 +691,7 @@ namespace BakeryPR.ModelView
                             {
                                 Product pDuct = productDao.byId(this.productionProduct.productId);
                                 this.productionProduct.productionId = production.id;
+                                this.productionProduct.weight = pDuct.weight;
 
                                 ProductionProduct pp = this.pProductDao.byProductionproductId(this.productionProduct.productionId,
                                     this.productionProduct.productId);
@@ -654,12 +699,15 @@ namespace BakeryPR.ModelView
                                 // check if the available gram is not more than the recipe total gram
                                 if (pp == null)
                                 {
-                                    double overheadSum = this.prodDao.byproductionId(this.productionProduct.productionId).Sum(x => (x.overheadCount * x.unitCost));
-                                    double totalIngredentCost = this.PIDao.sumtotalIngredientInGram(this.productionProduct.productionId);
+                                    //var prodproduction = this.productDao.byId(this.productionProduct.productId);
+
+                                    double overheadSum = this.prodDao.byproductionId(this.productionProduct.productionId).Sum(x => (x.overheadCount));
+                                    double totalIngredentCost = this.PIDao.sumtotalIngredientInKg(this.productionProduct.productionId);
                                     double totalDough = this.pProductDao.byproductionId(this.productionProduct.productionId).Sum(x => (x.weight * x.quantity));
+
                                     totalDough = totalDough + (this.productionProduct.quantity * this.productionProduct.weight);
-                                    this.productionProduct.overheadCost = Math.Round(WeightAverageCostUtil.ProductOverheadUnitCost(pDuct.weight, overheadSum, totalDough), 2);
-                                    this.productionProduct.ingredientCost = Math.Round(WeightAverageCostUtil.ProductIngredentUnitCost(pDuct.weight, totalIngredentCost, totalDough), 2);
+                                    this.productionProduct.overheadCost = Math.Round(WeightAverageCostUtil.ProductOverheadUnitCost(productionProduct.weight, overheadSum, totalDough), 2);
+                                    this.productionProduct.ingredientCost = Math.Round(WeightAverageCostUtil.ProductIngredentUnitCost(productionProduct.weight, totalIngredentCost, totalDough), 2);
 
                                     string query = "";
                                     foreach (var item in this.productionProducts)
@@ -670,7 +718,6 @@ namespace BakeryPR.ModelView
                                     }
 
                                     query = query + this.pProductDao.insertString(this.productionProduct);
-                                    //bool result = this.pProductDao.add(this.productionProduct);
                                     bool result = this.pProductDao.execute(query);
                                     if (result)
                                     {
@@ -873,7 +920,7 @@ namespace BakeryPR.ModelView
             set
             {
                 _productionIngredents = value;
-                this.totalProdIngredent = $"{value.Sum(x => x.amount)}gram";
+                this.totalProdIngredent = $"Total Dough Weight {value.Sum(x => x.amount)}kg";
                 this.NotifyPropertyChanged("productionIngredents");
             }
         }
@@ -1083,7 +1130,7 @@ namespace BakeryPR.ModelView
             {
                 List<ProductionProduct> lst = pProductDao.byproductionId(this.production.id);
                 _mpp = new ObservableCollection<ProductionProduct>(lst);
-                totalProductWeight = $"Product Summation:  {pProductDao.sumTotalProductIngram(lst)}gram";
+                totalProductWeight = $"Product Summation:  {pProductDao.sumTotalProductInKg(lst)}kg";
                 return _mpp;
             }
             set
@@ -1115,14 +1162,6 @@ namespace BakeryPR.ModelView
                     {
                         ManageProductionProduct mp = new ManageProductionProduct();
                         this.production = (Production)s;
-                        if (this.production.approval == ProductionStatus.CLOSED.ToString())
-                        {
-                            throw new Exception("production have been closed already");
-                        }
-                        else if (this.production.approval != ProductionStatus.APPROVED.ToString())
-                        {
-                            throw new Exception("Production have to be approved");
-                        }
                         mp.DataContext = this;
                         mp.ShowDialog();
                         this.production = new Production();
@@ -1141,7 +1180,7 @@ namespace BakeryPR.ModelView
         {
             get
             {
-                _totalP = PIDao.sumtotalIngredientInGram(this.production.id);
+                _totalP = PIDao.sumtotalIngredientInKg(this.production.id);
                 return _totalP;
             }
             set
@@ -1157,7 +1196,7 @@ namespace BakeryPR.ModelView
         {
             get
             {
-                _totalProduction = $"Recipe Total: {this.totalP}gram";
+                _totalProduction = $"Recipe Total: {this.totalP}Kg";
                 return _totalProduction;
             }
             set
@@ -1200,6 +1239,10 @@ namespace BakeryPR.ModelView
                     {
                         try
                         {
+                            if (this.prodIngredient.amount < 0)
+                            {
+                                throw new Exception("Quantity inputted is invalid");
+                            }
                             bool tr = PIDao.Update(this.prodIngredient);
                             if (tr)
                             {
@@ -1249,6 +1292,7 @@ namespace BakeryPR.ModelView
                     {
                         try
                         {
+                            // this.checkvalidation();
                             if (this.production.approval == ProductionStatus.CLOSED.ToString())
                             {
                                 return;
@@ -1271,7 +1315,7 @@ namespace BakeryPR.ModelView
                             double ds = pProductDao.sumTotalProductIngram(lst);
                             if (totalP > ds)
                             {
-                                MessageBoxResult msg = MessageBox.Show("Total recipe Gram is more than the total product gram. Do you want to continue?",
+                                MessageBoxResult msg = MessageBox.Show("Total dough weight is more than the weight of the product. Do you want to continue?",
                                     "Information", MessageBoxButton.YesNo, MessageBoxImage.Question);
                                 if (msg == MessageBoxResult.No)
                                 {
@@ -1280,7 +1324,7 @@ namespace BakeryPR.ModelView
                             }
                             else
                             {
-                                MessageBoxResult msg = MessageBox.Show("Total recipe gram is less than the total product gram. Do you want to continue?",
+                                MessageBoxResult msg = MessageBox.Show("Total dough weight is less than the weight of the product. Do you want to continue?",
                                     "Information", MessageBoxButton.YesNo, MessageBoxImage.Question);
                                 if (msg == MessageBoxResult.No)
                                 {

@@ -138,7 +138,7 @@ namespace BakeryPR.Models
         {
             get
             {
-                return $"{this.amount * unitCost}";
+                return $"{Math.Round(this.amount * unitCost,2)}";
             }
         }
 
