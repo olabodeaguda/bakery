@@ -4,6 +4,7 @@
              xmlns:local="clr-namespace:BakeryPR"
              StartupUri="Views/LoginView.xaml">
     <Application.Resources>
+        <ImageBrush ImageSource="pack://application:,,,/images/img4.png" x:Key="lisviewBkgrd" ></ImageBrush>
         <Style x:Key="BaseContentControlStyle" TargetType="{x:Type ContentControl}">
             <Setter Property="Foreground" Value="White" />
         </Style>
@@ -22,6 +23,21 @@
             <Setter Property="Margin" Value="5"></Setter>
         </Style>
 
+        <Style TargetType="Button">
+            <Setter Property="Margin" Value="5"></Setter>
+            <Setter Property="Background" Value="#FFEA7278"></Setter>
+            <Setter Property="Foreground" Value="#FFFFFF"></Setter>
+        </Style>
+
+        <Style x:Key="buttonDataTemplate" TargetType="{x:Type Button}" >
+            <Setter Property="Background" Value="#FFEA7278"></Setter>
+            <Setter Property="Foreground" Value="White"></Setter>
+        </Style>
+
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground" Value="#FF5E3C3D"></Setter>
+        </Style>
+
         <Style TargetType="Menu">
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="Background" Value="Black"/>
@@ -30,6 +46,8 @@
         <Style x:Key="btnSubmitStyle" TargetType="Button">
             <Setter Property="Height" Value="30"></Setter>
             <Setter Property="Width" Value="100"></Setter>
+            <Setter Property="Background" Value="#FFEA7278"></Setter>
+            <Setter Property="Foreground" Value="White"></Setter>
         </Style>
         <Style x:Key="headings" TargetType="TextBlock">
             <Setter Property="Margin" Value="15 0"></Setter>
@@ -45,7 +63,7 @@
             <Setter Property="Foreground" Value="LightGray"></Setter>
             <Setter Property="FontWeight" Value="ExtraBlack"></Setter>
         </Style>
-        
+
         <Style x:Key="DashboardBtnStyle" TargetType="Button">
             <Setter Property="BorderThickness" Value="3"></Setter>
             <Setter Property="Foreground" Value="White"></Setter>
@@ -68,10 +86,10 @@
 
         <LinearGradientBrush x:Key="windowBackgroundResource" EndPoint="0.5,1" StartPoint="0.5,0">
             <GradientStop Color="Black" Offset="0"/>
-            <GradientStop Color="White" Offset="0.273"/>
+            <GradientStop Color="#FFF4EDE3" Offset="0.087"/>
             <GradientStop Color="#FF0F0F0F" Offset="0.944"/>
-            <GradientStop Color="#FEC3C3C3" Offset="0.667"/>
-            <GradientStop Color="#FF5B5353" Offset="0.486"/>
+            <GradientStop Color="#FFF4EDE3" Offset="0.486"/>
+            <GradientStop Color="#FFE1DAD1" Offset="0.905"/>
         </LinearGradientBrush>
 
         <Style TargetType="Window">

@@ -591,6 +591,11 @@
     <Content Include="bin\Debug\NPOI.OpenXml4Net.dll" />
     <Content Include="bin\Debug\NPOI.OpenXmlFormats.dll" />
     <Content Include="bin\Debug\Toxy.dll" />
+    <Resource Include="images\img1.png" />
+    <Resource Include="images\img2.png" />
+    <Resource Include="images\img3.png" />
+    <Resource Include="images\img4.png" />
+    <Resource Include="images\img5.png" />
     <Resource Include="icn.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

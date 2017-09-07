@@ -134,11 +134,11 @@ namespace BakeryPR.Models
             get { return $"{ this.amount}{this.measureType}"; }
         }
 
-        public string totalUnitCost
+        public double totalUnitCost
         {
             get
             {
-                return $"{Math.Round(this.amount * unitCost,2)}";
+                return Math.Round(this.amount * unitCost,2);
             }
         }
 

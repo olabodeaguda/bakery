@@ -22,15 +22,15 @@
             <ac:AdornedControl.AdornerContent>
                 <local:LoadingWait></local:LoadingWait>
             </ac:AdornedControl.AdornerContent>
-        <ListView x:Name="ProductLst"  
+            <ListView x:Name="ProductLst"  
                   ItemsSource="{Binding productions,Mode=TwoWay}" IsSynchronizedWithCurrentItem="True" HorizontalAlignment="Left" 
-                  HorizontalContentAlignment="Left" Margin="5"  Grid.RowSpan="2" Grid.Row="1"  >
+                  HorizontalContentAlignment="Left" Margin="5"  Grid.RowSpan="2" Grid.Row="1"  Width="{Binding winWidth}" >
                 <ListView.View>
                     <GridView>
                         <GridViewColumn>
                             <GridViewColumn.CellTemplate >
                                 <DataTemplate>
-                                    <Button Content="Edit"  CommandParameter="{Binding}"
+                                    <Button  Style="{StaticResource buttonDataTemplate}" Content="Edit"  CommandParameter="{Binding}"
                                         Command="{Binding Path=DataContext.loadEditProductionCommand, 
                                     RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
                                 </DataTemplate>
@@ -40,7 +40,7 @@
                         <GridViewColumn  x:Name="gridV">
                             <GridViewColumn.CellTemplate >
                                 <DataTemplate>
-                                    <Button Content="Overheads"  CommandParameter="{Binding}"
+                                    <Button  Style="{StaticResource buttonDataTemplate}" Content="Overheads"  CommandParameter="{Binding}"
                                         Command="{Binding Path=DataContext.loadOverheadCommand, 
                                     RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
 
@@ -50,7 +50,7 @@
                         <GridViewColumn >
                             <GridViewColumn.CellTemplate >
                                 <DataTemplate>
-                                    <Button Content="Product"  CommandParameter="{Binding}"
+                                    <Button Style="{StaticResource buttonDataTemplate}" Content="Product"  CommandParameter="{Binding}"
                                         Command="{Binding Path=DataContext.loadProductCommand, 
                                     RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
 
@@ -60,7 +60,7 @@
                         <GridViewColumn >
                             <GridViewColumn.CellTemplate >
                                 <DataTemplate>
-                                    <Button Content="Move Product"  CommandParameter="{Binding}"
+                                    <Button Style="{StaticResource buttonDataTemplate}" Content="Move Product"  CommandParameter="{Binding}"
                                         Command="{Binding Path=DataContext.loadManageProduction, 
                                     RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
                                 </DataTemplate>
@@ -69,7 +69,7 @@
                         <GridViewColumn >
                             <GridViewColumn.CellTemplate >
                                 <DataTemplate>
-                                    <Button Content="Recipe"  CommandParameter="{Binding}"
+                                    <Button Style="{StaticResource buttonDataTemplate}" Content="Recipe"  CommandParameter="{Binding}"
                                         Command="{Binding Path=DataContext.loadIngredentCommand, 
                                     RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
                                 </DataTemplate>
@@ -78,7 +78,7 @@
                         <GridViewColumn >
                             <GridViewColumn.CellTemplate >
                                 <DataTemplate>
-                                    <Button Content="Approve"  CommandParameter="{Binding}"
+                                    <Button Style="{StaticResource buttonDataTemplate}" Content="Approve"  CommandParameter="{Binding}"
                                         Command="{Binding Path=DataContext.approveProductionCommand, 
                                     RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
                                 </DataTemplate>
@@ -87,7 +87,7 @@
                         <GridViewColumn >
                             <GridViewColumn.CellTemplate >
                                 <DataTemplate>
-                                    <Button Content="Report"  CommandParameter="{Binding}"
+                                    <Button Style="{StaticResource buttonDataTemplate}" Content="Report"  CommandParameter="{Binding}"
                                         Command="{Binding Path=DataContext.reportCommand, 
                                     RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
                                 </DataTemplate>

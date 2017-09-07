@@ -22,7 +22,7 @@
         <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center">Select Ingredient</TextBlock>
         <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center">Select Amount</TextBlock>
 
-        <ComboBox Height="30" SelectedValue="{Binding prodIngredient.ingredentId,Mode=TwoWay}"  Grid.Row="1" Grid.Column="1" 
+        <ComboBox IsEnabled="False" Height="30" SelectedValue="{Binding prodIngredient.ingredentId,Mode=TwoWay}"  Grid.Row="1" Grid.Column="1" 
                   ItemsSource="{Binding ingredents}" DisplayMemberPath="ingredentNameDisplay" SelectedValuePath="id"></ComboBox>
         <TextBox Height="30" Grid.Row="2" Grid.Column="1" Text="{Binding prodIngredient.amount,Mode=TwoWay}"></TextBox>
 

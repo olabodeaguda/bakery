@@ -139,9 +139,10 @@ namespace BakeryPR.Models
             }
         }
 
-
-
-
+        public double totalCost
+        {
+            get { return this.overheadCost + this.ingredientCost; }
+        }
 
         #region property change
 

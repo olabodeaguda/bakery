@@ -29,7 +29,7 @@
         </Grid.ColumnDefinitions>
         <TextBlock Style="{StaticResource headings}"  Grid.ColumnSpan="2" >Add User</TextBlock>
 
-        <TextBlock Grid.Row="1"  Height="30" VerticalAlignment="Center" >Username</TextBlock>
+        <TextBlock Grid.Row="1"  Height="30" VerticalAlignment="Center" Foreground="#FF5E3C3D" >Username</TextBlock>
         <TextBlock Grid.Row="2" Height="30" >Surname</TextBlock>
         <TextBlock Grid.Row="3"  Height="30" >Other Names</TextBlock>
         <TextBlock Grid.Row="4"  Height="30" >Password</TextBlock>

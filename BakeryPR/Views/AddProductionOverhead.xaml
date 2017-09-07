@@ -70,7 +70,7 @@
                         <GridViewColumn Width="200"  HeaderContainerStyle="{StaticResource ListViewStyle}" 
                                     Header="Overhead Name"  DisplayMemberBinding="{Binding overheadName}" />
                         <GridViewColumn Width="100" HeaderContainerStyle="{StaticResource ListViewStyle}" 
-                                    Header="Amount(Naira)" DisplayMemberBinding="{Binding overheadCount}" />
+                                    Header="Amount(Naira)" DisplayMemberBinding="{Binding overheadCount, StringFormat='# {0:0,0.00}'}" />
 
                     </GridView>
                 </ListView.View>

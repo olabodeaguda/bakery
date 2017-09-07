@@ -17,7 +17,7 @@
         <TextBlock Style="{StaticResource headings}" >Edit Overhead</TextBlock>
         <StackPanel Grid.Row="1">
             <TextBlock>Select overhead</TextBlock>
-            <ComboBox HorizontalAlignment="Left" Width="250" 
+            <ComboBox IsEnabled="False" HorizontalAlignment="Left" Width="250" 
                       SelectedValue="{Binding prodOverhead.overheadId,Mode=TwoWay}"  
                        Grid.Column="1" ItemsSource="{Binding overheads}" 
                   DisplayMemberPath="name" SelectedValuePath="id" Margin="5,5,0,5" Height="30"></ComboBox>

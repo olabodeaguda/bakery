@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -78,7 +79,7 @@ namespace BakeryPR.ModelView
                         {
                             return;
                         }
-                        
+
 
                         Production p = (Production)s;
                         await Task.Run(() =>
@@ -921,9 +922,25 @@ namespace BakeryPR.ModelView
             {
                 _productionIngredents = value;
                 this.totalProdIngredent = $"Total Dough Weight {value.Sum(x => x.amount)}kg";
+                this.totalProdCost =$"Total Ingredient Cost #{ string.Format(CultureInfo.InvariantCulture, "{0:N0}", Math.Round(value.Sum(x => (x.unitCost * x.amount)), 2))}";
+                //$"Total Ingredient Cost #{Math.Round(value.Sum(x => (x.unitCost * x.amount)),2)}";
                 this.NotifyPropertyChanged("productionIngredents");
             }
         }
+
+        private string _totalProdCost;
+
+        public string totalProdCost
+        {
+            get { return _totalProdCost; }
+            set
+            {
+                _totalProdCost = value;
+
+                this.NotifyPropertyChanged("totalProdCost");
+            }
+        }
+
 
         private string _productionName;
 

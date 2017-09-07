@@ -79,9 +79,11 @@
                         <GridViewColumn Width="100" HeaderContainerStyle="{StaticResource ListViewStyle}" 
                                     Header="Quantity" DisplayMemberBinding="{Binding quantity}" />
                         <GridViewColumn Width="200" HeaderContainerStyle="{StaticResource ListViewStyle}" 
-                                    Header="Overhead Cost" DisplayMemberBinding="{Binding overheadCost, StringFormat='# {0:0,0.00}'}" />
+                                    Header="Overhead Cost (in Naira)" DisplayMemberBinding="{Binding overheadCost, StringFormat='# {0:0,0.00}'}" />
                         <GridViewColumn Width="200" HeaderContainerStyle="{StaticResource ListViewStyle}" 
-                                    Header="Ingredient Cost" DisplayMemberBinding="{Binding ingredientCost, StringFormat='# {0:0,0.00}'}" />
+                                    Header="Ingredient Cost (in Naira)" DisplayMemberBinding="{Binding ingredientCost, StringFormat='# {0:0,0.00}'}" />
+                        <GridViewColumn Width="200" HeaderContainerStyle="{StaticResource ListViewStyle}" 
+                                    Header="Total Cost (in Naira)" DisplayMemberBinding="{Binding totalCost, StringFormat='# {0:0,0.00}'}" />
                         <GridViewColumn Width="200" HeaderContainerStyle="{StaticResource ListViewStyle}" 
                                     Header="Total Weight" DisplayMemberBinding="{Binding totalWeight}" />
                     </GridView>

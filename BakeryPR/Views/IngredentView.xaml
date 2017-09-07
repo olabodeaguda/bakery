@@ -27,7 +27,7 @@
                     <GridViewColumn  x:Name="gridV">
                         <GridViewColumn.CellTemplate >
                             <DataTemplate>
-                                <Button Content="Edit"  CommandParameter="{Binding}"
+                                <Button Style="{StaticResource buttonDataTemplate}" Content="Edit"  CommandParameter="{Binding}"
                                         Command="{Binding Path=DataContext.loadEditCommand, 
                                     RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
 
@@ -37,7 +37,7 @@
                     <GridViewColumn>
                         <GridViewColumn.CellTemplate >
                             <DataTemplate>
-                                <Button Content="Replenish Ingredient"  CommandParameter="{Binding}"
+                                <Button  Style="{StaticResource buttonDataTemplate}" Content="Replenish Ingredient"  CommandParameter="{Binding}"
                                         Command="{Binding Path=DataContext.loadUpdateInventoryCommand, 
                                     RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
 

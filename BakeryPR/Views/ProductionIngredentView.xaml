@@ -8,7 +8,7 @@
         Title="Production Ingredent"  Height="400" Width="850" Style="{StaticResource {x:Type Window}}" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Grid Margin="5">
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="100"></RowDefinition>
             <RowDefinition Height="5"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
@@ -18,7 +18,10 @@
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <TextBlock Style="{StaticResource headings}" Text="{Binding productionName,Mode=TwoWay}"></TextBlock>
-            <TextBlock Style="{StaticResource headings}" Text="{Binding totalProdIngredent,Mode=TwoWay}" Grid.Column="1"></TextBlock>
+            <StackPanel Grid.Column="1">
+                <TextBlock Style="{StaticResource headings}" Text="{Binding totalProdIngredent,Mode=TwoWay}" ></TextBlock>
+                <TextBlock Style="{StaticResource headings}" Text="{Binding totalProdCost,Mode=TwoWay}" Grid.Column="1"></TextBlock>
+            </StackPanel>
         </Grid>
 
         <!--<Button Command="{Binding loadAddProductionIngredient}" Margin="5 0 0 5" Grid.Row="1" Width="100" HorizontalAlignment="Left">Add</Button>-->
