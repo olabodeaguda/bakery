@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:BakeryPR.Views"
         xmlns:vm="clr-namespace:BakeryPR.ModelView"
         mc:Ignorable="d"
-        Title="Add Product" Height="490" Width="450" Style="{StaticResource {x:Type Window}}" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+        Title="{Binding title}" Height="490" Width="450" Style="{StaticResource {x:Type Window}}" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <!--<Window.DataContext>
         <vm:ProductViewModel></vm:ProductViewModel>
     </Window.DataContext>-->

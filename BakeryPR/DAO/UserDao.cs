@@ -104,10 +104,14 @@ namespace BakeryPR.DAO
             List<Profile> lst = new List<Profile>();
             using (SQLiteConnection conn = new SQLiteConnection(connectionString))
             {
+                String query = "select profile.*,Role.name as roleName from profile ";
+                query = query + "left join userRole on userRole.userId = profile.id ";
+                query = query + "left join Role on Role.id = userRole.roleId ";
+
                 conn.Open();
                 DataSet dt = new DataSet();
                 SQLiteCommand cmd = new SQLiteCommand(conn);
-                cmd.CommandText = "select * from profile order by id";
+                cmd.CommandText = query;
                 cmd.CommandType = CommandType.Text;
                 this.SQLiteAdaptor(dt, cmd);
 
@@ -118,7 +122,8 @@ namespace BakeryPR.DAO
                     pwd = x["pwd"].ToString(),
                     status = x["status"].ToString(),
                     surname = x["surname"].ToString(),
-                    username = x["username"].ToString()
+                    username = x["username"].ToString(),
+                    roleName = x["roleName"].ToString()
                 }).ToList();
             }
 
@@ -220,9 +225,7 @@ namespace BakeryPR.DAO
 
             return false;
         }
-
-
-
+        
         public List<DropdownModel> lstUserStatus()
         {
             return Enum.GetNames(typeof(UserSatus)).Select(x => new DropdownModel() { valuesId = x, value = x }).ToList();

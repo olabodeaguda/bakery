@@ -1,4 +1,5 @@
-﻿using BakeryPR.Utilities;
+﻿using BakeryPR.DAO;
+using BakeryPR.Utilities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,6 +12,21 @@ namespace BakeryPR.ModelView
 {
     public class UCDashboardModelView : INotifyPropertyChanged
     {
+        public string title
+        {
+            get
+            {
+                return companyDetailDao.Title();
+            }
+        }
+
+        public CompanyDetailDao companyDetailDao
+        {
+            get
+            {
+                return new CompanyDetailDao();
+            }
+        }
         public double winHeight
         {
             get

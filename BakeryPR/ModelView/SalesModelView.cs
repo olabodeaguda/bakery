@@ -15,6 +15,21 @@ namespace BakeryPR.ModelView
 {
     public class SalesModelView : INotifyPropertyChanged
     {
+        public string title
+        {
+            get
+            {
+                return companyDetailDao.Title();
+            }
+        }
+
+        public CompanyDetailDao companyDetailDao
+        {
+            get
+            {
+                return new CompanyDetailDao();
+            }
+        }
         private string _searchHisory;
 
         public string searchHisory

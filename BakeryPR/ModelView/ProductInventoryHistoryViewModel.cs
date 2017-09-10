@@ -13,6 +13,21 @@ namespace BakeryPR.ModelView
 {
     public class ProductInventoryHistoryViewModel : INotifyPropertyChanged
     {
+        public string title
+        {
+            get
+            {
+                return companyDetailDao.Title();
+            }
+        }
+
+        public CompanyDetailDao companyDetailDao
+        {
+            get
+            {
+                return new CompanyDetailDao();
+            }
+        }
         public ProductInventoryHistoryDao piDao
         {
             get

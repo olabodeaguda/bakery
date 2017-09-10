@@ -15,7 +15,21 @@ namespace BakeryPR.ModelView
 {
     public class ProductViewModel : INotifyPropertyChanged
     {
+        public string title
+        {
+            get
+            {
+                return companyDetailDao.Title();
+            }
+        }
 
+        public CompanyDetailDao companyDetailDao
+        {
+            get
+            {
+                return new CompanyDetailDao();
+            }
+        }
         public DelegateCommand<object> reportCommand
         {
             get

@@ -15,6 +15,22 @@ namespace BakeryPR.ModelView
 {
     public class OverheadModelView : INotifyPropertyChanged
     {
+        public string title
+        {
+            get
+            {
+                return companyDetailDao.Title();
+            }
+        }
+
+        public CompanyDetailDao companyDetailDao
+        {
+            get
+            {
+                return new CompanyDetailDao();
+            }
+        }
+
         public DelegateCommand<object> loadCommand
         {
             get

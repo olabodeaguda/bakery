@@ -52,6 +52,9 @@ namespace BakeryPR.Utilities
                 case "grpOverhead":
                     title = "Group Overhead";
                     return new GroupOverhead();
+                case "company":
+                    title = "About Company";
+                    return new CompanyRegistration();
                 default:
                     title = "Error";
                     return new ErrorView();

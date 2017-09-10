@@ -69,6 +69,18 @@ namespace BakeryPR.Models
             }
         }
 
+        private double _costOfPackage;
+
+        public double costOfPackage
+        {
+            get { return _costOfPackage; }
+            set
+            {
+                _costOfPackage = value;
+                this.NotifyPropertyChanged("costOfPackage");
+            }
+        }
+
 
 
         private string _productName;
@@ -141,7 +153,7 @@ namespace BakeryPR.Models
 
         public double totalCost
         {
-            get { return this.overheadCost + this.ingredientCost; }
+            get { return this.overheadCost + this.ingredientCost + this.costOfPackage; }
         }
 
         #region property change

@@ -7,7 +7,7 @@
         xmlns:vm="clr-namespace:BakeryPR.ModelView"
         xmlns:fa="http://schemas.fontawesome.io/icons/"
         mc:Ignorable="d"
-        Title="Add  Product" Height="400" Width="700" Style="{StaticResource {x:Type Window}}" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+        Title="{Binding title}" Height="400" Width="700" Style="{StaticResource {x:Type Window}}" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Window.DataContext>
         <vm:ProductionViewModel></vm:ProductionViewModel>
     </Window.DataContext>
@@ -78,6 +78,8 @@
                                     Header="Product"  DisplayMemberBinding="{Binding productName}" />
                         <GridViewColumn Width="100" HeaderContainerStyle="{StaticResource ListViewStyle}" 
                                     Header="Quantity" DisplayMemberBinding="{Binding quantity}" />
+                        <GridViewColumn Width="100" HeaderContainerStyle="{StaticResource ListViewStyle}" 
+                                    Header="Cost of Package" DisplayMemberBinding="{Binding costOfPackage, StringFormat='# {0:0,0.00}'}" />
                         <GridViewColumn Width="200" HeaderContainerStyle="{StaticResource ListViewStyle}" 
                                     Header="Overhead Cost (in Naira)" DisplayMemberBinding="{Binding overheadCost, StringFormat='# {0:0,0.00}'}" />
                         <GridViewColumn Width="200" HeaderContainerStyle="{StaticResource ListViewStyle}" 

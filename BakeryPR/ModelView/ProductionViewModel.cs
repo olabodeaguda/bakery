@@ -16,9 +16,24 @@ namespace BakeryPR.ModelView
 {
     public class ProductionViewModel : INotifyPropertyChanged
     {
-        private bool _isBusyVisible = false;
+        public string title
+        {
+            get
+            {
+                return companyDetailDao.Title();
+            }
+        }
 
-        public bool isBusyVisible
+        public CompanyDetailDao companyDetailDao
+        {
+            get
+            {
+                return new CompanyDetailDao();
+            }
+        }
+        private Visibility _isBusyVisible = Visibility.Collapsed;
+
+        public Visibility isBusyVisible
         {
             get { return _isBusyVisible; }
             set
@@ -72,7 +87,7 @@ namespace BakeryPR.ModelView
 
                         if (result == true)
                         {
-                            isBusyVisible = true;
+                            isBusyVisible = Visibility.Visible;
                             filename = dlg.FileName;
                         }
                         else
@@ -116,7 +131,7 @@ namespace BakeryPR.ModelView
                             }
 
                         });
-                        this.isBusyVisible = false;
+                        this.isBusyVisible = Visibility.Collapsed;
                     }
                     catch (Exception x)
                     {
@@ -167,28 +182,15 @@ namespace BakeryPR.ModelView
 
                             if (checkResource.success)
                             {
-                                bool isUpdateRecipe = false;
                                 Production oldP = dao.ProductionId(this.production.id);
-                                //if (oldP.recipeId != this.production.recipeId && oldP.quantity == this.production.quantity)
-                                //{
-                                //    isUpdateRecipe = true;
-                                //}
                                 bool sd = false;
-
-                                //if (!isUpdateRecipe)
-                                //{
-                                //    sd = dao.update(this.production);
-                                //}
-                                //else
-                                //{
                                 string query = dao.updateProductionQuery(this.production);
                                 query = query + dao.deleteProductionQuery(this.production);
                                 query = query + overheadDao.deleteProductionQuery(this.production);
                                 query = query + rdao.addProdIngredentDBQuery(this.production);
                                 query = query + ovDetilsDao.ProductionInsert(this.production.quantity, production.id);
-
+                                query = query + pProductDao.deleteProductionQuery(this.production);
                                 sd = dao.exec(query);
-                                //}
 
                                 if (sd)
                                 {
@@ -622,8 +624,6 @@ namespace BakeryPR.ModelView
             }
         }
 
-
-
         public DelegateCommand<object> UpdateProdproduct
         {
             get
@@ -641,8 +641,11 @@ namespace BakeryPR.ModelView
                              this.productionProduct.weight = pDuct.weight;
 
                              double overheadSum = this.prodDao.byproductionId(this.productionProduct.productionId).Sum(x => x.overheadCount);
+
                              double totalIngredentCost = this.PIDao.sumtotalIngredientInKg(this.productionProduct.productionId);
-                             double totalDough = this.pProductDao.byproductionId(this.productionProduct.productionId).Where(p => p.id != productionProduct.id).Sum(x => (x.weight * x.quantity));
+                             double totalDough = this.pProductDao.byproductionId(this.productionProduct.productionId)
+                             .Where(p => p.id != productionProduct.id).Sum(x => (x.weight * x.quantity));
+
                              totalDough = totalDough + (this.productionProduct.quantity * this.productionProduct.weight);
 
                              string query = "";
@@ -650,7 +653,14 @@ namespace BakeryPR.ModelView
                              {
                                  item.overheadCost = Math.Round(WeightAverageCostUtil.ProductOverheadUnitCost(item.weight, overheadSum, totalDough), 2);
                                  item.ingredientCost = Math.Round(WeightAverageCostUtil.ProductIngredentUnitCost(item.weight, totalIngredentCost, totalDough), 2);
-                                 query = query + this.pProductDao.updateString(item);
+                                 if (item.productId == this.productionProduct.productId)
+                                 {
+                                     query = query + this.pProductDao.updateString(item, this.productionProduct.quantity);
+                                 }
+                                 else
+                                 {
+                                     query = query + this.pProductDao.updateString(item);
+                                 }
                              }
 
                              bool result = pProductDao.execute(query);// pProductDao.update(this.productionProduct);
@@ -752,7 +762,6 @@ namespace BakeryPR.ModelView
                         AddProductionProduct prod = new AddProductionProduct();
                         productionProduct = new ProductionProduct();
                         this.production = (Production)s;
-                        //this.checkvalidation();
                         prod.DataContext = this;
                         prod.ShowDialog();
                     }
@@ -899,7 +908,6 @@ namespace BakeryPR.ModelView
                     {
                         ProductionIngredentView pi = new ProductionIngredentView();
                         this.production = (Production)s;
-                        //this.checkvalidation();
                         this.productionName = $"Production title {this.production.title}";
                         this.productionIngredents = new ObservableCollection<ProductionIngredent>(PIDao.byProductionId(this.production.id));
                         pi.DataContext = this;
@@ -921,9 +929,8 @@ namespace BakeryPR.ModelView
             set
             {
                 _productionIngredents = value;
-                this.totalProdIngredent = $"Total Dough Weight {value.Sum(x => x.amount)}kg";
-                this.totalProdCost =$"Total Ingredient Cost #{ string.Format(CultureInfo.InvariantCulture, "{0:N0}", Math.Round(value.Sum(x => (x.unitCost * x.amount)), 2))}";
-                //$"Total Ingredient Cost #{Math.Round(value.Sum(x => (x.unitCost * x.amount)),2)}";
+                this.totalProdIngredent = $"Bulk Dough Weight {value.Sum(x => x.amount)}kg";
+                this.totalProdCost = $"Total Ingredient Cost #{ string.Format(CultureInfo.InvariantCulture, "{0:N0}", Math.Round(value.Sum(x => (x.unitCost * x.amount)), 2))}";
                 this.NotifyPropertyChanged("productionIngredents");
             }
         }
@@ -1147,7 +1154,11 @@ namespace BakeryPR.ModelView
             {
                 List<ProductionProduct> lst = pProductDao.byproductionId(this.production.id);
                 _mpp = new ObservableCollection<ProductionProduct>(lst);
-                totalProductWeight = $"Product Summation:  {pProductDao.sumTotalProductInKg(lst)}kg";
+                var productWeight = pProductDao.sumTotalProductInKg(lst);
+                totalProductWeight = productWeight.ToString();
+                var recipeWeight = PIDao.byProductionId(this.production.id).Sum(x => x.amount);
+                totalRecipeDough = recipeWeight.ToString();
+                totalDoughDiff = $"{(productWeight > recipeWeight ? (productWeight - recipeWeight) : (recipeWeight - productWeight))}";
                 return _mpp;
             }
             set
@@ -1164,10 +1175,37 @@ namespace BakeryPR.ModelView
             get { return _totalProductWeight; }
             set
             {
-                _totalProductWeight = value;
+                _totalProductWeight = $"Product Dough Weight:  {value}kg";
                 this.NotifyPropertyChanged("totalProductWeight");
             }
         }
+
+        private string _totalRecipeDough;
+
+        public string totalRecipeDough
+        {
+            get { return _totalRecipeDough; }
+            set
+            {
+                _totalRecipeDough = $"Recipe Dough Weight:  {value}kg";
+                this.NotifyPropertyChanged("totalRecipeDough");
+            }
+        }
+
+        private string _totalDoughDiff;
+
+        public string totalDoughDiff
+        {
+            get { return _totalDoughDiff; }
+            set
+            {
+                _totalDoughDiff = $"Dough Weight Difference:  {value}kg";
+                this.NotifyPropertyChanged("totalDoughDiff");
+            }
+        }
+
+
+
 
         public DelegateCommand<object> loadManageProduction
         {

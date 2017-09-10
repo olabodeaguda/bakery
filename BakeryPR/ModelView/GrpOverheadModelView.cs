@@ -15,6 +15,21 @@ namespace BakeryPR.ModelView
 {
     public class GrpOverheadModelView : INotifyPropertyChanged
     {
+        public string title
+        {
+            get
+            {
+                return companyDetailDao.Title();
+            }
+        }
+
+        public CompanyDetailDao companyDetailDao
+        {
+            get
+            {
+                return new CompanyDetailDao();
+            }
+        }
         private OverheadDetailsGroup _overheaddetailGrp = new OverheadDetailsGroup();
 
         public OverheadDetailsGroup overheaddetailGrp

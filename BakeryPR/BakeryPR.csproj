@@ -70,6 +70,9 @@
       <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\Microsoft.Expression.Interactions.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="NPOI, Version=2.3.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\NPOI.2.3.0\lib\net40\NPOI.dll</HintPath>
@@ -133,8 +136,10 @@
     <Compile Include="DAO\CartDao.cs" />
     <Compile Include="DAO\CartProductDao.cs" />
     <Compile Include="DAO\CommonDao.cs" />
+    <Compile Include="DAO\CompanyDetailDao.cs" />
     <Compile Include="DAO\IngredentDao.cs" />
     <Compile Include="DAO\InventoryHistoryDao.cs" />
+    <Compile Include="DAO\LicenseDao.cs" />
     <Compile Include="DAO\MeasureTypeDao.cs" />
     <Compile Include="DAO\OverheadDao.cs" />
     <Compile Include="DAO\OverheadDetailsDao.cs" />
@@ -149,9 +154,12 @@
     <Compile Include="DAO\RecipeIngredentDao.cs" />
     <Compile Include="DAO\RoleDao.cs" />
     <Compile Include="DAO\UserDao.cs" />
+    <Compile Include="ls\KeyModel.cs" />
+    <Compile Include="ls\Keys.cs" />
     <Compile Include="Models\CartModel.cs" />
     <Compile Include="Models\CartProductModel.cs" />
     <Compile Include="Models\ChangePwd.cs" />
+    <Compile Include="Models\CompanyDetail.cs" />
     <Compile Include="Models\DropdownModel.cs" />
     <Compile Include="Models\Error.cs" />
     <Compile Include="Models\ExcelModel.cs" />
@@ -159,6 +167,7 @@
     <Compile Include="Models\InventoryHistory.cs" />
     <Compile Include="Models\InventoryMode.cs" />
     <Compile Include="Models\ItemModel.cs" />
+    <Compile Include="Models\LicenseModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\MeasurementType.cs" />
     <Compile Include="Models\Overhead.cs" />
@@ -178,7 +187,9 @@
     <Compile Include="Models\SalesRevenueModel.cs" />
     <Compile Include="Models\UserRole.cs" />
     <Compile Include="Models\UserStatusModel.cs" />
+    <Compile Include="ModelView\CompanyDetailModelView.cs" />
     <Compile Include="ModelView\DashboardModelView.cs" />
+    <Compile Include="ModelView\FlashScreenModelView.cs" />
     <Compile Include="ModelView\GrpOverheadModelView.cs" />
     <Compile Include="ModelView\IngredentModelView.cs" />
     <Compile Include="ModelView\LoginModelView.cs" />
@@ -192,6 +203,7 @@
     <Compile Include="ModelView\SalesModelView.cs" />
     <Compile Include="ModelView\UCDashboardModelView.cs" />
     <Compile Include="ModelView\UserManagementModelView.cs" />
+    <Compile Include="ModelView\ValidateLicenseModelView.cs" />
     <Compile Include="Utilities\AppConfigUtils.cs" />
     <Compile Include="Utilities\CartStatus.cs" />
     <Compile Include="Utilities\DelegateCommand.cs" />
@@ -206,6 +218,7 @@
     <Compile Include="Utilities\ProductionStatus.cs" />
     <Compile Include="Utilities\SalesType.cs" />
     <Compile Include="Utilities\UserSatus.cs" />
+    <Compile Include="Utilities\ValidateField.cs" />
     <Compile Include="Utilities\WeightAverageCostUtil.cs" />
     <Compile Include="Views\addGroupOverhead.xaml.cs">
       <DependentUpon>addGroupOverhead.xaml</DependentUpon>
@@ -255,6 +268,12 @@
     <Compile Include="Views\ChangeUserStatus.xaml.cs">
       <DependentUpon>ChangeUserStatus.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\CompanyDetails.xaml.cs">
+      <DependentUpon>CompanyDetails.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CompanyRegistration.xaml.cs">
+      <DependentUpon>CompanyRegistration.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Dashboard.xaml.cs">
       <DependentUpon>Dashboard.xaml</DependentUpon>
     </Compile>
@@ -297,6 +316,9 @@
     </Compile>
     <Compile Include="Views\ErrorView.xaml.cs">
       <DependentUpon>ErrorView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FlashScreen.xaml.cs">
+      <DependentUpon>FlashScreen.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\GroupOverhead.xaml.cs">
       <DependentUpon>GroupOverhead.xaml</DependentUpon>
@@ -354,6 +376,9 @@
     </Compile>
     <Compile Include="Views\UserManagement.xaml.cs">
       <DependentUpon>UserManagement.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ValidateLicense.xaml.cs">
+      <DependentUpon>ValidateLicense.xaml</DependentUpon>
     </Compile>
     <Page Include="Views\addGroupOverhead.xaml">
       <SubType>Designer</SubType>
@@ -419,6 +444,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\CompanyDetails.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CompanyRegistration.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Dashboard.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -468,6 +501,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ErrorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\FlashScreen.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -547,6 +584,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\ValidateLicense.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -566,7 +607,11 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="bakery.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="bakeryPR.db" />
+    <None Include="bin\Debug\bakery.json" />
     <None Include="bin\Debug\bakeryPR.db" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -591,12 +636,12 @@
     <Content Include="bin\Debug\NPOI.OpenXml4Net.dll" />
     <Content Include="bin\Debug\NPOI.OpenXmlFormats.dll" />
     <Content Include="bin\Debug\Toxy.dll" />
+    <Resource Include="icn.ico" />
     <Resource Include="images\img1.png" />
     <Resource Include="images\img2.png" />
     <Resource Include="images\img3.png" />
     <Resource Include="images\img4.png" />
     <Resource Include="images\img5.png" />
-    <Resource Include="icn.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.105.2\build\net45\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.105.2\build\net45\System.Data.SQLite.Core.targets')" />

@@ -8,7 +8,7 @@
         xmlns:utility="clr-namespace:BakeryPR.Utilities"
         xmlns:fa="http://schemas.fontawesome.io/icons/"
         mc:Ignorable="d"
-        Title="Change User Status" Height="220" Width="400" Style="{StaticResource {x:Type Window}}" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+        Title="{Binding title}" Height="220" Width="400" Style="{StaticResource {x:Type Window}}" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Grid Margin="5">
         <Grid.RowDefinitions>
             <RowDefinition Height="50"></RowDefinition>
@@ -30,7 +30,7 @@
         </StackPanel>
         
         <StackPanel  Grid.Row="3" Grid.Column="3" Orientation="Horizontal" HorizontalAlignment="Right">
-            <fa:ImageAwesome Icon="Refresh" Spin="True" Visibility="{Binding isSpin,Mode=TwoWay}" Height="20" Width="30" />
+            <fa:ImageAwesome Icon="Spinner" Spin="True" Visibility="{Binding isSpin,Mode=TwoWay}" Height="20" Width="30" />
             <Button Style="{StaticResource btnSubmitStyle}" Width="120" Grid.Column="1" Command="{Binding ChangeUserStatusCommand}"
                     Height="Auto" IsDefault="True" >Ok</Button>
         </StackPanel>

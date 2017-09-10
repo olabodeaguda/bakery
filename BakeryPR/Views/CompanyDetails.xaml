@@ -1,0 +1,72 @@
+﻿<Window x:Class="BakeryPR.Views.CompanyDetails"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BakeryPR.Views"
+        mc:Ignorable="d"
+        xmlns:vm="clr-namespace:BakeryPR.ModelView"
+        Title="{Binding title}" Style="{StaticResource {x:Type Window}}" 
+        WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Width="450" Height="500">
+    <Grid Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="60"></RowDefinition>
+        </Grid.RowDefinitions>
+        <TextBlock Style="{StaticResource headings}" Margin="15,0,15.6,0" > Company Details</TextBlock>
+
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <StackPanel>
+                <TextBlock>Business Name</TextBlock>
+                <TextBox Width="200" HorizontalAlignment="Left" Height="30" Text="{Binding companyDetail.businessName,Mode=TwoWay}"></TextBox>
+            </StackPanel>
+            <StackPanel Grid.Row="1">
+                <TextBlock>Business Address</TextBlock>
+                <TextBox Width="200" HorizontalAlignment="Left" Height="30" Text="{Binding companyDetail.businessAddress,Mode=TwoWay}"></TextBox>
+            </StackPanel>
+            <StackPanel Grid.Row="2">
+                <TextBlock>Business Reg. Number</TextBlock>
+                <TextBox Width="200" HorizontalAlignment="Left" Height="30" Text="{Binding companyDetail.businessRegNUmber,Mode=TwoWay}"></TextBox>
+            </StackPanel>
+            <StackPanel Grid.Row="3">
+                <TextBlock>Business Reg. Type</TextBlock>
+                <ComboBox Width="200" HorizontalAlignment="Left" SelectedValuePath="Tag" Height="30" 
+                          SelectedValue="{Binding companyDetail.businessRegType,Mode=TwoWay}">
+                    <ComboBoxItem IsSelected="True" Tag="0">None</ComboBoxItem>
+                    <ComboBoxItem Tag="SOLE_PROPRIETORSHIP ">Sole Proprietorship</ComboBoxItem>
+                    <ComboBoxItem Tag="PARTNERSHIP">Partnership</ComboBoxItem>
+                    <ComboBoxItem Tag="LIMITED_LIABILITY">Limited Liability</ComboBoxItem>
+                </ComboBox>
+            </StackPanel>
+            <StackPanel Grid.Column="1">
+                <TextBlock>Contact Email</TextBlock>
+                <TextBox Width="200" HorizontalAlignment="Left" Height="30" Text="{Binding companyDetail.contactEmail,Mode=TwoWay}"></TextBox>
+            </StackPanel>
+            <StackPanel Grid.Column="1"  Grid.Row="1">
+                <TextBlock>Contact Name</TextBlock>
+                <TextBox Width="200" HorizontalAlignment="Left" Height="30" Text="{Binding companyDetail.contactName,Mode=TwoWay}"></TextBox>
+            </StackPanel>
+            <StackPanel Grid.Column="1"  Grid.Row="2">
+                <TextBlock>Contact Phone Number</TextBlock>
+                <TextBox Width="200" HorizontalAlignment="Left" Height="30" Text="{Binding companyDetail.contactPhoneNumber,Mode=TwoWay}"></TextBox>
+            </StackPanel>
+            <StackPanel Grid.Column="1"  Grid.Row="3">
+                <TextBlock>Business Email Address</TextBlock>
+                <TextBox Width="200" HorizontalAlignment="Left" Height="30" Text="{Binding companyDetail.emailAddress,Mode=TwoWay}"></TextBox>
+            </StackPanel>
+        </Grid>
+
+        <Button Grid.Row="2" Height="50" Width="100" HorizontalAlignment="Left" Command="{Binding AddCommand}">Save</Button>
+    </Grid>
+</Window>

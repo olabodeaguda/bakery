@@ -14,6 +14,25 @@ namespace BakeryPR.ModelView
 {
     public class LoginModelView : INotifyPropertyChanged
     {
+        public LicenseDao licenseDao
+        {
+            get
+            {
+                return new LicenseDao();
+            }
+        }
+
+        public DelegateCommand<object> InitializationCommand
+        {
+            get
+            {
+                return new DelegateCommand<object>((s) =>
+                {
+                    
+                });
+            }
+        }
+
         private LoginModel _loginmodel = new LoginModel();
 
         public LoginModel loginModel
@@ -48,7 +67,7 @@ namespace BakeryPR.ModelView
                     await Task.Run(() =>
                     {
                         try
-                        {                          
+                        {
                             if (string.IsNullOrEmpty(this.loginModel.username))
                             {
                                 throw new Exception("Username is required");
@@ -106,7 +125,17 @@ namespace BakeryPR.ModelView
                     {
                         if (this.loginModel.isLogin.Equals("1"))
                         {
-                            LoginView lv = (LoginView)Application.Current.MainWindow;
+                            licenseDao.UpdateLoadCount();
+                            LoginView lv = null;
+                            foreach (Window tm in Application.Current.Windows)
+                            {
+                                if (tm is LoginView)
+                                {
+                                    lv = (LoginView)tm;
+                                    break;
+                                }
+                            }
+
                             Dashboard dh = new Dashboard();
                             dh.Show();
                             if (lv != null)
@@ -149,5 +178,20 @@ namespace BakeryPR.ModelView
         }
         #endregion
 
+        public string title
+        {
+            get
+            {
+                return companyDetailDao.Title();
+            }
+        }
+
+        public CompanyDetailDao companyDetailDao
+        {
+            get
+            {
+                return new CompanyDetailDao();
+            }
+        }
     }
 }

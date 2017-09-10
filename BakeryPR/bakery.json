@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "bakery-179506",
+  "private_key_id": "cff733656b39e7fd9f3fc3760fd66c2f40eb242e",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCRRnBdbFro0t5p\nV8P38EFToIFalcb20pasdo2MFuyWqPyOsiHXxnl/bI4yQ1SKUYjrEQueCbe1Wtd0\n2QpmM9UCHqPbTVhX2F0H5k/KETRrT7qLscce0LzCBYxxX27R/mcKq4h7Eg/207tF\nhRYIkU8vgn581oEq1cHXlxmeZ9lXIrl34/Wybj7dG4cs8BUJCV9oXAbp//O0MRQy\nGuULykV0A4A0xgdGUapQyr/6Iew3aa0dEw227fDzVrVFqPd5QeBmGDxPx557ntkh\nCy3BE3Fh2WTSKON+OCKIK6T1HlG2w42rmaeDBsCSfq1btYydng8TPCRfXVXKY/v7\nveu7+PTrAgMBAAECggEAE3MAvCEzkpQYnrXXUKxjspR8fOosdwL+lRxSGv0+s3Tw\nSxJiIYc64Ophpy0IdnQwBniDu6bFZ4w/6C7ei4xI6j275jJWr3wSCGq3J/BhujQ0\nX1tvsxpzCu6/PLZwGcEbfnw0i3WBmaQDIG2O45rApTWtRX1aUafIidp63ZA9ssKJ\nua6MgWvn5kUc0KrAZHGjl4lFz5VFRD1qmjBMAaDnISnspBwr6MoqeH/FM0mD3nkN\nFuBrgi53s7fptzjeAaCmdPAW6nmIjH9AcgNXTVvmLAP6Z1/hwT73PCuHnoiwXMjX\nRgplOYrDi/05r/ZjWKozKXrCfKQyzyZMNWTsKR00wQKBgQDDi0XNwbmyeB3lXPU5\nlU5HnQyk/kFe9/OM0uJusBW9lFS4r/r5RbzJ8Y9vy8RTd3JM/9BNSh7c19Ffbwuc\nfU5XIRMYo68ZxC7HubphnNpSHo8/CODkn7SJWgXKXyWebjprRO0na7vnqmp/afiC\nLdgaOl8WHQKn0u6se4Lo3EIUewKBgQC+MIi8C02DwMCeyNCi3zfpXkd3Iwhf0oMB\nDVLGP1GKNLuBm/6UttHR4Xim+zn3hHn8J9ZReeGFmd51bub2bOfr14gXKwDL91dq\nPXtbjkasino4INzTAyO1VQw+E/MDiSg00LaPCA/vpIpbMUiz3dezf+8WkB7S+3PP\n46IT6YlOUQKBgEti/CxRDXhimpP8fIYQq7csMt3BMA6e5QRboPQvapJGB0uUfNtx\nKVFpkXT2R+At4qEQ1ouVkcRuZ8e1FfLk1Dj/BU+weych3S8eyV4sjHawVWVl1N4P\nPBjf3e+hMu2bbWZBknRqMm0j5B7vCeGWLwQdkN8DnCx7Q4y3qUaA8/DVAoGBAJxM\nwKJhW5OyfdpASI4Bii6EZ5D2PnSZSUY9D9CSys0c5xft/jtzP14PwRrhjdLnkWRz\nzMLqujcUq+iweqj7+WEtoM8BbUcyfyl1W4Jzm4tCxoyIHVJg2yCzwzrlJCq8tkkp\nWU6UnpwgCgBFsWz4HMOMmQ1e5aYYNiYb+eAJZejxAoGATI5FaQ5IimRagG3BQ5se\nifbo4uUX1PP0dgWcmrrwkEDFyz60A7KkIfOD6kRehgIx/WHsFHpAYXKU3Y4mbkn/\nnq60B+v18KQCy4uLfpc/pJ3e0vad/i5fcVYotp2KNNcKqlCPr6ngfxUYxdVSFTKc\nFG/FFW+lj833/p6k5VpFEoU=\n-----END PRIVATE KEY-----\n",
+  "client_email": "mosadmin@bakery-179506.iam.gserviceaccount.com",
+  "client_id": "102200514062616488929",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://accounts.google.com/o/oauth2/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/mosadmin%40bakery-179506.iam.gserviceaccount.com"
+}

@@ -13,7 +13,21 @@ namespace BakeryPR.ModelView
 {
     public class ProductionIngredientHistoryModelView : INotifyPropertyChanged
     {
+        public string title
+        {
+            get
+            {
+                return companyDetailDao.Title();
+            }
+        }
 
+        public CompanyDetailDao companyDetailDao
+        {
+            get
+            {
+                return new CompanyDetailDao();
+            }
+        }
         private int _selectIngredent;
 
         public int selectedIngredent

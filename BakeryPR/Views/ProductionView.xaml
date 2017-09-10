@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:BakeryPR.Views"
              xmlns:vm="clr-namespace:BakeryPR.ModelView"
+        xmlns:fa="http://schemas.fontawesome.io/icons/"
              xmlns:ac="clr-namespace:AdornedControl;assembly=AdornedControl"
              mc:Ignorable="d" 
              d:DesignHeight="{Binding winHeight}" d:DesignWidth="{Binding winWidth}">
@@ -17,100 +18,99 @@
             <RowDefinition Height="60"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
+        
         <Button Width="90" Height="40" HorizontalAlignment="Left" Command="{Binding loadCommand}">Add</Button>
-        <ac:AdornedControl Name="LoadingAdorner" IsAdornerVisible="{Binding isBusyVisible,Mode=TwoWay}" Grid.RowSpan="2" Grid.Row="1" >
-            <ac:AdornedControl.AdornerContent>
-                <local:LoadingWait></local:LoadingWait>
-            </ac:AdornedControl.AdornerContent>
-            <ListView x:Name="ProductLst"  
+        <ListView x:Name="ProductLst"  
                   ItemsSource="{Binding productions,Mode=TwoWay}" IsSynchronizedWithCurrentItem="True" HorizontalAlignment="Left" 
                   HorizontalContentAlignment="Left" Margin="5"  Grid.RowSpan="2" Grid.Row="1"  Width="{Binding winWidth}" >
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn>
-                            <GridViewColumn.CellTemplate >
-                                <DataTemplate>
-                                    <Button  Style="{StaticResource buttonDataTemplate}" Content="Edit"  CommandParameter="{Binding}"
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn>
+                        <GridViewColumn.CellTemplate >
+                            <DataTemplate>
+                                <Button  Style="{StaticResource buttonDataTemplate}" Content="Edit"  CommandParameter="{Binding}"
                                         Command="{Binding Path=DataContext.loadEditProductionCommand, 
                                     RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-
-                        <GridViewColumn  x:Name="gridV">
-                            <GridViewColumn.CellTemplate >
-                                <DataTemplate>
-                                    <Button  Style="{StaticResource buttonDataTemplate}" Content="Overheads"  CommandParameter="{Binding}"
-                                        Command="{Binding Path=DataContext.loadOverheadCommand, 
-                                    RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
-
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                        <GridViewColumn >
-                            <GridViewColumn.CellTemplate >
-                                <DataTemplate>
-                                    <Button Style="{StaticResource buttonDataTemplate}" Content="Product"  CommandParameter="{Binding}"
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn >
+                        <GridViewColumn.CellTemplate >
+                            <DataTemplate>
+                                <Button Style="{StaticResource buttonDataTemplate}" Content="Product"  CommandParameter="{Binding}"
                                         Command="{Binding Path=DataContext.loadProductCommand, 
                                     RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
 
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                        <GridViewColumn >
-                            <GridViewColumn.CellTemplate >
-                                <DataTemplate>
-                                    <Button Style="{StaticResource buttonDataTemplate}" Content="Move Product"  CommandParameter="{Binding}"
-                                        Command="{Binding Path=DataContext.loadManageProduction, 
-                                    RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                        <GridViewColumn >
-                            <GridViewColumn.CellTemplate >
-                                <DataTemplate>
-                                    <Button Style="{StaticResource buttonDataTemplate}" Content="Recipe"  CommandParameter="{Binding}"
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn >
+                        <GridViewColumn.CellTemplate >
+                            <DataTemplate>
+                                <Button Style="{StaticResource buttonDataTemplate}" Content="Recipe"  CommandParameter="{Binding}"
                                         Command="{Binding Path=DataContext.loadIngredentCommand, 
                                     RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                        <GridViewColumn >
-                            <GridViewColumn.CellTemplate >
-                                <DataTemplate>
-                                    <Button Style="{StaticResource buttonDataTemplate}" Content="Approve"  CommandParameter="{Binding}"
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn  x:Name="gridV">
+                        <GridViewColumn.CellTemplate >
+                            <DataTemplate>
+                                <Button  Style="{StaticResource buttonDataTemplate}" Content="Overheads"  CommandParameter="{Binding}"
+                                        Command="{Binding Path=DataContext.loadOverheadCommand, 
+                                    RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
+
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn >
+                        <GridViewColumn.CellTemplate >
+                            <DataTemplate>
+                                <Button Style="{StaticResource buttonDataTemplate}" Content="Approve"  CommandParameter="{Binding}"
                                         Command="{Binding Path=DataContext.approveProductionCommand, 
                                     RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                        <GridViewColumn >
-                            <GridViewColumn.CellTemplate >
-                                <DataTemplate>
-                                    <Button Style="{StaticResource buttonDataTemplate}" Content="Report"  CommandParameter="{Binding}"
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <GridViewColumn >
+                        <GridViewColumn.CellTemplate >
+                            <DataTemplate>
+                                <Button Style="{StaticResource buttonDataTemplate}" Content="Move Product"  CommandParameter="{Binding}"
+                                        Command="{Binding Path=DataContext.loadManageProduction, 
+                                    RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <GridViewColumn >
+                        <GridViewColumn.CellTemplate >
+                            <DataTemplate>
+                                <Button Style="{StaticResource buttonDataTemplate}" Content="Report"  CommandParameter="{Binding}"
                                         Command="{Binding Path=DataContext.reportCommand, 
                                     RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                        <GridViewColumn Width="200"  HeaderContainerStyle="{StaticResource ListViewStyle}" 
-                                    Header="Title"  DisplayMemberBinding="{Binding title}" />
-                        <GridViewColumn Width="200"  HeaderContainerStyle="{StaticResource ListViewStyle}" 
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Width="200"  HeaderContainerStyle="{StaticResource ListViewStyle}" 
+                                    Header="Title"  DisplayMemberBinding="{Binding title}"  />
+                    <GridViewColumn Width="200"  HeaderContainerStyle="{StaticResource ListViewStyle}" 
                                     Header="Recipe"  DisplayMemberBinding="{Binding recipeTitle}" />
-                        <GridViewColumn Width="200"  HeaderContainerStyle="{StaticResource ListViewStyle}" 
+                    <GridViewColumn Width="200"  HeaderContainerStyle="{StaticResource ListViewStyle}" 
                                     Header="Quantity of Flour (KG)"  DisplayMemberBinding="{Binding quantity}" />
-                        <GridViewColumn Width="100" HeaderContainerStyle="{StaticResource ListViewStyle}" 
+                    <GridViewColumn Width="100" HeaderContainerStyle="{StaticResource ListViewStyle}" 
                                     Header="Date Created" DisplayMemberBinding="{Binding dateCreated,StringFormat=yyyy-MM-dd}" />
-                        <GridViewColumn Width="100" HeaderContainerStyle="{StaticResource ListViewStyle}" 
+                    <GridViewColumn Width="100" HeaderContainerStyle="{StaticResource ListViewStyle}" 
                                     Header="Last Updated" DisplayMemberBinding="{Binding lastUpdated,StringFormat=yyyy-MM-dd}" />
-                        <GridViewColumn Width="100" HeaderContainerStyle="{StaticResource ListViewStyle}" 
+                    <GridViewColumn Width="100" HeaderContainerStyle="{StaticResource ListViewStyle}" 
                                     Header="Approval Status" DisplayMemberBinding="{Binding approval}" />
-                        <GridViewColumn Width="100" HeaderContainerStyle="{StaticResource ListViewStyle}" 
+                    <GridViewColumn Width="100" HeaderContainerStyle="{StaticResource ListViewStyle}" 
                                     Header="Approval By" DisplayMemberBinding="{Binding approveBy}" />
-                    </GridView>
-                </ListView.View>
-            </ListView>
+                </GridView>
+            </ListView.View>
+        </ListView>
 
-        </ac:AdornedControl>
+        <fa:ImageAwesome Icon="Spinner" Spin="True" Visibility="{Binding isBusyVisible,Mode=TwoWay}"
+                         Height="100" Width="80" SpinDuration="2" Grid.RowSpan="2" />
     </Grid>
 </UserControl>

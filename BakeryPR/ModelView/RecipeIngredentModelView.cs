@@ -15,6 +15,21 @@ namespace BakeryPR.ModelView
 {
     public class RecipeIngredentModelView : INotifyPropertyChanged
     {
+        public string title
+        {
+            get
+            {
+                return companyDetailDao.Title();
+            }
+        }
+
+        public CompanyDetailDao companyDetailDao
+        {
+            get
+            {
+                return new CompanyDetailDao();
+            }
+        }
         private bool _isAddIngredent;
 
         public bool isAddIngredent

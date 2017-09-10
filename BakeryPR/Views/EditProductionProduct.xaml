@@ -7,7 +7,7 @@
         xmlns:vm="clr-namespace:BakeryPR.ModelView"
         xmlns:fa="http://schemas.fontawesome.io/icons/"
         mc:Ignorable="d"
-        Title="Update Product" Height="300" Width="500" Style="{StaticResource {x:Type Window}}" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+        Title="{Binding title}" Height="300" Width="500" Style="{StaticResource {x:Type Window}}" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <!--<Window.DataContext>
         <vm:ProductionViewModel></vm:ProductionViewModel>
     </Window.DataContext>-->
@@ -34,7 +34,7 @@
 
         <StackPanel Grid.Column="1" Grid.Row="3" Orientation="Horizontal" Margin="3.8,8.6,-0.4,9.4">
             <Button Width="50" HorizontalAlignment="Left" Command="{Binding UpdateProdproduct}" Margin="12">Update</Button>
-            <fa:ImageAwesome Icon="Refresh" Spin="True" Visibility="{Binding isSpin,Mode=TwoWay}" Height="20" Width="30" />
+            <fa:ImageAwesome Icon="Spinner" Spin="True" Visibility="{Binding isSpin,Mode=TwoWay}" Height="20" Width="30" />
         </StackPanel>
 
     </Grid>

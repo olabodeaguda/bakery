@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BakeryPR.DAO;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -10,7 +11,21 @@ namespace BakeryPR.ModelView
 {
     public class Sales2ViewModel : INotifyPropertyChanged
     {
+        public string title
+        {
+            get
+            {
+                return companyDetailDao.Title();
+            }
+        }
 
+        public CompanyDetailDao companyDetailDao
+        {
+            get
+            {
+                return new CompanyDetailDao();
+            }
+        }
         public double winHeight
         {
             get

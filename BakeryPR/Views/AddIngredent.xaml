@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:BakeryPR.Views"
         xmlns:vm="clr-namespace:BakeryPR.ModelView"
         mc:Ignorable="d"
-        Title="Add Ingredent" Height="300" Width="450" Style="{StaticResource {x:Type Window}}" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+        Title="{Binding title}" Height="300" Width="450" Style="{StaticResource {x:Type Window}}" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Window.DataContext>
         <vm:IngredentModelView></vm:IngredentModelView>
     </Window.DataContext>

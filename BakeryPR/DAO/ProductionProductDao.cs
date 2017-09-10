@@ -122,7 +122,7 @@ namespace BakeryPR.DAO
                 conn.Open();
                 DataSet dt = new DataSet();
                 SQLiteCommand cmd = new SQLiteCommand(conn);
-                string query = "select productionProduct.*,product.descripton as productName,measurementType.measureTypeName,product.weight  from productionProduct ";
+                string query = "select productionProduct.*,product.descripton as productName,measurementType.measureTypeName,product.weight,product.costOfPackage  from productionProduct ";
                 query += "inner join product on product.id = productionProduct.productId ";
                 query += "inner join measurementType on measurementType.id = product.mTypeId where productionProduct.productionId = @productionId ";
 
@@ -130,20 +130,6 @@ namespace BakeryPR.DAO
                 cmd.CommandType = CommandType.Text;
                 cmd.Parameters.AddWithValue("@productionId", productionId);
                 this.SQLiteAdaptor(dt, cmd);
-
-                //lst = dt.Tables[0].Rows.Cast<DataRow>().Select(x => new ProductionProduct()
-                //{
-                //    id = int.Parse(x["id"].ToString()),
-                //    measureTypeName = x["measureTypeName"].ToString(),
-                //    productId = int.Parse(x["productId"].ToString()),
-                //    productionId = int.Parse(x["productionId"].ToString()),
-                //    quantity = int.Parse(x["quantity"].ToString()),
-                //    expectedQuantity = int.Parse(x["quantity"].ToString()),
-                //    productName = x["productName"].ToString(),
-                //    weight = double.Parse(x["weight"].ToString()),
-                //    ingredientCost = double.Parse(x["ingredentCost"].ToString()),
-                //    overheadCost = double.Parse(x["overheadCost"].ToString())
-                //}).ToList();
 
                 foreach (var x in dt.Tables[0].Rows.Cast<DataRow>())
                 {
@@ -163,6 +149,7 @@ namespace BakeryPR.DAO
                     }
                     pp.ingredientCost = double.Parse(x["ingredentCost"].ToString());
                     pp.overheadCost = double.Parse(x["overheadCost"].ToString());
+                    pp.costOfPackage = double.Parse(x["costOfPackage"].ToString());
                     lst.Add(pp);
                 }
 
@@ -186,11 +173,20 @@ namespace BakeryPR.DAO
             return $"UPDATE productionProduct set overheadCost='{pp.overheadCost}',ingredentCost='{pp.ingredientCost}' where id='{pp.id}' ;";
         }
 
+        public string updateString(ProductionProduct pp,int quantity)
+        {
+            return $"UPDATE productionProduct set quantity = '{quantity}',  overheadCost='{pp.overheadCost}',ingredentCost='{pp.ingredientCost}' where id='{pp.id}' ;";
+        }
+
         public string insertString(ProductionProduct pp)
         {
             return $"insert into productionProduct(productId,productionId,quantity,overheadCost,ingredentCost) " +
                 $"values('{pp.productId}','{pp.productionId}','{pp.quantity}','{pp.overheadCost}','{pp.ingredientCost}');";
         }
 
+        public string deleteProductionQuery(Production p)
+        {
+            return "delete from productionProduct where productionId = '" + p.id + "';";
+        }
     }
 }

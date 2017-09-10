@@ -5,14 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"        
         xmlns:vm="clr-namespace:BakeryPR.ModelView"
         xmlns:utility="clr-namespace:BakeryPR.Utilities"
+         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:fa="http://schemas.fontawesome.io/icons/"
         mc:Ignorable="d"
-        Title="Bakery Login"  Height="270" Width="300" 
+        Title="{Binding title}"  Height="270" Width="300" 
         Style="{StaticResource {x:Type Window}}" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Window.DataContext>
         <vm:LoginModelView></vm:LoginModelView>
     </Window.DataContext>
-    
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding InitializationCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <Grid Margin="5">
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
@@ -35,7 +40,7 @@
         </StackPanel>
 
         <StackPanel  Grid.Row="3" Grid.Column="3" Orientation="Horizontal" HorizontalAlignment="Right">
-            <fa:ImageAwesome Icon="Refresh" Spin="True" Visibility="{Binding isSpin,Mode=TwoWay}" Height="20" Width="30" />
+            <fa:ImageAwesome Icon="Spinner" Spin="True" Visibility="{Binding isSpin,Mode=TwoWay}" Height="20" Width="30" />
             <Button Style="{StaticResource btnSubmitStyle}" Width="120" Grid.Column="1" Command="{Binding loginCommand}"
                     Height="Auto" IsDefault="True"  >Login</Button>
         </StackPanel>

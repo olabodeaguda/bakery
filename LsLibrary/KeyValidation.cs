@@ -10,9 +10,14 @@ namespace LsLibrary
     {
         public bool validate(EncodingModel encodingmodel)
         {
-          //  byte[] bt = Encoding.ASCII.GetBytes();
-            //this.profile.pwd = Convert.ToBase64String(bt);
             return false;
         }
+
+        public string createLicense(EncodingModel encodingModel)
+        {
+
+            return null;
+        }
+
     }
 }

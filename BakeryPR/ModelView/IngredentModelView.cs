@@ -15,6 +15,21 @@ namespace BakeryPR.ModelView
 {
     public class IngredentModelView : INotifyPropertyChanged
     {
+        public string title
+        {
+            get
+            {
+                return companyDetailDao.Title();
+            }
+        }
+
+        public CompanyDetailDao companyDetailDao
+        {
+            get
+            {
+                return new CompanyDetailDao();
+            }
+        }
         public void loadAddWin(object param)
         {
             AddIngredent add = new AddIngredent();
@@ -172,14 +187,14 @@ namespace BakeryPR.ModelView
                         Ingredent ig = this.ingredent;
 
                         double val = 0;
-                        if (!double.TryParse(ig.newQuantity.ToString(), out val))
+                        if (!double.TryParse(ig.unitCost.ToString(), out val))
                         {
                             throw new Exception("Invalid input for quantity");
                         }
 
-                        if (ig.measureTypeName.ToLower() == "gram")
+                        if (ig.mTypeId == 2)
                         {
-                            ig.newQuantity = ig.newQuantity / 1000;
+                            ig.unitCost = ig.unitCost / 1000;
                             ig.mTypeId = 1;
                         }
 

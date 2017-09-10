@@ -16,6 +16,23 @@ namespace BakeryPR.ModelView
 {
     public class DashboardModelView : INotifyPropertyChanged
     {
+        public string titleBar
+        {
+            get
+            {
+                return companyDetailDao.Title();
+            }
+        }
+
+        public CompanyDetailDao companyDetailDao
+        {
+            get
+            {
+                return new CompanyDetailDao();
+            }
+        }
+
+
         public void Navigate(object obj)
         {
             this.userModel = appDao.read();
