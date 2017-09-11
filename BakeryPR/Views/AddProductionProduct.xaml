@@ -40,14 +40,19 @@
             </Grid.ColumnDefinitions>
             <TextBlock Padding="6" Margin="5" Height="30">Select Product</TextBlock>
             <TextBlock Padding="6" Margin="5" Height="30" Grid.Row="1" >Quantity</TextBlock>
+            <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Margin="209.4,0,32.8,50" Grid.RowSpan="2" >
+                <TextBlock Padding="6" Margin="5" Height="30" Text="{Binding productionProduct.weightMsg,Mode=TwoWay}"></TextBlock>
+                <TextBox Grid.Row="1" Grid.Column="1" Height="30" Width="200" Text="{Binding productionProduct.weight,Mode=TwoWay}"></TextBox>
+            </StackPanel>
+
 
             <ComboBox HorizontalAlignment="Left" Width="200" 
-                      SelectedValue="{Binding productionProduct.productId,Mode=TwoWay}"  
+                      SelectedValue="{Binding productionProduct.productId,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  
                        Grid.Column="1" ItemsSource="{Binding products}" 
                   DisplayMemberPath="descripton" SelectedValuePath="id" Margin="5,5,0,5" Height="30"></ComboBox>
             <TextBox Grid.Row="1" Grid.Column="1" Height="30" Text="{Binding productionProduct.quantity,Mode=TwoWay}"></TextBox>
 
-            <StackPanel Grid.Column="2" Orientation="Horizontal">
+            <StackPanel Grid.Column="1" Orientation="Horizontal" Grid.Row="1" Grid.ColumnSpan="2" Margin="209.4,0.4,22.8,0">
                 <Button Width="50"  HorizontalAlignment="Left" Command="{Binding addPProductCommand}" 
                         Margin="12" RenderTransformOrigin="0.457,0.554">Add</Button>
                 <fa:ImageAwesome Icon="Refresh" Spin="True" Visibility="{Binding isSpin,Mode=TwoWay}" Height="20" Width="30" />

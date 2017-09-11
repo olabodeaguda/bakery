@@ -14,7 +14,7 @@
             <RowDefinition></RowDefinition>
             <RowDefinition Height="60"></RowDefinition>
         </Grid.RowDefinitions>
-        <TextBlock Style="{StaticResource headings}" Margin="15,0,15.6,0" > Company Details</TextBlock>
+        <TextBlock Style="{StaticResource headings}" Margin="15,0,15.6,0" > Business Details</TextBlock>
 
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>

@@ -637,8 +637,13 @@ namespace BakeryPR.ModelView
                              this.isSpin = Visibility.Visible;
 
                              Product pDuct = productDao.byId(this.productionProduct.productId);
+                             double expectedW = 0.05 * pDuct.weight;
                              this.productionProduct.productionId = production.id;
-                             this.productionProduct.weight = pDuct.weight;
+
+                             if ((this.productionProduct.weight > (pDuct.weight + expectedW)) || (this.productionProduct.weight < (pDuct.weight - expectedW)))
+                             {
+                                 throw new Exception($"Product weight must not be greater than {Math.Round(pDuct.weight + expectedW, 2)} or less that {Math.Round(pDuct.weight - expectedW, 2)}");
+                             }
 
                              double overheadSum = this.prodDao.byproductionId(this.productionProduct.productionId).Sum(x => x.overheadCount);
 
@@ -651,14 +656,16 @@ namespace BakeryPR.ModelView
                              string query = "";
                              foreach (var item in this.productionProducts)
                              {
-                                 item.overheadCost = Math.Round(WeightAverageCostUtil.ProductOverheadUnitCost(item.weight, overheadSum, totalDough), 2);
-                                 item.ingredientCost = Math.Round(WeightAverageCostUtil.ProductIngredentUnitCost(item.weight, totalIngredentCost, totalDough), 2);
                                  if (item.productId == this.productionProduct.productId)
                                  {
-                                     query = query + this.pProductDao.updateString(item, this.productionProduct.quantity);
+                                     item.overheadCost = Math.Round(WeightAverageCostUtil.ProductOverheadUnitCost(this.productionProduct.weight, overheadSum, totalDough), 2);
+                                     item.ingredientCost = Math.Round(WeightAverageCostUtil.ProductIngredentUnitCost(this.productionProduct.weight, totalIngredentCost, totalDough), 2);
+                                     query = query + this.pProductDao.updateString(item, this.productionProduct.quantity,this.productionProduct.weight);
                                  }
                                  else
                                  {
+                                     item.overheadCost = Math.Round(WeightAverageCostUtil.ProductOverheadUnitCost(item.weight, overheadSum, totalDough), 2);
+                                     item.ingredientCost = Math.Round(WeightAverageCostUtil.ProductIngredentUnitCost(item.weight, totalIngredentCost, totalDough), 2);
                                      query = query + this.pProductDao.updateString(item);
                                  }
                              }
@@ -701,8 +708,13 @@ namespace BakeryPR.ModelView
                             if (production.id != -1)
                             {
                                 Product pDuct = productDao.byId(this.productionProduct.productId);
+                                double expectedW = 0.05 * pDuct.weight;
                                 this.productionProduct.productionId = production.id;
-                                this.productionProduct.weight = pDuct.weight;
+
+                                if ((this.productionProduct.weight > (pDuct.weight + expectedW)) || (this.productionProduct.weight < (pDuct.weight - expectedW)))
+                                {
+                                    throw new Exception($"Product weight must not be greater than {Math.Round(pDuct.weight + expectedW, 2)} or less that {Math.Round(pDuct.weight - expectedW, 2)}");
+                                }
 
                                 ProductionProduct pp = this.pProductDao.byProductionproductId(this.productionProduct.productionId,
                                     this.productionProduct.productId);
@@ -1251,7 +1263,7 @@ namespace BakeryPR.ModelView
         {
             get
             {
-                _totalProduction = $"Recipe Total: {this.totalP}Kg";
+                _totalProduction = $"Total Recipe Cost #{ string.Format(CultureInfo.InvariantCulture, "{0:N0}", Math.Round(this.totalP, 2))}";
                 return _totalProduction;
             }
             set

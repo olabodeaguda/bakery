@@ -18,11 +18,12 @@ namespace BakeryPR.DAO
             {
                 conn.Open();
                 SQLiteCommand cmd = new SQLiteCommand(conn);
-                cmd.CommandText = "insert into productionProduct(productId,productionId,quantity) " +
+                cmd.CommandText = "insert into productionProduct(productId,productionId,quantity,productWeight) " +
                     "values(@productId,@productionId,@quantity)";
                 cmd.Parameters.AddWithValue("@productId", values.productId);
                 cmd.Parameters.AddWithValue("@productionId", values.productionId);
                 cmd.Parameters.AddWithValue("@quantity", values.quantity);
+                cmd.Parameters.AddWithValue("@productWeight", values.weight);
                 cmd.CommandType = CommandType.Text;
                 int count = cmd.ExecuteNonQuery();
                 if (count > 0)
@@ -63,7 +64,7 @@ namespace BakeryPR.DAO
                 conn.Open();
                 DataSet dt = new DataSet();
                 SQLiteCommand cmd = new SQLiteCommand(conn);
-                string query = "select productionProduct.*,product.descripton as productName,measurementType.measureTypeName,product.weight  from productionProduct ";
+                string query = "select productionProduct.*,product.descripton as productName,measurementType.measureTypeName,productionProduct.productWeight as weight  from productionProduct ";
                 query += "inner join product on product.id = productionProduct.productId ";
                 query += "inner join measurementType on measurementType.id = product.mTypeId where productionProduct.productionId = @productionId and productionProduct.ProductId = @productId ";
 
@@ -104,7 +105,7 @@ namespace BakeryPR.DAO
                     pp.ingredientCost = double.Parse(x["ingredentCost"].ToString());
                     pp.overheadCost = double.Parse(x["overheadCost"].ToString());
 
-                    return pp; 
+                    return pp;
                 }
                 else
                 {
@@ -122,7 +123,7 @@ namespace BakeryPR.DAO
                 conn.Open();
                 DataSet dt = new DataSet();
                 SQLiteCommand cmd = new SQLiteCommand(conn);
-                string query = "select productionProduct.*,product.descripton as productName,measurementType.measureTypeName,product.weight,product.costOfPackage  from productionProduct ";
+                string query = "select productionProduct.*,product.descripton as productName,measurementType.measureTypeName,productionProduct.productWeight as weight,product.costOfPackage  from productionProduct ";
                 query += "inner join product on product.id = productionProduct.productId ";
                 query += "inner join measurementType on measurementType.id = product.mTypeId where productionProduct.productionId = @productionId ";
 
@@ -142,11 +143,12 @@ namespace BakeryPR.DAO
                     pp.expectedQuantity = int.Parse(x["quantity"].ToString());
                     pp.productName = x["productName"].ToString();
                     pp.weight = double.Parse(x["weight"].ToString());
-                    if (pp.measureTypeName.ToLower() == "gram")
-                    {
-                        pp.weight = pp.weight / 1000;
-                        pp.measureTypeName = "kg";
-                    }
+                    //if (pp.measureTypeName.ToLower() == "gram")
+                    //{
+                    //    pp.weight = pp.weight / 1000;
+                    //    pp.measureTypeName = "kg";
+                    //}
+
                     pp.ingredientCost = double.Parse(x["ingredentCost"].ToString());
                     pp.overheadCost = double.Parse(x["overheadCost"].ToString());
                     pp.costOfPackage = double.Parse(x["costOfPackage"].ToString());
@@ -160,12 +162,12 @@ namespace BakeryPR.DAO
 
         public double sumTotalProductIngram(List<ProductionProduct> e)
         {
-            return e.Sum(x => x.measureTypeName.ToLower().Equals("kg") ? ((x.weight * x.quantity) * 100) : (x.weight * x.quantity));
+            return e.Sum(x => x.measureTypeName.ToLower().Equals("kg") ? ((x.weight * x.quantity) / 1000) : (x.weight * x.quantity));
         }
 
         public double sumTotalProductInKg(List<ProductionProduct> e)
         {
-            return e.Sum(x => x.measureTypeName.ToLower().Equals("gram") ? ((x.weight * x.quantity) * 100) : (x.weight * x.quantity));
+            return e.Sum(x => x.measureTypeName.ToLower().Equals("gram") ? ((x.weight * x.quantity) * 1000) : (x.weight * x.quantity));
         }
 
         public string updateString(ProductionProduct pp)
@@ -173,15 +175,15 @@ namespace BakeryPR.DAO
             return $"UPDATE productionProduct set overheadCost='{pp.overheadCost}',ingredentCost='{pp.ingredientCost}' where id='{pp.id}' ;";
         }
 
-        public string updateString(ProductionProduct pp,int quantity)
+        public string updateString(ProductionProduct pp, int quantity, double weight)
         {
-            return $"UPDATE productionProduct set quantity = '{quantity}',  overheadCost='{pp.overheadCost}',ingredentCost='{pp.ingredientCost}' where id='{pp.id}' ;";
+            return $"UPDATE productionProduct set productWeight='{weight}', quantity = '{quantity}',  overheadCost='{pp.overheadCost}',ingredentCost='{pp.ingredientCost}' where id='{pp.id}' ;";
         }
 
         public string insertString(ProductionProduct pp)
         {
-            return $"insert into productionProduct(productId,productionId,quantity,overheadCost,ingredentCost) " +
-                $"values('{pp.productId}','{pp.productionId}','{pp.quantity}','{pp.overheadCost}','{pp.ingredientCost}');";
+            return $"insert into productionProduct(productId,productionId,quantity,overheadCost,ingredentCost,productWeight) " +
+                $"values('{pp.productId}','{pp.productionId}','{pp.quantity}','{pp.overheadCost}','{pp.ingredientCost}','{pp.weight}');";
         }
 
         public string deleteProductionQuery(Production p)

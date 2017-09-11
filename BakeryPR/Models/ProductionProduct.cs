@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BakeryPR.DAO;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -9,6 +10,28 @@ namespace BakeryPR.Models
 {
     public class ProductionProduct : INotifyPropertyChanged
     {
+
+        public ProductDao productDao
+        {
+            get
+            {
+                return new ProductDao();
+            }
+        }
+
+        private string _weightMsg = "Product Weight(Kg)";
+
+        public string weightMsg
+        {
+            get { return _weightMsg; }
+            set
+            {
+                _weightMsg = value;
+                this.NotifyPropertyChanged("weightMsg");
+            }
+        }
+
+
         private int _id;
 
         public int id
@@ -28,6 +51,19 @@ namespace BakeryPR.Models
             get { return _productId; }
             set
             {
+                if (_productId != value)
+                {
+                    Product pr = productDao.byId(value);
+                    weight = pr.weight;
+                    if (pr.measureTypeName.ToLower() == "kg")
+                    {
+                        weightMsg = "Product Weight(Kg)";
+                    }
+                    else
+                    {
+                        weightMsg = "Product Weight(Gram)";
+                    }
+                }
                 _productId = value;
                 this.NotifyPropertyChanged("productId");
             }

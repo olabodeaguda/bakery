@@ -24,10 +24,10 @@
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
-            <TextBlock Grid.Row="0" Text="{Binding totalProduction,Mode=TwoWay}"></TextBlock>
+            <!--<TextBlock Grid.Row="0" Text="{Binding totalProduction,Mode=TwoWay}"></TextBlock>-->
             <TextBlock Grid.Column="0" Grid.Row="1" Text="{Binding totalProductWeight,Mode=TwoWay}"></TextBlock>
-            <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding totalRecipeDough,Mode=TwoWay}"></TextBlock>
-            <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding totalDoughDiff,Mode=TwoWay}"></TextBlock>
+            <TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding totalRecipeDough,Mode=TwoWay}"></TextBlock>
+            <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding totalDoughDiff,Mode=TwoWay}"></TextBlock>
         </Grid>
         <ListView Grid.Row="2" x:Name="productLst" 
                   ItemsSource="{Binding mpp,Mode=TwoWay}" IsSynchronizedWithCurrentItem="True"  >
@@ -46,9 +46,7 @@
                     <GridViewColumn Width="200"  HeaderContainerStyle="{StaticResource ListViewStyle}" 
                                     Header="Product"  DisplayMemberBinding="{Binding productName}" />
                     <GridViewColumn Width="100" HeaderContainerStyle="{StaticResource ListViewStyle}" 
-                                    Header="Original Quantity" DisplayMemberBinding="{Binding quantity}" />
-                    <GridViewColumn Width="100" HeaderContainerStyle="{StaticResource ListViewStyle}" 
-                                    Header="Expected Quantity" DisplayMemberBinding="{Binding quantity}" />
+                                    Header="Quantity" DisplayMemberBinding="{Binding quantity}" />
                     <GridViewColumn Width="200" HeaderContainerStyle="{StaticResource ListViewStyle}" 
                                     Header="Total Weight" DisplayMemberBinding="{Binding totalWeight}" />
                 </GridView>
