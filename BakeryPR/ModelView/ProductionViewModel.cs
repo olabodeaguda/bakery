@@ -80,8 +80,8 @@ namespace BakeryPR.ModelView
                     try
                     {
                         Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
-                        dlg.DefaultExt = ".xlsx";
-                        dlg.Filter = "Excel Files|*.xlsx;";
+                        dlg.DefaultExt = ".pdf";
+                        dlg.Filter = "PDF files|*.pdf;";
 
                         Nullable<bool> result = dlg.ShowDialog();
 
@@ -95,18 +95,31 @@ namespace BakeryPR.ModelView
                             return;
                         }
 
-
                         Production p = (Production)s;
-                        await Task.Run(() =>
+                        await Task.Run(async () =>
                         {
+                            var pingredent = PIDao.byProductionId(p.id);
+                            string ingreTemp = "<table style='border-width: 1px;border-style: solid;border-color: black;'>";
+                            ingreTemp = ingreTemp + "<tr style='text-align:center;border-width: 1px;border-style: solid;border-color: black;'>";
+                            ingreTemp = ingreTemp + "<th style='text-align:center;border-width: 1px;border-style: solid;border-color: black;'>INGREDIENT NAME</th>";
+                            ingreTemp = ingreTemp + "<th style='text-align:center;border-width: 1px;border-style: solid;border-color: black;'>QUANTITY</th>";
+                            ingreTemp = ingreTemp + "<th style='text-align:center;border-width: 1px;border-style: solid;border-color: black;'>UNIT COST</th>";
+                            ingreTemp = ingreTemp + "<th style='text-align:center;border-width: 1px;border-style: solid;border-color: black;'>TOTAL COST</th>";
+                            ingreTemp = ingreTemp + "</tr>";
 
-                            List<ProductionCostModel> lst = PIDao.byProductionId(p.id).Select(x => new ProductionCostModel()
+                            foreach (var tm in pingredent)
                             {
-                                ingredentName = x.ingredentName,
-                                quantity = x.amount,
-                                UnitCost = x.unitCost,
-                                totalCost = x.amount * x.unitCost
-                            }).ToList();
+                                ingreTemp = ingreTemp + "<tr style='text-align:center;border-width: 1px;border-style: solid;border-color: black;'>";
+                                ingreTemp = ingreTemp + $"<td style='text-align:center;border-width: 1px;border-style: solid;border-color: black;'>{tm.ingredentName}</td>";
+                                ingreTemp = ingreTemp + $"<td style='text-align:center;border-width: 1px;border-style: solid;border-color: black;'>{tm.amount}{tm.measureType}</td>";
+                                ingreTemp = ingreTemp + $"<td style='text-align:center;border-width: 1px;border-style: solid;border-color: black;'>N{string.Format(CultureInfo.InvariantCulture, "{0:N0}", tm.unitCost)}/{tm.measureType}</td>";
+                                ingreTemp = ingreTemp + $"<td style='text-align:center;border-width: 1px;border-style: solid;border-color: black;'>N{string.Format(CultureInfo.InvariantCulture, "{0:N0}", tm.totalUnitCost)}</td>";
+                                ingreTemp = ingreTemp + $"</tr>";
+
+                                //ingreTemp = ingreTemp + $"<li>{tm.ingredentName} @ {tm.amount}{tm.measureType}\t  " +
+                                //$"  N{string.Format(CultureInfo.InvariantCulture, "{0:N0}", tm.unitCost)}/{tm.measureType}          N{string.Format(CultureInfo.InvariantCulture, "{0:N0}", tm.totalUnitCost)} </li>";
+                            }
+                            ingreTemp = ingreTemp + "</table>";
 
                             List<SalesRevenueModel> salesRM = cartDao.byDaily(p.dateCreated.ToString("yyyy-MM-dd"))
                             .Select(x => new SalesRevenueModel()
@@ -117,20 +130,50 @@ namespace BakeryPR.ModelView
                                 totalPrice = x.price
                             }).ToList();
 
-                            ExcelModel excelmodel = new ExcelModel()
-                            {
-                                ProductionCost = lst,
-                                SalesCost = salesRM,
-                                productionDate = $"{p.dateCreated.Day}/{p.dateCreated.Month}/{p.dateCreated.Year}"
-                            };
+                            string template = pDFReader.GetproductionReporttemplate();
+                            template = template.Replace("{{productionName}}", p.recipeTitle.ToUpper());
+                            template = template.Replace("{{companyName}}", title);
+                            template = template.Replace("{{date}}", p.dateCreated.ToString("dd-MM-yyyy"));
+                            template = template.Replace("{{productList}}", ingreTemp);
+                            template = template.Replace("{{bulkDoughWeight}}", $"{pingredent.Sum(x => x.amount)}");
+                            template = template.Replace("{{TotalPrice}}",
+                                $"{ string.Format(CultureInfo.InvariantCulture, "{0:N0}", Math.Round(pingredent.Sum(x => (x.unitCost * x.amount)), 2))}");
 
-                            if (excelmodel != null)
+                            var pOverhead = prodDao.byproductionId(p.id);
+                            string overh = "<table style='border-width: 1px;border-style: solid;border-color: black;'><tr style='text-align:center;border-width: 1px;border-style: solid;border-color: black;'><th style='text-align:center;border-width: 1px;border-style: solid;border-color: black;'>OVERHEAD</th><th style='text-align:center;border-width: 1px;border-style: solid;border-color: black;'>AMOUNT</th></tr>";
+
+                            foreach (var tm in pOverhead)
                             {
-                                ExcelU.Export(p.id, filename, excelmodel);
+                                overh = overh + $"<tr><td style='text-align:center;border-width: 1px;border-style: solid;border-color: black;'>{tm.overheadName}</td>" +
+                                $"<td style='text-align:center;border-width: 1px;border-style: solid;border-color: black;'>{string.Format(CultureInfo.InvariantCulture, "N{0:N0}", Math.Round(tm.overheadCount), 2)}</td></tr>";
+                            }
+                            overh = overh + $"<tr><td style='text-align:center;border-width: 1px;border-style: solid;border-color: black;'>Total </td>" +
+                            $"<td style='text-align:center;border-width: 1px;border-style: solid;border-color: black;'>{string.Format(CultureInfo.InvariantCulture, "N{0:N0}", Math.Round(pOverhead.Sum(x => x.overheadCount)), 2)}</td></tr>";
+                            overh = overh + "</table>";
+
+                            template = template.Replace("{{OverheadList}}", overh);
+
+                            var t = pProductDao.byproductionId(p.id);
+                            string pducts = "";
+                            foreach (var tm in pProductDao.byproductionId(p.id))
+                            {
+                                pducts = pducts + "<tr>";
+                                pducts = pducts + $"<td style='text-align:center;border-width: 1px;border-style: solid;border-color: black;'> {tm.productName} </td>";
+                                pducts = pducts + $"<td style='text-align:center;border-width: 1px;border-style: solid;border-color: black;'> {tm.quantity}</td>";
+                                pducts = pducts + $"<td style='text-align:center;border-width: 1px;border-style: solid;border-color: black;'> {tm.ingredientCost} </td>";
+                                pducts = pducts + $"<td style='text-align:center;border-width: 1px;border-style: solid;border-color: black;'> {tm.overheadCost} </td>";
+                                pducts = pducts + $"<td style='text-align:center;border-width: 1px;border-style: solid;border-color: black;'> {tm.costOfPackage} </td>";
+                                pducts = pducts + $"<td style='text-align:center;border-width: 1px;border-style: solid;border-color: black;'> {tm.totalCost} </td>";
+                                pducts = pducts + "</tr>";
                             }
 
+                            template = template.Replace("{{products}}",pducts);
+                            await pDFReader.GetProductionReport(template, filename);
+
+                            MessageBox.Show("Report has been generated was successfully");
+
+                            this.isBusyVisible = Visibility.Collapsed;
                         });
-                        this.isBusyVisible = Visibility.Collapsed;
                     }
                     catch (Exception x)
                     {
@@ -140,6 +183,15 @@ namespace BakeryPR.ModelView
                 });
             }
         }
+
+        public PDFReader pDFReader
+        {
+            get
+            {
+                return new PDFReader();
+            }
+        }
+
         public DelegateCommand<object> loadEditProductionCommand
         {
             get
@@ -659,7 +711,7 @@ namespace BakeryPR.ModelView
                                  {
                                      item.overheadCost = Math.Round(WeightAverageCostUtil.ProductOverheadUnitCost(this.productionProduct.weight, overheadSum, totalDough), 2);
                                      item.ingredientCost = Math.Round(WeightAverageCostUtil.ProductIngredentUnitCost(this.productionProduct.weight, totalIngredentCost, totalDough), 2);
-                                     query = query + this.pProductDao.updateString(item, this.productionProduct.quantity,this.productionProduct.weight);
+                                     query = query + this.pProductDao.updateString(item, this.productionProduct.quantity, this.productionProduct.weight);
                                  }
                                  else
                                  {

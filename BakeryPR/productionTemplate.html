@@ -1,12 +1,13 @@
-
-<div style="margin-left:auto;margin-right:auto;width:2480px;">
-<h4>
+<div style="margin-bottom:20px;">
+<h4 style="text-align:center;">
 	{{companyName}}
 </h4>
 
-<h4>
-	Production Report for xxxxxxxxxxxxxx (i.e production title) on {{date}}
+<h4 style="text-align:center;">
+	Production Report for {{productionName}} on {{date}}
 </h4>
+</div>
+<div>
 
 <p>
 	<b>a.	RECIPE: {{productionName}}</b>
@@ -30,17 +31,15 @@ Bulk Dough Weight: {{bulkDoughWeight}}kg @ Nzzz/kg		N{{TotalPrice}}
 <b>d.	PRODUCT COSTING:</b>
 </p>
 
-<table>
+<table style="width:100%;border-width: 1px;border-style: solid;border-color: black;">
 <tr>
-	<th>Product</th>
-	<th>No of loaves</th>
-	<th>Ingredient Cost/loaf</th>
-	<th>Overhead/loaf</th>
-	<th>Packaging Cost/loaf </th>
-	<th>Total Cost /loaf</th>
-<tr>
-<tbody>
-
-</tbody>
+	<th style="width:15%;border-width: 1px;border-style: solid;border-color: black;">Product</th>
+	<th style="width:15%;border-width: 1px;border-style: solid;border-color: black;">No of loaves</th>
+	<th style="width:15%;border-width: 1px;border-style: solid;border-color: black;">Ingredient Cost/loaf</th>
+	<th style="width:15%;border-width: 1px;border-style: solid;border-color: black;">Overhead/loaf</th>
+	<th style="width:15%;border-width: 1px;border-style: solid;border-color: black;">Packaging Cost/loaf </th>
+	<th style="width:15%;border-width: 1px;border-style: solid;border-color: black;">Total Cost /loaf</th>
+</tr>
+{{products}}
 </table>
 </div>

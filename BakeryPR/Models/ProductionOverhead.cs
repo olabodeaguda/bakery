@@ -33,9 +33,9 @@ namespace BakeryPR.Models
             set { _productionId = value; }
         }
 
-        private int _overheadCount;
+        private double _overheadCount;
 
-        public int overheadCount
+        public double overheadCount
         {
             get { return _overheadCount; }
             set
