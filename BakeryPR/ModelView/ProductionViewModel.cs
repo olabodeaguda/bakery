@@ -99,25 +99,22 @@ namespace BakeryPR.ModelView
                         await Task.Run(async () =>
                         {
                             var pingredent = PIDao.byProductionId(p.id);
-                            string ingreTemp = "<table style='border-width: 1px;border-style: solid;border-color: black;'>";
-                            ingreTemp = ingreTemp + "<tr style='text-align:center;border-width: 1px;border-style: solid;border-color: black;'>";
-                            ingreTemp = ingreTemp + "<th style='text-align:center;border-width: 1px;border-style: solid;border-color: black;'>INGREDIENT NAME</th>";
-                            ingreTemp = ingreTemp + "<th style='text-align:center;border-width: 1px;border-style: solid;border-color: black;'>QUANTITY</th>";
-                            ingreTemp = ingreTemp + "<th style='text-align:center;border-width: 1px;border-style: solid;border-color: black;'>UNIT COST</th>";
-                            ingreTemp = ingreTemp + "<th style='text-align:center;border-width: 1px;border-style: solid;border-color: black;'>TOTAL COST</th>";
+                            string ingreTemp = "<table style='border-width: 0.5px;border-style: solid;border-color: black;'>";
+                            ingreTemp = ingreTemp + "<tr style='text-align:center;border-width: 0.5px;border-style: solid;border-color: black;'>";
+                            ingreTemp = ingreTemp + "<th style='text-align:center;border-width: 0.5px;border-style: solid;border-color: black;'>INGREDIENT NAME</th>";
+                            ingreTemp = ingreTemp + "<th style='text-align:center;border-width: 0.5px;border-style: solid;border-color: black;'>QUANTITY</th>";
+                            ingreTemp = ingreTemp + "<th style='text-align:center;border-width:0.5px;border-style: solid;border-color: black;'>UNIT COST</th>";
+                            ingreTemp = ingreTemp + "<th style='text-align:center;border-width: 0.5px;border-style: solid;border-color: black;'>TOTAL COST</th>";
                             ingreTemp = ingreTemp + "</tr>";
 
                             foreach (var tm in pingredent)
                             {
-                                ingreTemp = ingreTemp + "<tr style='text-align:center;border-width: 1px;border-style: solid;border-color: black;'>";
-                                ingreTemp = ingreTemp + $"<td style='text-align:center;border-width: 1px;border-style: solid;border-color: black;'>{tm.ingredentName}</td>";
-                                ingreTemp = ingreTemp + $"<td style='text-align:center;border-width: 1px;border-style: solid;border-color: black;'>{tm.amount}{tm.measureType}</td>";
-                                ingreTemp = ingreTemp + $"<td style='text-align:center;border-width: 1px;border-style: solid;border-color: black;'>N{string.Format(CultureInfo.InvariantCulture, "{0:N0}", tm.unitCost)}/{tm.measureType}</td>";
-                                ingreTemp = ingreTemp + $"<td style='text-align:center;border-width: 1px;border-style: solid;border-color: black;'>N{string.Format(CultureInfo.InvariantCulture, "{0:N0}", tm.totalUnitCost)}</td>";
+                                ingreTemp = ingreTemp + "<tr style='text-align:center;border-width: 0.5px;border-style: solid;border-color: black;'>";
+                                ingreTemp = ingreTemp + $"<td style='text-align:center;border-width: 0.5px;border-style: solid;border-color: black;'>{tm.ingredentName}</td>";
+                                ingreTemp = ingreTemp + $"<td style='text-align:center;border-width: 0.5px;border-style: solid;border-color: black;'>{tm.amount}{tm.measureType}</td>";
+                                ingreTemp = ingreTemp + $"<td style='text-align:center;border-width: 0.5px;border-style: solid;border-color: black;'>N{string.Format(CultureInfo.InvariantCulture, "{0:N0}", tm.unitCost)}/{tm.measureType}</td>";
+                                ingreTemp = ingreTemp + $"<td style='text-align:center;border-width: 0.5px;border-style: solid;border-color: black;'>N{string.Format(CultureInfo.InvariantCulture, "{0:N0}", tm.totalUnitCost)}</td>";
                                 ingreTemp = ingreTemp + $"</tr>";
-
-                                //ingreTemp = ingreTemp + $"<li>{tm.ingredentName} @ {tm.amount}{tm.measureType}\t  " +
-                                //$"  N{string.Format(CultureInfo.InvariantCulture, "{0:N0}", tm.unitCost)}/{tm.measureType}          N{string.Format(CultureInfo.InvariantCulture, "{0:N0}", tm.totalUnitCost)} </li>";
                             }
                             ingreTemp = ingreTemp + "</table>";
 
@@ -131,24 +128,27 @@ namespace BakeryPR.ModelView
                             }).ToList();
 
                             string template = pDFReader.GetproductionReporttemplate();
-                            template = template.Replace("{{productionName}}", p.recipeTitle.ToUpper());
-                            template = template.Replace("{{companyName}}", title);
+                            template = template.Replace("{{productionName}}", p.title.ToUpper());
+                            template = template.Replace("{{recipeName}}", p.recipeTitle.ToUpper());
+                            template = template.Replace("{{companyName}}", title.ToUpper());
                             template = template.Replace("{{date}}", p.dateCreated.ToString("dd-MM-yyyy"));
                             template = template.Replace("{{productList}}", ingreTemp);
                             template = template.Replace("{{bulkDoughWeight}}", $"{pingredent.Sum(x => x.amount)}");
+                            double tw = pingredent.Sum(x => (x.unitCost * x.amount)) / pingredent.Sum(x => x.amount);
+                            template = template.Replace("{{unitWeight}}", $"{ string.Format(CultureInfo.InvariantCulture, "{0:0,0.00}", Math.Round(tw, 2))}");
                             template = template.Replace("{{TotalPrice}}",
-                                $"{ string.Format(CultureInfo.InvariantCulture, "{0:N0}", Math.Round(pingredent.Sum(x => (x.unitCost * x.amount)), 2))}");
+                                $"{ string.Format(CultureInfo.InvariantCulture, "{0:0,0.00}", Math.Round(pingredent.Sum(x => (x.unitCost * x.amount)), 2))}");
 
                             var pOverhead = prodDao.byproductionId(p.id);
-                            string overh = "<table style='border-width: 1px;border-style: solid;border-color: black;'><tr style='text-align:center;border-width: 1px;border-style: solid;border-color: black;'><th style='text-align:center;border-width: 1px;border-style: solid;border-color: black;'>OVERHEAD</th><th style='text-align:center;border-width: 1px;border-style: solid;border-color: black;'>AMOUNT</th></tr>";
+                            string overh = "<table style='border-width: 0.5px;border-style: solid;border-color: black;'><tr style='text-align:center;border-width: 1px;border-style: solid;border-color: black;'><th style='text-align:center;border-width: 1px;border-style: solid;border-color: black;'>OVERHEAD</th><th style='text-align:center;border-width: 1px;border-style: solid;border-color: black;'>AMOUNT</th></tr>";
 
                             foreach (var tm in pOverhead)
                             {
-                                overh = overh + $"<tr><td style='text-align:center;border-width: 1px;border-style: solid;border-color: black;'>{tm.overheadName}</td>" +
-                                $"<td style='text-align:center;border-width: 1px;border-style: solid;border-color: black;'>{string.Format(CultureInfo.InvariantCulture, "N{0:N0}", Math.Round(tm.overheadCount), 2)}</td></tr>";
+                                overh = overh + $"<tr><td style='text-align:center;border-width: 0.5px;border-style: solid;border-color: black;'>{tm.overheadName}</td>" +
+                                $"<td style='text-align:center;border-width: 0.5px;border-style: solid;border-color: black;'>{string.Format(CultureInfo.InvariantCulture, "N{0:0,0.00}", Math.Round(tm.overheadCount), 2)}</td></tr>";
                             }
-                            overh = overh + $"<tr><td style='text-align:center;border-width: 1px;border-style: solid;border-color: black;'>Total </td>" +
-                            $"<td style='text-align:center;border-width: 1px;border-style: solid;border-color: black;'>{string.Format(CultureInfo.InvariantCulture, "N{0:N0}", Math.Round(pOverhead.Sum(x => x.overheadCount)), 2)}</td></tr>";
+                            overh = overh + $"<tr><td style='text-align:center;border-width: 0.5px;border-style: solid;border-color: black;'>Total </td>" +
+                            $"<td style='text-align:center;border-width: 0.5px;border-style: solid;border-color: black;'>{string.Format(CultureInfo.InvariantCulture, "N{0:0,0.00}", Math.Round(pOverhead.Sum(x => x.overheadCount)), 2)}</td></tr>";
                             overh = overh + "</table>";
 
                             template = template.Replace("{{OverheadList}}", overh);
@@ -158,12 +158,12 @@ namespace BakeryPR.ModelView
                             foreach (var tm in pProductDao.byproductionId(p.id))
                             {
                                 pducts = pducts + "<tr>";
-                                pducts = pducts + $"<td style='text-align:center;border-width: 1px;border-style: solid;border-color: black;'> {tm.productName} </td>";
-                                pducts = pducts + $"<td style='text-align:center;border-width: 1px;border-style: solid;border-color: black;'> {tm.quantity}</td>";
-                                pducts = pducts + $"<td style='text-align:center;border-width: 1px;border-style: solid;border-color: black;'> {tm.ingredientCost} </td>";
-                                pducts = pducts + $"<td style='text-align:center;border-width: 1px;border-style: solid;border-color: black;'> {tm.overheadCost} </td>";
-                                pducts = pducts + $"<td style='text-align:center;border-width: 1px;border-style: solid;border-color: black;'> {tm.costOfPackage} </td>";
-                                pducts = pducts + $"<td style='text-align:center;border-width: 1px;border-style: solid;border-color: black;'> {tm.totalCost} </td>";
+                                pducts = pducts + $"<td style='text-align:center;border-width: 0.5px;border-style: solid;border-color: black;'> {tm.productName} </td>";
+                                pducts = pducts + $"<td style='text-align:center;border-width: 0.5px;border-style: solid;border-color: black;'> {tm.quantity}</td>";
+                                pducts = pducts + $"<td style='text-align:center;border-width: 0.5px;border-style: solid;border-color: black;'> {String.Format(CultureInfo.InvariantCulture, "N{0:0,0.00}", tm.ingredientCost)} </td>";
+                                pducts = pducts + $"<td style='text-align:center;border-width: 0.5px;border-style: solid;border-color: black;'> {String.Format(CultureInfo.InvariantCulture, "N{0:0,0.00}",tm.overheadCost)} </td>";
+                                pducts = pducts + $"<td style='text-align:center;border-width: 0.5px;border-style: solid;border-color: black;'> {String.Format(CultureInfo.InvariantCulture, "N{0:0,0.00}",tm.costOfPackage)} </td>";
+                                pducts = pducts + $"<td style='text-align:center;border-width: 0.5px;border-style: solid;border-color: black;'> {String.Format(CultureInfo.InvariantCulture, "N{0:0,0.00}",tm.totalCost)} </td>";
                                 pducts = pducts + "</tr>";
                             }
 
