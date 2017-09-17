@@ -6,7 +6,6 @@
              xmlns:local="clr-namespace:BakeryPR.Views"
              xmlns:vm="clr-namespace:BakeryPR.ModelView"
         xmlns:fa="http://schemas.fontawesome.io/icons/"
-             xmlns:ac="clr-namespace:AdornedControl;assembly=AdornedControl"
              mc:Ignorable="d" 
              d:DesignHeight="{Binding winHeight}" d:DesignWidth="{Binding winWidth}">
     <UserControl.DataContext>

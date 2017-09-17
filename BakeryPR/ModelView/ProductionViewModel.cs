@@ -117,7 +117,6 @@ namespace BakeryPR.ModelView
                                 totalPrice = x.price
                             }).ToList();
 
-
                             ExcelModel excelmodel = new ExcelModel()
                             {
                                 ProductionCost = lst,
