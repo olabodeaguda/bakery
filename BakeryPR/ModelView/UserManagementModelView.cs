@@ -270,7 +270,7 @@ namespace BakeryPR.ModelView
                             Profile res = userDao.byProfile(this.profile);
                             if (res != null)
                             {
-                                throw new Exception("Username already exist for another user");
+                                throw new Exception("Username already exists");
                             }
                             bool result = userDao.Update(this.profile);
                             if (result)
@@ -385,7 +385,7 @@ namespace BakeryPR.ModelView
                             Profile pFile = userDao.byUsername(this.profile.username);
                             if (pFile != null)
                             {
-                                throw new Exception(this.profile.username + " already exist");
+                                throw new Exception(this.profile.username + " already exists");
                             }
 
                             this.profile.status = UserSatus.ACTIVE.ToString();

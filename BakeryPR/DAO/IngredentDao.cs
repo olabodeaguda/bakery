@@ -6,6 +6,7 @@ using System.Data.SQLite;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace BakeryPR.DAO
 {
@@ -66,21 +67,41 @@ namespace BakeryPR.DAO
 
         public bool add(Ingredent values)
         {
-            using (SQLiteConnection conn = new SQLiteConnection(connectionString))
+            try
             {
-                conn.Open();
-                SQLiteCommand cmd = new SQLiteCommand(conn);
-                cmd.CommandText = "insert into ingredent(ingredentName,unitCost,quantity,mTypeid) " +
-                    "values(@ingredentName,@unitCost,@quantity,@mTypeid)";
-                cmd.Parameters.AddWithValue("@ingredentName", values.ingredentName);
-                cmd.Parameters.AddWithValue("@unitCost", values.unitCost);
-                cmd.Parameters.AddWithValue("@quantity", values.quantity);
-                cmd.Parameters.AddWithValue("@mTypeid", values.mTypeId);
-                cmd.CommandType = CommandType.Text;
-                int count = cmd.ExecuteNonQuery();
-                if (count > 0)
+                var t = all().FirstOrDefault(x => x.ingredentName.ToLower() == values.ingredentName.ToLower());
+                if (t != null)
                 {
-                    return true;
+                    MessageBox.Show("Ingredient already added", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+
+                using (SQLiteConnection conn = new SQLiteConnection(connectionString))
+                {
+                    conn.Open();
+                    SQLiteCommand cmd = new SQLiteCommand(conn);
+                    cmd.CommandText = "insert into ingredent(ingredentName,unitCost,quantity,mTypeid) " +
+                        "values(@ingredentName,@unitCost,@quantity,@mTypeid)";
+                    cmd.Parameters.AddWithValue("@ingredentName", values.ingredentName);
+                    cmd.Parameters.AddWithValue("@unitCost", values.unitCost);
+                    cmd.Parameters.AddWithValue("@quantity", values.quantity);
+                    cmd.Parameters.AddWithValue("@mTypeid", values.mTypeId);
+                    cmd.CommandType = CommandType.Text;
+                    int count = cmd.ExecuteNonQuery();
+                    if (count > 0)
+                    {
+                        return true;
+                    }
+                }
+            }
+            catch (Exception x)
+            {
+                if (x.Message.ToLower().Contains("unique"))
+                {
+                    MessageBox.Show("Recipe already added", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                else
+                {
+                    MessageBox.Show(x.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
 

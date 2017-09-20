@@ -343,7 +343,7 @@ namespace BakeryPR.ModelView
                             MessageBox.Show("Please Ingredient addition failed.. Please add ingredient manually");
                         }
 
-                        MessageBox.Show("Production have been added successfully");
+                        MessageBox.Show("Production has been added successfully");
                         this.production = new Production();
                         this.productions = new ObservableCollection<Production>(dao.all());
 
@@ -795,13 +795,13 @@ namespace BakeryPR.ModelView
                                     bool result = this.pProductDao.execute(query);
                                     if (result)
                                     {
-                                        MessageBox.Show("Product have been added successfully");
+                                        MessageBox.Show("Product has been added successfully");
                                         this.productionProducts = new ObservableCollection<ProductionProduct>(pProductDao.byproductionId(this.productionProduct.productionId));
                                     }
                                 }
                                 else
                                 {
-                                    MessageBox.Show("Selected product already exist for the selected production");
+                                    MessageBox.Show("Selected product already existn");
                                 }
                             }
                         }
@@ -1480,7 +1480,7 @@ namespace BakeryPR.ModelView
                             bool result = pihDao.add(query);
                             if (result)
                             {
-                                MessageBox.Show("product have been move to sales", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                                MessageBox.Show("Product have been move to sales", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
                             }
                         }
                         catch (Exception x)

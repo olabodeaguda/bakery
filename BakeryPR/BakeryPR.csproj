@@ -374,6 +374,9 @@
     <Compile Include="Views\RecipeIngredentView.xaml.cs">
       <DependentUpon>RecipeIngredentView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\SalesHistory.xaml.cs">
+      <DependentUpon>SalesHistory.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\SalesView.xaml.cs">
       <DependentUpon>SalesView.xaml</DependentUpon>
     </Compile>
@@ -573,6 +576,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\RecipeIngredentView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SalesHistory.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

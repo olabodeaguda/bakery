@@ -97,7 +97,7 @@ namespace BakeryPR.ModelView
                         }
                         if (this.recipeIngredent.quantity <= 0)
                         {
-                            throw new Exception("Quantity have been inputted wrongly");
+                            throw new Exception("Quantity has been inputted wrongly");
                         }
 
                         this.recipeIngredent.recipeId = this.recipe.id;

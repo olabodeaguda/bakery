@@ -8,6 +8,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace BakeryPR.DAO
 {
@@ -80,24 +81,38 @@ namespace BakeryPR.DAO
 
         public bool add(Recipe values)
         {
-            using (SQLiteConnection conn = new SQLiteConnection(connectionString))
+            try
             {
-                conn.Open();
-                SQLiteCommand cmd = new SQLiteCommand(conn);
-                cmd.CommandText = "insert into recipe(title,dateCreated,lastUpdated,quantity) " +
-                    "values(@title,@dateCreated,@lastUpdated,@quantity)";
-                cmd.Parameters.AddWithValue("@title", values.title);
-                cmd.Parameters.AddWithValue("@dateCreated", values.dateCreated.ToString("yyyy-MM-dd"));
-                cmd.Parameters.AddWithValue("@lastUpdated", values.dateCreated.ToString("yyyy-MM-dd"));
-                cmd.Parameters.AddWithValue("@quantity", values.quantity);
-                cmd.CommandType = CommandType.Text;
-                int count = cmd.ExecuteNonQuery();
-                if (count > 0)
+                using (SQLiteConnection conn = new SQLiteConnection(connectionString))
                 {
-                    return true;
+                    conn.Open();
+                    SQLiteCommand cmd = new SQLiteCommand(conn);
+                    cmd.CommandText = "insert into recipe(title,dateCreated,lastUpdated,quantity) " +
+                        "values(@title,@dateCreated,@lastUpdated,@quantity)";
+                    cmd.Parameters.AddWithValue("@title", values.title);
+                    cmd.Parameters.AddWithValue("@dateCreated", values.dateCreated.ToString("yyyy-MM-dd"));
+                    cmd.Parameters.AddWithValue("@lastUpdated", values.dateCreated.ToString("yyyy-MM-dd"));
+                    cmd.Parameters.AddWithValue("@quantity", values.quantity);
+                    cmd.CommandType = CommandType.Text;
+                    int count = cmd.ExecuteNonQuery();
+                    if (count > 0)
+                    {
+                        return true;
+                    }
+                }
+
+            }
+            catch (Exception x)
+            {
+                if (x.Message.ToLower().Contains("unique"))
+                {
+                    MessageBox.Show("Recipe already added", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                else
+                {
+                    MessageBox.Show(x.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
-
             return false;
         }
 
@@ -164,7 +179,7 @@ namespace BakeryPR.DAO
                     if (comp > r.quantity && r.unitCost > 0)
                     {
                         //no enough material for
-                        error = new Error() { success = false, errorMsg = r.ingredentName + " is out of stock for the selected ingredent" };
+                        error = new Error() { success = false, errorMsg = r.ingredentName + " is out of stock" };
                         break;
                     }
                 }
