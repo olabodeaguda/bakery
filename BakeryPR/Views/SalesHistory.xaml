@@ -25,33 +25,13 @@
                     <ListView Grid.Row="1"  Margin="8"  ItemsSource="{Binding dailyCartHistory,Mode=TwoWay}"
                                   IsSynchronizedWithCurrentItem="True" 
                                    ScrollViewer.CanContentScroll="True">
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition></RowDefinition>
-                                        <RowDefinition></RowDefinition>
-                                        <RowDefinition></RowDefinition>
-                                        <RowDefinition></RowDefinition>
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition></ColumnDefinition>
-                                        <ColumnDefinition></ColumnDefinition>
-                                    </Grid.ColumnDefinitions>
-                                    <TextBlock Grid.Row="0">Customer Name</TextBlock>
-                                    <TextBlock Grid.Row="1">Product Name</TextBlock>
-                                    <TextBlock Grid.Row="2">Quantity</TextBlock>
-                                    <TextBlock Grid.Row="3">Price</TextBlock>
-
-                                    <TextBlock Margin="10 0 0 0" Grid.Row="0" Grid.Column="1" Text="{Binding customerName,Mode=TwoWay}"></TextBlock>
-                                    <TextBlock Margin="10 0 0 0" Grid.Row="1" Grid.Column="1" Text="{Binding pName,Mode=TwoWay}"></TextBlock>
-                                    <TextBlock Margin="10 0 0 0" Grid.Row="2" Grid.Column="1" Text="{Binding quantity,Mode=TwoWay}"></TextBlock>
-                                    <TextBlock Margin="10 0 0 0" Grid.Row="3" Grid.Column="1" Text="{Binding price,Mode=TwoWay}"></TextBlock>
-
-                                </Grid>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-
+                        <GridView>
+                            <GridViewColumn Header="" ></GridViewColumn>
+                            <GridViewColumn Header="Customer Name" DisplayMemberBinding="{Binding   customerName,Mode=TwoWay}"></GridViewColumn>
+                            <GridViewColumn Header="Product Name" DisplayMemberBinding="{Binding  pName,Mode=TwoWay}"></GridViewColumn>
+                            <GridViewColumn Header="Quantity" DisplayMemberBinding="{Binding  quantity,Mode=TwoWay}"></GridViewColumn>
+                            <GridViewColumn Header="Price" DisplayMemberBinding="{Binding  price,Mode=TwoWay}"></GridViewColumn>
+                        </GridView>
                         <ListView.Style>
                             <Style TargetType="ListView">
                                 <Style.Triggers>
