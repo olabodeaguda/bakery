@@ -196,6 +196,7 @@
     <Compile Include="Models\RecipeIngredents.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\SalesRevenueModel.cs" />
+    <Compile Include="Models\SalesSearchModel.cs" />
     <Compile Include="Models\UserRole.cs" />
     <Compile Include="Models\UserStatusModel.cs" />
     <Compile Include="ModelView\CompanyDetailModelView.cs" />
@@ -292,6 +293,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Views\EditCart.xaml.cs">
+      <DependentUpon>EditCart.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\EditGrpOverhead.xaml.cs">
       <DependentUpon>EditGrpOverhead.xaml</DependentUpon>
@@ -468,6 +472,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Dashboard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EditCart.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

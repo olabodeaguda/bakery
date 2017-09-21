@@ -55,6 +55,9 @@ namespace BakeryPR.Utilities
                 case "company":
                     title = "About Company";
                     return new CompanyRegistration();
+                case "saleshistory":
+                    title = "Transaction History";
+                    return new SalesHistory();
                 default:
                     title = "Error";
                     return new ErrorView();

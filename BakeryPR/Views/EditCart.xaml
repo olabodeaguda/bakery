@@ -1,4 +1,4 @@
-﻿<Window x:Class="BakeryPR.Views.cartSummary"
+﻿<Window x:Class="BakeryPR.Views.EditCart"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -14,7 +14,7 @@
             <RowDefinition Height="40"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <TextBlock Style="{StaticResource headings}"  Grid.ColumnSpan="2" >Cart Summary</TextBlock>
+        <TextBlock Style="{StaticResource headings}"  Grid.ColumnSpan="2" >Edit Cart</TextBlock>
         <StackPanel Orientation="Horizontal" Grid.Row="1"  Margin="5" Height='40'>
             <TextBlock  VerticalAlignment="Center">Customer Name</TextBlock>
             <TextBox Text="{Binding cartModel.customerName,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="150" Height="50"></TextBox>

@@ -115,17 +115,16 @@
 
                         </Grid>
                         
-                        <StackPanel Orientation="Horizontal" Grid.Row="1"  Margin="5" Height='50'>
+                       <!-- <StackPanel Orientation="Horizontal" Grid.Row="1"  Margin="5" Height='50'>
                             <TextBlock>Customer Name</TextBlock>
-                            <TextBox Text="{Binding cartModel.customerName,Mode=TwoWay}" Width="150" Height="50"></TextBox>
-                            <!--<RadioButton Margin="50 0 0 0"  IsChecked="{Binding cartModel.isRetails}"   GroupName="salesType">Retails</RadioButton>-->
-                        </StackPanel>
+                            <TextBox Text="{Binding cartModel.customerName,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="150" Height="50"></TextBox>
+                        </StackPanel>-->
                         <StackPanel  Grid.Row="2">
                             <TextBlock Style="{StaticResource headings}" TextAlignment="Center" Foreground="White" >Cart List</TextBlock>
                             <ListView  ItemsSource="{Binding cartModel.itemLst,Mode=TwoWay}" IsSynchronizedWithCurrentItem="True">
                                 <ListView.View>
                                     <GridView>
-                                        <GridViewColumn HeaderContainerStyle="{StaticResource ListViewStyle}" Header="Price" Width="100">
+                                       <!--<GridViewColumn HeaderContainerStyle="{StaticResource ListViewStyle}" Header="Price" Width="100">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
                                                     <TextBox Text="{Binding Path=manualPrice,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
@@ -139,7 +138,7 @@
                                                     </TextBox>
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
-                                        </GridViewColumn>
+                                        </GridViewColumn>-->
                                         <GridViewColumn HeaderContainerStyle="{StaticResource ListViewStyle}" 
                                     Header="Product"  DisplayMemberBinding="{Binding productName}"></GridViewColumn>
                                         <GridViewColumn HeaderContainerStyle="{StaticResource ListViewStyle}" 

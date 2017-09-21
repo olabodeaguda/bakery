@@ -8,6 +8,14 @@
             xmlns:vm="clr-namespace:BakeryPR.ModelView"
              mc:Ignorable="d" 
               d:DesignHeight="{Binding winHeight}" d:DesignWidth="{Binding winWidth}" >
+    <UserControl.DataContext>
+        <vm:SalesModelView></vm:SalesModelView>
+    </UserControl.DataContext>
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding loadCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <Grid>
         <Border Grid.Column="2"  BorderThickness="2" BorderBrush="BurlyWood" Margin="5">
             <Grid Grid.Column="2" Margin="5">
@@ -18,25 +26,62 @@
                 <TextBlock Style="{StaticResource headings}" TextAlignment="Center" >History</TextBlock>
                 <Grid Grid.Row="1" Margin="5">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="50"></RowDefinition>
+                        <RowDefinition Height="80"></RowDefinition>
                         <RowDefinition></RowDefinition>
                     </Grid.RowDefinitions>
-                    <TextBox Height="40" BorderThickness="3" Text="{Binding searchHisory,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="255"></ColumnDefinition>
+                            <ColumnDefinition Width="255"></ColumnDefinition>
+                            <ColumnDefinition Width="255"></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock Foreground="White">Customer Name</TextBlock>
+                            <TextBox Text="{Binding salesSearchModel.customerName,Mode=TwoWay}" HorizontalAlignment="Left" Width="220" Height="40" BorderThickness="3"></TextBox>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" Orientation="Vertical">
+                            <TextBlock Foreground="White">Product Name</TextBlock>
+                            <TextBox Text="{Binding salesSearchModel.productName,Mode=TwoWay}" HorizontalAlignment="Left" Width="220" Height="40" BorderThickness="3" ></TextBox>
+                        </StackPanel>
+                        <StackPanel Grid.Column="2" VerticalAlignment="Center">
+                            <TextBlock Foreground="White">Sales Date</TextBlock>
+                            <DatePicker SelectedDate="{Binding salesSearchModel.salesDate}" 
+                                        Text="{Binding salesSearchModel.salesDateDisplay,Mode=TwoWay}"
+                                        HorizontalAlignment="Left" Height="40"  Width="220" ></DatePicker>
+                        </StackPanel>
+                        
+
+                        <Button Grid.Column="3" HorizontalAlignment="Left" Height="40" Padding="4" Width="100" 
+                                Command="{Binding SearchistoryCommand}">Search</Button>
+                    </Grid>
+                    
                     <ListView Grid.Row="1"  Margin="8"  ItemsSource="{Binding dailyCartHistory,Mode=TwoWay}"
                                   IsSynchronizedWithCurrentItem="True" 
                                    ScrollViewer.CanContentScroll="True">
+                        <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="" ></GridViewColumn>
-                            <GridViewColumn Header="Customer Name" DisplayMemberBinding="{Binding   customerName,Mode=TwoWay}"></GridViewColumn>
+                                <!--<GridViewColumn>
+                                    <GridViewColumn.CellTemplate >
+                                        <DataTemplate>
+                                            <Button  Style="{StaticResource buttonDataTemplate}" Content="Edit"  CommandParameter="{Binding}"
+                                        Command="{Binding Path=DataContext.loadEditSalesCommand, 
+                                    RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>-->
+                                <GridViewColumn Header="Customer Name" DisplayMemberBinding="{Binding customerName,Mode=TwoWay}"></GridViewColumn>
                             <GridViewColumn Header="Product Name" DisplayMemberBinding="{Binding  pName,Mode=TwoWay}"></GridViewColumn>
                             <GridViewColumn Header="Quantity" DisplayMemberBinding="{Binding  quantity,Mode=TwoWay}"></GridViewColumn>
-                            <GridViewColumn Header="Price" DisplayMemberBinding="{Binding  price,Mode=TwoWay}"></GridViewColumn>
-                        </GridView>
+                                <GridViewColumn Header="Price" DisplayMemberBinding="{Binding  price,Mode=TwoWay}"></GridViewColumn>
+                                <GridViewColumn Header="Sales Status" DisplayMemberBinding="{Binding  cartStatus,Mode=TwoWay}"></GridViewColumn>
+                            </GridView>
+                        </ListView.View>
                         <ListView.Style>
                             <Style TargetType="ListView">
                                 <Style.Triggers>
                                     <Trigger Property="HasItems"
-                         Value="False">
+                         Value="False">            
                                         <Setter Property="Template">
                                             <Setter.Value>
                                                 <ControlTemplate TargetType="ListView">

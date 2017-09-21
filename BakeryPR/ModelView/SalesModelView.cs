@@ -47,11 +47,25 @@ namespace BakeryPR.ModelView
             }
         }
 
+        public DelegateCommand<object> loadEditSalesCommand
+        {
+            get
+            {
+                return new DelegateCommand<object>((s) =>
+                {
+
+                });
+            }
+
+        }
+
         public List<CartModel> dailyHistory
         {
             get
             {
-                return this.cartDao.byDaily(DateTime.Now.ToString("yyyy-MM-dd"));
+                DateTime nowDate = DateTime.Now;
+                DateTime dt = new DateTime(nowDate.Year, nowDate.Month, nowDate.Day);
+                return this.cartDao.GetCart(dt.Ticks, null, null);
             }
         }
 
@@ -93,8 +107,12 @@ namespace BakeryPR.ModelView
                             }
 
                             _cartModel.cartStatus = CartStatus.PROCESSING.ToString();
-                            List<CartModel> cartByDate = cartDao.byDate(DateTime.Now.ToString("yyyy-MM-dd"));
-                            this.cartModel.customerName = $"Customer{cartByDate.Count + 1}";
+                            if (this.cartModel.customerName == null)
+                            {
+                                List<CartModel> cartByDate = cartDao.byDate(DateTime.Now.ToString("yyyy-MM-dd"));
+                                this.cartModel.customerName = $"Customer{cartByDate.Count + 1}";
+                            }
+
                             int cartId = cartDao.add(this.cartModel);
                             string cardString = string.Empty;
                             List<Product> productsCurrent = lstItem;
@@ -235,6 +253,21 @@ namespace BakeryPR.ModelView
             }
         }
 
+        public DelegateCommand<object> SearchistoryCommand
+        {
+            get
+            {
+                return new DelegateCommand<object>(async (s) =>
+                {
+                    await Task.Run(() =>
+                    {
+                        SalesSearchModel ssm = this.salesSearchModel;
+                        List<CartModel> sHistory = this.cartDao.GetCart(((string.IsNullOrEmpty(ssm.salesDateDisplay)) ? 0 : ssm.salesDate.Ticks), ssm.customerName, ssm.productName);
+                        this.dailyCartHistory = new ObservableCollection<CartModel>(sHistory);
+                    });
+                });
+            }
+        }
 
         private string _searchItem;
 
@@ -276,6 +309,18 @@ namespace BakeryPR.ModelView
             }
         }
 
+        private SalesSearchModel _salesSearchModel = new SalesSearchModel();
+
+        public SalesSearchModel salesSearchModel
+        {
+            get { return _salesSearchModel; }
+            set
+            {
+                _salesSearchModel = value;
+                this.NotifyPropertyChanged("salesSearchModel");
+            }
+        }
+
 
         private List<Product> lstItem
         {
@@ -312,7 +357,6 @@ namespace BakeryPR.ModelView
             }
         }
 
-
         public DelegateCommand<object> itmLstDblCommand
         {
             get
@@ -326,7 +370,6 @@ namespace BakeryPR.ModelView
                             Product p = this.selectedProduct;
                             CartProductModel newCpm = new CartProductModel()
                             {
-                                //price = p. //cartModel.isRetails ? p.retailPrice : p.wholeSales,
                                 productId = p.id,
                                 productName = p.name,
                                 quantity = 1,
