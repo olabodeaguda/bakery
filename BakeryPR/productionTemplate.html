@@ -1,0 +1,45 @@
+<div style="margin-bottom:20px;">
+<h4 style="text-align:center;">
+	{{companyName}}
+</h4>
+
+<h4 style="text-align:center;">
+	Production Report for {{productionName}} on {{date}}
+</h4>
+</div>
+<div>
+
+<p>
+	<b>a.	RECIPE: {{recipeName}}</b>
+</p>
+
+<p>
+	<b>b.	INGREDIENTS USED FOR PRODUCTON:</b>
+</p>
+{{productList}}
+
+<p>
+Bulk Dough Weight: {{bulkDoughWeight}}kg @ N{{unitWeight}}/kg		N{{TotalPrice}}
+</p>
+
+<p>
+<b>c.	OVERHEAD </b>
+</p>
+{{OverheadList}}
+
+<p>
+<b>d.	PRODUCT COSTING:</b>
+</p>
+
+<table style="width:100%;border-width: 1px;border-style: solid;border-color: black;">
+<tr>
+	<th style="width:15%;border-width: 1px;border-style: solid;border-color: black;">Product</th>
+	<th style="width:15%;border-width: 1px;border-style: solid;border-color: black;">No of loaves</th>
+	<th style="width:15%;border-width: 1px;border-style: solid;border-color: black;">Ingredient Cost/loaf</th>
+	<th style="width:15%;border-width: 1px;border-style: solid;border-color: black;">Overhead/loaf</th>
+	<th style="width:15%;border-width: 1px;border-style: solid;border-color: black;">Packaging Cost/loaf </th>
+	<th style="width:15%;border-width: 1px;border-style: solid;border-color: black;">Total Cost /loaf</th>
+</tr>
+{{products}}
+</table>
+</div>

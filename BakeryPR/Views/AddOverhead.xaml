@@ -1,0 +1,39 @@
+﻿<Window x:Class="BakeryPR.Views.AddOverhead"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BakeryPR.Views"
+        mc:Ignorable="d"
+        Title="{Binding title}" Height="300" Width="450" Style="{StaticResource {x:Type Window}}" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+    <Grid Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70"></RowDefinition>
+            <RowDefinition Height="38*"></RowDefinition>
+            <RowDefinition Height="8*"></RowDefinition>
+            <RowDefinition Height="43*"></RowDefinition>
+            <RowDefinition Height="43*"></RowDefinition>
+            <RowDefinition Height="59*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="150"></ColumnDefinition>
+            <ColumnDefinition Width="250"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <TextBlock Style="{StaticResource headings}"  Grid.ColumnSpan="2">Add Overhead</TextBlock>
+        <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Height="16" Margin="0,11">Overhead Name</TextBlock>
+        <!--<TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center">Quantity(KG)</TextBlock>-->
+        <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" TextWrapping="Wrap" Height="16" Margin="0,18,0,9">Cost for a 50Kg Flour</TextBlock>
+        <TextBlock Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Height="16" Margin="0,25,0,1.721">Overhead Type</TextBlock>
+
+        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding overhead.name,Mode=TwoWay}"></TextBox>
+        <!--<TextBox Grid.Row="2" Grid.Column="1" Text="{Binding overhead.mTypeId,Mode=TwoWay}"></TextBox>-->
+        <TextBox  Grid.Row="3" Grid.Column="1" Text="{Binding overhead.unitCost,Mode=TwoWay}"></TextBox>
+        <ComboBox SelectedValue="{Binding overhead.overheadType,Mode=TwoWay}"  Grid.Row="4" Grid.Column="1" ItemsSource="{Binding OverheadTypes}" Margin="5,5,5,0" RenderTransformOrigin="0.5,0.5" 
+                  >
+            
+        </ComboBox>
+
+        <Button Style="{StaticResource btnSubmitStyle}" Grid.Column="1" Grid.Row="5" Command="{Binding addCommand}" Height="Auto" Margin="75,24.279,76,5" Width="Auto" >Add</Button>
+
+    </Grid>
+</Window>

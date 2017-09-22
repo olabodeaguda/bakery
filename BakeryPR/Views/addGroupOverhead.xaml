@@ -1,0 +1,69 @@
+﻿<Window x:Class="BakeryPR.Views.addGrpOverhead"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BakeryPR.Views"
+        xmlns:vm="clr-namespace:BakeryPR.ModelView"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        mc:Ignorable="d"
+        Title="{Binding title}" Height="400" Width="500" Style="{StaticResource {x:Type Window}}" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+    <!--<Window.DataContext>
+        <vm:GrpOverheadModelView></vm:GrpOverheadModelView>
+    </Window.DataContext>-->
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35.2"></RowDefinition>
+            <RowDefinition Height="105.6"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <TextBlock Style="{StaticResource headings}" Margin="15,0,14.6,0.2">Manage Overhead</TextBlock>
+        <StackPanel Margin="0,2.8,-0.4,116.4" Grid.Row="1" Grid.RowSpan="2">
+            <TextBlock Padding="6 0 0 0">Quantity(KG)</TextBlock>
+            <TextBox Padding="0 0 0 6" HorizontalAlignment="Left" Width="200" Height="21" 
+                     Text="{Binding overheadDetail.quantity}" Margin="5,5,0,5"></TextBox>
+            <TextBlock Padding="6 0 0 0">Title</TextBlock>
+            <StackPanel Orientation="Horizontal" Height="30">
+                <TextBox HorizontalAlignment="Left" Width="200" Text="{Binding overheadDetail.groupName}"></TextBox>
+                <Button Width="50" Height="25" Command="{Binding addCommand}">Add</Button>
+            </StackPanel>
+        </StackPanel>
+
+        <Grid Grid.Row="2" Margin="4">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Button Command="{Binding loadOverheadCommand}" Width="100" Height="25" 
+                    HorizontalAlignment="Left" IsEnabled="{Binding isAddoverhead}">Add Overhead</Button>
+
+            <ListView x:Name="OverheadLst"  Width="490" Margin="2" 
+                  ItemsSource="{Binding overHeaddetailsLst,Mode=TwoWay}" IsSynchronizedWithCurrentItem="True"
+                      HorizontalAlignment="Left" HorizontalContentAlignment="Left" 
+                  Grid.Row="1">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn  x:Name="gridV">
+                            <GridViewColumn.CellTemplate >
+                                <DataTemplate>
+                                    <Button Content="Edit"  CommandParameter="{Binding}"
+                                        Command="{Binding Path=DataContext.editOverheadGrp, 
+                                    RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Width="200"  HeaderContainerStyle="{StaticResource ListViewStyle}" 
+                                    Header="Overhead Name"  DisplayMemberBinding="{Binding overheadName}" />
+                        <GridViewColumn Width="100" HeaderContainerStyle="{StaticResource ListViewStyle}" 
+                                    Header="Quantity" DisplayMemberBinding="{Binding quantityView}" />
+                        <GridViewColumn Width="200" HeaderContainerStyle="{StaticResource ListViewStyle}" 
+                                    Header="Cost/Unit" DisplayMemberBinding="{Binding unitCost}" />
+                        <GridViewColumn Width="200" HeaderContainerStyle="{StaticResource ListViewStyle}" 
+                                    Header="Total Cost" DisplayMemberBinding="{Binding totalCost}" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </Grid>
+    </Grid>
+</Window>

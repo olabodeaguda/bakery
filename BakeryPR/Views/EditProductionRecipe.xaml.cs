@@ -10,17 +10,16 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace BakeryPR
+namespace BakeryPR.Views
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for EditProductionRecipe.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class EditProductionRecipe : Window
     {
-        public MainWindow()
+        public EditProductionRecipe()
         {
             InitializeComponent();
         }

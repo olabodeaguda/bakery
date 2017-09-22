@@ -1,0 +1,73 @@
+﻿<Window x:Class="BakeryPR.Views.Dashboard"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:fa="http://schemas.fontawesome.io/icons/"
+        xmlns:local="clr-namespace:BakeryPR.Views"
+        mc:Ignorable="d"
+        xmlns:vm="clr-namespace:BakeryPR.ModelView"
+        Title="{Binding titleBar}" Height="{Binding winHeight}" Width="{Binding winWidth}" WindowState="Maximized"
+        WindowStyle="SingleBorderWindow"
+        WindowStartupLocation="CenterScreen" 
+        Style="{StaticResource {x:Type Window}}">
+    <Window.Resources>
+        <ImageBrush ImageSource="pack://application:,,,/images/img1.png" x:Key="BackgroundSponge" ></ImageBrush>
+    </Window.Resources>
+   
+    <Window.DataContext>
+        <vm:DashboardModelView></vm:DashboardModelView>
+    </Window.DataContext>
+
+    <Grid  Background="{DynamicResource BackgroundSponge}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="80"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Menu>
+
+            <MenuItem Header="_File" >
+                <MenuItem Header="E_xit" Command="{Binding navCommand}" CommandParameter="exit"></MenuItem>
+            </MenuItem>
+            <!--<MenuItem Header="_Dashboard"></MenuItem>-->
+            <MenuItem Header="_Settings" Visibility="{Binding isAccessible,Mode=TwoWay}">
+                <MenuItem Header="Product" Command="{Binding navCommand}" CommandParameter="product"></MenuItem>
+                <MenuItem Header="Manage Overhead" Command="{Binding navCommand}" CommandParameter="overhead"></MenuItem>
+                <MenuItem Header="Manage Recipe" Command="{Binding navCommand}" CommandParameter="recipe"></MenuItem>
+                <MenuItem Header="User Management" Command="{Binding navCommand}" CommandParameter="user"></MenuItem>
+                <MenuItem Header="About Company" Command="{Binding navCommand}" CommandParameter="company"></MenuItem>
+            </MenuItem>
+            <MenuItem  Header="_Manage Ingredient" Command="{Binding navCommand}" CommandParameter="ingredient"></MenuItem>
+            <MenuItem Header="_Production"  Visibility="{Binding isAccessible,Mode=TwoWay}" Command="{Binding navCommand}" CommandParameter="production"></MenuItem>
+            <MenuItem  Header="_Sales"  Command="{Binding navCommand}" CommandParameter="sales"></MenuItem>
+            <MenuItem Header="_Reports" CommandParameter="reports">
+                <MenuItem Header="Product" Command="{Binding navCommand}" CommandParameter="ProductInventory"></MenuItem>
+                <MenuItem Header="Ingredient" Command="{Binding navCommand}" CommandParameter="IngredientInventory"></MenuItem>
+                <MenuItem Header="Sales History" Command="{Binding navCommand}" CommandParameter="saleshistory"></MenuItem>
+            </MenuItem>
+        </Menu>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <TextBlock  Style="{StaticResource boldheadings}" Text="{Binding title}"></TextBlock>
+            <StackPanel Margin="5" HorizontalAlignment="Right" Grid.Column="1" Visibility="{Binding isLogin, Mode=TwoWay}" Orientation="Horizontal">
+                <TextBlock Foreground="White" Visibility="{Binding isLogin, Mode=TwoWay}" MinWidth="250" Margin="5"
+                           Text="{Binding loginModel.displayname,Mode=TwoWay}"
+                           TextAlignment="Right" >
+                </TextBlock>
+                <Button Visibility="{Binding isLogin, Mode=TwoWay}" Command="{Binding logoutCommand}" Height="30" Width="100" VerticalAlignment="Top">Log Out</Button>
+            </StackPanel>
+        </Grid>
+
+        <DockPanel Grid.Row="2">
+            <ContentPresenter Content="{Binding navState}"  Width="{Binding winWidth}"></ContentPresenter>
+        </DockPanel>
+
+        <TextBlock TextAlignment="Center" Foreground="White" TextWrapping="WrapWithOverflow" Width="{Binding winWidth}" Text="{Binding footerText}" Grid.Row="3" FontSize="16" HorizontalAlignment="Center"></TextBlock>
+    </Grid>
+</Window>
+    

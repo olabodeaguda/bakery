@@ -1,0 +1,40 @@
+﻿<Window x:Class="BakeryPR.Views.cartSummary"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BakeryPR.Views"
+        mc:Ignorable="d"
+        Title="{Binding title}" Height="290" Width="500" Style="{StaticResource {x:Type Window}}" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+    <Grid Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <TextBlock Style="{StaticResource headings}"  Grid.ColumnSpan="2" >Cart Summary</TextBlock>
+        <StackPanel Orientation="Horizontal" Grid.Row="1"  Margin="5" Height='40'>
+            <TextBlock  VerticalAlignment="Center">Customer Name</TextBlock>
+            <TextBox Text="{Binding cartModel.customerName,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="150" Height="50"></TextBox>
+        </StackPanel>
+        <ListView Grid.Row="2"  ItemsSource="{Binding cartModel.itemLst,Mode=TwoWay}" IsSynchronizedWithCurrentItem="True">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Width="100" HeaderContainerStyle="{StaticResource ListViewStyle}" 
+                                    Header="Product"  DisplayMemberBinding="{Binding productName}"></GridViewColumn>
+                    <GridViewColumn Width="100" HeaderContainerStyle="{StaticResource ListViewStyle}" 
+                                     Header="Quantity"  DisplayMemberBinding="{Binding quantity}"></GridViewColumn>
+                    <GridViewColumn Width="150" HeaderContainerStyle="{StaticResource ListViewStyle}" 
+                                    Header="Price"  DisplayMemberBinding="{Binding price}"></GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Command="{Binding CheckOutCommand}" HorizontalAlignment="Right" 
+                    Width="110" Height="30" VerticalAlignment="Center">Check Out Invoice</Button>
+        </StackPanel>
+    </Grid>
+</Window>

@@ -1,0 +1,42 @@
+﻿<Window x:Class="BakeryPR.Views.EditProduction"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BakeryPR.Views"
+        mc:Ignorable="d"
+        Title="{Binding title}"  Height="330" Width="450" Style="{StaticResource {x:Type Window}}" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="112.8"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.ColumnSpan="2" Margin="0,0,0.2,0.2">
+            <TextBlock Style="{StaticResource headings}"  > Update Production</TextBlock>
+            <TextBlock Grid.Column="2" Text="{Binding production.title}" 
+                   Style="{StaticResource headings}" ></TextBlock>
+        </StackPanel>
+        <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Height="16" Margin="0,16.8,0.8,17.6">Production Title</TextBlock>
+        <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Height="16" Margin="0,17.4,0.8,17">Select Recipe</TextBlock>
+        <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Height="16" Margin="0,17,0.8,17.4">Quantity of flour(KG)</TextBlock>
+
+        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding production.title,Mode=TwoWay}" Margin="8.2,9.8,3.2,10.6"/>
+        <ComboBox SelectedValue="{Binding production.recipeId,Mode=TwoWay}"  Grid.Row="2" Grid.Column="1"
+                  ItemsSource="{Binding recipes}" 
+                  DisplayMemberPath="title" SelectedValuePath="id" Margin="8.2,5.4,3.2,5">
+        </ComboBox>
+        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding production.quantity,Mode=TwoWay}" Margin="8.2,10,3.2,10.4"/>
+
+        <Button Style="{StaticResource btnSubmitStyle}" HorizontalAlignment="Right" 
+                Grid.Column="1" Grid.Row="4" Command="{Binding EditProductionCommand}" Height="Auto" Margin="0,10.6,-1.8,9.8" >Update</Button>
+
+
+    </Grid>
+</Window>

@@ -1,0 +1,35 @@
+﻿<Window x:Class="BakeryPR.Views.ValidateLicense"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BakeryPR.Views"
+        xmlns:fa="http://schemas.fontawesome.io/icons/"
+        xmlns:vm="clr-namespace:BakeryPR.ModelView"
+        mc:Ignorable="d"
+        Title="{Binding title}" Style="{StaticResource {x:Type Window}}" 
+        WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Width="400" Height="270">
+    <!--<Window.DataContext>
+        <vm:ValidateLicenseModelView></vm:ValidateLicenseModelView>
+    </Window.DataContext>-->
+    <Grid Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="39.2"></RowDefinition>
+            <RowDefinition Height="80"></RowDefinition>
+            <RowDefinition Height="70"></RowDefinition>
+        </Grid.RowDefinitions>
+        <TextBlock Style="{StaticResource headings}" Margin="15,0,15.6,1.2" > Validate Key</TextBlock>
+
+        <StackPanel Grid.Row="1" Margin="5 20 0 0 ">
+            <TextBlock Margin="8 0 0 0">Enter Key</TextBlock>
+            <TextBox Width="200" HorizontalAlignment="Left" Height="30" Text="{Binding licenseModel.value}"></TextBox>
+        </StackPanel>
+
+        <StackPanel  Grid.Row="2" Orientation="Horizontal">
+            <Button Height="50" Width="100" HorizontalAlignment="Left" Command="{Binding AddCommand}">Ok</Button>
+           
+        </StackPanel>
+        <fa:ImageAwesome Icon="Spinner" Spin="True" Visibility="{Binding isSpin,Mode=TwoWay}" 
+                         Height="100" Width="60" SpinDuration="2"  Grid.RowSpan="3"/>
+    </Grid>
+</Window>
