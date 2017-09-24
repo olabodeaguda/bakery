@@ -96,6 +96,18 @@ namespace BakeryPR.Models
         }
 
 
+        private double _dateCreatedTimespan;
+
+        public double dateCreatedTimespan
+        {
+            get { return _dateCreatedTimespan; }
+            set
+            {
+                _dateCreatedTimespan = value;
+                this.NotifyPropertyChanged("dateCreatedTimespan");
+            }
+        }
+
         #region property change
 
         public double winHeight

@@ -77,8 +77,8 @@ namespace BakeryPR.DAO
             {
                 conn.Open();
                 SQLiteCommand cmd = new SQLiteCommand(conn);
-                cmd.CommandText = "insert into production(title,dateCreated,lastUpdated,createdBy,recipeId,quantity,approval) " +
-                    " values(@title,@dateCreated,@lastUpdated,@createdBy,@recipeId,@quantity,@approval); SELECT last_insert_rowid();";
+                cmd.CommandText = "insert into production(title,dateCreated,lastUpdated,createdBy,recipeId,quantity,approval,dateCreatedTimespan) " +
+                    " values(@title,@dateCreated,@lastUpdated,@createdBy,@recipeId,@quantity,@approval,@dateCreatedTimespan); SELECT last_insert_rowid();";
                 cmd.Parameters.AddWithValue("@title", values.title);
                 cmd.Parameters.AddWithValue("@createdBy", values.createdBY);
                 cmd.Parameters.AddWithValue("@recipeId", values.recipeId);
@@ -86,6 +86,7 @@ namespace BakeryPR.DAO
                 cmd.Parameters.AddWithValue("@quantity", values.quantity);
                 cmd.Parameters.AddWithValue("@dateCreated", DateTime.Now.ToString("yyyy-MM-dd"));
                 cmd.Parameters.AddWithValue("@lastUpdated", DateTime.Now.ToString("yyyy-MM-dd"));
+                cmd.Parameters.AddWithValue("@dateCreatedTimespan", DateTime.Now.Ticks);
 
                 cmd.CommandType = CommandType.Text;
                 object obj = cmd.ExecuteScalar(); //cmd.ExecuteNonQuery();
@@ -171,7 +172,13 @@ namespace BakeryPR.DAO
 
         public String updateApprovalStatusQuery(Production pr)
         {
-            string query = "update production set approval='" + pr.approval + "' where id = '" + pr.id+"';";
+            string query = "update production set approval='" + pr.approval + "' where id = '" + pr.id + "';";
+            return query;
+        }
+
+        public String updateApprovalStatusQuery(Production pr, string productionStatus)
+        {
+            string query = "update production set approval='" + productionStatus + "' where id = '" + pr.id + "';";
             return query;
         }
 
@@ -196,6 +203,72 @@ namespace BakeryPR.DAO
             }
         }
 
+        public List<Production> ByDateRange(double dateStart, double dateEnd)
+        {
+            List<Production> lst = new List<Production>();
+            using (SQLiteConnection conn = new SQLiteConnection(this.connectionString))
+            {
+                string query = $"select production.*,recipe.title as recipeTitle from production inner join recipe on recipe.id=production.recipeId " +
+                    $"where production.dateCreatedTimespan >= '{dateStart}' and production.dateCreatedTimespan<='{dateEnd}' and production.approval='CLOSED'  order by production.title desc";
+                conn.Open();
+                DataSet dt = new DataSet();
+                SQLiteCommand cmd = new SQLiteCommand(conn);
+                cmd.CommandText = query;
+                cmd.CommandType = CommandType.Text;
+                this.SQLiteAdaptor(dt, cmd);
+
+                lst = dt.Tables[0].Rows.Cast<DataRow>().Select(x => new Production()
+                {
+                    id = int.Parse(x["id"].ToString()),
+                    createdBY = x["createdBy"].ToString(),
+                    title = x["title"].ToString(),
+                    recipeTitle = x["recipeTitle"].ToString(),
+                    quantity = String.IsNullOrEmpty(x["quantity"].ToString()) ? 0 : double.Parse(x["quantity"].ToString()),
+                    recipeId = int.Parse(x["recipeId"].ToString()),
+                    dateCreated = DateTime.Parse(x["dateCreated"].ToString(), new CultureInfo("en-US", true)),
+                    lastUpdated = DateTime.Parse(x["lastUpdated"].ToString(), new CultureInfo("en-US", true)),
+                    approval = x["approval"].ToString(),
+                    approveBy = x["approveBy"].ToString(),
+                    // dateCreateTSpan = x["dateCreatedTimespan"].ToString()
+                    dateCreatedTimespan = Convert.ToInt64(x.Field<double>("dateCreatedTimespan"))
+                }).ToList();
+            }
+
+            return lst;
+        }
+
+        public List<Production> ByDateRange(double dateStart)
+        {
+            List<Production> lst = new List<Production>();
+            using (SQLiteConnection conn = new SQLiteConnection(this.connectionString))
+            {
+                string query = $"select production.*,recipe.title as recipeTitle from production inner join recipe on recipe.id=production.recipeId " +
+                    $"where dateCreatedTimespan >= '{dateStart}'  order by production.title desc";
+                conn.Open();
+                DataSet dt = new DataSet();
+                SQLiteCommand cmd = new SQLiteCommand(conn);
+                cmd.CommandText = query;
+                cmd.CommandType = CommandType.Text;
+                this.SQLiteAdaptor(dt, cmd);
+
+                lst = dt.Tables[0].Rows.Cast<DataRow>().Select(x => new Production()
+                {
+                    id = int.Parse(x["id"].ToString()),
+                    createdBY = x["createdBy"].ToString(),
+                    title = x["title"].ToString(),
+                    recipeTitle = x["recipeTitle"].ToString(),
+                    quantity = String.IsNullOrEmpty(x["quantity"].ToString()) ? 0 : double.Parse(x["quantity"].ToString()),
+                    recipeId = int.Parse(x["recipeId"].ToString()),
+                    dateCreated = DateTime.Parse(x["dateCreated"].ToString(), new CultureInfo("en-US", true)),
+                    lastUpdated = DateTime.Parse(x["lastUpdated"].ToString(), new CultureInfo("en-US", true)),
+                    approval = x["approval"].ToString(),
+                    approveBy = x["approveBy"].ToString(),
+                    dateCreatedTimespan = long.Parse(x["dateCreatedTimespan"].ToString())
+                }).ToList();
+            }
+
+            return lst;
+        }
 
     }
 }

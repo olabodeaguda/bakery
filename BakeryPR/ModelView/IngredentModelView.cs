@@ -144,11 +144,11 @@ namespace BakeryPR.ModelView
                         Ingredent ig = this.ingredent;
 
                         double val = 0;
-                        if (!double.TryParse(this.inventoryHistory.newQuantity.ToString(),out val))
+                        if (!double.TryParse(this.inventoryHistory.newQuantity.ToString(), out val))
                         {
                             throw new Exception("Invalid input for quantity");
                         }
-                        else if(!double.TryParse(this.inventoryHistory.newUnitCost.ToString(), out val))
+                        else if (!double.TryParse(this.inventoryHistory.newUnitCost.ToString(), out val))
                         {
                             throw new Exception("Invalid input for Unit Cost");
                         }
@@ -211,7 +211,14 @@ namespace BakeryPR.ModelView
                     }
                     catch (Exception x)
                     {
-                        MessageBox.Show(x.Message);
+                        if (x.Message.ToLower().Contains("unique"))
+                        {
+                            MessageBox.Show("Recipe already added", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
+                        else
+                        {
+                            MessageBox.Show(x.Message);
+                        }
                     }
 
                 });

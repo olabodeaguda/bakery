@@ -22,6 +22,14 @@ namespace BakeryPR.Models
             }
         }
 
+        public double totalSales
+        {
+            get
+            {
+                return quantity * price;
+            }
+        }
+
         private double _retailPrice;
 
         public double retailPrice
@@ -189,6 +197,35 @@ namespace BakeryPR.Models
                 this.NotifyPropertyChanged("pName");
             }
         }
+
+        private double _costPrice;
+
+        public double costPrice
+        {
+            get { return _costPrice; }
+            set
+            {
+                _costPrice = value;
+                this.NotifyPropertyChanged("costPrice");
+            }
+        }
+
+        public double totalCost
+        {
+            get
+            {
+                return costPrice * quantity;
+            }
+        }
+
+        public double contribution
+        {
+            get
+            {
+                return totalSales - totalCost;
+            }
+        }
+
 
         private ObservableCollection<CartProductModel> _itemLst = new ObservableCollection<CartProductModel>();
 

@@ -24,7 +24,6 @@
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
-            <!--<TextBlock Grid.Row="0" Text="{Binding totalProduction,Mode=TwoWay}"></TextBlock>-->
             <TextBlock Grid.Column="0" Grid.Row="1" Text="{Binding totalProductWeight,Mode=TwoWay}"></TextBlock>
             <TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding totalRecipeDough,Mode=TwoWay}"></TextBlock>
             <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding totalDoughDiff,Mode=TwoWay}"></TextBlock>

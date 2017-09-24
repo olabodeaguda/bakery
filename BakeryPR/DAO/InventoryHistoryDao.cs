@@ -29,7 +29,7 @@ namespace BakeryPR.DAO
 
                 DataSet dt = new DataSet();
                 SQLiteCommand cmd = new SQLiteCommand(conn);
-                cmd.CommandText = query;// "select * from inventoryHistory where ingredentId =@ingredentId";
+                cmd.CommandText = query;
                 cmd.Parameters.AddWithValue("ingredentId", ingredentId);
                 cmd.CommandType = CommandType.Text;
                 this.SQLiteAdaptor(dt, cmd);
@@ -42,10 +42,16 @@ namespace BakeryPR.DAO
                     amount = double.Parse(x["amount"].ToString()),
                     inventoryMode = x["inventoryMode"].ToString(),
                     dateCreated = DateTime.ParseExact(x["dateCreated"].ToString(), "dd-MM-yyyy", CultureInfo.InvariantCulture)
-                }).ToList();
+                }).Where(x => x.amount > 0).OrderByDescending(x => x.dateCreated).ToList();
             }
 
             return lst;
+        }
+
+        public string insertQuery(InventoryHistory inventoryHistory)
+        {
+            return $"insert into inventoryHistory(ingredentId,amount,dateCreated,addedBy,inventoryMode) " +
+                    $"values('{inventoryHistory.ingredentId}','{inventoryHistory.newQuantity}','{DateTime.Now.ToString("dd-MM-yyyy")}','{inventoryHistory.addedBy}','{inventoryHistory.inventoryMode}');";
         }
 
         public bool add(InventoryHistory values)
@@ -68,8 +74,8 @@ namespace BakeryPR.DAO
                     //ingredentQuantity(values.ingredentId)
                     double unitCost = WeightAverageCostUtil.calculate(values.amount, values.oldUnitCost,
                         values.newQuantity, values.newUnitCost);
-                    dao.updateIngredent(values.ingredentId, (values.newQuantity+values.amount), unitCost);
-                    return true;                   
+                    dao.updateIngredent(values.ingredentId, (values.newQuantity + values.amount), unitCost);
+                    return true;
                 }
             }
 
@@ -96,6 +102,6 @@ namespace BakeryPR.DAO
         }
 
 
-        
+
     }
 }

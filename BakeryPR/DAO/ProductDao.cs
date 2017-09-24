@@ -34,7 +34,8 @@ namespace BakeryPR.DAO
                     wholeSales = double.Parse(x["wholeSales"].ToString()),
                     measureTypeName = x["measureTypeName"].ToString(),
                     name = x["name"].ToString(),
-                    inventoryStore = String.IsNullOrEmpty(x["inventoryStore"].ToString()) ? 0 : int.Parse(x["inventoryStore"].ToString())
+                    inventoryStore = String.IsNullOrEmpty(x["inventoryStore"].ToString()) ? 0 : int.Parse(x["inventoryStore"].ToString()),
+                    costprice = double.Parse(x["costprice"].ToString())
                 }).ToList();
             }
 
@@ -71,13 +72,13 @@ namespace BakeryPR.DAO
                         p.weight = p.weight / 1000;
                         p.measureTypeName = "kg";
                     }
-                   
+
                     p.name = x["name"].ToString();
                     p.inventoryStore = String.IsNullOrEmpty(x["inventoryStore"].ToString()) ? 0 : int.Parse(x["inventoryStore"].ToString());
                     p.isDiscount = string.IsNullOrEmpty(x["isDiscount"].ToString()) ? false : (int.Parse(x["isDiscount"].ToString()) == 1 ? true : false);
                     p.discount = string.IsNullOrEmpty(x["discount"].ToString()) ? 0.0 : (double.Parse(x["discount"].ToString()));
-
-                    return p; 
+                    p.costprice = double.Parse(x["costPrice"].ToString());
+                    return p;
                 }
                 else
                 {
@@ -139,10 +140,16 @@ namespace BakeryPR.DAO
             return false;
         }
 
-
         public String updateStoreQuery(Product pr)
         {
-            string query = "update product set inventoryStore=" + pr.inventoryStore + " where id = '" + pr.id + "' ;";
+            string query = $"update product set inventoryStore='{pr.inventoryStore}',  costprice='{pr.costprice}'  where id = '{pr.id}';";
+            return query;
+        }
+
+
+        public String updateStore(Product pr)
+        {
+            string query = $"update product set inventoryStore='{pr.inventoryStore}' where id = '{pr.id}';";
             return query;
         }
 

@@ -45,7 +45,7 @@ namespace BakeryPR.Models
             }
         }
 
-        private string _salesDateDisplay= DateTime.Now.ToString("dd-MM-yyyy");
+        private string _salesDateDisplay = DateTime.Now.ToShortDateString();
 
         public string salesDateDisplay
         {
@@ -57,6 +57,29 @@ namespace BakeryPR.Models
             }
         }
 
+        private DateTime _salesEndDate = DateTime.Now;
+
+        public DateTime salesEndDate
+        {
+            get { return _salesEndDate; }
+            set
+            {
+                _salesEndDate = value;
+                this.NotifyPropertyChanged("salesEndDate");
+            }
+        }
+
+        private string _salesDateEndDisplay = DateTime.Now.ToShortDateString();
+
+        public string salesDateEndDisplay
+        {
+            get { return _salesDateEndDisplay; }
+            set
+            {
+                _salesDateEndDisplay = value;
+                this.NotifyPropertyChanged("salesDateEndDisplay");
+            }
+        }
 
         #region property change
 

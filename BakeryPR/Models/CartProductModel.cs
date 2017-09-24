@@ -37,7 +37,7 @@ namespace BakeryPR.Models
             {
                 return new DelegateCommand<object>((s) =>
                 {
-                   // Product p = pDao.byId(this.productId);
+                    // Product p = pDao.byId(this.productId);
                     //if (this.isRetail)
                     //{
                     //    //this.price = this.quantity * p.retailPrice;
@@ -134,6 +134,18 @@ namespace BakeryPR.Models
             {
                 _productName = value;
                 this.NotifyPropertyChanged("productName");
+            }
+        }
+
+        private double _costPrice;
+
+        public double costPrice
+        {
+            get { return _costPrice; }
+            set
+            {
+                _costPrice = value;
+                this.NotifyPropertyChanged("costPrice");
             }
         }
 

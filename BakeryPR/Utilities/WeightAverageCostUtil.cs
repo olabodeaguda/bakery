@@ -10,6 +10,11 @@ namespace BakeryPR.Utilities
     {
         public static double calculate(double oldQuantity, double oldUnitCost, double newQuantity, double newUnitCost)
         {
+            if (oldUnitCost == 0)
+            {
+                return newUnitCost;
+            }
+
             double tCost = (oldQuantity * oldUnitCost) + (newQuantity * newUnitCost);
             double tQuantity = oldQuantity + newQuantity;
 

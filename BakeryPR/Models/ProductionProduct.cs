@@ -159,7 +159,7 @@ namespace BakeryPR.Models
         {
             get
             {
-                return $"{(weight * quantity)}{measureTypeName}";
+                return $"{(weight * quantity)}Kg";
             }
         }
 

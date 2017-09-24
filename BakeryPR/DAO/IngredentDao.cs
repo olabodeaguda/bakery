@@ -12,6 +12,13 @@ namespace BakeryPR.DAO
 {
     public class IngredentDao : AbstractDao
     {
+        public InventoryHistoryDao inventoryHistoryDao
+        {
+            get
+            {
+                return new InventoryHistoryDao();
+            }
+        }
         public List<Ingredent> all()
         {
             List<Ingredent> lst = new List<Ingredent>();
@@ -67,41 +74,27 @@ namespace BakeryPR.DAO
 
         public bool add(Ingredent values)
         {
-            try
+            var t = all().FirstOrDefault(x => x.ingredentName.ToLower() == values.ingredentName.ToLower());
+            if (t != null)
             {
-                var t = all().FirstOrDefault(x => x.ingredentName.ToLower() == values.ingredentName.ToLower());
-                if (t != null)
-                {
-                    MessageBox.Show("Ingredient already added", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-
-                using (SQLiteConnection conn = new SQLiteConnection(connectionString))
-                {
-                    conn.Open();
-                    SQLiteCommand cmd = new SQLiteCommand(conn);
-                    cmd.CommandText = "insert into ingredent(ingredentName,unitCost,quantity,mTypeid) " +
-                        "values(@ingredentName,@unitCost,@quantity,@mTypeid)";
-                    cmd.Parameters.AddWithValue("@ingredentName", values.ingredentName);
-                    cmd.Parameters.AddWithValue("@unitCost", values.unitCost);
-                    cmd.Parameters.AddWithValue("@quantity", values.quantity);
-                    cmd.Parameters.AddWithValue("@mTypeid", values.mTypeId);
-                    cmd.CommandType = CommandType.Text;
-                    int count = cmd.ExecuteNonQuery();
-                    if (count > 0)
-                    {
-                        return true;
-                    }
-                }
+                throw new Exception("Ingredient already added");
             }
-            catch (Exception x)
+
+            using (SQLiteConnection conn = new SQLiteConnection(connectionString))
             {
-                if (x.Message.ToLower().Contains("unique"))
+                conn.Open();
+                SQLiteCommand cmd = new SQLiteCommand(conn);
+                cmd.CommandText = "insert into ingredent(ingredentName,unitCost,quantity,mTypeid) " +
+                    "values(@ingredentName,@unitCost,@quantity,@mTypeid)";
+                cmd.Parameters.AddWithValue("@ingredentName", values.ingredentName);
+                cmd.Parameters.AddWithValue("@unitCost", values.unitCost);
+                cmd.Parameters.AddWithValue("@quantity", values.quantity);
+                cmd.Parameters.AddWithValue("@mTypeid", values.mTypeId);
+                cmd.CommandType = CommandType.Text;
+                int count = cmd.ExecuteNonQuery();
+                if (count > 0)
                 {
-                    MessageBox.Show("Recipe already added", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-                else
-                {
-                    MessageBox.Show(x.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return true;
                 }
             }
 
@@ -150,7 +143,7 @@ namespace BakeryPR.DAO
             return false;
         }
 
-        public bool updateIngredent(int ingredntId, double quantity,double unitCost)
+        public bool updateIngredent(int ingredntId, double quantity, double unitCost)
         {
             using (SQLiteConnection conn = new SQLiteConnection(connectionString))
             {
@@ -171,6 +164,21 @@ namespace BakeryPR.DAO
             return false;
         }
 
+        public LoginModel loginModel
+        {
+            get
+            {
+                return appConfigDao.read();
+            }
+        }
+
+        public AppConfigDao appConfigDao
+        {
+            get
+            {
+                return new AppConfigDao();
+            }
+        }
 
         public string updateIngredientQuantityQuery(Production p, List<ProductionIngredent> lstOfPI)
         {
@@ -183,12 +191,19 @@ namespace BakeryPR.DAO
                 {
                     double quantity = ini.quantity - tm.amount;
                     query = query + "update ingredent set quantity ='" + quantity + "' where id = '" + tm.ingredentId + "';";
+                    //update history here
+                    InventoryHistory inventoryHistory = new InventoryHistory();
+                    inventoryHistory.amount = tm.amount;
+                    inventoryHistory.newQuantity = tm.amount;
+                    inventoryHistory.ingredentId = tm.ingredentId;
+                    inventoryHistory.inventoryMode = InventoryMode.PRODUCTION.ToString();
+                    inventoryHistory.addedBy = loginModel.fullname;
+                    query = query + inventoryHistoryDao.insertQuery(inventoryHistory);
                 }
             }
 
             return query;
         }
-
 
         public bool delete(int id)
         {

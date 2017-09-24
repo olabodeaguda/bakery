@@ -164,6 +164,31 @@ namespace BakeryPR.Models
             }
         }
 
+        private long _dateCreatedTimespan;
+
+        public long dateCreatedTimespan
+        {
+            get { return _dateCreatedTimespan; }
+            set
+            {
+                _dateCreatedTimespan = value;
+                this.NotifyPropertyChanged("dateCreatedTimespan");
+            }
+        }
+
+        private double _dateCreateTSpan;
+
+        public double dateCreateTSpan
+        {
+            get { return _dateCreateTSpan; }
+            set
+            {
+                _dateCreateTSpan = value;
+                //dateCreatedTimespan =  long.Parse(value);
+                this.NotifyPropertyChanged("dateCreateTSpan");
+            }
+        }
+
 
         #region property change
 

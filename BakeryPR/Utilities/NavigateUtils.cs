@@ -44,10 +44,10 @@ namespace BakeryPR.Utilities
                     title = "Manage Recipe";
                     return new RecipeIngredentView();
                 case "IngredientInventory":
-                    title = "Ingredient Inventory History";
+                    title = "Ingredient Movement Report";
                     return new ProductionIngredientHistory();
                 case "ProductInventory":
-                    title = "Ingredient Inventory History";
+                    title = "Product Movement Report";
                     return new ProductinventoryHistory();
                 case "grpOverhead":
                     title = "Group Overhead";
@@ -56,6 +56,18 @@ namespace BakeryPR.Utilities
                     title = "About Company";
                     return new CompanyRegistration();
                 case "saleshistory":
+                    title = "Transaction History";
+                    return new SalesHistory();
+                case "productionReport":
+                    title = "Production Report";
+                    return new ProductionReport();
+                case "salesReport":
+                    title = "Transaction History";
+                    return new SalesHistory();
+                case "ingredientMovementReport":
+                    title = "Transaction History";
+                    return new SalesHistory();
+                case "productMovementReport":
                     title = "Transaction History";
                     return new SalesHistory();
                 default:

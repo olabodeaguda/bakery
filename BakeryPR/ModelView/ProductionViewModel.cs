@@ -161,13 +161,13 @@ namespace BakeryPR.ModelView
                                 pducts = pducts + $"<td style='text-align:center;border-width: 0.5px;border-style: solid;border-color: black;'> {tm.productName} </td>";
                                 pducts = pducts + $"<td style='text-align:center;border-width: 0.5px;border-style: solid;border-color: black;'> {tm.quantity}</td>";
                                 pducts = pducts + $"<td style='text-align:center;border-width: 0.5px;border-style: solid;border-color: black;'> {String.Format(CultureInfo.InvariantCulture, "N{0:0,0.00}", tm.ingredientCost)} </td>";
-                                pducts = pducts + $"<td style='text-align:center;border-width: 0.5px;border-style: solid;border-color: black;'> {String.Format(CultureInfo.InvariantCulture, "N{0:0,0.00}",tm.overheadCost)} </td>";
-                                pducts = pducts + $"<td style='text-align:center;border-width: 0.5px;border-style: solid;border-color: black;'> {String.Format(CultureInfo.InvariantCulture, "N{0:0,0.00}",tm.costOfPackage)} </td>";
-                                pducts = pducts + $"<td style='text-align:center;border-width: 0.5px;border-style: solid;border-color: black;'> {String.Format(CultureInfo.InvariantCulture, "N{0:0,0.00}",tm.totalCost)} </td>";
+                                pducts = pducts + $"<td style='text-align:center;border-width: 0.5px;border-style: solid;border-color: black;'> {String.Format(CultureInfo.InvariantCulture, "N{0:0,0.00}", tm.overheadCost)} </td>";
+                                pducts = pducts + $"<td style='text-align:center;border-width: 0.5px;border-style: solid;border-color: black;'> {String.Format(CultureInfo.InvariantCulture, "N{0:0,0.00}", tm.costOfPackage)} </td>";
+                                pducts = pducts + $"<td style='text-align:center;border-width: 0.5px;border-style: solid;border-color: black;'> {String.Format(CultureInfo.InvariantCulture, "N{0:0,0.00}", tm.totalCost)} </td>";
                                 pducts = pducts + "</tr>";
                             }
 
-                            template = template.Replace("{{products}}",pducts);
+                            template = template.Replace("{{products}}", pducts);
                             await pDFReader.GetProductionReport(template, filename);
 
                             MessageBox.Show("Report has been generated was successfully");
@@ -1146,13 +1146,12 @@ namespace BakeryPR.ModelView
                             PIDao.checkIngredentAvalabilityByProdId(p.id);
 
                             var ru = this.appConfigDao.read();
-                            //bool result = PIDao.changeProdApprovalStatus(ProductionStatus.APPROVED.ToString(),
-                            //    p.id, ru.username);
 
                             string query = PIDao.changeProdApprovalStatusQuery(ProductionStatus.APPROVED.ToString(),
                                 p.id, ru.username);
 
                             List<ProductionIngredent> lstPI = PIDao.byProductionId(this.production.id);
+
                             //update ingredient weight
                             query = query + ingredentDao.updateIngredientQuantityQuery(this.production, lstPI);
 
@@ -1266,9 +1265,6 @@ namespace BakeryPR.ModelView
                 this.NotifyPropertyChanged("totalDoughDiff");
             }
         }
-
-
-
 
         public DelegateCommand<object> loadManageProduction
         {
@@ -1430,6 +1426,8 @@ namespace BakeryPR.ModelView
                             }
 
                             List<ProductionProduct> lst = pProductDao.byproductionId(this.production.id);
+
+                            #region restrict quantity
                             double ds = pProductDao.sumTotalProductIngram(lst);
                             if (totalP > ds)
                             {
@@ -1449,13 +1447,14 @@ namespace BakeryPR.ModelView
                                     return;
                                 }
                             }
+                            #endregion
 
                             List<Product> lstProduct = productDao.all();
                             String query = "";
                             foreach (var tm in mpp)
                             {
                                 ProductInventoryHistory pih = new ProductInventoryHistory();
-                                pih.inventoryMode = InventoryModeEnum.ADD.ToString();
+                                pih.inventoryMode = InventoryModeEnum.NEW_PRODUCT.ToString();
                                 pih.createdDate = DateTime.Now;
                                 pih.createdBy = appConfigDao.read().username;
                                 pih.productId = tm.productId;
@@ -1467,19 +1466,23 @@ namespace BakeryPR.ModelView
                                 if (p != null)
                                 {
                                     p.inventoryStore = String.IsNullOrEmpty(p.inventoryStore.ToString().Trim()) ? 0 : p.inventoryStore;
-                                    query = query + productDao.updateStoreQuery(new Product() { id = tm.productId, inventoryStore = (p.inventoryStore + pih.quantity) });
+                                    p.costprice = WeightAverageCostUtil.calculate(p.inventoryStore, p.costprice, pih.quantity, tm.totalCost);
+                                    query = query + productDao.updateStoreQuery(new Product()
+                                    {
+                                        id = tm.productId,
+                                        inventoryStore = (p.inventoryStore + pih.quantity),
+                                        costprice = p.costprice
+                                    });
                                 }
-                            }
-                            this.production.approval = ProductionStatus.CLOSED.ToString();
-                            query = query + dao.updateApprovalStatusQuery(this.production);
 
-                            //List<ProductionIngredent> lstPI = PIDao.byProductionId(this.production.id);
-                            ////update ingredient weight
-                            //query = query + ingredentDao.updateIngredientQuantityQuery(this.production, lstPI);
+                                // inventory history
+                            }
+                            query = query + dao.updateApprovalStatusQuery(this.production, ProductionStatus.CLOSED.ToString());
 
                             bool result = pihDao.add(query);
                             if (result)
                             {
+                                this.productions = new ObservableCollection<Production>(dao.all());
                                 MessageBox.Show("Product have been move to sales", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
                             }
                         }

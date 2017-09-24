@@ -65,7 +65,7 @@ namespace BakeryPR.ModelView
             {
                 DateTime nowDate = DateTime.Now;
                 DateTime dt = new DateTime(nowDate.Year, nowDate.Month, nowDate.Day);
-                return this.cartDao.GetCart(dt.Ticks, null, null);
+                return this.cartDao.GetCart(this.cartDao.getCartQueryString(null,null,dt.Ticks));
             }
         }
 
@@ -83,7 +83,6 @@ namespace BakeryPR.ModelView
                 this.NotifyPropertyChanged("dailyCartHistory");
             }
         }
-
 
         public DelegateCommand<object> CheckOutCommand
         {
@@ -133,9 +132,10 @@ namespace BakeryPR.ModelView
                                 }
 
                                 tm.cartId = cartId;
+                                tm.costPrice = p.costprice;
 
                                 cardString = cardString + cartProductDao.getInsertQuery(tm);
-                                cardString = cardString + productDao.updateStoreQuery(new Product()
+                                cardString = cardString + productDao.updateStore(new Product()
                                 {
                                     id = tm.productId,
                                     inventoryStore = p.inventoryStore - tm.quantity
@@ -262,7 +262,21 @@ namespace BakeryPR.ModelView
                     await Task.Run(() =>
                     {
                         SalesSearchModel ssm = this.salesSearchModel;
-                        List<CartModel> sHistory = this.cartDao.GetCart(((string.IsNullOrEmpty(ssm.salesDateDisplay)) ? 0 : ssm.salesDate.Ticks), ssm.customerName, ssm.productName);
+                        List<CartModel> sHistory = new List<CartModel>();
+
+                        if (string.IsNullOrEmpty(ssm.salesDateDisplay) && string.IsNullOrEmpty(ssm.salesDateEndDisplay))
+                        {
+                            sHistory = this.cartDao.GetCart(this.cartDao.getCartQueryString(ssm.customerName, ssm.productName));
+                        }
+                        else if (!string.IsNullOrEmpty(ssm.salesDateDisplay) && string.IsNullOrEmpty(ssm.salesDateEndDisplay))
+                        {
+                            sHistory = this.cartDao.GetCart(this.cartDao.getCartQueryString(ssm.customerName, ssm.productName, ssm.salesDate.Ticks));
+                        }
+                        else if(!string.IsNullOrEmpty(ssm.salesDateDisplay) && !string.IsNullOrEmpty(ssm.salesDateEndDisplay))
+                        {
+                            sHistory = this.cartDao.GetCart(this.cartDao.getCartQueryString(ssm.customerName, ssm.productName, ssm.salesDate.Ticks,ssm.salesEndDate.Ticks));
+                        }
+
                         this.dailyCartHistory = new ObservableCollection<CartModel>(sHistory);
                     });
                 });
@@ -320,7 +334,6 @@ namespace BakeryPR.ModelView
                 this.NotifyPropertyChanged("salesSearchModel");
             }
         }
-
 
         private List<Product> lstItem
         {

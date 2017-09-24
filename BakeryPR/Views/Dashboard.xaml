@@ -43,9 +43,10 @@
             <MenuItem Header="_Production"  Visibility="{Binding isAccessible,Mode=TwoWay}" Command="{Binding navCommand}" CommandParameter="production"></MenuItem>
             <MenuItem  Header="_Sales"  Command="{Binding navCommand}" CommandParameter="sales"></MenuItem>
             <MenuItem Header="_Reports" CommandParameter="reports">
-                <MenuItem Header="Product" Command="{Binding navCommand}" CommandParameter="ProductInventory"></MenuItem>
-                <MenuItem Header="Ingredient" Command="{Binding navCommand}" CommandParameter="IngredientInventory"></MenuItem>
-                <MenuItem Header="Sales History" Command="{Binding navCommand}" CommandParameter="saleshistory"></MenuItem>
+                <MenuItem Header="Product Movement Report" Command="{Binding navCommand}" CommandParameter="ProductInventory"></MenuItem>
+                <MenuItem Header="Ingredient Movement Report" Command="{Binding navCommand}" CommandParameter="IngredientInventory"></MenuItem>
+                <MenuItem Header="Production Report" Command="{Binding navCommand}" CommandParameter="productionReport"></MenuItem>
+                <MenuItem Header="Sales Report" Command="{Binding navCommand}" CommandParameter="salesReport"></MenuItem>
             </MenuItem>
         </Menu>
         <Grid Grid.Row="1">

@@ -150,6 +150,14 @@ namespace BakeryPR.Models
             }
         }
 
+        private long _dateTimeSpan;
+
+        public long dateTimeSpan
+        {
+            get { return _dateTimeSpan; }
+            set { _dateTimeSpan = value; }
+        }
+
 
         #region property change
 

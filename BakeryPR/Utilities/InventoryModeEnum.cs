@@ -8,6 +8,6 @@ namespace BakeryPR.Utilities
 {
     public enum InventoryModeEnum
     {
-        ADD,SUBSTRACT
+        ADD,SUBSTRACT,NEW_PRODUCT
     }
 }

@@ -8,6 +8,6 @@ namespace BakeryPR.Models
 {
     public enum InventoryMode
     {
-        ADD,MINUS
+        ADD,MINUS,PRODUCTION
     }
 }

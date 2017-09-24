@@ -171,20 +171,42 @@ namespace BakeryPR.DAO
             return result;
         }
 
-        public List<CartModel> GetCart(long dateTick, string customername, string productname)
+        public string getCartQueryString(string customername, string productname)
+        {
+            return $" select cart.*,cartProduct.costprice,cartProduct.productId,cartProduct.price,cartProduct.quantity,product.name as ProductName from cart" +
+                $" inner join cartProduct on cartProduct.cartId = cart.id " +
+             $" inner join product on product.id = cartProduct.productId " +
+             $" where product.name like '{(productname == null ? "" : "%" + productname + "%")}'  " +
+             $"or  cart.customerName like '{(customername == null ? "" : "%" + customername + "%")}' ";
+
+        }
+
+        public string getCartQueryString(string customername, string productname, long startDate)
+        {
+            return $" select cart.*,cartProduct.costprice,cartProduct.productId,cartProduct.price,cartProduct.quantity,product.name as ProductName from cart" +
+                $" inner join cartProduct on cartProduct.cartId = cart.id " +
+             $" inner join product on product.id = cartProduct.productId " +
+             $" where product.name like '{(productname == null ? "" : "%" + productname + "%")}' " +
+             $"or  cart.customerName like '{(customername == null ? "" : "%" + customername + "%")}' " +
+             $" or cart.createdTimeSpan >= {startDate}";
+        }
+
+        public string getCartQueryString(string customername, string productname, long startDate, long endDate)
+        {
+            return $" select cart.*,cartProduct.costprice,cartProduct.productId,cartProduct.price,cartProduct.quantity,product.name as ProductName from cart" +
+                $" inner join cartProduct on cartProduct.cartId = cart.id " +
+             $" inner join product on product.id = cartProduct.productId " +
+             $" where product.name like '{(productname == null ? "" : "%" + productname + "%")}' " +
+             $"or  cart.customerName like '{(customername == null ? "" : "%" + customername + "%")}' " +
+             $" or (cart.createdTimeSpan >= {startDate} and cart.createdTimeSpan <= {endDate})";
+        }
+
+        public List<CartModel> GetCart(string query)
         {
             List<CartModel> lst = new List<CartModel>();
             using (SQLiteConnection conn = new SQLiteConnection(this.connectionString))
             {
-                conn.Open();
-                String t1 = "createdTimeSpan >= '" + dateTick + "'";
-                String t2 = "createdTimeSpan < '0'";
-                string query = $" select cart.*,cartProduct.productId,cartProduct.price,cartProduct.quantity,product.name as ProductName from cart  ";
-                query = query + $" inner join cartProduct on cartProduct.cartId = cart.id ";
-                query = query + $" inner join product on product.id = cartProduct.productId ";
-                query = query + $" where product.name like '{(productname == null ? "" : "%" + productname + "%")}' " +
-                    $"or cart.customerName like '{(customername == null ? "" : "%" + customername + "%")}' " +
-                    $"or {(dateTick == 0 ? t2 : t1)}";
+                conn.Open();                
 
                 DataSet dt = new DataSet();
                 SQLiteCommand cmd = new SQLiteCommand(conn);
@@ -207,6 +229,7 @@ namespace BakeryPR.DAO
                         cartModel.price = double.Parse(t["price"].ToString());
                         cartModel.quantity = int.Parse(t["quantity"].ToString());
                         cartModel.salesType = t["salesType"].ToString();
+                        cartModel.costPrice = double.Parse(t["costPrice"].ToString());
                         lst.Add(cartModel);
                     }
                 }

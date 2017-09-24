@@ -34,6 +34,7 @@
                             <ColumnDefinition Width="255"></ColumnDefinition>
                             <ColumnDefinition Width="255"></ColumnDefinition>
                             <ColumnDefinition Width="255"></ColumnDefinition>
+                            <ColumnDefinition Width="255"></ColumnDefinition>
                             <ColumnDefinition></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <StackPanel Orientation="Vertical">
@@ -45,43 +46,46 @@
                             <TextBox Text="{Binding salesSearchModel.productName,Mode=TwoWay}" HorizontalAlignment="Left" Width="220" Height="40" BorderThickness="3" ></TextBox>
                         </StackPanel>
                         <StackPanel Grid.Column="2" VerticalAlignment="Center">
-                            <TextBlock Foreground="White">Sales Date</TextBlock>
+                            <TextBlock Foreground="White">Sales Start Date</TextBlock>
                             <DatePicker SelectedDate="{Binding salesSearchModel.salesDate}" 
                                         Text="{Binding salesSearchModel.salesDateDisplay,Mode=TwoWay}"
                                         HorizontalAlignment="Left" Height="40"  Width="220" ></DatePicker>
                         </StackPanel>
-                        
 
-                        <Button Grid.Column="3" HorizontalAlignment="Left" Height="40" Padding="4" Width="100" 
+                        <StackPanel Grid.Column="3" VerticalAlignment="Center">
+                            <TextBlock Foreground="White">Sales end Date</TextBlock>
+                            <DatePicker SelectedDate="{Binding salesSearchModel.salesEndDate}" 
+                                        Text="{Binding salesSearchModel.salesDateEndDisplay,Mode=TwoWay}"
+                                        HorizontalAlignment="Left" Height="40"  Width="220" ></DatePicker>
+                        </StackPanel>
+
+
+                        <Button Grid.Column="4" HorizontalAlignment="Left" Height="40" Padding="4" Width="100" 
                                 Command="{Binding SearchistoryCommand}">Search</Button>
                     </Grid>
-                    
+
                     <ListView Grid.Row="1"  Margin="8"  ItemsSource="{Binding dailyCartHistory,Mode=TwoWay}"
                                   IsSynchronizedWithCurrentItem="True" 
                                    ScrollViewer.CanContentScroll="True">
                         <ListView.View>
-                        <GridView>
-                                <!--<GridViewColumn>
-                                    <GridViewColumn.CellTemplate >
-                                        <DataTemplate>
-                                            <Button  Style="{StaticResource buttonDataTemplate}" Content="Edit"  CommandParameter="{Binding}"
-                                        Command="{Binding Path=DataContext.loadEditSalesCommand, 
-                                    RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>-->
+                            <GridView>
+                                <GridViewColumn Header="Sales Date" DisplayMemberBinding="{Binding dateCreated,Mode=TwoWay}"></GridViewColumn>
                                 <GridViewColumn Header="Customer Name" DisplayMemberBinding="{Binding customerName,Mode=TwoWay}"></GridViewColumn>
-                            <GridViewColumn Header="Product Name" DisplayMemberBinding="{Binding  pName,Mode=TwoWay}"></GridViewColumn>
-                            <GridViewColumn Header="Quantity" DisplayMemberBinding="{Binding  quantity,Mode=TwoWay}"></GridViewColumn>
-                                <GridViewColumn Header="Price" DisplayMemberBinding="{Binding  price,Mode=TwoWay}"></GridViewColumn>
-                                <GridViewColumn Header="Sales Status" DisplayMemberBinding="{Binding  cartStatus,Mode=TwoWay}"></GridViewColumn>
+                                <GridViewColumn Header="Sales Type" DisplayMemberBinding="{Binding salesType,Mode=TwoWay}"></GridViewColumn>
+                                <GridViewColumn Header="Product Sold" DisplayMemberBinding="{Binding  pName,Mode=TwoWay}"></GridViewColumn>
+                                <GridViewColumn Header="No of Loaves" DisplayMemberBinding="{Binding  quantity,Mode=TwoWay}"></GridViewColumn>
+                                <GridViewColumn Header="Selling Price" DisplayMemberBinding="{Binding  price, StringFormat='# {0:0,0.00}'}"></GridViewColumn>
+                                <GridViewColumn Header="Cost Price" DisplayMemberBinding="{Binding  costPrice, StringFormat='# {0:0,0.00}'}"></GridViewColumn>
+                                <GridViewColumn Header="Total Sales" DisplayMemberBinding="{Binding  totalSales, StringFormat='# {0:0,0.00}'}"></GridViewColumn>
+                                <GridViewColumn Header="Total Cost" DisplayMemberBinding="{Binding  totalCost, StringFormat='# {0:0,0.00}'}"></GridViewColumn>
+                                <GridViewColumn Header="Contribution" DisplayMemberBinding="{Binding  contribution, StringFormat='# {0:0,0.00}'}"></GridViewColumn>
                             </GridView>
                         </ListView.View>
                         <ListView.Style>
                             <Style TargetType="ListView">
                                 <Style.Triggers>
                                     <Trigger Property="HasItems"
-                         Value="False">            
+                         Value="False">
                                         <Setter Property="Template">
                                             <Setter.Value>
                                                 <ControlTemplate TargetType="ListView">

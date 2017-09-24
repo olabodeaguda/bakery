@@ -161,6 +161,7 @@
     <Compile Include="DAO\ProductionIngredentDao.cs" />
     <Compile Include="DAO\ProductionOverheadDao.cs" />
     <Compile Include="DAO\ProductionProductDao.cs" />
+    <Compile Include="DAO\ProductionReportDao.cs" />
     <Compile Include="DAO\RecipeDao.cs" />
     <Compile Include="DAO\RecipeIngredentDao.cs" />
     <Compile Include="DAO\RoleDao.cs" />
@@ -191,9 +192,11 @@
     <Compile Include="Models\ProductionIngredent.cs" />
     <Compile Include="Models\ProductionOverhead.cs" />
     <Compile Include="Models\ProductionProduct.cs" />
+    <Compile Include="Models\ProductionReportModel.cs" />
     <Compile Include="Models\Profile.cs" />
     <Compile Include="Models\Recipe.cs" />
     <Compile Include="Models\RecipeIngredents.cs" />
+    <Compile Include="Models\ReportSearchModel.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\SalesRevenueModel.cs" />
     <Compile Include="Models\SalesSearchModel.cs" />
@@ -208,6 +211,7 @@
     <Compile Include="ModelView\OverheadModelView.cs" />
     <Compile Include="ModelView\ProductInventoryHistoryViewModel.cs" />
     <Compile Include="ModelView\ProductionIngredientHistoryModelView.cs" />
+    <Compile Include="ModelView\ProductionReportModelView.cs" />
     <Compile Include="ModelView\ProductionViewModel.cs" />
     <Compile Include="ModelView\ProductViewModel.cs" />
     <Compile Include="ModelView\RecipeIngredentModelView.cs" />
@@ -345,6 +349,9 @@
     <Compile Include="Views\EditProductionProduct.xaml.cs">
       <DependentUpon>EditProductionProduct.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\IngredientMovementReport.xaml.cs">
+      <DependentUpon>IngredientMovementReport.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\LoadingWait.xaml.cs">
       <DependentUpon>LoadingWait.xaml</DependentUpon>
     </Compile>
@@ -369,8 +376,14 @@
     <Compile Include="Views\ProductionIngredientHistory.xaml.cs">
       <DependentUpon>ProductionIngredientHistory.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ProductionReport.xaml.cs">
+      <DependentUpon>ProductionReport.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ProductionView.xaml.cs">
       <DependentUpon>ProductionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ProductMovememntReport.xaml.cs">
+      <DependentUpon>ProductMovememntReport.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ProductView.xaml.cs">
       <DependentUpon>ProductView.xaml</DependentUpon>
@@ -380,6 +393,9 @@
     </Compile>
     <Compile Include="Views\SalesHistory.xaml.cs">
       <DependentUpon>SalesHistory.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SalesReport.xaml.cs">
+      <DependentUpon>SalesReport.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SalesView.xaml.cs">
       <DependentUpon>SalesView.xaml</DependentUpon>
@@ -543,6 +559,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\IngredientMovementReport.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\LoadingWait.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -575,7 +595,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\ProductionReport.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\ProductionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ProductMovememntReport.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -588,6 +616,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\SalesHistory.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SalesReport.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

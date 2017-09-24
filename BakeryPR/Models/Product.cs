@@ -194,6 +194,19 @@ namespace BakeryPR.Models
             }
         }
 
+        private double _costprice;
+
+        public double costprice
+        {
+            get { return _costprice; }
+            set
+            {
+                _costprice = value;
+                this.NotifyPropertyChanged("costprice");
+            }
+        }
+
+
         #region property change
 
         public event PropertyChangedEventHandler PropertyChanged;

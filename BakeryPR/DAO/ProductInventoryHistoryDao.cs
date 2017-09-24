@@ -37,7 +37,8 @@ namespace BakeryPR.DAO
                     productId = int.Parse(x["productId"].ToString()),
                     quantity = int.Parse(x["quantity"].ToString()),
                     createdBy = x["createdBy"].ToString(),
-                    createdDate = DateTime.ParseExact(x["createdDate"].ToString(), "yyyy-MM-dd", CultureInfo.InvariantCulture)
+                    createdDate = DateTime.ParseExact(x["createdDate"].ToString(), "yyyy-MM-dd", CultureInfo.InvariantCulture),
+                    dateCreatedTimespan = double.Parse(x["dateCreatedTimespan"].ToString())
                 }).ToList();
             }
 
@@ -46,8 +47,8 @@ namespace BakeryPR.DAO
 
         public string insertQuery(ProductInventoryHistory p)
         {
-            string query = "insert into ProductInventoryHistory(productId,quantity,createdBy,createdDate,inventoryMode) ";
-            query = query + "values('" + p.productId + "'," + p.quantity + ",'" + p.createdBy + "','" + DateTime.Now.ToString("yyyy-MM-dd") + "','" + p.inventoryMode + "'); ";
+            string query = "insert into ProductInventoryHistory(productId,quantity,createdBy,createdDate,inventoryMode,dateCreatedTimespan) ";
+            query = query + "values('" + p.productId + "'," + p.quantity + ",'" + p.createdBy + "','" + DateTime.Now.ToString("yyyy-MM-dd") + "','" + p.inventoryMode + "','" + DateTime.Now.Ticks + "'); ";
 
             return query;
         }
@@ -56,8 +57,8 @@ namespace BakeryPR.DAO
         {
             using (SQLiteConnection conn = new SQLiteConnection(connectionString))
             {
-                string query = "insert into ProductionInventoryHistory(productId,quantity,createdBy,createdDate,inventoryMode) ";
-                query = query + "values(@productId,@quantity,@createdBy,@createdDate,@inventoryMode)";
+                string query = "insert into ProductionInventoryHistory(productId,quantity,createdBy,createdDate,inventoryMode,dateCreatedTimespan) ";
+                query = query + "values(@productId,@quantity,@createdBy,@createdDate,@inventoryMode,@dateCreatedTimespan)";
                 conn.Open();
                 SQLiteCommand cmd = new SQLiteCommand(conn);
                 cmd.CommandText = query;
@@ -67,6 +68,7 @@ namespace BakeryPR.DAO
                 cmd.Parameters.AddWithValue("@createdBy", p.createdBy);
                 cmd.Parameters.AddWithValue("@createdDate", p.createdDate.ToString("yyyy-MM-dd"));
                 cmd.Parameters.AddWithValue("@inventoryMode", p.inventoryMode);
+                cmd.Parameters.AddWithValue("@dateCreatedTimespan", DateTime.Now.Ticks);
                 int count = cmd.ExecuteNonQuery();
                 if (count > 0)
                 {
