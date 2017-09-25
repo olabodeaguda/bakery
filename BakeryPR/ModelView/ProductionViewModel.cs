@@ -1429,6 +1429,16 @@ namespace BakeryPR.ModelView
 
                             #region restrict quantity
                             double ds = pProductDao.sumTotalProductIngram(lst);
+                            double diff = (totalP - ds) / ((totalP + ds) / 2);
+
+                            if (diff >= 0.01 || diff <= -0.01)
+                            {
+                                string val = diff > 0 ? "0.01" : "-0.01";
+                                MessageBox.Show($"Product dough weight and Bulk dough weight difference is more that " +
+                                    $" {val} ", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                                return;
+                            }
+
                             if (totalP > ds)
                             {
                                 MessageBoxResult msg = MessageBox.Show("Total dough weight is more than the weight of the product. Do you want to continue?",
