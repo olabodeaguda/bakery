@@ -61,15 +61,6 @@ namespace BakeryPR.Utilities
                 case "productionReport":
                     title = "Production Report";
                     return new ProductionReport();
-                case "salesReport":
-                    title = "Transaction History";
-                    return new SalesHistory();
-                case "ingredientMovementReport":
-                    title = "Transaction History";
-                    return new SalesHistory();
-                case "productMovementReport":
-                    title = "Transaction History";
-                    return new SalesHistory();
                 default:
                     title = "Error";
                     return new ErrorView();

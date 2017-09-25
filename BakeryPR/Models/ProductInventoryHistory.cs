@@ -24,6 +24,8 @@ namespace BakeryPR.Models
             }
         }
 
+        public int index { get; set; }
+
         private int _productId;
 
         public int productId
@@ -96,9 +98,9 @@ namespace BakeryPR.Models
         }
 
 
-        private double _dateCreatedTimespan;
+        private long _dateCreatedTimespan;
 
-        public double dateCreatedTimespan
+        public long dateCreatedTimespan
         {
             get { return _dateCreatedTimespan; }
             set
@@ -107,6 +109,13 @@ namespace BakeryPR.Models
                 this.NotifyPropertyChanged("dateCreatedTimespan");
             }
         }
+
+
+        public int quantityProduced { get; set; }
+
+        public int quantitySold { get; set; }
+
+        public int balance { get; set; }
 
         #region property change
 

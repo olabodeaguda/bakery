@@ -38,11 +38,63 @@ namespace BakeryPR.DAO
                     quantity = int.Parse(x["quantity"].ToString()),
                     createdBy = x["createdBy"].ToString(),
                     createdDate = DateTime.ParseExact(x["createdDate"].ToString(), "yyyy-MM-dd", CultureInfo.InvariantCulture),
-                    dateCreatedTimespan = double.Parse(x["dateCreatedTimespan"].ToString())
+                    dateCreatedTimespan = Convert.ToInt64(x.Field<double>("dateCreatedTimespan"))
                 }).ToList();
             }
 
             return lst;
+        }
+
+        public List<ProductInventoryHistory> byId(string query)
+        {
+            List<ProductInventoryHistory> lst = new List<ProductInventoryHistory>();
+            using (SQLiteConnection conn = new SQLiteConnection(this.connectionString))
+            {
+                conn.Open();
+                DataSet dt = new DataSet();
+                SQLiteCommand cmd = new SQLiteCommand(conn);
+                cmd.CommandText = query;
+                cmd.CommandType = CommandType.Text;
+                this.SQLiteAdaptor(dt, cmd);
+
+                List<ProductInventoryHistory> lstpih = dt.Tables[0].Rows.Cast<DataRow>().Select(x => new ProductInventoryHistory()
+                {
+                    id = int.Parse(x["id"].ToString()),
+                    productName = x["name"].ToString(),
+                    productId = int.Parse(x["productId"].ToString()),
+                    quantity = int.Parse(x["quantity"].ToString()),
+                    createdBy = x["createdBy"].ToString(),
+                    createdDate = DateTime.ParseExact(x["createdDate"].ToString(), "yyyy-MM-dd", CultureInfo.InvariantCulture),
+                    dateCreatedTimespan = Convert.ToInt64(x.Field<double>("dateCreatedTimespan")),
+                    inventoryMode = x["inventoryMode"].ToString()
+                }).OrderBy(x => x.dateCreatedTimespan).ToList();
+
+                int sum = 0;
+                int index = 1;
+                foreach (var x in lstpih)
+                {
+                    x.index = index++;
+                    if (x.quantity > 0)
+                    {
+                        if (x.inventoryMode == "NEW_PRODUCT")
+                        {
+                            x.quantityProduced = x.quantity;
+                            x.quantitySold = 0;
+                            sum = sum + x.quantity;
+                        }
+                        else if (x.inventoryMode == "SALES")
+                        {
+                            x.quantityProduced = 0;
+                            x.quantitySold = x.quantity;
+                            sum = sum - x.quantity;
+                        }
+                        x.balance = sum;
+                        lst.Add(x);
+                    }
+                }
+            }
+
+            return lst.OrderByDescending(x => x.index).ToList();
         }
 
         public string insertQuery(ProductInventoryHistory p)
@@ -51,6 +103,30 @@ namespace BakeryPR.DAO
             query = query + "values('" + p.productId + "'," + p.quantity + ",'" + p.createdBy + "','" + DateTime.Now.ToString("yyyy-MM-dd") + "','" + p.inventoryMode + "','" + DateTime.Now.Ticks + "'); ";
 
             return query;
+        }
+
+        public string SearchQuery(int productId)
+        {
+            return $"select ProductInventoryHistory.*,product.name from ProductInventoryHistory " +
+            $" inner join product on product.id = ProductInventoryHistory.productId " +
+            $" where ProductInventoryHistory.productId = '{productId}' ";
+        }
+
+        public string SearchQuery(int productId, long startdate)
+        {
+            string p = productId > 0 ? "ProductInventoryHistory.productId = '" + productId + "' and " : string.Empty;
+
+            return $"select ProductInventoryHistory.*,product.name from ProductInventoryHistory " +
+            $" inner join product on product.id = ProductInventoryHistory.productId " +
+            $" where {p} dateCreatedTimespan >= '{startdate}' ";
+        }
+
+        public string SearchQuery(int productId, long startdate, long endDate)
+        {
+            string p = productId > 0 ? "ProductInventoryHistory.productId = '" + productId + "' and " : string.Empty;
+            return $"select ProductInventoryHistory.*,product.name from ProductInventoryHistory " +
+            $" inner join product on product.id = ProductInventoryHistory.productId " +
+            $" where {p} (dateCreatedTimespan >= '{startdate}' and  dateCreatedTimespan <= '{endDate}')";
         }
 
         public bool add(ProductInventoryHistory p)

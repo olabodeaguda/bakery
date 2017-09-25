@@ -36,7 +36,7 @@ namespace BakeryPR.ModelView
             set
             {
                 _selectIngredent = value;
-                this.inventoryHistory = new ObservableCollection<InventoryHistory>(inventoryDao.byId(_selectIngredent));
+                this.inventoryHistory = new ObservableCollection<InventoryHistory>(inventoryDao.byIdReport(_selectIngredent));
                 this.NotifyPropertyChanged("selectedIngredent");
             }
         }

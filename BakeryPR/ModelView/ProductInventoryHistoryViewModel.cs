@@ -1,5 +1,6 @@
 ﻿using BakeryPR.DAO;
 using BakeryPR.Models;
+using BakeryPR.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -57,12 +58,75 @@ namespace BakeryPR.ModelView
             }
         }
 
+        private ProductInventoryHistoryModel _productInventoryHistoryModel = new ProductInventoryHistoryModel();
+
+        public ProductInventoryHistoryModel productInventoryHistoryModel
+        {
+            get { return _productInventoryHistoryModel; }
+            set
+            {
+                _productInventoryHistoryModel = value;
+                this.NotifyPropertyChanged("productInventoryHistoryModel");
+            }
+        }
+
+        private Visibility _isBusyVisible = Visibility.Collapsed;
+
+        public Visibility isBusyVisible
+        {
+            get { return _isBusyVisible; }
+            set
+            {
+                _isBusyVisible = value;
+                this.NotifyPropertyChanged("isBusyVisible");
+            }
+        }
+
+
+        public DelegateCommand<object> searchHistoryCommand
+        {
+            get
+            {
+                return new DelegateCommand<object>(async (s) =>
+                {
+                    isBusyVisible = Visibility.Visible;
+                    await Task.Run(() =>
+                    {
+                        string query = string.Empty;
+                        if (string.IsNullOrEmpty(productInventoryHistoryModel.startDateDisplay) && string.IsNullOrEmpty(productInventoryHistoryModel.endDateDisplay))
+                        {
+                            query = piDao.SearchQuery(this.productInventoryHistoryModel.selectedproduct);
+                        }
+                        else if (!string.IsNullOrEmpty(productInventoryHistoryModel.startDateDisplay) && string.IsNullOrEmpty(productInventoryHistoryModel.endDateDisplay))
+                        {
+                            query = piDao.SearchQuery(this.productInventoryHistoryModel.selectedproduct, this.productInventoryHistoryModel.startDate.Ticks);
+                        }
+                        else if (!string.IsNullOrEmpty(productInventoryHistoryModel.startDateDisplay) && !string.IsNullOrEmpty(productInventoryHistoryModel.endDateDisplay))
+                        {
+                            query = piDao.SearchQuery(this.productInventoryHistoryModel.selectedproduct, this.productInventoryHistoryModel.startDate.Ticks,
+                                this.productInventoryHistoryModel.endDate.Ticks);
+                        }
+
+                        this.productHistory = new ObservableCollection<ProductInventoryHistory>(piDao.byId(query));
+                    });
+                    isBusyVisible = Visibility.Collapsed;
+                });
+            }
+        }
+
 
         public List<Product> products
         {
             get
             {
-                return this.productDao.all();
+                List<Product> lst = new List<Product>();
+                lst.Add(new Product()
+                {
+                    id = -1,
+                    name = "Select product"
+                });
+                lst.AddRange(this.productDao.all());
+                return lst;
             }
         }
 

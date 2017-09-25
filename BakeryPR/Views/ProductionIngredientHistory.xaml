@@ -30,9 +30,11 @@
                     <GridViewColumn Width="200"  HeaderContainerStyle="{StaticResource ListViewStyle}" 
                                     Header="Date Added"  DisplayMemberBinding="{Binding dateCreated,StringFormat=yyyy-MM-dd}" />
                     <GridViewColumn Width="200"  HeaderContainerStyle="{StaticResource ListViewStyle}" 
-                                    Header="Quantity"  DisplayMemberBinding="{Binding amountDisplay}" />
+                                    Header="Replenishement"  DisplayMemberBinding="{Binding replenishDisplay}" />
                     <GridViewColumn Width="200"  HeaderContainerStyle="{StaticResource ListViewStyle}" 
-                                    Header="Inventory Type"  DisplayMemberBinding="{Binding inventoryMode}" />
+                                    Header="Issued to Production"  DisplayMemberBinding="{Binding productionCountDisplay}" />
+                    <GridViewColumn Width="200"  HeaderContainerStyle="{StaticResource ListViewStyle}" 
+                                    Header="Balance"  DisplayMemberBinding="{Binding balanceDisplay}" />
                     <GridViewColumn Width="200"  HeaderContainerStyle="{StaticResource ListViewStyle}" 
                                     Header="Added By"  DisplayMemberBinding="{Binding addedBy}" />
                 </GridView>

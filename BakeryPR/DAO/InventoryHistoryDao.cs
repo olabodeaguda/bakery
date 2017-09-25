@@ -48,6 +48,62 @@ namespace BakeryPR.DAO
             return lst;
         }
 
+        public List<InventoryHistory> byIdReport(int ingredentId)
+        {
+            List<InventoryHistory> lst = new List<InventoryHistory>();
+            using (SQLiteConnection conn = new SQLiteConnection(this.connectionString))
+            {
+                conn.Open();
+                string query = " select inventoryHistory.*,ingredent.ingredentName, measurementType.measureTypeName from inventoryHistory ";
+                query = query + "inner join ingredent on ingredent.id = inventoryHistory.ingredentId ";
+                query = query + "inner join measurementType on measurementType.id = ingredent.mTypeId ";
+                query = query + "where ingredentId =@ingredentId ";
+                query = query + " order by inventoryHistory.id desc ";
+
+                DataSet dt = new DataSet();
+                SQLiteCommand cmd = new SQLiteCommand(conn);
+                cmd.CommandText = query;
+                cmd.Parameters.AddWithValue("ingredentId", ingredentId);
+                cmd.CommandType = CommandType.Text;
+                this.SQLiteAdaptor(dt, cmd);
+
+                List<InventoryHistory> lstAscending = dt.Tables[0].Rows.Cast<DataRow>().Select(x => new InventoryHistory()
+                {
+                    id = int.Parse(x["id"].ToString()),
+                    addedBy = x["addedBy"].ToString(),
+                    ingredentId = int.Parse(x["ingredentId"].ToString()),
+                    amount = double.Parse(x["amount"].ToString()),
+                    inventoryMode = x["inventoryMode"].ToString(),
+                    dateCreated = DateTime.ParseExact(x["dateCreated"].ToString(), "dd-MM-yyyy", CultureInfo.InvariantCulture),
+                    replenishCount = x["inventoryMode"].ToString().Trim() == "ADD" ? double.Parse(x["amount"].ToString()) : 0,
+                    productionCount = x["inventoryMode"].ToString().Trim() == "PRODUCTION" ? double.Parse(x["amount"].ToString()) : 0,
+                    measureType = x["measureTypeName"].ToString()
+                }).Where(x => x.amount > 0).OrderBy(x => x.dateCreated).ToList();
+
+                double sum = 0;
+                int index = 1;
+                foreach (var x in lstAscending)
+                {
+                    x.index = index++;
+                    if (x.amount > 0)
+                    {
+                        if (x.inventoryMode == "PRODUCTION")
+                        {
+                            sum = sum - x.amount;
+                        }
+                        else
+                        {
+                            sum = sum + x.amount;
+                        }
+                        x.balance = sum;
+                        lst.Add(x);
+                    }
+                }
+            }
+
+            return lst.OrderByDescending(x => x.index).ToList();
+        }
+
         public string insertQuery(InventoryHistory inventoryHistory)
         {
             return $"insert into inventoryHistory(ingredentId,amount,dateCreated,addedBy,inventoryMode) " +
@@ -100,8 +156,5 @@ namespace BakeryPR.DAO
 
             return amount;
         }
-
-
-
     }
 }

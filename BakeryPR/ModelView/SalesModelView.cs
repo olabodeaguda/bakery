@@ -145,7 +145,7 @@ namespace BakeryPR.ModelView
                                 cardString = cardString + PIHDao.insertQuery(new ProductInventoryHistory()
                                 {
                                     createdBy = this.cartModel.createdBy,
-                                    inventoryMode = InventoryMode.ADD.ToString(),
+                                    inventoryMode = InventoryMode.SALES.ToString(),
                                     productId = tm.productId,
                                     quantity = tm.quantity
                                 });

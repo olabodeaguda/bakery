@@ -263,7 +263,7 @@ namespace BakeryPR.DAO
                     lastUpdated = DateTime.Parse(x["lastUpdated"].ToString(), new CultureInfo("en-US", true)),
                     approval = x["approval"].ToString(),
                     approveBy = x["approveBy"].ToString(),
-                    dateCreatedTimespan = long.Parse(x["dateCreatedTimespan"].ToString())
+                    dateCreatedTimespan = Convert.ToInt64(x.Field<double>("dateCreatedTimespan"))
                 }).ToList();
             }
 

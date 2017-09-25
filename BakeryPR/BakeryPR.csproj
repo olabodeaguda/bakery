@@ -187,6 +187,7 @@
     <Compile Include="Models\OverheadDetailsGroup.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\ProductInventoryHistory.cs" />
+    <Compile Include="Models\ProductInventoryHistoryModel.cs" />
     <Compile Include="Models\Production.cs" />
     <Compile Include="Models\ProductionCostModel.cs" />
     <Compile Include="Models\ProductionIngredent.cs" />

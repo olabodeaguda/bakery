@@ -20,6 +20,7 @@ namespace BakeryPR.Models
                 this.NotifyPropertyChanged("id");
             }
         }
+        public int index { get; set; }
 
         private int _ingredentId;
 
@@ -156,6 +157,66 @@ namespace BakeryPR.Models
         {
             get { return _dateTimeSpan; }
             set { _dateTimeSpan = value; }
+        }
+
+        private double _replenishCount;
+
+        public double replenishCount
+        {
+            get { return _replenishCount; }
+            set
+            {
+                _replenishCount = value;
+                this.NotifyPropertyChanged("replenishCount");
+            }
+        }
+
+        public string replenishDisplay
+        {
+            get
+            {
+                return $"{replenishCount}{measureType}";
+            }
+        }
+
+        private double _productionCount;
+
+        public double productionCount
+        {
+            get { return _productionCount; }
+            set
+            {
+                _productionCount = value;
+                this.NotifyPropertyChanged("productionCount");
+            }
+        }
+
+        public string productionCountDisplay
+        {
+            get
+            {
+                return $"{productionCount}{measureType}";
+            }
+        }
+
+        private double _balance;
+
+        public double balance
+        {
+            get { return _balance; }
+            set
+            {
+                _balance = value;
+                this.NotifyPropertyChanged("balance");
+            }
+        }
+
+        public string balanceDisplay
+        {
+            get
+            {
+                return $"{balance}{measureType}";
+            }
         }
 
 
