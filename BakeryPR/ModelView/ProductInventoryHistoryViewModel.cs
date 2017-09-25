@@ -99,12 +99,12 @@ namespace BakeryPR.ModelView
                         }
                         else if (!string.IsNullOrEmpty(productInventoryHistoryModel.startDateDisplay) && string.IsNullOrEmpty(productInventoryHistoryModel.endDateDisplay))
                         {
-                            query = piDao.SearchQuery(this.productInventoryHistoryModel.selectedproduct, this.productInventoryHistoryModel.startDate.Ticks);
+                            query = piDao.SearchQuery(this.productInventoryHistoryModel.selectedproduct, this.productInventoryHistoryModel.startDate.AddDays(-1).Ticks);
                         }
                         else if (!string.IsNullOrEmpty(productInventoryHistoryModel.startDateDisplay) && !string.IsNullOrEmpty(productInventoryHistoryModel.endDateDisplay))
                         {
-                            query = piDao.SearchQuery(this.productInventoryHistoryModel.selectedproduct, this.productInventoryHistoryModel.startDate.Ticks,
-                                this.productInventoryHistoryModel.endDate.Ticks);
+                            query = piDao.SearchQuery(this.productInventoryHistoryModel.selectedproduct, this.productInventoryHistoryModel.startDate.AddDays(-1).Ticks,
+                                this.productInventoryHistoryModel.endDate.AddDays(1).Ticks);
                         }
 
                         this.productHistory = new ObservableCollection<ProductInventoryHistory>(piDao.byId(query));

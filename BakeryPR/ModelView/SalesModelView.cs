@@ -270,11 +270,11 @@ namespace BakeryPR.ModelView
                         }
                         else if (!string.IsNullOrEmpty(ssm.salesDateDisplay) && string.IsNullOrEmpty(ssm.salesDateEndDisplay))
                         {
-                            sHistory = this.cartDao.GetCart(this.cartDao.getCartQueryString(ssm.customerName, ssm.productName, ssm.salesDate.Ticks));
+                            sHistory = this.cartDao.GetCart(this.cartDao.getCartQueryString(ssm.customerName, ssm.productName, ssm.salesDate.AddDays(-1).Ticks));
                         }
                         else if(!string.IsNullOrEmpty(ssm.salesDateDisplay) && !string.IsNullOrEmpty(ssm.salesDateEndDisplay))
                         {
-                            sHistory = this.cartDao.GetCart(this.cartDao.getCartQueryString(ssm.customerName, ssm.productName, ssm.salesDate.Ticks,ssm.salesEndDate.Ticks));
+                            sHistory = this.cartDao.GetCart(this.cartDao.getCartQueryString(ssm.customerName, ssm.productName, ssm.salesDate.AddDays(-1).Ticks,ssm.salesEndDate.AddDays(1).Ticks));
                         }
 
                         this.dailyCartHistory = new ObservableCollection<CartModel>(sHistory);

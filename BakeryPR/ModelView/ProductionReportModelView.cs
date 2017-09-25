@@ -63,15 +63,15 @@ namespace BakeryPR.ModelView
                             !string.IsNullOrEmpty(this.reportSearchModel.endDateDisplay))
                         {
                             long startDate = new DateTime(this.reportSearchModel.startDate.Year,
-                                this.reportSearchModel.startDate.Month, this.reportSearchModel.startDate.Day).Ticks;
+                                this.reportSearchModel.startDate.Month, this.reportSearchModel.startDate.Day).AddDays(-1).Ticks;
                             long endDate = new DateTime(this.reportSearchModel.endDate.Year,
-                                this.reportSearchModel.endDate.Month, this.reportSearchModel.endDate.Day).Ticks;
+                                this.reportSearchModel.endDate.Month, this.reportSearchModel.endDate.Day).AddDays(1).Ticks;
                             searchResult = new ObservableCollection<ProductionReportModel>(productionReportDao.ByDate(startDate, endDate));
                         }
                         else if (!string.IsNullOrEmpty(this.reportSearchModel.startDateDisplay))
                         {
                             long startDate = new DateTime(this.reportSearchModel.startDate.Year,
-                                this.reportSearchModel.startDate.Month, this.reportSearchModel.startDate.Day).Ticks;
+                                this.reportSearchModel.startDate.Month, this.reportSearchModel.startDate.Day).AddDays(-1).Ticks;
                             searchResult = new ObservableCollection<ProductionReportModel>(productionReportDao.ByDate(startDate));
                         }
 

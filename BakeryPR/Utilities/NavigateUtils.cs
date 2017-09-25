@@ -56,11 +56,14 @@ namespace BakeryPR.Utilities
                     title = "About Company";
                     return new CompanyRegistration();
                 case "saleshistory":
-                    title = "Transaction History";
+                    title = "Sales History Report";
                     return new SalesHistory();
                 case "productionReport":
                     title = "Production Report";
                     return new ProductionReport();
+                case "salesReport":
+                    title = "Sales Report";
+                    return new SalesReport();
                 default:
                     title = "Error";
                     return new ErrorView();

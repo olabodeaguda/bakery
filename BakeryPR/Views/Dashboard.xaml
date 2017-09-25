@@ -46,7 +46,7 @@
                 <MenuItem Header="Product Movement Report" Command="{Binding navCommand}" CommandParameter="ProductInventory"></MenuItem>
                 <MenuItem Header="Ingredient Movement Report" Command="{Binding navCommand}" CommandParameter="IngredientInventory"></MenuItem>
                 <MenuItem Header="Production Report" Command="{Binding navCommand}" CommandParameter="productionReport"></MenuItem>
-                <MenuItem Header="Sales Report" Command="{Binding navCommand}" CommandParameter="salesReport"></MenuItem>
+                <MenuItem Header="Sales History Report" Command="{Binding navCommand}" CommandParameter="saleshistory"></MenuItem>
             </MenuItem>
         </Menu>
         <Grid Grid.Row="1">

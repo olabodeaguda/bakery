@@ -113,7 +113,7 @@ namespace BakeryPR.ModelView
                 else
                 {
                     int count = 0;
-                    if (e.loadCount != 0 && (e.loadCount % 100) == 0)
+                    if (e.loadCount != 0 && (e.loadCount % 4000) == 0)
                     {
                         count++;
                     }

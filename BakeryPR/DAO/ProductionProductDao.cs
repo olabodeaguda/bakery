@@ -167,7 +167,7 @@ namespace BakeryPR.DAO
 
         public double sumTotalProductInKg(List<ProductionProduct> e)
         {
-            return e.Sum(x => x.measureTypeName.ToLower().Equals("gram") ? ((x.weight * x.quantity) * 1000) : (x.weight * x.quantity));
+            return e.Sum(x => (x.weight * x.quantity)); //e.Sum(x => x.measureTypeName.ToLower().Equals("gram") ? ((x.weight * x.quantity) ) : (x.weight * x.quantity));
         }
 
         public string updateString(ProductionProduct pp)
