@@ -52,7 +52,6 @@ namespace BakeryPR.ModelView
         }
 
         private string _filename;
-
         public string filename
         {
             get { return _filename; }
@@ -632,8 +631,12 @@ namespace BakeryPR.ModelView
                     try
                     {
                         EditProductionProduct epp = new EditProductionProduct();
-                        this.productionProduct = (ProductionProduct)s;
-                        this.checkvalidation();
+                        this.productionProduct =   (ProductionProduct)s;
+                        //    this.checkvalidation();
+                        if (this.production.approval == ProductionStatus.CLOSED.ToString())
+                        {
+                            throw new Exception("Closed production can't be edited");
+                        }
                         epp.DataContext = this;
                         epp.ShowDialog();
                     }
@@ -1208,6 +1211,24 @@ namespace BakeryPR.ModelView
 
         #region Manage Production Product
 
+        private double _doughDiff;
+
+        public double doughDiff
+        {
+            get
+            {
+                List<ProductionProduct> lst = pProductDao.byproductionId(this.production.id);
+                var productWeight = pProductDao.sumTotalProductInKg(lst);
+                totalProductWeight = productWeight.ToString();
+                var recipeWeight = PIDao.byProductionId(this.production.id).Sum(x => x.amount);
+                totalRecipeDough = recipeWeight.ToString();
+                double tdf = (productWeight > recipeWeight ? (productWeight - recipeWeight) : (recipeWeight - productWeight));
+
+                return tdf;
+            }
+        }
+
+
         private ObservableCollection<ProductionProduct> _mpp;
 
         public ObservableCollection<ProductionProduct> mpp
@@ -1220,7 +1241,8 @@ namespace BakeryPR.ModelView
                 totalProductWeight = productWeight.ToString();
                 var recipeWeight = PIDao.byProductionId(this.production.id).Sum(x => x.amount);
                 totalRecipeDough = recipeWeight.ToString();
-                totalDoughDiff = $"{(productWeight > recipeWeight ? (productWeight - recipeWeight) : (recipeWeight - productWeight))}";
+                double d = (productWeight > recipeWeight ? (productWeight - recipeWeight) : (recipeWeight - productWeight));
+                totalDoughDiff = $"{Math.Round(d, 2)}";
                 return _mpp;
             }
             set
@@ -1428,18 +1450,18 @@ namespace BakeryPR.ModelView
                             List<ProductionProduct> lst = pProductDao.byproductionId(this.production.id);
 
                             #region restrict quantity
-                            double ds = pProductDao.sumTotalProductIngram(lst);
-                            double diff = (totalP - ds) / ((totalP + ds) / 2);
 
-                            if (diff >= 0.01 || diff <= -0.01)
+                            var recipeWeight = PIDao.byProductionId(this.production.id).Sum(x => x.amount);
+                            double diff = (doughDiff * 100) / recipeWeight;                            
+
+                            if (diff > 1 || diff < -1)
                             {
-                                string val = diff > 0 ? "0.01" : "-0.01";
                                 MessageBox.Show($"Product dough weight and Bulk dough weight difference is more that " +
-                                    $" {val} ", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                                    $"1% ", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                                 return;
                             }
 
-                            if (totalP > ds)
+                            /*if (totalP > ds)
                             {
                                 MessageBoxResult msg = MessageBox.Show("Total dough weight is more than the weight of the product. Do you want to continue?",
                                     "Information", MessageBoxButton.YesNo, MessageBoxImage.Question);
@@ -1456,7 +1478,7 @@ namespace BakeryPR.ModelView
                                 {
                                     return;
                                 }
-                            }
+                            }*/
                             #endregion
 
                             List<Product> lstProduct = productDao.all();
@@ -1492,7 +1514,23 @@ namespace BakeryPR.ModelView
                             bool result = pihDao.add(query);
                             if (result)
                             {
+                                this.production.approval = "CLOSED";
                                 this.productions = new ObservableCollection<Production>(dao.all());
+
+                                ManageProductionProduct lv = null;
+                                foreach (Window tm in Application.Current.Windows)
+                                {
+                                    if (tm is ManageProductionProduct)
+                                    {
+                                        lv = (ManageProductionProduct)tm;
+                                        break;
+                                    }
+                                }
+                                if (lv != null)
+                                {
+                                    lv.Close();
+                                }
+
                                 MessageBox.Show("Product have been move to sales", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
                             }
                         }

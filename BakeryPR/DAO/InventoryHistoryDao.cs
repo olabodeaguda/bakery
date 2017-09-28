@@ -78,7 +78,7 @@ namespace BakeryPR.DAO
                     replenishCount = x["inventoryMode"].ToString().Trim() == "ADD" ? double.Parse(x["amount"].ToString()) : 0,
                     productionCount = x["inventoryMode"].ToString().Trim() == "PRODUCTION" ? double.Parse(x["amount"].ToString()) : 0,
                     measureType = x["measureTypeName"].ToString()
-                }).Where(x => x.amount > 0).OrderBy(x => x.dateCreated).ToList();
+                }).OrderBy(x => x.dateCreated).ToList();
 
                 double sum = 0;
                 int index = 1;
