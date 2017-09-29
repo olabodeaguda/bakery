@@ -34,7 +34,7 @@ namespace BakeryPR.ModelView
         {
             get
             {
-                return new DelegateCommand<object>(async(s) =>
+                return new DelegateCommand<object>(async (s) =>
                 {
                     await Task.Run(() =>
                     {
@@ -54,6 +54,35 @@ namespace BakeryPR.ModelView
                     prod.DataContext = this;
                     prod.ShowDialog();
                     this.products = new ObservableCollection<Product>(dao.all());
+                });
+            }
+        }
+
+        public DelegateCommand<object> loadDeleteCommand
+        {
+            get
+            {
+                return new DelegateCommand<object>((s) =>
+                {
+                    Product p = (Product)s;
+                    if (p == null)
+                    {
+                        return;
+                    }
+                    MessageBoxResult msg = MessageBox.Show("Are you sure ?", "Deletion", MessageBoxButton.YesNo, MessageBoxImage.Exclamation);
+                    if (msg == MessageBoxResult.Yes)
+                    {
+                        bool result = dao.Delete(p.id);
+                        if (result)
+                        {
+                            this.products = new ObservableCollection<Product>(dao.all());
+                            MessageBox.Show($"{p.name} has been deteled successfully");
+                        }
+                        else
+                        {
+                            MessageBox.Show($"{p.name} has not been deteled. Please try again or contat administrator");
+                        }
+                    }
                 });
             }
         }

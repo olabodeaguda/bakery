@@ -47,6 +47,16 @@ namespace BakeryPR.ModelView
             }
         }
 
+        private double _CartProductDao;
+
+        public double CartProductDao
+        {
+            get { return _CartProductDao; }
+            set { _CartProductDao = value;
+            }
+        }
+
+
         public DelegateCommand<object> loadEditSalesCommand
         {
             get
@@ -462,6 +472,34 @@ namespace BakeryPR.ModelView
             get
             {
                 return SystemParameters.PrimaryScreenWidth;
+            }
+        }
+
+        public DelegateCommand<object> loadDeleteCommand
+        {
+            get
+            {
+                return new DelegateCommand<object>((s) =>
+                {
+                    CartModel p = (CartModel)s;
+                    if (p == null)
+                    {
+                        return;
+                    }
+                    MessageBoxResult msg = MessageBox.Show("Are you sure ?", "Deletion", MessageBoxButton.YesNo, MessageBoxImage.Exclamation);
+                    if (msg == MessageBoxResult.Yes)
+                    {
+                        bool result = dao.Delete(p.id);
+                        if (result)
+                        {
+                            MessageBox.Show($"{p.title} has been deteled successfully");
+                        }
+                        else
+                        {
+                            MessageBox.Show($"{p.title} has not been deteled. Please try again or contat administrator");
+                        }
+                    }
+                });
             }
         }
 

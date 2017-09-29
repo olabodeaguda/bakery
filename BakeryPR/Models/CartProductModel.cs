@@ -149,8 +149,8 @@ namespace BakeryPR.Models
             }
         }
 
-
-
+        public CartProductDao cartProductDao { get; private set; }       
+        
         #region property change
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -23,11 +23,21 @@
             <ListView.View>
 
                 <GridView>
-                    <GridViewColumn  x:Name="gridV">
+                    <GridViewColumn  x:Name="gridV">            
                         <GridViewColumn.CellTemplate >
                             <DataTemplate>
                                 <Button Content="Edit"  CommandParameter="{Binding}"
                                         Command="{Binding Path=DataContext.loadEditCommand, 
+                                    RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
+
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn>
+                        <GridViewColumn.CellTemplate >
+                            <DataTemplate>
+                                <Button Content="Delete"  CommandParameter="{Binding}"
+                                        Command="{Binding Path=DataContext.loadDeleteCommand, 
                                     RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
 
                             </DataTemplate>

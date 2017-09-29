@@ -82,9 +82,7 @@
                                     <TextBlock Name="itemName" Text="{Binding name,Mode=TwoWay}" ></TextBlock>
                                     <StackPanel Orientation="Horizontal">
                                             <TextBlock Text="{Binding quantityString}"></TextBlock>
-                                            <TextBlock Margin="5 0 0 0" Text="{Binding retailString}"></TextBlock>
-                                            <TextBlock Margin="5 0 0 0" Text="{Binding wholeString}"></TextBlock>
-                                    </StackPanel>
+                                        </StackPanel>
                                 </StackPanel>
                             </DataTemplate>
                         </ListView.ItemTemplate>

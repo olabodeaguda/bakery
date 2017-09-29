@@ -11,6 +11,24 @@ namespace BakeryPR.DAO
 {
     public class ProductionProductDao : AbstractDao
     {
+        public bool Delete(int id)
+        {
+            using (SQLiteConnection conn = new SQLiteConnection(connectionString))
+            {
+                conn.Open();
+                SQLiteCommand cmd = new SQLiteCommand(conn);
+                cmd.CommandText = "delete from productionProduct where id = @id;";
+                cmd.Parameters.AddWithValue("@id", id);
+                cmd.CommandType = CommandType.Text;
+                int count = cmd.ExecuteNonQuery();
+                if (count > 0)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
 
         public bool add(ProductionProduct values)
         {

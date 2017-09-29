@@ -140,12 +140,30 @@ namespace BakeryPR.DAO
             return false;
         }
 
+        public bool Delete(int id)
+        {
+            using (SQLiteConnection conn = new SQLiteConnection(connectionString))
+            {
+                conn.Open();
+                SQLiteCommand cmd = new SQLiteCommand(conn);
+                cmd.CommandText = "delete from product where id = @id";
+                cmd.Parameters.AddWithValue("@id", id);
+                cmd.CommandType = CommandType.Text;
+                int count = cmd.ExecuteNonQuery();
+                if (count > 0)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         public String updateStoreQuery(Product pr)
         {
             string query = $"update product set inventoryStore='{pr.inventoryStore}',  costprice='{pr.costprice}'  where id = '{pr.id}';";
             return query;
         }
-
 
         public String updateStore(Product pr)
         {

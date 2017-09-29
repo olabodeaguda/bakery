@@ -69,6 +69,16 @@
                                    ScrollViewer.CanContentScroll="True">
                         <ListView.View>
                             <GridView>
+                                <GridViewColumn>
+                                    <GridViewColumn.CellTemplate >
+                                        <DataTemplate>
+                                            <Button Content="Delete"  CommandParameter="{Binding}"
+                                        Command="{Binding Path=DataContext.loadDeleteCommand, 
+                                    RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
+
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
                                 <GridViewColumn Header="Sales Date" DisplayMemberBinding="{Binding dateCreated,Mode=TwoWay}"></GridViewColumn>
                                 <GridViewColumn Header="Customer Name" DisplayMemberBinding="{Binding customerName,Mode=TwoWay}"></GridViewColumn>
                                 <GridViewColumn Header="Sales Type" DisplayMemberBinding="{Binding salesType,Mode=TwoWay}"></GridViewColumn>

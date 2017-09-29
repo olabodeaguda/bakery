@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BakeryPR.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -83,6 +84,11 @@ namespace BakeryPR.Models
             set
             {
                 _isWholesales = value;
+                if (value)
+                {
+                    salesType = SalesType.WHOLESALES.ToString();
+                    isRetails = false;
+                }
                 this.NotifyPropertyChanged("isWholesales");
             }
 
@@ -96,6 +102,11 @@ namespace BakeryPR.Models
             set
             {
                 _isRetails = value;
+                if (value)
+                {
+                    salesType = SalesType.RETAIL.ToString();
+                    isWholesales = false;
+                }
                 this.NotifyPropertyChanged("isRetails");
             }
         }

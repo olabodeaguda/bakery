@@ -193,7 +193,7 @@ namespace BakeryPR.DAO
 
         public string getCartQueryString(string customername, string productname, long startDate, long endDate)
         {
-            return $" select cart.*,cartProduct.costprice,cartProduct.productId,cartProduct.price,cartProduct.quantity,product.name as ProductName from cart" +
+            return $" select cart.* ,cartProduct.costprice,cartProduct.productId,cartProduct.price,cartProduct.quantity,product.name as ProductName from cart" +
                 $" inner join cartProduct on cartProduct.cartId = cart.id " +
              $" inner join product on product.id = cartProduct.productId " +
              $" where product.name like '{(productname == null ? "" : "%" + productname + "%")}' " +
@@ -237,5 +237,11 @@ namespace BakeryPR.DAO
 
             return lst;
         }
+
+        public string QueryDelete(int id)
+        {
+
+        }
+
     }
 }

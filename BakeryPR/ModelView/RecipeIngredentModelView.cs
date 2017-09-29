@@ -66,6 +66,35 @@ namespace BakeryPR.ModelView
             }
         }
 
+        public DelegateCommand<object> loadDeleteCommand
+        {
+            get
+            {
+                return new DelegateCommand<object>((s) =>
+                {
+                    Recipe p = (Recipe)s;
+                    if (p == null)
+                    {
+                        return;
+                    }
+                    MessageBoxResult msg = MessageBox.Show("Are you sure ?", "Deletion", MessageBoxButton.YesNo, MessageBoxImage.Exclamation);
+                    if (msg == MessageBoxResult.Yes)
+                    {
+                        bool result = dao.Delete(p.id);
+                        if (result)
+                        {
+                            this.recipes = new ObservableCollection<Recipe>(dao.all());
+                            MessageBox.Show($"{p.title} has been deteled successfully");
+                        }
+                        else
+                        {
+                            MessageBox.Show($"{p.title} has not been deteled. Please try again or contat administrator");
+                        }
+                    }
+                });
+            }
+        }
+
         public DelegateCommand<object> loadCommand
         {
             get
@@ -373,7 +402,7 @@ namespace BakeryPR.ModelView
                         {
                             throw new Exception("Wrong quantity have been inputted");
                         }
-                       
+
                         bool result = this.riDao.Update(this.recipeIngredent);
                         if (result)
                         {

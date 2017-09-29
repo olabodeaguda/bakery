@@ -397,6 +397,39 @@ namespace BakeryPR.ModelView
                 this.NotifyPropertyChanged("recipes");
             }
         }
+        //loadDeleteProdproduct
+
+
+        public DelegateCommand<object> loadDeleteProdproduct
+        {
+            get
+            {
+                return new DelegateCommand<object>((s) =>
+                {
+                    ProductionProduct p = (ProductionProduct)s;
+                    if (p == null)
+                    {
+                        return;
+                    }
+                    MessageBoxResult msg = MessageBox.Show("Are you sure ?", "Deletion", MessageBoxButton.YesNo, MessageBoxImage.Exclamation);
+                    if (msg == MessageBoxResult.Yes)
+                    {
+                        bool result = pProductDao.Delete(p.id);
+                        if (result)
+                        {
+                            List<ProductionProduct> lstP = pProductDao.byproductionId(this.productionProduct.productionId);
+                            this.productionProducts = new ObservableCollection<ProductionProduct>(lstP);
+
+                            MessageBox.Show($"{p.productName} has been deleted successfully");
+                        }
+                        else
+                        {
+                            MessageBox.Show($"{p.productName} has not been deleted. Please try again or contat administrator");
+                        }
+                    }
+                });
+            }
+        }
 
         private Production _production = new Production();
 
@@ -677,6 +710,37 @@ namespace BakeryPR.ModelView
                 this.NotifyPropertyChanged("totalDougt");
             }
         }
+
+        public DelegateCommand<object> loadDeleteRecipeCommand
+        {
+            get
+            {
+                return new DelegateCommand<object>((s) =>
+                {
+                    this.isSpin = Visibility.Visible;
+                    Recipe p = (Recipe)s;
+                    if (p == null)
+                    {
+                        return;
+                    }
+                    MessageBoxResult msg = MessageBox.Show("Are you sure ?", "Deletion", MessageBoxButton.YesNo, MessageBoxImage.Exclamation);
+                    if (msg == MessageBoxResult.Yes)
+                    {
+                        bool result = rdao.Delete(p.id);
+                        if (result)
+                        {
+                            _recipes = new ObservableCollection<Recipe>(this.rdao.all());
+                            MessageBox.Show($"{p.title} has been deteled successfully");
+                        }
+                        else
+                        {
+                            MessageBox.Show($"{p.title} has not been deteled. Please try again or contat administrator");
+                        }
+                    }
+                });
+            }
+        }
+
 
         public DelegateCommand<object> UpdateProdproduct
         {

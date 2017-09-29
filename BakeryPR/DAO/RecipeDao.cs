@@ -16,6 +16,26 @@ namespace BakeryPR.DAO
     {
         IngredentDao ingreDao = new IngredentDao();
         RecipeIngredentDao riDao = new RecipeIngredentDao();
+
+        public bool Delete(int id)
+        {
+            using (SQLiteConnection conn = new SQLiteConnection(connectionString))
+            {
+                conn.Open();
+                SQLiteCommand cmd = new SQLiteCommand(conn);
+                cmd.CommandText = "delete from recipe where id = @id; delete from recipeIngredent where recipeId= @id;";
+                cmd.Parameters.AddWithValue("@id", id);
+                cmd.CommandType = CommandType.Text;
+                int count = cmd.ExecuteNonQuery();
+                if (count > 0)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         public List<Recipe> all()
         {
             List<Recipe> lst = new List<Recipe>();
