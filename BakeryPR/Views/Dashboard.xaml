@@ -12,7 +12,7 @@
         WindowStartupLocation="CenterScreen" 
         Style="{StaticResource {x:Type Window}}">
     <Window.Resources>
-        <ImageBrush ImageSource="pack://application:,,,/images/img1.png" x:Key="BackgroundSponge" ></ImageBrush>
+        <ImageBrush ImageSource="pack://application:,,,/images/img6.png" x:Key="BackgroundSponge" ></ImageBrush>
     </Window.Resources>
    
     <Window.DataContext>
@@ -68,7 +68,7 @@
             <ContentPresenter Content="{Binding navState}"  Width="{Binding winWidth}"></ContentPresenter>
         </DockPanel>
 
-        <TextBlock TextAlignment="Center" Foreground="White" TextWrapping="WrapWithOverflow" Width="{Binding winWidth}" Text="{Binding footerText}" Grid.Row="3" FontSize="16" HorizontalAlignment="Center"></TextBlock>
+        <!--<TextBlock TextAlignment="Center" Foreground="White" TextWrapping="WrapWithOverflow" Width="{Binding winWidth}" Text="{Binding footerText}" Grid.Row="3" FontSize="16" HorizontalAlignment="Center"></TextBlock>-->
     </Grid>
 </Window>
     

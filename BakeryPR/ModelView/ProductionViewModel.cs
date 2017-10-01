@@ -169,7 +169,7 @@ namespace BakeryPR.ModelView
                             template = template.Replace("{{products}}", pducts);
                             await pDFReader.GetProductionReport(template, filename);
 
-                            MessageBox.Show("Report has been generated was successfully");
+                            MessageBox.Show("Report generated successfully");
 
                             this.isBusyVisible = Visibility.Collapsed;
                         });
@@ -411,7 +411,12 @@ namespace BakeryPR.ModelView
                     {
                         return;
                     }
-                    MessageBoxResult msg = MessageBox.Show("Are you sure ?", "Deletion", MessageBoxButton.YesNo, MessageBoxImage.Exclamation);
+                    if (production.approval == "CLOSED")
+                    {
+                        MessageBox.Show("Selected production have been closed","Error",MessageBoxButton.OK,MessageBoxImage.Error);
+                        return;
+                    }
+                    MessageBoxResult msg = MessageBox.Show("Are you sure you want to delete this product ?", "Deletion", MessageBoxButton.YesNo, MessageBoxImage.Exclamation);
                     if (msg == MessageBoxResult.Yes)
                     {
                         bool result = pProductDao.Delete(p.id);
@@ -507,6 +512,10 @@ namespace BakeryPR.ModelView
                     {
                         try
                         {
+                            if (this.prodOverhead.overheadCount <= 0)
+                            {
+                                throw new Exception("Amount wrongly inputted");
+                            }
                             bool d = prodDao.update(this.prodOverhead);
                             if (d)
                             {
@@ -723,6 +732,12 @@ namespace BakeryPR.ModelView
                     {
                         return;
                     }
+
+                    if (production.approval == "CLOSED")
+                    {
+                        MessageBox.Show("Request failed. Production is closed");
+                        return;
+                    }
                     MessageBoxResult msg = MessageBox.Show("Are you sure ?", "Deletion", MessageBoxButton.YesNo, MessageBoxImage.Exclamation);
                     if (msg == MessageBoxResult.Yes)
                     {
@@ -868,7 +883,7 @@ namespace BakeryPR.ModelView
                                 }
                                 else
                                 {
-                                    MessageBox.Show("Selected product already existn");
+                                    MessageBox.Show("Selected product already exists");
                                 }
                             }
                         }
@@ -1026,7 +1041,6 @@ namespace BakeryPR.ModelView
                 this.NotifyPropertyChanged("totalProdIngredent");
             }
         }
-
 
         public DelegateCommand<object> loadIngredentCommand
         {
@@ -1204,7 +1218,8 @@ namespace BakeryPR.ModelView
                             Production p = (Production)s;
                             this.production = p;
                             checkvalidation();
-                            MessageBoxResult msg = MessageBox.Show("Are you sure", "Approve Production", MessageBoxButton.YesNo, MessageBoxImage.Information);
+                            MessageBoxResult msg = MessageBox.Show("Do you want to approve this production?",
+                                "Approve Production", MessageBoxButton.YesNo, MessageBoxImage.Information);
                             if (msg == MessageBoxResult.No)
                             {
                                 return;
@@ -1226,7 +1241,7 @@ namespace BakeryPR.ModelView
                             if (result)
                             {
                                 this.productions = new ObservableCollection<Production>(dao.all());
-                                MessageBox.Show("Approval was successfull", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                                MessageBox.Show("Production successfully approved", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
                             }
                             else
                             {
@@ -1499,7 +1514,7 @@ namespace BakeryPR.ModelView
                             }
                             else if (this.production.approval == ProductionStatus.NOT_APPROVED.ToString())
                             {
-                                MessageBox.Show("Production need approval before movement to sales");
+                                MessageBox.Show("Production must be approved before products can be moved to sales");
                                 return;
                             }
 
@@ -1520,8 +1535,7 @@ namespace BakeryPR.ModelView
 
                             if (diff > 1 || diff < -1)
                             {
-                                MessageBox.Show($"Product dough weight and Bulk dough weight difference is more that " +
-                                    $"1% ", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                                MessageBox.Show($"Difference between Product dough weight and Bulk dough weight should not exceed 1%", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                                 return;
                             }
 
@@ -1592,7 +1606,11 @@ namespace BakeryPR.ModelView
                                 }
                                 if (lv != null)
                                 {
-                                    lv.Close();
+                                    //App.Current.Dispatcher.BeginInvoke(() =>
+                                    //{
+                                    //    lv.Close();
+                                    //},);
+                                    
                                 }
 
                                 MessageBox.Show("Product have been move to sales", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -1615,7 +1633,7 @@ namespace BakeryPR.ModelView
             {
                 if (this.production.approval == ProductionStatus.APPROVED.ToString())
                 {
-                    throw new Exception("Approved production can't be edited or re-approve");
+                    throw new Exception("Approved Production cannot be edited or re-approve");
                 }
                 else if (this.production.approval == ProductionStatus.CLOSED.ToString())
                 {

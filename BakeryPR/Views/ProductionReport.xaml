@@ -57,8 +57,8 @@
                                 <GridViewColumn Header="Recipe" DisplayMemberBinding="{Binding  productionRecipe,Mode=TwoWay}"></GridViewColumn>
                                 <GridViewColumn Header="Products" DisplayMemberBinding="{Binding  products,Mode=TwoWay}"></GridViewColumn>
                                 <GridViewColumn Header="Quantity of Flour(Kg)" DisplayMemberBinding="{Binding  quantityOfFlour,Mode=TwoWay}"></GridViewColumn>
-                                <GridViewColumn Header="Bulk dough Weight" DisplayMemberBinding="{Binding  bulkDoughWeight, StringFormat='# {0:0,0.00}'}"></GridViewColumn>
-                                <GridViewColumn Header="Total product Weight" DisplayMemberBinding="{Binding  totalProductWeight, StringFormat='# {0:0,0.00}'}"></GridViewColumn>
+                                <GridViewColumn Header="Bulk dough Weight" DisplayMemberBinding="{Binding  bulkDoughWeight, StringFormat=' {0:0,0.00}'}"></GridViewColumn>
+                                <GridViewColumn Header="Total product Weight" DisplayMemberBinding="{Binding  totalProductWeight, StringFormat=' {0:0,0.00}'}"></GridViewColumn>
                                 <GridViewColumn Header="Total ingredient Cost" DisplayMemberBinding="{Binding  totalIngredientCost, StringFormat='# {0:0,0.00}'}"></GridViewColumn>
                                 <GridViewColumn Header="Total Package Cost" DisplayMemberBinding="{Binding  totalPackageCost, StringFormat='# {0:0,0.00}'}"></GridViewColumn>
                                 <GridViewColumn Header="Total Overhead Cost" DisplayMemberBinding="{Binding  totalOverheadCost, StringFormat='# {0:0,0.00}'}"></GridViewColumn>

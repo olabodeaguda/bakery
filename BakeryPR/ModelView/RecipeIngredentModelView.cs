@@ -77,7 +77,7 @@ namespace BakeryPR.ModelView
                     {
                         return;
                     }
-                    MessageBoxResult msg = MessageBox.Show("Are you sure ?", "Deletion", MessageBoxButton.YesNo, MessageBoxImage.Exclamation);
+                    MessageBoxResult msg = MessageBox.Show("Are you sure you want to delete this Recipe ?", "Deletion", MessageBoxButton.YesNo, MessageBoxImage.Exclamation);
                     if (msg == MessageBoxResult.Yes)
                     {
                         bool result = dao.Delete(p.id);

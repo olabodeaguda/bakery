@@ -80,6 +80,13 @@ namespace BakeryPR.ModelView
                         Overhead ig = this.overhead;
                         ig.mTypeId = 50;
 
+                        var isExist = dao.all().FirstOrDefault(x => x.name.ToLower() == ig.name.ToLower());
+                        if (isExist != null)
+                        {
+                            MessageBox.Show($"{ig.name} already exist", "Duplicate", MessageBoxButton.OK, MessageBoxImage.Error);
+                            return;
+                        }                        
+
                         bool result = dao.add(ig);
                         if (result)
                         {
@@ -132,7 +139,7 @@ namespace BakeryPR.ModelView
                     {
                         return;
                     }
-                    MessageBoxResult msg = MessageBox.Show("Are you sure ?", "Deletion", MessageBoxButton.YesNo, MessageBoxImage.Exclamation);
+                    MessageBoxResult msg = MessageBox.Show("Are you sure you want to delete this overhead ?", "Deletion", MessageBoxButton.YesNo, MessageBoxImage.Exclamation);
                     if (msg == MessageBoxResult.Yes)
                     {
                         bool result = dao.Delete(p.id);

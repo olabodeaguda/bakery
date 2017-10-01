@@ -24,8 +24,11 @@
         </StackPanel>
 
         <StackPanel Grid.Row="2">
-            <TextBlock>Price(Naira)</TextBlock>
-            <TextBox Height="30"  Width="250" Text="{Binding prodOverhead.overheadCount,Mode=TwoWay}"></TextBox>
+            <TextBlock>Cost(Naira)/50kg Flour</TextBlock>
+            <TextBox Height="30"  Width="250" 
+                     Text="{Binding prodOverhead.overheadCount,Mode=TwoWay, 
+                NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged}">
+            </TextBox>
 
         </StackPanel>
 

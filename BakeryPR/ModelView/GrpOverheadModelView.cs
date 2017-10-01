@@ -146,7 +146,6 @@ namespace BakeryPR.ModelView
             }
         }
 
-
         public DelegateCommand<object> loadOverheadUpdateCommand
         {
             get

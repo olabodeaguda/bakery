@@ -343,7 +343,7 @@ namespace BakeryPR.ModelView
                             bool result = userDao.ChangePwd(this.changePass);
                             if (result)
                             {
-                                MessageBox.Show("User Password have been changed successfully", "Change Password", MessageBoxButton.OK,
+                                MessageBox.Show("Change Password successful", "Change Password", MessageBoxButton.OK,
                                     MessageBoxImage.Information);
                                 this.profile = new Profile();
                             }
@@ -394,7 +394,7 @@ namespace BakeryPR.ModelView
                             bool result = userDao.add(this.profile);
                             if (result)
                             {
-                                MessageBox.Show("User have been created", "Saved", MessageBoxButton.OK,
+                                MessageBox.Show("User has been successfully created", "Saved", MessageBoxButton.OK,
                                     MessageBoxImage.Information);
                                 this.profile = new Profile();
                                 this.profiles = new ObservableCollection<Profile>(userDao.all());

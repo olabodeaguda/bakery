@@ -19,8 +19,6 @@
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
             
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
@@ -28,28 +26,28 @@
             <ColumnDefinition Width="150"></ColumnDefinition>
             <ColumnDefinition Width="250"></ColumnDefinition>
         </Grid.ColumnDefinitions>
+        <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center">Product Name</TextBlock>
         <TextBlock Style="{StaticResource headings}"  Grid.ColumnSpan="2">Add Product</TextBlock>
-        <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center">Description</TextBlock>
-        <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center">Weight</TextBlock>
-        <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center">Weight Measurement Type</TextBlock>
-        <TextBlock Grid.Row="4" Grid.Column="0" VerticalAlignment="Center">Cost of Package</TextBlock>
-        <TextBlock Grid.Row="5" Grid.Column="0" VerticalAlignment="Center">Retail price</TextBlock>
-        <TextBlock Grid.Row="6" Grid.Column="0" VerticalAlignment="Center">Wholesales Price</TextBlock>
-        <TextBlock Grid.Row="7" Grid.Column="0" VerticalAlignment="Center">Product Name</TextBlock>
-       <!-- <TextBlock Grid.Row="8" Grid.Column="0" VerticalAlignment="Center">Is Discount</TextBlock>
+        <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center">Description</TextBlock>
+        <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center">Weight</TextBlock>
+        <TextBlock Grid.Row="4" Grid.Column="0" VerticalAlignment="Center">Weight Measurement Type</TextBlock>
+        <TextBlock Grid.Row="5" Grid.Column="0" VerticalAlignment="Center">Cost of Package</TextBlock>
+       <!-- <TextBlock Grid.Row="6" Grid.Column="0" VerticalAlignment="Center">Retail price</TextBlock>
+        <TextBlock Grid.Row="7" Grid.Column="0" VerticalAlignment="Center">Wholesales Price</TextBlock>
+        <TextBlock Grid.Row="8" Grid.Column="0" VerticalAlignment="Center">Is Discount</TextBlock>
         <TextBlock Grid.Row="9" Grid.Column="0" VerticalAlignment="Center">Discount Name</TextBlock>-->
 
-        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding product.descripton,Mode=TwoWay}"></TextBox>
-        <TextBox  Grid.Row="2" Grid.Column="1" Text="{Binding product.weight,Mode=TwoWay}"></TextBox>
-        <ComboBox SelectedValue="{Binding product.mTypeId,Mode=TwoWay}"  Grid.Row="3" Grid.Column="1" ItemsSource="{Binding MeasurementTypes}" DisplayMemberPath="name" SelectedValuePath="id"></ComboBox>
-        <TextBox  Grid.Row="4" Grid.Column="1" Text="{Binding product.costOfPackage,Mode=TwoWay}"></TextBox>
-        <TextBox  Grid.Row="5" Grid.Column="1" Text="{Binding product.retailPrice,Mode=TwoWay}"></TextBox>
+        <TextBox  Grid.Row="1" Grid.Column="1" Text="{Binding product.name,Mode=TwoWay}"></TextBox>
+        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding product.descripton,Mode=TwoWay}"></TextBox>
+        <TextBox  Grid.Row="3" Grid.Column="1" Text="{Binding product.weight,Mode=TwoWay}"></TextBox>
+        <ComboBox SelectedValue="{Binding product.mTypeId,Mode=TwoWay}"  Grid.Row="4" Grid.Column="1" ItemsSource="{Binding MeasurementTypes}" DisplayMemberPath="name" SelectedValuePath="id"></ComboBox>
+        <TextBox  Grid.Row="5" Grid.Column="1" Text="{Binding product.costOfPackage,Mode=TwoWay}"></TextBox>
+      <!--  <TextBox  Grid.Row="5" Grid.Column="1" Text="{Binding product.retailPrice,Mode=TwoWay}"></TextBox>
         <TextBox  Grid.Row="6" Grid.Column="1" Text="{Binding product.wholeSales,Mode=TwoWay}"></TextBox>
-        <TextBox  Grid.Row="7" Grid.Column="1" Text="{Binding product.name,Mode=TwoWay}"></TextBox>
-     <!--   <RadioButton IsChecked="{Binding product.isDiscount,Mode=TwoWay}" Margin="9 0 0 0" Grid.Row="8" Grid.Column="1" VerticalAlignment="Center"></RadioButton>
+        <RadioButton IsChecked="{Binding product.isDiscount,Mode=TwoWay}" Margin="9 0 0 0" Grid.Row="8" Grid.Column="1" VerticalAlignment="Center"></RadioButton>
         <TextBox  Grid.Row="9" Grid.Column="1" Text="{Binding product.discount,Mode=TwoWay}"></TextBox>
 -->
-        <Button Style="{StaticResource btnSubmitStyle}" Grid.Column="1" Grid.Row="10" Command="{Binding addCommand}" >Add</Button>
+        <Button Style="{StaticResource btnSubmitStyle}" Grid.Column="1" Grid.Row="6" Command="{Binding addCommand}" >Add</Button>
 
     </Grid>
 </Window>

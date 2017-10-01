@@ -20,45 +20,50 @@
 
         <Style TargetType="Button">
             <Setter Property="Margin" Value="5"></Setter>
-            <Setter Property="Background" Value="#FFEA7278"></Setter>
+            <Setter Property="Background" Value="Green"></Setter>
             <Setter Property="Foreground" Value="#FFFFFF"></Setter>
         </Style>
 
         <Style x:Key="buttonDataTemplate" TargetType="{x:Type Button}" >
-            <Setter Property="Background" Value="#FFEA7278"></Setter>
+            <Setter Property="Background" Value="Green"></Setter>
             <Setter Property="Foreground" Value="White"></Setter>
         </Style>
 
         <Style TargetType="TextBlock">
             <Setter Property="Foreground" Value="#FF5E3C3D"></Setter>
         </Style>
+
+        <!--<Style TargetType="ListView">
+            <Setter Property="Background" Value="Transparent"></Setter>
+        </Style>-->
+
         <Style TargetType="MenuItem">
             <Setter Property="Foreground" Value="#FFFFFF"></Setter>
         </Style>
 
         <Style TargetType="Menu">
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="Background" Value="Black"/>
+            <Setter Property="Foreground" Value="Yellow"/>
+            <Setter Property="Background" Value="Green"/>
         </Style>
 
         <Style x:Key="btnSubmitStyle" TargetType="Button">
             <Setter Property="Height" Value="30"></Setter>
             <Setter Property="Width" Value="100"></Setter>
-            <Setter Property="Background" Value="#FFEA7278"></Setter>
+            <Setter Property="Background" Value="Green"></Setter>
             <Setter Property="Foreground" Value="White"></Setter>
         </Style>
         <Style x:Key="headings" TargetType="TextBlock">
             <Setter Property="Margin" Value="15 0"></Setter>
             <Setter Property="FontSize" Value="25"></Setter>
             <Setter Property="FontStyle" Value="Normal"></Setter>
-            <Setter Property="Foreground" Value="Gray"></Setter>
+            <Setter Property="Foreground" Value="Green"></Setter>
         </Style>
 
         <Style x:Key="boldheadings" TargetType="TextBlock">
             <Setter Property="Margin" Value="15 0"></Setter>
             <Setter Property="FontSize" Value="30"></Setter>
             <Setter Property="FontStyle" Value="Normal"></Setter>
-            <Setter Property="Foreground" Value="LightGray"></Setter>
+            <Setter Property="Foreground" Value="Yellow"></Setter>
             <Setter Property="FontWeight" Value="ExtraBlack"></Setter>
         </Style>
 
@@ -69,7 +74,7 @@
             <Setter Property="BorderBrush" Value="White"></Setter>
             <Setter Property="FontWeight" Value="Bold"></Setter>
             <Setter Property="FontSize" Value="20"></Setter>
-            <Setter Property="Background" Value="Black"></Setter>
+            <Setter Property="Background" Value="Yellow"></Setter>
 
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
@@ -83,7 +88,7 @@
         </Style>
 
         <LinearGradientBrush x:Key="windowBackgroundResource" EndPoint="0.5,1" StartPoint="0.5,0">
-            <GradientStop Color="Black" Offset="0"/>
+            <GradientStop Color="Green" Offset="0"/>
             <GradientStop Color="#FFF4EDE3" Offset="0.087"/>
             <GradientStop Color="#FF0F0F0F" Offset="0.944"/>
             <GradientStop Color="#FFF4EDE3" Offset="0.486"/>

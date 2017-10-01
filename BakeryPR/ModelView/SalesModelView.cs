@@ -52,7 +52,9 @@ namespace BakeryPR.ModelView
         public double CartProductDao
         {
             get { return _CartProductDao; }
-            set { _CartProductDao = value;
+            set
+            {
+                _CartProductDao = value;
             }
         }
 
@@ -75,7 +77,7 @@ namespace BakeryPR.ModelView
             {
                 DateTime nowDate = DateTime.Now;
                 DateTime dt = new DateTime(nowDate.Year, nowDate.Month, nowDate.Day);
-                return this.cartDao.GetCart(this.cartDao.getCartQueryString(null,null,dt.Ticks));
+                return this.cartDao.GetCart(this.cartDao.getCartQueryString(null, null, dt.Ticks));
             }
         }
 
@@ -271,27 +273,33 @@ namespace BakeryPR.ModelView
                 {
                     await Task.Run(() =>
                     {
-                        SalesSearchModel ssm = this.salesSearchModel;
-                        List<CartModel> sHistory = new List<CartModel>();
-
-                        if (string.IsNullOrEmpty(ssm.salesDateDisplay) && string.IsNullOrEmpty(ssm.salesDateEndDisplay))
-                        {
-                            sHistory = this.cartDao.GetCart(this.cartDao.getCartQueryString(ssm.customerName, ssm.productName));
-                        }
-                        else if (!string.IsNullOrEmpty(ssm.salesDateDisplay) && string.IsNullOrEmpty(ssm.salesDateEndDisplay))
-                        {
-                            sHistory = this.cartDao.GetCart(this.cartDao.getCartQueryString(ssm.customerName, ssm.productName, ssm.salesDate.AddDays(-1).Ticks));
-                        }
-                        else if(!string.IsNullOrEmpty(ssm.salesDateDisplay) && !string.IsNullOrEmpty(ssm.salesDateEndDisplay))
-                        {
-                            sHistory = this.cartDao.GetCart(this.cartDao.getCartQueryString(ssm.customerName, ssm.productName, ssm.salesDate.AddDays(-1).Ticks,ssm.salesEndDate.AddDays(1).Ticks));
-                        }
-
-                        this.dailyCartHistory = new ObservableCollection<CartModel>(sHistory);
+                        RefreshSalesHistory();
                     });
                 });
             }
         }
+
+        private void RefreshSalesHistory()
+        {
+            SalesSearchModel ssm = this.salesSearchModel;
+            List<CartModel> sHistory = new List<CartModel>();
+
+            if (string.IsNullOrEmpty(ssm.salesDateDisplay) && string.IsNullOrEmpty(ssm.salesDateEndDisplay))
+            {
+                sHistory = this.cartDao.GetCart(this.cartDao.getCartQueryString(ssm.customerName, ssm.productName));
+            }
+            else if (!string.IsNullOrEmpty(ssm.salesDateDisplay) && string.IsNullOrEmpty(ssm.salesDateEndDisplay))
+            {
+                sHistory = this.cartDao.GetCart(this.cartDao.getCartQueryString(ssm.customerName, ssm.productName, ssm.salesDate.AddDays(-1).Ticks));
+            }
+            else if (!string.IsNullOrEmpty(ssm.salesDateDisplay) && !string.IsNullOrEmpty(ssm.salesDateEndDisplay))
+            {
+                sHistory = this.cartDao.GetCart(this.cartDao.getCartQueryString(ssm.customerName, ssm.productName, ssm.salesDate.AddDays(-1).Ticks, ssm.salesEndDate.AddDays(1).Ticks));
+            }
+
+            this.dailyCartHistory = new ObservableCollection<CartModel>(sHistory);
+        }
+
 
         private string _searchItem;
 
@@ -489,14 +497,15 @@ namespace BakeryPR.ModelView
                     MessageBoxResult msg = MessageBox.Show("Are you sure ?", "Deletion", MessageBoxButton.YesNo, MessageBoxImage.Exclamation);
                     if (msg == MessageBoxResult.Yes)
                     {
-                        bool result = dao.Delete(p.id);
+                        bool result = cartDao.executeQuery(cartDao.QueryDelete(p.id));
                         if (result)
                         {
-                            MessageBox.Show($"{p.title} has been deteled successfully");
+                            RefreshSalesHistory();
+                            MessageBox.Show($"Cart have been cancelled successfully");
                         }
                         else
                         {
-                            MessageBox.Show($"{p.title} has not been deteled. Please try again or contat administrator");
+                            MessageBox.Show($"An error occur while canceling you request. Please try again or contat administrator");
                         }
                     }
                 });

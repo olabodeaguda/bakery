@@ -57,7 +57,7 @@ namespace BakeryPR.ModelView
                         bool result = dao.update(sd);
                         if (result)
                         {
-                            MessageBox.Show("Update was successfull");
+                            MessageBox.Show("Update was successful");
                         }
                     }
                     catch (Exception x)
@@ -143,6 +143,10 @@ namespace BakeryPR.ModelView
                     {
                         Ingredent ig = this.ingredent;
 
+                        if (ig.newUnitCost < 0)
+                        {
+                            throw new Exception("Invalid input for Unit Cost");
+                        }
                         double val = 0;
                         if (!double.TryParse(this.inventoryHistory.newQuantity.ToString(), out val))
                         {
@@ -197,6 +201,8 @@ namespace BakeryPR.ModelView
                             ig.unitCost = ig.unitCost / 1000;
                             ig.mTypeId = 1;
                         }
+
+
 
                         bool result = dao.add(ig);
                         if (result)

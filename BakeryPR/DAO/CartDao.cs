@@ -13,6 +13,22 @@ namespace BakeryPR.DAO
 {
     public class CartDao : AbstractDao
     {
+        public CartProductDao cartProductDao
+        {
+            get
+            {
+                return new CartProductDao();
+            }
+        }
+
+        public ProductDao productDao
+        {
+            get
+            {
+                return new ProductDao();
+            }
+        }
+
         public string getInsert(CartModel cart)
         {
             string query = "insert into cart(customerName,dateCreated,createdBy,cartStatus,salesType,createdTimeSpan) values(";
@@ -173,32 +189,65 @@ namespace BakeryPR.DAO
 
         public string getCartQueryString(string customername, string productname)
         {
-            return $" select cart.*,cartProduct.costprice,cartProduct.productId,cartProduct.price,cartProduct.quantity,product.name as ProductName from cart" +
+            string query = "";
+            query = query + $" select cart.*,cartProduct.costprice,cartProduct.productId,cartProduct.price,cartProduct.quantity,product.name as ProductName from cart" +
                 $" inner join cartProduct on cartProduct.cartId = cart.id " +
              $" inner join product on product.id = cartProduct.productId " +
-             $" where product.name like '{(productname == null ? "" : "%" + productname + "%")}'  " +
-             $"or  cart.customerName like '{(customername == null ? "" : "%" + customername + "%")}' ";
+             $" where cart.cartStatus = 'DONE' ";
+            if (!string.IsNullOrEmpty(productname))
+            {
+                query = query + $"AND product.name like '{(productname == null ? "" : "%" + productname + "%")}' ";
+            }
+            if (!string.IsNullOrEmpty(customername))
+            {
+                query = query + $"or  cart.customerName like '{(customername == null ? "" : "%" + customername + "%")}' ";
 
+            }
+            return query;
         }
 
         public string getCartQueryString(string customername, string productname, long startDate)
         {
-            return $" select cart.*,cartProduct.costprice,cartProduct.productId,cartProduct.price,cartProduct.quantity,product.name as ProductName from cart" +
+            string query = "";
+            query = query + $" select cart.*,cartProduct.costprice,cartProduct.productId,cartProduct.price,cartProduct.quantity,product.name as ProductName from cart" +
                 $" inner join cartProduct on cartProduct.cartId = cart.id " +
              $" inner join product on product.id = cartProduct.productId " +
-             $" where product.name like '{(productname == null ? "" : "%" + productname + "%")}' " +
-             $"or  cart.customerName like '{(customername == null ? "" : "%" + customername + "%")}' " +
-             $" or cart.createdTimeSpan >= {startDate}";
+             $" where cart.cartStatus = 'DONE' ";
+
+            if (!string.IsNullOrEmpty(productname))
+            {
+                query = query + $"AND product.name like '{(productname == null ? "" : "%" + productname + "%")}' ";
+            }
+            if (!string.IsNullOrEmpty(customername))
+            {
+                query = query + $"AND  cart.customerName like '{(customername == null ? "" : "%" + customername + "%")}' ";
+
+            }
+
+            query = query + $" AND cart.createdTimeSpan >= {startDate}";
+
+            return query;
         }
 
         public string getCartQueryString(string customername, string productname, long startDate, long endDate)
         {
-            return $" select cart.* ,cartProduct.costprice,cartProduct.productId,cartProduct.price,cartProduct.quantity,product.name as ProductName from cart" +
+            string query = "";
+            query = query + $" select cart.* ,cartProduct.costprice,cartProduct.productId,cartProduct.price,cartProduct.quantity,product.name as ProductName from cart" +
                 $" inner join cartProduct on cartProduct.cartId = cart.id " +
              $" inner join product on product.id = cartProduct.productId " +
-             $" where product.name like '{(productname == null ? "" : "%" + productname + "%")}' " +
-             $"or  cart.customerName like '{(customername == null ? "" : "%" + customername + "%")}' " +
-             $" or (cart.createdTimeSpan >= {startDate} and cart.createdTimeSpan <= {endDate})";
+             $" where cart.cartStatus = 'DONE' ";
+            if (!string.IsNullOrEmpty(productname))
+            {
+                query = query + $"AND product.name like '{(productname == null ? "" : "%" + productname + "%")}' ";
+            }
+            if (!string.IsNullOrEmpty(customername))
+            {
+                query = query + $"AND  cart.customerName like '{(customername == null ? "" : "%" + customername + "%")}' ";
+
+            }
+            query = query + $" AND (cart.createdTimeSpan >= {startDate} and cart.createdTimeSpan <= {endDate})";
+
+            return query;
         }
 
         public List<CartModel> GetCart(string query)
@@ -206,7 +255,7 @@ namespace BakeryPR.DAO
             List<CartModel> lst = new List<CartModel>();
             using (SQLiteConnection conn = new SQLiteConnection(this.connectionString))
             {
-                conn.Open();                
+                conn.Open();
 
                 DataSet dt = new DataSet();
                 SQLiteCommand cmd = new SQLiteCommand(conn);
@@ -240,7 +289,21 @@ namespace BakeryPR.DAO
 
         public string QueryDelete(int id)
         {
+            String query = $"Update cart set cartStatus = '{"DELETED"}' where id = {id};";
+            List<CartProductModel> lst = cartProductDao.byCartId(id);
 
+            foreach (var tm in lst)
+            {
+                Product p = productDao.byId(tm.productId);
+                if (p != null)
+                {
+                    int newQuantity = p.inventoryStore + tm.quantity;
+                    query = query + productDao.updateStore(new Product() { id = tm.productId, inventoryStore = newQuantity });
+                }
+
+            }
+
+            return query;
         }
 
     }

@@ -41,13 +41,13 @@
         </Style>
     </UserControl.Resources>
 
-    <Grid Margin="5">
+    <Grid Margin="5" Background="Transparent">
         <Grid.RowDefinitions>
             <RowDefinition Height="70"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="1"  Background="Transparent">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="350"></ColumnDefinition>
                 <ColumnDefinition Width="500*"></ColumnDefinition>
@@ -70,7 +70,7 @@
                         <ListView Grid.Row="1" Margin="8" 
                                   SelectedItem="{Binding selectedProduct,Mode=TwoWay, 
                             UpdateSourceTrigger=PropertyChanged}"  ItemsSource="{Binding itemLst,Mode=TwoWay}"
-                                  IsSynchronizedWithCurrentItem="True" ScrollViewer.CanContentScroll="True">
+                                  IsSynchronizedWithCurrentItem="True" ScrollViewer.CanContentScroll="True"  Background="Transparent">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="MouseDoubleClick">
                                 <i:InvokeCommandAction Command="{Binding itmLstDblCommand}" CommandParameter="{Binding}" />
@@ -118,7 +118,7 @@
                             <TextBox Text="{Binding cartModel.customerName,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="150" Height="50"></TextBox>
                         </StackPanel>-->
                         <StackPanel  Grid.Row="2">
-                            <TextBlock Style="{StaticResource headings}" TextAlignment="Center" Foreground="White" >Cart List</TextBlock>
+                            <TextBlock Style="{StaticResource headings}" TextAlignment="Center" Foreground="Green" >Cart List</TextBlock>
                             <ListView  ItemsSource="{Binding cartModel.itemLst,Mode=TwoWay}" IsSynchronizedWithCurrentItem="True">
                                 <ListView.View>
                                     <GridView>
@@ -155,10 +155,10 @@
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
-                                        <GridViewColumn HeaderContainerStyle="{StaticResource ListViewStyle}" Header="Price" Width="100">
+                                        <GridViewColumn HeaderContainerStyle="{StaticResource ListViewStyle}" Header="Unit Price" Width="100">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <TextBox Text="{Binding Path=manualPrice,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+                                                    <TextBox Text="{Binding Path=manualPrice,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,StringFormat=' {0:0,0.00}'}">
                                                         <i:Interaction.Triggers>
                                                             <i:EventTrigger EventName="TextChanged">
                                                                 <i:InvokeCommandAction Command="{Binding quantityChangedCommand}" CommandParameter="{Binding}" >
@@ -171,7 +171,7 @@
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
                                         <GridViewColumn HeaderContainerStyle="{StaticResource ListViewStyle}" 
-                                    Header="Total Price"  DisplayMemberBinding="{Binding price}"></GridViewColumn>
+                                    Header="Total Sales"  DisplayMemberBinding="{Binding price,StringFormat=' {0:0,0.00}'}"></GridViewColumn>
                                     </GridView>
                                 </ListView.View>
                                 <ListView.Style>

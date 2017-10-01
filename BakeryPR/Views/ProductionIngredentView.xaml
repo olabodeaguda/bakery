@@ -41,15 +41,6 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn >
-                        <GridViewColumn.CellTemplate >
-                            <DataTemplate>
-                                <Button Content="Delete"  CommandParameter="{Binding}"
-                                        Command="{Binding Path=DataContext.loadDeleteCommand, 
-                                    RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
                     <GridViewColumn Width="150"  HeaderContainerStyle="{StaticResource ListViewStyle}" 
                                     Header="Ingredient Name"  DisplayMemberBinding="{Binding ingredentName}" />
                     <GridViewColumn Width="150"  HeaderContainerStyle="{StaticResource ListViewStyle}" 
