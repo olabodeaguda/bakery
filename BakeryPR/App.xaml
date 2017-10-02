@@ -10,6 +10,11 @@
         </Style>
         <Style TargetType="{x:Type Label}" BasedOn="{StaticResource BaseContentControlStyle}" />
 
+
+        <!--<Style TargetType="{x:Type TextBlock}">
+            <Setter Property="Foreground" Value="#FF5E3C3D"></Setter>
+        </Style>-->
+        
         <Style TargetType="ComboBox">
             <Setter Property="Margin" Value="5"></Setter>
         </Style>
@@ -23,22 +28,15 @@
             <Setter Property="Background" Value="Green"></Setter>
             <Setter Property="Foreground" Value="#FFFFFF"></Setter>
         </Style>
-
+        
         <Style x:Key="buttonDataTemplate" TargetType="{x:Type Button}" >
             <Setter Property="Background" Value="Green"></Setter>
             <Setter Property="Foreground" Value="White"></Setter>
         </Style>
 
-        <Style TargetType="TextBlock">
-            <Setter Property="Foreground" Value="#FF5E3C3D"></Setter>
-        </Style>
-
-        <!--<Style TargetType="ListView">
-            <Setter Property="Background" Value="Transparent"></Setter>
-        </Style>-->
-
         <Style TargetType="MenuItem">
             <Setter Property="Foreground" Value="#FFFFFF"></Setter>
+            <Setter Property="Background" Value="Green"></Setter>
         </Style>
 
         <Style TargetType="Menu">
@@ -63,7 +61,7 @@
             <Setter Property="Margin" Value="15 0"></Setter>
             <Setter Property="FontSize" Value="30"></Setter>
             <Setter Property="FontStyle" Value="Normal"></Setter>
-            <Setter Property="Foreground" Value="Yellow"></Setter>
+            <Setter Property="Foreground" Value="Green"></Setter>
             <Setter Property="FontWeight" Value="ExtraBlack"></Setter>
         </Style>
 
@@ -98,6 +96,5 @@
         <Style TargetType="Window">
             <Setter Property="Background" Value="{StaticResource windowBackgroundResource}" />
         </Style>
-
     </Application.Resources>
 </Application>

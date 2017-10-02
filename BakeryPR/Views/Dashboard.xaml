@@ -14,7 +14,7 @@
     <Window.Resources>
         <ImageBrush ImageSource="pack://application:,,,/images/img6.png" x:Key="BackgroundSponge" ></ImageBrush>
     </Window.Resources>
-   
+
     <Window.DataContext>
         <vm:DashboardModelView></vm:DashboardModelView>
     </Window.DataContext>
@@ -23,10 +23,10 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="50"></RowDefinition>
             <RowDefinition Height="80"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition/>
+            <RowDefinition Height="80.8"></RowDefinition>
         </Grid.RowDefinitions>
-        <Menu>
+        <Menu Margin="0,0,-0.4,79.6" Grid.RowSpan="2">
 
             <MenuItem Header="_File" >
                 <MenuItem Header="E_xit" Command="{Binding navCommand}" CommandParameter="exit"></MenuItem>
@@ -49,7 +49,7 @@
                 <MenuItem Header="Sales History Report" Command="{Binding navCommand}" CommandParameter="saleshistory"></MenuItem>
             </MenuItem>
         </Menu>
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="1" Margin="0,0.4,-0.4,6.6">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
@@ -64,11 +64,21 @@
             </StackPanel>
         </Grid>
 
-        <DockPanel Grid.Row="2">
+        <DockPanel Grid.Row="2" Margin="0,0.4,-0.4,44.4" Grid.RowSpan="2">
             <ContentPresenter Content="{Binding navState}"  Width="{Binding winWidth}"></ContentPresenter>
         </DockPanel>
-
-        <!--<TextBlock TextAlignment="Center" Foreground="White" TextWrapping="WrapWithOverflow" Width="{Binding winWidth}" Text="{Binding footerText}" Grid.Row="3" FontSize="16" HorizontalAlignment="Center"></TextBlock>-->
+        <Grid Grid.Row="3" Background="Green" Margin="0,3.4,-6.4,0.4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Image HorizontalAlignment="Left" Source="/BakeryPR;component/images/img7.png" ></Image>
+            <TextBlock Grid.Column="1" TextAlignment="Center" Foreground="White" VerticalAlignment="Bottom" TextWrapping="WrapWithOverflow"  
+                   Text="{Binding footerText}" Grid.Row="3" FontSize="16" HorizontalAlignment="Center" 
+                   ></TextBlock>
+            <Image HorizontalAlignment="Right" Source="/BakeryPR;component/images/img8.png" Grid.Column="2" Margin="0,0,5,0" />
+        </Grid>
     </Grid>
 </Window>
     

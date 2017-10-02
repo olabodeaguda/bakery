@@ -27,7 +27,8 @@
         <TextBox Height="30" Grid.Row="2" Grid.Column="1" Text="{Binding prodIngredient.amount,Mode=TwoWay}"></TextBox>
 
         <StackPanel  Grid.Row="4" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Style="{StaticResource btnSubmitStyle}" Width="120" Grid.Column="1" Command="{Binding updateProdIngredent}"
+            <Button Style="{StaticResource btnSubmitStyle}" Width="120" Grid.Column="1" 
+                    Command="{Binding updateProdIngredent}"
                     Height="Auto" >Update</Button>
             <fa:ImageAwesome Icon="Spinner" Spin="True" Visibility="{Binding isSpin,Mode=TwoWay}" Height="20" Width="30" />
         </StackPanel>

@@ -49,7 +49,7 @@ namespace BakeryPR.DAO
                 Overhead lj = all().FirstOrDefault(x => x.name.ToLower() == values.name.ToLower());
                 if (lj != null)
                 {
-                    throw new Exception("Overhead already exist");
+                    throw new Exception("Overhead already exists");
                 }
                 else if(values.unitCost < 1)
                 {

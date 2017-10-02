@@ -212,7 +212,7 @@ namespace BakeryPR.ModelView
         {
             get
             {
-                return "Copyright © " + DateTime.Now.Year.ToString();
+                return " FMN Bakery Manager 1.0 © Flourmills of Nigeria PLC " +  DateTime.Now.Year.ToString();
             }
         }
 

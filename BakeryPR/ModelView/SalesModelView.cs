@@ -169,7 +169,7 @@ namespace BakeryPR.ModelView
                             bool d = cartDao.executeQuery(cardString);
                             if (d)
                             {
-                                MessageBox.Show("Sales was successfull", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                                MessageBox.Show("Sales was successful", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
                                 App.Current.Dispatcher.Invoke((Action)delegate
                                 {
                                     this.dailyCartHistory = new ObservableCollection<CartModel>(dailyHistory);
@@ -494,14 +494,14 @@ namespace BakeryPR.ModelView
                     {
                         return;
                     }
-                    MessageBoxResult msg = MessageBox.Show("Are you sure ?", "Deletion", MessageBoxButton.YesNo, MessageBoxImage.Exclamation);
+                    MessageBoxResult msg = MessageBox.Show("Do you want to cancel this sales ?", "Deletion", MessageBoxButton.YesNo, MessageBoxImage.Exclamation);
                     if (msg == MessageBoxResult.Yes)
                     {
                         bool result = cartDao.executeQuery(cartDao.QueryDelete(p.id));
                         if (result)
                         {
                             RefreshSalesHistory();
-                            MessageBox.Show($"Cart have been cancelled successfully");
+                            MessageBox.Show($"Sales successfully cancelled");
                         }
                         else
                         {

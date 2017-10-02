@@ -136,7 +136,7 @@ namespace BakeryPR.ModelView
                         RecipeIngredents rri = this.riDao.byRecipeIdIngredent(this.recipeIngredent.recipeId, this.recipeIngredent.ingredentId);
                         if (rri != null)
                         {
-                            MessageBox.Show("Ingredient already exist");
+                            MessageBox.Show("Ingredient already exists");
                             return;
                         }
 

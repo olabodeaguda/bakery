@@ -695,6 +695,9 @@
     <Content Include="bin\Debug\NPOI.OpenXml4Net.dll" />
     <Content Include="bin\Debug\NPOI.OpenXmlFormats.dll" />
     <Content Include="bin\Debug\Toxy.dll" />
+    <Resource Include="images\img7.png" />
+    <Resource Include="images\img8.png" />
+    <Resource Include="images\img9.png" />
     <Resource Include="images\img6.png" />
     <Content Include="productionTemplate.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

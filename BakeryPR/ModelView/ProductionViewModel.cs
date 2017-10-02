@@ -413,7 +413,7 @@ namespace BakeryPR.ModelView
                     }
                     if (production.approval == "CLOSED")
                     {
-                        MessageBox.Show("Selected production have been closed","Error",MessageBoxButton.OK,MessageBoxImage.Error);
+                        MessageBox.Show("Selected production is closed","Error",MessageBoxButton.OK,MessageBoxImage.Error);
                         return;
                     }
                     MessageBoxResult msg = MessageBox.Show("Are you sure you want to delete this product ?", "Deletion", MessageBoxButton.YesNo, MessageBoxImage.Exclamation);
@@ -594,7 +594,7 @@ namespace BakeryPR.ModelView
                             }
                             else
                             {
-                                MessageBox.Show("Selected overhead already exist");
+                                MessageBox.Show("Selected overhead already exists");
                             }
                         }
                         catch (Exception x)
@@ -1158,7 +1158,7 @@ namespace BakeryPR.ModelView
                             //check if ingredent already exist for the production
                             if (this.PIDao.byProductionIngredent(this.production.id, this.ingredent.id))
                             {
-                                throw new Exception("Selected ingredent already exist");
+                                throw new Exception("Selected ingredent already exists");
                             }
 
                             //checked if amount is available
@@ -1350,7 +1350,7 @@ namespace BakeryPR.ModelView
             get { return _totalRecipeDough; }
             set
             {
-                _totalRecipeDough = $"Recipe Dough Weight:  {value}kg";
+                _totalRecipeDough = $"Bulk Dough Weight:  {value}kg";
                 this.NotifyPropertyChanged("totalRecipeDough");
             }
         }
@@ -1514,7 +1514,7 @@ namespace BakeryPR.ModelView
                             }
                             else if (this.production.approval == ProductionStatus.NOT_APPROVED.ToString())
                             {
-                                MessageBox.Show("Production must be approved before products can be moved to sales");
+                                MessageBox.Show("Production needs to be approved before moving to sales");
                                 return;
                             }
 
@@ -1522,7 +1522,7 @@ namespace BakeryPR.ModelView
 
                             if (this.productionProducts.Count < 1)
                             {
-                                MessageBox.Show("Product produced have not been added");
+                                MessageBox.Show("Products has not been added");
                                 return;
                             }
 
@@ -1595,25 +1595,25 @@ namespace BakeryPR.ModelView
                                 this.production.approval = "CLOSED";
                                 this.productions = new ObservableCollection<Production>(dao.all());
 
-                                ManageProductionProduct lv = null;
-                                foreach (Window tm in Application.Current.Windows)
-                                {
-                                    if (tm is ManageProductionProduct)
-                                    {
-                                        lv = (ManageProductionProduct)tm;
-                                        break;
-                                    }
-                                }
-                                if (lv != null)
-                                {
-                                    //App.Current.Dispatcher.BeginInvoke(() =>
-                                    //{
-                                    //    lv.Close();
-                                    //},);
+                                //ManageProductionProduct lv = null;
+                                //foreach (Window tm in Application.Current.Windows)
+                                //{
+                                //    if (tm is ManageProductionProduct)
+                                //    {
+                                //        lv = (ManageProductionProduct)tm;
+                                //        break;
+                                //    }
+                                //}
+                                //if (lv != null)
+                                //{
+                                //    //App.Current.Dispatcher.BeginInvoke(() =>
+                                //    //{
+                                //    //    lv.Close();
+                                //    //},);
                                     
-                                }
+                                //}
 
-                                MessageBox.Show("Product have been move to sales", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                                MessageBox.Show("Products successfully moved to Sales", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
                             }
                         }
                         catch (Exception x)
@@ -1633,7 +1633,7 @@ namespace BakeryPR.ModelView
             {
                 if (this.production.approval == ProductionStatus.APPROVED.ToString())
                 {
-                    throw new Exception("Approved Production cannot be edited or re-approve");
+                    throw new Exception("Approved Production cannot be edited or re-approved");
                 }
                 else if (this.production.approval == ProductionStatus.CLOSED.ToString())
                 {

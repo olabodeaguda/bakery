@@ -83,7 +83,7 @@ namespace BakeryPR.ModelView
                         var isExist = dao.all().FirstOrDefault(x => x.name.ToLower() == ig.name.ToLower());
                         if (isExist != null)
                         {
-                            MessageBox.Show($"{ig.name} already exist", "Duplicate", MessageBoxButton.OK, MessageBoxImage.Error);
+                            MessageBox.Show($"{ig.name} already exists", "Duplicate", MessageBoxButton.OK, MessageBoxImage.Error);
                             return;
                         }                        
 
